@@ -50,4 +50,4 @@ This application works in all modern browsers including:
 - Chrome
 - Firefox
 - Safari
-- Edge 
+- Edge  
