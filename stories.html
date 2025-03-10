@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Stories | Oonchiumpa Strategic Plan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-link">← Back to Home</a>
+            <h1>Our Stories</h1>
+        </div>
+
+        <nav class="menu-bar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html">Our Stories</a></li>
+                <li><a href="impact.html">Our Impact</a></li>
+                <li><a href="strategy.html">Our Strategy</a></li>
+            </ul>
+        </nav>
+
+        <section class="card animate-on-scroll">
+            <h2>Our Stories</h2>
+            <p>Oonchiumpa's culturally responsive programmes have created meaningful change in the lives of Aboriginal youth and their communities. These stories highlight the impact of our work and the importance of continued support.</p>
+        </section>
+
+        <section class="card">
+            <h3>Youth Justice Diversion Success</h3>
+            <div class="quote">
+                <p>"The Summer Diversion Camp changed my life. Instead of getting into trouble, I learned about my culture and found a path forward. Now I'm working and helping other young people."</p>
+                <p class="quote-author">- James, Programme Participant</p>
+            </div>
+            <p>James was referred to our Summer Diversion Camp after multiple encounters with the justice system. Through culturally appropriate mentoring and activities, he reconnected with his heritage and developed new skills. Today, James has been offense-free for over a year and is employed as a youth mentor.</p>
+            <p>This success story exemplifies how our programmes align with NIAA's priority to break the cycle of youth entering the justice system through diversion and rehabilitation.</p>
+        </section>
+
+        <section class="card">
+            <h3>Cultural Resilience Building</h3>
+            <div class="quote">
+                <p>"Working with the elders and learning our traditional ways has given these young people a sense of belonging and purpose. We're seeing real change in how they view themselves and their future."</p>
+                <p class="quote-author">- Elder Margaret, Cultural Mentor</p>
+            </div>
+            <p>Our cultural strengthening initiatives connect youth with elders and traditional country to learn traditional knowledge. These programmes have proven to be powerful protective factors against antisocial behaviour and substance abuse.</p>
+            <p>By embedding Arrernte knowledge systems in our programme design, we've created culturally safe spaces where youth can develop their identity and build resilience.</p>
+        </section>
+
+        <section class="card">
+            <h3>Community Safety Impact</h3>
+            <div class="quote">
+                <p>"Since Oonchiumpa began their night programmes, we've seen a significant reduction in youth-related incidents in the CBD. Their approach is making a real difference to community safety."</p>
+                <p class="quote-author">- Senior Sergeant Williams, Alice Springs Police</p>
+            </div>
+            <p>Our night outreach programmes have successfully reduced the number of young people in high-risk situations during evening hours. By providing safe spaces and positive activities during these periods, we've contributed to improved community safety.</p>
+            <p>This work directly supports NIAA's priority to reduce crime and antisocial behaviour through youth engagement and diversion programmes.</p>
+        </section>
+
+        <section class="card">
+            <h3>Building Community Leadership</h3>
+            <div class="quote">
+                <p>"The training and support from Oonchiumpa has empowered our community members to take leadership roles in addressing youth challenges. We're now developing our own solutions."</p>
+                <p class="quote-author">- Robert, Community Leader</p>
+            </div>
+            <p>Our leadership development initiatives have strengthened local capacity to address youth challenges. By supporting Aboriginal-led governance and programme delivery, we've fostered sustainable community-driven solutions.</p>
+            <p>This approach aligns with NIAA's priority to strengthen community fabric through Indigenous-led solutions and leadership development.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Oonchiumpa Consultancy & Services</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add active class to current page in menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const menuLinks = document.querySelectorAll('.menu-bar a');
+            
+            menuLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else if (currentPage === 'index.html' && linkPage === 'index.html') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

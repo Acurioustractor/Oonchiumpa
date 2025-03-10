@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oonchiumpa Strategic Plan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Oonchiumpa Strategic Plan</h1>
+            <p class="subtitle">Sustainability and Expansion for Indigenous Youth Services</p>
+        </header>
+
+        <nav class="menu-bar">
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="stories.html">Our Stories</a></li>
+                <li><a href="impact.html">Our Impact</a></li>
+                <li><a href="strategy.html">Our Strategy</a></li>
+            </ul>
+        </nav>
+
+        <nav class="main-nav">
+            <ul>
+                <li>
+                    <a href="stories.html" class="nav-card">
+                        <div class="card-icon">📖</div>
+                        <h2>Our Stories</h2>
+                        <p>Success stories and community impact through culturally responsive programmes</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="impact.html" class="nav-card">
+                        <div class="card-icon">📊</div>
+                        <h2>Our Impact</h2>
+                        <p>Measurable outcomes and alignment with NIAA priorities</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="strategy.html" class="nav-card">
+                        <div class="card-icon">🗓️</div>
+                        <h2>Our Strategy</h2>
+                        <p>3-year implementation timeline and expansion roadmap</p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <section class="overview">
+            <h2>Executive Summary</h2>
+            <p>Oonchiumpa has successfully implemented a culturally responsive model that addresses the complex needs of Aboriginal youth in Alice Springs and surrounding communities. This strategic plan outlines our approach to secure a 3-year funding extension from NIAA to solidify programme outcomes and expand services.</p>
+            
+            <div class="key-points">
+                <div class="point">
+                    <h3>Community Safety</h3>
+                    <p>Reduction in night-time youth presence in CBD areas and decreased police contact for programme participants</p>
+                </div>
+                <div class="point">
+                    <h3>Youth Justice Diversion</h3>
+                    <p>Specialised case management for youth at risk of justice system involvement and culturally informed alternatives to detention</p>
+                </div>
+                <div class="point">
+                    <h3>Cultural Resilience</h3>
+                    <p>Aboriginal-led governance and programme delivery with cultural strengthening initiatives that build youth resilience</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Oonchiumpa Consultancy & Services</p>
+        </footer>
+    </div>
+
+    <script>
+        // Add active class to current page in menu
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const menuLinks = document.querySelectorAll('.menu-bar a');
+            
+            menuLinks.forEach(link => {
+                const linkPage = link.getAttribute('href');
+                if (linkPage === currentPage) {
+                    link.classList.add('active');
+                } else if (currentPage === 'index.html' && linkPage === 'index.html') {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
