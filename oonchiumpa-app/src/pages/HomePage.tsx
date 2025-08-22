@@ -5,6 +5,9 @@ import { FeatureCard } from '../components/FeatureCard';
 import { StorySection } from '../components/StorySection';
 import { Button } from '../components/Button';
 import { useNavigate } from 'react-router-dom';
+import ImpactMetrics from '../components/ImpactMetrics';
+import TeamProfiles from '../components/TeamProfiles';
+import CaseStudyHighlights from '../components/CaseStudyHighlights';
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -70,12 +73,21 @@ export const HomePage: React.FC = () => {
           />
         </div>
       </Section>
+
+      {/* Impact Metrics - Show the powerful data */}
+      <ImpactMetrics />
       
       <StorySection
         title="Our Journey Begins"
         subtitle="The Oonchiumpa Story"
         content="Rooted in thousands of years of tradition, our organization emerged from a vision to preserve and share the profound wisdom of Aboriginal culture. We believe in the power of storytelling to heal, educate, and unite communities across all backgrounds. Through authentic cultural experiences and innovative programs, we're creating spaces where ancient knowledge meets modern understanding."
       />
+
+      {/* Team Profiles - Show the authentic voices */}
+      <TeamProfiles />
+
+      {/* Case Study Highlights - Show transformation stories */}
+      <CaseStudyHighlights />
       
       <Section className="bg-gradient-to-br from-ochre-50 to-eucalyptus-50">
         <div className="text-center">
