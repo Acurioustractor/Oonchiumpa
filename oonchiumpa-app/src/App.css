@@ -1,0 +1,23 @@
+/* Animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Remove default focus outlines and use custom ones */
+*:focus-visible {
+  outline: 2px solid theme('colors.ochre.500');
+  outline-offset: 2px;
+}
