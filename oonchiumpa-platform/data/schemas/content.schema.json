@@ -1,0 +1,191 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Oonchiumpa Content Schema",
+  "description": "Schema for all content types in the Oonchiumpa platform",
+  "definitions": {
+    "culturalSensitivity": {
+      "type": "string",
+      "enum": ["public", "community", "sensitive", "sacred", "restricted"],
+      "description": "Level of cultural sensitivity for content access control"
+    },
+    "approvalStatus": {
+      "type": "string",
+      "enum": ["pending", "under_review", "elder_approved", "community_approved", "published", "rejected"],
+      "description": "Approval workflow status"
+    },
+    "contentType": {
+      "type": "string",
+      "enum": ["story", "testimonial", "report", "news", "event", "resource", "gallery"],
+      "description": "Type of content"
+    }
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the content"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "description": "Content title"
+    },
+    "type": {
+      "$ref": "#/definitions/contentType"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "Main content text"
+        },
+        "summary": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Brief summary of content"
+        },
+        "blocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["text", "image", "video", "gallery", "quote", "metrics"]
+              },
+              "content": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cultural": {
+      "type": "object",
+      "properties": {
+        "sensitivity": {
+          "$ref": "#/definitions/culturalSensitivity"
+        },
+        "approvalStatus": {
+          "$ref": "#/definitions/approvalStatus"
+        },
+        "approvedBy": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "type": "string", "enum": ["elder", "cultural_advisor", "community_member"] },
+              "approvedAt": { "type": "string", "format": "date-time" }
+            }
+          }
+        },
+        "communityRelevance": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Communities this content is relevant to"
+          }
+        },
+        "culturalTags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "description": "Cultural themes and topics"
+          }
+        }
+      },
+      "required": ["sensitivity", "approvalStatus"]
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "role": { "type": "string" },
+            "community": { "type": "string" }
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "coordinates": {
+              "type": "object",
+              "properties": {
+                "latitude": { "type": "number" },
+                "longitude": { "type": "number" }
+              }
+            }
+          }
+        },
+        "dateCreated": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "datePublished": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "featured": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "media": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "enum": ["image", "video", "audio", "document"] },
+          "url": { "type": "string", "format": "uri" },
+          "thumbnailUrl": { "type": "string", "format": "uri" },
+          "alt": { "type": "string" },
+          "caption": { "type": "string" },
+          "cultural": {
+            "type": "object",
+            "properties": {
+              "sensitivity": { "$ref": "#/definitions/culturalSensitivity" },
+              "restrictions": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "impact": {
+      "type": "object",
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "value": { "type": "number" },
+              "unit": { "type": "string" },
+              "category": { "type": "string", "enum": ["education", "safety", "cultural", "employment", "wellbeing"] }
+            }
+          }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  },
+  "required": ["id", "title", "type", "cultural", "metadata"],
+  "additionalProperties": false
+}

@@ -6,6 +6,7 @@ import { ServicesPage } from "../pages/ServicesPage";
 import { StoriesPage } from "../pages/StoriesPage";
 import { EnhancedStoryDetailPage } from "../pages/EnhancedStoryDetailPage";
 import { OutcomesPage } from "../pages/OutcomesPage";
+import { ImpactPage } from "../pages/ImpactPage";
 import { ContactPage } from "../pages/ContactPage";
 import ContentGeneratorPage from "../pages/ContentGeneratorPage";
 import BlogPage from "../pages/BlogPage";
@@ -46,6 +47,7 @@ export const AppRoutes = () => {
         <Route path="stories" element={<StoriesPage />} />
         <Route path="stories/:id" element={<EnhancedStoryDetailPage />} />
         <Route path="outcomes" element={<OutcomesPage />} />
+        <Route path="impact" element={<ImpactPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:id" element={<BlogPostDetailPage />} />

@@ -1,0 +1,588 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const client_1 = require("@prisma/client");
+const multer_1 = __importDefault(require("multer"));
+const path_1 = __importDefault(require("path"));
+const promises_1 = __importDefault(require("fs/promises"));
+const sharp_1 = __importDefault(require("sharp"));
+const aiOrchestrator_1 = require("../services/aiOrchestrator");
+const router = (0, express_1.Router)();
+const prisma = new client_1.PrismaClient();
+// Configure multer for media uploads
+const storage = multer_1.default.diskStorage({
+    destination: async (req, file, cb) => {
+        const mediaType = file.mimetype.startsWith('image/') ? 'images' : 'videos';
+        const uploadPath = path_1.default.join(process.cwd(), 'uploads', 'media', mediaType);
+        await promises_1.default.mkdir(uploadPath, { recursive: true });
+        cb(null, uploadPath);
+    },
+    filename: (req, file, cb) => {
+        const timestamp = Date.now();
+        const sanitizedName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+        cb(null, `${timestamp}_${sanitizedName}`);
+    }
+});
+const upload = (0, multer_1.default)({
+    storage,
+    limits: {
+        fileSize: 500 * 1024 * 1024, // 500MB for videos
+    },
+    fileFilter: (req, file, cb) => {
+        const allowedTypes = [
+            // Images
+            'image/jpeg',
+            'image/png',
+            'image/webp',
+            'image/gif',
+            // Videos
+            'video/mp4',
+            'video/webm',
+            'video/quicktime',
+            'video/avi'
+        ];
+        if (allowedTypes.includes(file.mimetype)) {
+            cb(null, true);
+        }
+        else {
+            cb(new Error(`Unsupported media type: ${file.mimetype}`));
+        }
+    }
+});
+// Upload media files with program linking
+router.post('/upload', upload.array('media', 20), async (req, res, next) => {
+    try {
+        const { programId, outcomeId, storyId, title, description, tags = [], culturalContext = {}, location, dateTaken, photographer, permissions, uploadedById } = req.body;
+        const files = req.files;
+        if (!files || files.length === 0) {
+            return res.status(400).json({
+                error: 'No media files uploaded',
+                message: 'Please select media files to upload'
+            });
+        }
+        const uploadResults = [];
+        for (const file of files) {
+            try {
+                const isImage = file.mimetype.startsWith('image/');
+                const isVideo = file.mimetype.startsWith('video/');
+                // Process image with Sharp for thumbnails and optimization
+                let processedMedia = null;
+                if (isImage) {
+                    processedMedia = await this.processImage(file);
+                }
+                // Analyze media with AI
+                const aiAnalysis = await aiOrchestrator_1.aiOrchestrator.analyzeMedia(file.path, isImage ? 'image' : 'video');
+                // Create media item record
+                const mediaItem = await prisma.mediaItem.create({
+                    data: {
+                        type: isImage ? 'IMAGE' : 'VIDEO',
+                        originalUrl: file.path,
+                        cdnUrl: processedMedia?.optimizedPath || file.path,
+                        thumbnailUrl: processedMedia?.thumbnailPath,
+                        title: title || `Media from ${file.originalname}`,
+                        description,
+                        altText: aiAnalysis[0]?.content?.description || '',
+                        tags: Array.isArray(tags) ? tags : tags.split(',').map((t) => t.trim()),
+                        filename: file.originalname,
+                        fileSize: file.size,
+                        mimeType: file.mimetype,
+                        width: processedMedia?.width,
+                        height: processedMedia?.height,
+                        uploadedById,
+                        aiDescription: aiAnalysis[0]?.content?.description,
+                        aiTags: aiAnalysis[0]?.content?.tags || [],
+                        culturalContext: {
+                            location,
+                            dateTaken,
+                            photographer,
+                            permissions,
+                            ...culturalContext
+                        }
+                    }
+                });
+                // Link to programs, outcomes, or stories if specified
+                await this.linkMediaToContent(mediaItem.id, { programId, outcomeId, storyId });
+                uploadResults.push({
+                    mediaId: mediaItem.id,
+                    filename: file.originalname,
+                    type: isImage ? 'image' : 'video',
+                    size: file.size,
+                    aiAnalysis: aiAnalysis[0]?.content,
+                    thumbnailUrl: processedMedia?.thumbnailPath,
+                    status: 'success'
+                });
+            }
+            catch (error) {
+                console.error(`Error processing media ${file.originalname}:`, error);
+                uploadResults.push({
+                    filename: file.originalname,
+                    status: 'error',
+                    error: error instanceof Error ? error.message : 'Processing failed'
+                });
+            }
+        }
+        res.json({
+            message: `Uploaded ${files.length} media files`,
+            results: uploadResults,
+            summary: {
+                total: files.length,
+                successful: uploadResults.filter(r => r.status === 'success').length,
+                errors: uploadResults.filter(r => r.status === 'error').length
+            }
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+// Get media gallery with advanced filtering
+router.get('/gallery', async (req, res, next) => {
+    try {
+        const { type, // 'image' | 'video'
+        programId, outcomeId, storyId, tags, location, photographer, dateFrom, dateTo, limit = '24', offset = '0', sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+        const where = {};
+        if (type) {
+            where.type = type.toString().toUpperCase();
+        }
+        if (tags) {
+            where.tags = {
+                hasSome: tags.toString().split(',').map(t => t.trim())
+            };
+        }
+        if (location || photographer || dateFrom || dateTo) {
+            where.culturalContext = {};
+            if (location) {
+                where.culturalContext.path = ['location'];
+                where.culturalContext.equals = location;
+            }
+        }
+        // Filter by linked content
+        if (programId || outcomeId || storyId) {
+            const linkedMedia = {};
+            if (programId)
+                linkedMedia.programId = programId;
+            if (outcomeId)
+                linkedMedia.outcomes = { some: { id: outcomeId } };
+            if (storyId)
+                linkedMedia.stories = { some: { id: storyId } };
+            Object.assign(where, linkedMedia);
+        }
+        const mediaItems = await prisma.mediaItem.findMany({
+            where,
+            include: {
+                uploadedBy: {
+                    select: { name: true, avatar: true }
+                },
+                stories: {
+                    select: { id: true, title: true }
+                },
+                outcomes: {
+                    select: { id: true, title: true }
+                }
+            },
+            orderBy: { [sortBy]: sortOrder },
+            take: parseInt(limit),
+            skip: parseInt(offset)
+        });
+        const total = await prisma.mediaItem.count({ where });
+        // Group media by type and add metadata
+        const gallery = mediaItems.map(item => ({
+            id: item.id,
+            type: item.type.toLowerCase(),
+            url: item.cdnUrl,
+            thumbnailUrl: item.thumbnailUrl,
+            title: item.title,
+            description: item.description,
+            altText: item.altText,
+            tags: item.tags,
+            dimensions: {
+                width: item.width,
+                height: item.height
+            },
+            fileInfo: {
+                size: item.fileSize,
+                mimeType: item.mimeType,
+                filename: item.filename
+            },
+            culturalContext: item.culturalContext,
+            aiAnalysis: {
+                description: item.aiDescription,
+                tags: item.aiTags
+            },
+            linkedContent: {
+                stories: item.stories,
+                outcomes: item.outcomes
+            },
+            uploadedBy: item.uploadedBy,
+            uploadedAt: item.createdAt
+        }));
+        res.json({
+            gallery,
+            filters: {
+                type,
+                tags,
+                location,
+                programId,
+                outcomeId,
+                storyId
+            },
+            pagination: {
+                total,
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                hasMore: total > parseInt(offset) + gallery.length
+            }
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+// Get media collections (grouped by program/outcome/story)
+router.get('/collections', async (req, res, next) => {
+    try {
+        // Get stories with their media
+        const storiesWithMedia = await prisma.story.findMany({
+            where: {
+                status: 'PUBLISHED',
+                mediaItems: {
+                    some: {}
+                }
+            },
+            select: {
+                id: true,
+                title: true,
+                category: true,
+                tags: true,
+                mediaItems: {
+                    select: {
+                        id: true,
+                        type: true,
+                        thumbnailUrl: true,
+                        cdnUrl: true,
+                        title: true
+                    },
+                    take: 6 // Preview images
+                },
+                _count: {
+                    select: { mediaItems: true }
+                }
+            }
+        });
+        // Get outcomes with their media
+        const outcomesWithMedia = await prisma.outcome.findMany({
+            where: {
+                status: 'PUBLISHED',
+                mediaItems: {
+                    some: {}
+                }
+            },
+            select: {
+                id: true,
+                title: true,
+                category: true,
+                location: true,
+                mediaItems: {
+                    select: {
+                        id: true,
+                        type: true,
+                        thumbnailUrl: true,
+                        cdnUrl: true,
+                        title: true
+                    },
+                    take: 6
+                },
+                _count: {
+                    select: { mediaItems: true }
+                }
+            }
+        });
+        // Group media by location
+        const mediaByLocation = await prisma.mediaItem.groupBy({
+            by: ['culturalContext'],
+            _count: true,
+            having: {
+                culturalContext: {
+                    not: {}
+                }
+            }
+        });
+        const collections = {
+            stories: storiesWithMedia.map(story => ({
+                id: story.id,
+                title: story.title,
+                type: 'story',
+                category: story.category,
+                tags: story.tags,
+                mediaCount: story._count.mediaItems,
+                previewMedia: story.mediaItems
+            })),
+            outcomes: outcomesWithMedia.map(outcome => ({
+                id: outcome.id,
+                title: outcome.title,
+                type: 'outcome',
+                category: outcome.category,
+                location: outcome.location,
+                mediaCount: outcome._count.mediaItems,
+                previewMedia: outcome.mediaItems
+            })),
+            locations: await this.getLocationCollections()
+        };
+        res.json(collections);
+    }
+    catch (error) {
+        next(error);
+    }
+});
+// Update media metadata
+router.put('/:mediaId', async (req, res, next) => {
+    try {
+        const { mediaId } = req.params;
+        const { title, description, tags, culturalContext, linkToStory, linkToOutcome, permissions } = req.body;
+        const updateData = {};
+        if (title)
+            updateData.title = title;
+        if (description)
+            updateData.description = description;
+        if (tags)
+            updateData.tags = Array.isArray(tags) ? tags : tags.split(',').map((t) => t.trim());
+        if (culturalContext)
+            updateData.culturalContext = culturalContext;
+        const mediaItem = await prisma.mediaItem.update({
+            where: { id: mediaId },
+            data: updateData
+        });
+        // Handle content linking
+        if (linkToStory) {
+            await this.linkMediaToContent(mediaId, { storyId: linkToStory });
+        }
+        if (linkToOutcome) {
+            await this.linkMediaToContent(mediaId, { outcomeId: linkToOutcome });
+        }
+        res.json({
+            mediaItem,
+            message: 'Media updated successfully'
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+// Generate video thumbnails and metadata
+router.post('/:mediaId/process-video', async (req, res, next) => {
+    try {
+        const { mediaId } = req.params;
+        const mediaItem = await prisma.mediaItem.findUnique({
+            where: { id: mediaId }
+        });
+        if (!mediaItem || mediaItem.type !== 'VIDEO') {
+            return res.status(400).json({
+                error: 'Invalid media item',
+                message: 'Media item must be a video'
+            });
+        }
+        // Process video (thumbnail generation, metadata extraction)
+        const videoProcessing = await this.processVideo(mediaItem.originalUrl);
+        // Update media item with video metadata
+        await prisma.mediaItem.update({
+            where: { id: mediaId },
+            data: {
+                thumbnailUrl: videoProcessing.thumbnailPath,
+                duration: videoProcessing.duration,
+                width: videoProcessing.width,
+                height: videoProcessing.height,
+                processingStatus: 'COMPLETED'
+            }
+        });
+        res.json({
+            mediaId,
+            thumbnailUrl: videoProcessing.thumbnailPath,
+            metadata: videoProcessing,
+            status: 'processed'
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+// Search media with AI-powered semantic search
+router.get('/search', async (req, res, next) => {
+    try {
+        const { query, type, limit = '20' } = req.query;
+        if (!query) {
+            return res.status(400).json({
+                error: 'Search query required'
+            });
+        }
+        // Search in titles, descriptions, AI descriptions, and tags
+        const where = {
+            OR: [
+                { title: { contains: query, mode: 'insensitive' } },
+                { description: { contains: query, mode: 'insensitive' } },
+                { aiDescription: { contains: query, mode: 'insensitive' } },
+                { tags: { hasSome: [query] } },
+                { aiTags: { hasSome: [query] } }
+            ]
+        };
+        if (type) {
+            where.type = type.toString().toUpperCase();
+        }
+        const searchResults = await prisma.mediaItem.findMany({
+            where,
+            include: {
+                uploadedBy: {
+                    select: { name: true, avatar: true }
+                },
+                stories: {
+                    select: { id: true, title: true }
+                },
+                outcomes: {
+                    select: { id: true, title: true }
+                }
+            },
+            take: parseInt(limit),
+            orderBy: { createdAt: 'desc' }
+        });
+        res.json({
+            query,
+            results: searchResults.map(item => ({
+                id: item.id,
+                type: item.type.toLowerCase(),
+                url: item.cdnUrl,
+                thumbnailUrl: item.thumbnailUrl,
+                title: item.title,
+                description: item.description,
+                tags: item.tags,
+                aiDescription: item.aiDescription,
+                linkedContent: {
+                    stories: item.stories,
+                    outcomes: item.outcomes
+                },
+                uploadedBy: item.uploadedBy,
+                uploadedAt: item.createdAt
+            })),
+            count: searchResults.length
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+async;
+processImage(file, Express.Multer.File);
+{
+    try {
+        const inputPath = file.path;
+        const outputDir = path_1.default.dirname(inputPath);
+        const baseName = path_1.default.basename(inputPath, path_1.default.extname(inputPath));
+        // Create optimized version
+        const optimizedPath = path_1.default.join(outputDir, `${baseName}_optimized.webp`);
+        const thumbnailPath = path_1.default.join(outputDir, `${baseName}_thumb.webp`);
+        // Process with Sharp
+        const image = (0, sharp_1.default)(inputPath);
+        const metadata = await image.metadata();
+        // Create optimized version (max 1920px width)
+        await image
+            .resize(1920, null, {
+            withoutEnlargement: true,
+            fit: 'inside'
+        })
+            .webp({ quality: 85 })
+            .toFile(optimizedPath);
+        // Create thumbnail (400px width)
+        await image
+            .resize(400, 300, {
+            fit: 'cover',
+            position: 'center'
+        })
+            .webp({ quality: 80 })
+            .toFile(thumbnailPath);
+        return {
+            optimizedPath,
+            thumbnailPath,
+            width: metadata.width,
+            height: metadata.height,
+            originalSize: file.size
+        };
+    }
+    catch (error) {
+        console.error('Error processing image:', error);
+        return null;
+    }
+}
+async;
+processVideo(videoPath, string);
+{
+    // Placeholder for video processing
+    // Would use FFmpeg to generate thumbnails and extract metadata
+    return {
+        thumbnailPath: videoPath.replace('.mp4', '_thumb.jpg'),
+        duration: 0,
+        width: 1920,
+        height: 1080
+    };
+}
+async;
+linkMediaToContent(mediaId, string, links, any);
+{
+    try {
+        if (links.storyId) {
+            await prisma.story.update({
+                where: { id: links.storyId },
+                data: {
+                    mediaItems: {
+                        connect: { id: mediaId }
+                    }
+                }
+            });
+        }
+        if (links.outcomeId) {
+            await prisma.outcome.update({
+                where: { id: links.outcomeId },
+                data: {
+                    mediaItems: {
+                        connect: { id: mediaId }
+                    }
+                }
+            });
+        }
+    }
+    catch (error) {
+        console.error('Error linking media to content:', error);
+    }
+}
+async;
+getLocationCollections();
+{
+    // Get media grouped by location from cultural context
+    const mediaItems = await prisma.mediaItem.findMany({
+        select: {
+            id: true,
+            type: true,
+            thumbnailUrl: true,
+            cdnUrl: true,
+            title: true,
+            culturalContext: true
+        }
+    });
+    const locationGroups = {};
+    mediaItems.forEach(item => {
+        const location = item.culturalContext?.location;
+        if (location) {
+            if (!locationGroups[location]) {
+                locationGroups[location] = [];
+            }
+            locationGroups[location].push(item);
+        }
+    });
+    return Object.entries(locationGroups).map(([location, media]) => ({
+        location,
+        mediaCount: media.length,
+        previewMedia: media.slice(0, 6)
+    }));
+}
+exports.default = router;
+//# sourceMappingURL=media-gallery.js.map

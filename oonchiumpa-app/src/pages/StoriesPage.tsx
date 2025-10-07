@@ -37,11 +37,20 @@ export const StoriesPage: React.FC = () => {
   );
 
   const categories = useMemo(() => {
-    if (!stories) return [];
+    if (!stories) return ['all'];
     // Use story_type instead of category for filtering
     const cats = stories.map(story => story.story_type || story.category).filter(Boolean);
-    return ['all', ...Array.from(new Set(cats))];
+    return ['all', ...Array.from(new Set(cats)).sort()];
   }, [stories]);
+
+  const formatCategoryLabel = (category: string) => {
+    if (category === 'all') return 'All Stories';
+    // Convert snake_case to Title Case
+    return category
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
 
   const filteredStories = useMemo(() => {
     if (!stories) return [];
@@ -235,11 +244,11 @@ export const StoriesPage: React.FC = () => {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="px-6 py-3 rounded-full border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-all"
+              className="px-6 py-3 rounded-full border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-all bg-white"
             >
               {categories.map(category => (
                 <option key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
+                  {formatCategoryLabel(category)}
                 </option>
               ))}
             </select>

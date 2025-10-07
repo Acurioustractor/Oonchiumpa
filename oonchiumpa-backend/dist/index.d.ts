@@ -1,0 +1,8 @@
+import { Server } from "socket.io";
+import { PrismaClient } from "@prisma/client";
+declare const io: Server<import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, import("socket.io").DefaultEventsMap, any>;
+export declare const prisma: PrismaClient<{
+    log: ("info" | "error" | "query" | "warn")[];
+}, "info" | "error" | "query" | "warn", import("@prisma/client/runtime/library").DefaultArgs>;
+export { io };
+//# sourceMappingURL=index.d.ts.map

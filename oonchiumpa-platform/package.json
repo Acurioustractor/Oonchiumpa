@@ -1,0 +1,54 @@
+{
+  "name": "oonchiumpa-platform",
+  "version": "1.0.0",
+  "description": "Digital platform for Oonchiumpa Consultancy & Services - Aboriginal youth empowerment and cultural preservation",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "typecheck": "turbo run typecheck",
+    "cultural-review": "node tools/cultural-review/validate-content.js",
+    "setup": "npm install && npm run build",
+    "data:migrate": "cd apps/api-gateway && npm run migrate",
+    "data:seed": "cd apps/api-gateway && npm run seed"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.14",
+    "@types/node": "^20.5.0",
+    "typescript": "^5.1.6",
+    "prettier": "^3.0.0",
+    "eslint": "^8.47.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oonchiumpa/digital-platform.git"
+  },
+  "keywords": [
+    "aboriginal",
+    "youth-empowerment",
+    "cultural-preservation",
+    "digital-platform",
+    "react",
+    "nodejs",
+    "typescript"
+  ],
+  "author": "Oonchiumpa Consultancy & Services",
+  "license": "PROPRIETARY",
+  "funding": {
+    "type": "grant",
+    "url": "https://www.niaa.gov.au/"
+  }
+}

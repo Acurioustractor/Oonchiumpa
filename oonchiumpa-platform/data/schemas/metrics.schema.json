@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Oonchiumpa Impact Metrics Schema",
+  "description": "Schema for impact metrics and evaluation data",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable metric name"
+    },
+    "key": {
+      "type": "string",
+      "description": "Machine-readable metric identifier"
+    },
+    "value": {
+      "type": "number",
+      "description": "Metric value"
+    },
+    "unit": {
+      "type": "string",
+      "enum": ["percentage", "count", "days", "hours", "currency", "ratio", "score"],
+      "description": "Unit of measurement"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["education", "safety", "cultural", "employment", "wellbeing", "housing", "justice"],
+      "description": "Impact category"
+    },
+    "subcategory": {
+      "type": "string",
+      "description": "More specific categorization"
+    },
+    "period": {
+      "type": "object",
+      "properties": {
+        "start": { "type": "string", "format": "date" },
+        "end": { "type": "string", "format": "date" },
+        "frequency": { "type": "string", "enum": ["daily", "weekly", "monthly", "quarterly", "yearly"] }
+      },
+      "required": ["start", "end"]
+    },
+    "target": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "number" },
+        "description": { "type": "string" },
+        "achievedPercentage": { "type": "number", "minimum": 0 }
+      }
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["evaluation", "survey", "administrative", "observation"] },
+        "document": { "type": "string" },
+        "collector": { "type": "string" },
+        "methodology": { "type": "string" }
+      }
+    },
+    "participants": {
+      "type": "object",
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "demographic": {
+          "type": "object",
+          "properties": {
+            "age": {
+              "type": "object",
+              "properties": {
+                "under18": { "type": "integer" },
+                "18to25": { "type": "integer" },
+                "over25": { "type": "integer" }
+              }
+            },
+            "gender": {
+              "type": "object",
+              "properties": {
+                "male": { "type": "integer" },
+                "female": { "type": "integer" },
+                "nonBinary": { "type": "integer" },
+                "notSpecified": { "type": "integer" }
+              }
+            },
+            "community": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "significance": {
+      "type": "object",
+      "properties": {
+        "statistical": { "type": "number", "description": "P-value or confidence level" },
+        "practical": { "type": "string", "description": "Real-world impact description" },
+        "cultural": { "type": "string", "description": "Cultural significance of the outcome" }
+      }
+    },
+    "trends": {
+      "type": "object",
+      "properties": {
+        "direction": { "type": "string", "enum": ["improving", "stable", "declining"] },
+        "rate": { "type": "number", "description": "Rate of change" },
+        "historical": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date" },
+              "value": { "type": "number" }
+            }
+          }
+        }
+      }
+    },
+    "qualitative": {
+      "type": "object",
+      "properties": {
+        "quotes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "speaker": { "type": "string" },
+              "role": { "type": "string" },
+              "culturalSensitivity": { "type": "string", "enum": ["public", "restricted"] }
+            }
+          }
+        },
+        "observations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "stories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentId": { "type": "string" },
+              "summary": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "verifiedBy": { "type": "string" },
+        "verificationDate": { "type": "string", "format": "date-time" },
+        "methodology": { "type": "string" },
+        "limitations": { "type": "string" }
+      }
+    },
+    "visualization": {
+      "type": "object",
+      "properties": {
+        "chartType": { "type": "string", "enum": ["bar", "line", "pie", "counter", "progress", "map"] },
+        "displayFormat": { "type": "string" },
+        "colorScheme": { "type": "string" },
+        "culturalContext": { "type": "string" }
+      }
+    }
+  },
+  "required": ["id", "name", "key", "value", "unit", "category", "period", "source"],
+  "additionalProperties": false
+}

@@ -9,10 +9,10 @@ export const Layout = () => {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
+    { label: "Our Impact", href: "/impact" },
     { label: "Services", href: "/services" },
     { label: "Stories", href: "/stories" },
     { label: "Blog", href: "/blog" },
-    { label: "Outcomes", href: "/outcomes" },
   ];
 
   const footerSections = [
@@ -37,6 +37,7 @@ export const Layout = () => {
     {
       title: "Resources",
       links: [
+        { label: "Our Impact", href: "/impact" },
         { label: "Stories", href: "/stories" },
         { label: "Community Blog", href: "/blog" },
         { label: "Outcomes", href: "/outcomes" },

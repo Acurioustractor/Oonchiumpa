@@ -1,0 +1,36 @@
+{
+  "name": "@oonchiumpa/cultural-protocols",
+  "version": "1.0.0",
+  "description": "Aboriginal cultural protocols and validation utilities for Oonchiumpa platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "aboriginal",
+    "cultural-protocols",
+    "validation",
+    "indigenous"
+  ],
+  "author": "Oonchiumpa Consultancy & Services",
+  "license": "PROPRIETARY",
+  "devDependencies": {
+    "typescript": "^5.1.6",
+    "@types/node": "^20.5.0",
+    "jest": "^29.6.2",
+    "@types/jest": "^29.5.4",
+    "eslint": "^8.47.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.2"
+  },
+  "files": [
+    "dist"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Set up modern React project with Vite, Tailwind CSS, and Aboriginal cultural design system",
+        "description": "Initialize a new React project using Vite as the build tool, configure Tailwind CSS for styling, and establish an Aboriginal cultural design system foundation for the Oonchiumpa website enhancement.",
+        "details": "1. Initialize new React project with Vite using `npm create vite@latest oonchiumpa-react -- --template react-ts`\n2. Install and configure Tailwind CSS following official Vite integration guide\n3. Set up project structure with organized folders: components/, pages/, assets/, styles/, utils/\n4. Create Aboriginal cultural design system starting with:\n   - Color palette inspired by traditional Aboriginal art (earth tones, ochre, red, yellow, black, white)\n   - Typography system using web-safe fonts that respect cultural aesthetics\n   - Spacing and layout principles that reflect Aboriginal design patterns\n   - Component library foundation with culturally appropriate naming conventions\n5. Configure Tailwind with custom theme extending default config to include cultural color palette\n6. Set up basic routing with React Router DOM\n7. Create initial layout components (Header, Footer, Navigation) with cultural design elements\n8. Establish folder structure for integrating evaluation report data\n9. Configure development environment with proper TypeScript support\n10. Set up basic ESLint and Prettier configuration for code consistency",
+        "testStrategy": "1. Verify Vite development server starts successfully with `npm run dev`\n2. Confirm Tailwind CSS is working by applying custom cultural color classes\n3. Test TypeScript compilation with `npm run build`\n4. Verify all custom Tailwind theme colors render correctly in browser\n5. Check responsive design functionality across different screen sizes\n6. Validate routing works for basic navigation between pages\n7. Ensure all layout components render without console errors\n8. Test that cultural design elements display appropriately and respectfully\n9. Verify project structure allows for easy integration of evaluation report data\n10. Run ESLint and Prettier to ensure code quality standards are met",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create data lake repository system with JSON APIs and automated content ingestion",
+        "description": "Build a comprehensive data management system to store and organize evaluation reports, stories, metrics, photos, and videos with structured JSON APIs for content access and automated ingestion workflows.",
+        "details": "1. Design database schema for content types:\n   - Reports table: id, title, content, date_created, category, tags, file_path\n   - Stories table: id, title, narrative, author, date_created, location, media_refs\n   - Metrics table: id, metric_name, value, date_recorded, category, source\n   - Media table: id, filename, type (photo/video), metadata, upload_date, description\n\n2. Set up backend API endpoints:\n   - GET/POST /api/reports - CRUD operations for evaluation reports\n   - GET/POST /api/stories - Story management with full-text search\n   - GET/POST /api/metrics - Metrics data with aggregation capabilities\n   - GET/POST /api/media - File upload/retrieval with thumbnail generation\n   - GET /api/search - Cross-content search functionality\n\n3. Implement automated content ingestion:\n   - File system watchers for document directories\n   - CSV/JSON import processors for bulk data\n   - Image/video metadata extraction pipelines\n   - Content validation and categorization rules\n\n4. Create data lake storage structure:\n   - Raw data layer for unprocessed files\n   - Processed data layer with standardized formats\n   - Archive layer for historical content\n   - Backup and versioning system\n\n5. Build admin interface for content management:\n   - Bulk upload functionality\n   - Content categorization and tagging\n   - Data quality monitoring dashboard\n   - Export capabilities for different formats",
+        "testStrategy": "1. Test all API endpoints with Postman/Thunder Client for proper CRUD operations\n2. Verify file upload functionality with various media types (images, videos, documents)\n3. Test automated ingestion by placing files in watched directories\n4. Validate search functionality across different content types\n5. Test data integrity with bulk imports of sample Aboriginal community data\n6. Verify backup and restore procedures\n7. Load test APIs with concurrent requests to ensure performance\n8. Test content validation rules with invalid/corrupted files\n9. Verify metadata extraction accuracy for uploaded media\n10. Test cross-references between stories, reports, and media content",
+        "status": "done",
+        "dependencies": [
+          1
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Build headless CMS system with visual content editor and cultural protocols workflow",
+        "description": "Develop a comprehensive headless CMS with visual drag-and-drop content editor, multimedia asset management, blog/stories publishing system, photo galleries, video testimonials, and Aboriginal cultural protocols approval workflow.",
+        "details": "1. Set up headless CMS architecture:\n   - Create CMS admin interface using React components from cultural design system\n   - Implement visual drag-and-drop content editor with blocks for text, images, videos, galleries\n   - Build content type management for blogs, stories, reports, testimonials\n\n2. Multimedia management system:\n   - File upload interface with drag-and-drop functionality\n   - Image optimization and responsive image generation\n   - Video player integration with thumbnail generation\n   - Batch upload and organization tools\n   - Media library with search and filtering\n\n3. Publishing workflow:\n   - Draft/publish status management\n   - Content scheduling system\n   - SEO metadata fields for all content types\n   - URL slug generation and management\n\n4. Aboriginal cultural protocols approval workflow:\n   - Multi-stage approval process with cultural advisors\n   - Content flagging system for cultural sensitivity review\n   - Approval notification system\n   - Version control for content revisions during approval\n   - Cultural protocol checklist integration\n\n5. Integration with data lake:\n   - Connect CMS to existing JSON APIs from Task 2\n   - Content synchronization between CMS and data repository\n   - Automated content backup and versioning\n\n6. User roles and permissions:\n   - Admin, Editor, Cultural Advisor, Contributor roles\n   - Content access controls based on cultural sensitivity\n   - Audit trail for all content changes",
+        "testStrategy": "1. Test visual content editor functionality with various content blocks and media types\n2. Verify multimedia upload, optimization, and display across different file formats\n3. Test complete publishing workflow from draft creation to live publication\n4. Validate cultural approval workflow with multiple approval stages and notifications\n5. Test user role permissions and access controls for different content types\n6. Verify integration with data lake APIs for content synchronization\n7. Test responsive design of CMS interface on various devices\n8. Perform security testing for file uploads and user authentication\n9. Test content search and filtering functionality\n10. Validate SEO metadata generation and URL management",
+        "status": "done",
+        "dependencies": [
+          1,
+          2
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Integrate evaluation report data into interactive impact dashboard with real metrics and Three Horizons visualization",
+        "description": "Create an interactive dashboard that displays real impact metrics from Oonchiumpa evaluation reports, featuring animated counters for key statistics and an interactive Three Horizons strategic model visualization.",
+        "details": "1. Data Integration:\n   - Connect to data lake APIs to fetch evaluation report metrics\n   - Parse and structure impact data: 72% school re-engagement rate, 95% Operation Luna reduction\n   - Create data models for Three Horizons strategic framework (Horizon 1: Core programs, Horizon 2: Emerging initiatives, Horizon 3: Transformational vision)\n\n2. Interactive Dashboard Components:\n   - Build animated counter components using React with CSS transitions or libraries like CountUp.js\n   - Create responsive metric cards displaying key statistics with visual progress indicators\n   - Implement real-time data updates with automatic refresh capabilities\n\n3. Three Horizons Model Visualization:\n   - Design interactive SVG or Canvas-based visualization showing the three strategic horizons\n   - Implement hover states and tooltips explaining each horizon's programs and outcomes\n   - Add filtering and drill-down capabilities to explore specific initiatives within each horizon\n\n4. Dashboard Layout and Navigation:\n   - Create responsive grid layout using Tailwind CSS classes\n   - Implement smooth transitions between different dashboard views\n   - Add export functionality for reports and visualizations\n   - Ensure accessibility compliance and mobile responsiveness",
+        "testStrategy": "1. Verify data integration by testing API connections and confirming accurate metric display (72%, 95%)\n2. Test animated counters for smooth transitions and correct final values\n3. Validate Three Horizons visualization interactivity including hover states, tooltips, and filtering\n4. Test dashboard responsiveness across different screen sizes and devices\n5. Verify real-time data updates and refresh functionality\n6. Test export features for generating dashboard reports\n7. Conduct accessibility testing with screen readers and keyboard navigation\n8. Performance testing to ensure smooth animations and quick data loading",
+        "status": "done",
+        "dependencies": [
+          1,
+          2
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Build Storyteller Dashboard with Empathy Ledger Controls",
+        "description": "Create a dedicated dashboard where storytellers can manage their stories, toggle visibility on/off, set permission levels, and control cultural sensitivity settings. This is the core user interface for the Empathy Ledger system.",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Integrate Story Visibility Controls in Frontend",
+        "description": "Add toggle switches, permission indicators, and storyteller controls to the StoriesPage and StoryDetailPage so storytellers can see and control their story visibility in real-time.",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Launch Photo and Video Content Collection Campaign",
+        "description": "Systematically collect real photos and videos for the platform including team photos, program activities, facility shots, and community events. Prioritize cultural sensitivity and permission protocols.",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Connect Real Stories with Empathy Ledger Permissions",
+        "description": "Import or create real community stories and connect them with the Empathy Ledger system. Set up proper permission levels, cultural sensitivity settings, and storyteller controls for authentic content.",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Build Cultural Review and Approval Interface",
+        "description": "Create frontend interfaces for elders and cultural advisors to review stories, set cultural sensitivity levels, and manage approval workflows. Include cultural protocol checklists and approval history tracking.",
+        "details": "",
+        "testStrategy": "",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-20T21:36:40.404Z",
+      "updated": "2025-08-26T20:44:31.736Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

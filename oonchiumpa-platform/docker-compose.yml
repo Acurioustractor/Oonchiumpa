@@ -1,0 +1,225 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: oonchiumpa-postgres
+    environment:
+      POSTGRES_DB: oonchiumpa_dev
+      POSTGRES_USER: oonchiumpa
+      POSTGRES_PASSWORD: cultural_dev_2024
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infrastructure/docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+
+  # MongoDB for Content Management
+  mongodb:
+    image: mongo:7-jammy
+    container_name: oonchiumpa-mongodb
+    environment:
+      MONGO_INITDB_DATABASE: oonchiumpa_content
+      MONGO_INITDB_ROOT_USERNAME: oonchiumpa
+      MONGO_INITDB_ROOT_PASSWORD: cultural_content_2024
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./infrastructure/docker/mongodb/init.js:/docker-entrypoint-initdb.d/init.js:ro
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+
+  # Redis for Caching and Queue Management
+  redis:
+    image: redis:7-alpine
+    container_name: oonchiumpa-redis
+    command: redis-server --appendonly yes --requirepass cultural_cache_2024
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+      - ./infrastructure/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+
+  # Elasticsearch for Search (Optional)
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.0
+    container_name: oonchiumpa-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - search
+
+  # MinIO for Local S3-compatible Storage (Development)
+  minio:
+    image: minio/minio:latest
+    container_name: oonchiumpa-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: oonchiumpa_admin
+      MINIO_ROOT_PASSWORD: cultural_storage_2024
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - storage
+
+  # NGINX Reverse Proxy (Production-like setup)
+  nginx:
+    image: nginx:alpine
+    container_name: oonchiumpa-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./infrastructure/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./infrastructure/docker/nginx/ssl:/etc/ssl:ro
+    depends_on:
+      - api-gateway
+      - web-frontend
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - production
+
+  # API Gateway Service
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    container_name: oonchiumpa-api-gateway
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=postgresql://oonchiumpa:cultural_dev_2024@postgres:5432/oonchiumpa_dev
+      - MONGODB_URL=mongodb://oonchiumpa:cultural_content_2024@mongodb:27017/oonchiumpa_content
+      - REDIS_URL=redis://:cultural_cache_2024@redis:6379
+      - CULTURAL_VALIDATION_ENABLED=true
+      - ELDER_APPROVAL_REQUIRED=true
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    volumes:
+      - ./apps/api-gateway:/app
+      - /app/node_modules
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - api
+
+  # Web Frontend Service
+  web-frontend:
+    build:
+      context: .
+      dockerfile: ./apps/web-frontend/Dockerfile
+    container_name: oonchiumpa-web-frontend
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3001
+      - VITE_CULTURAL_MODE=development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    volumes:
+      - ./apps/web-frontend:/app
+      - /app/node_modules
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - frontend
+
+  # CMS Admin Service
+  cms-admin:
+    build:
+      context: .
+      dockerfile: ./apps/cms-admin/Dockerfile
+    container_name: oonchiumpa-cms-admin
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3001
+      - VITE_CULTURAL_PROTOCOLS_ENABLED=true
+    ports:
+      - "3002:3002"
+    depends_on:
+      - api-gateway
+    volumes:
+      - ./apps/cms-admin:/app
+      - /app/node_modules
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - cms
+
+  # Data Lake Processing Service
+  data-lake:
+    build:
+      context: .
+      dockerfile: ./apps/data-lake/Dockerfile
+    container_name: oonchiumpa-data-lake
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://oonchiumpa:cultural_dev_2024@postgres:5432/oonchiumpa_dev
+      - MONGODB_URL=mongodb://oonchiumpa:cultural_content_2024@mongodb:27017/oonchiumpa_content
+      - REDIS_URL=redis://:cultural_cache_2024@redis:6379
+      - STORAGE_PATH=/app/data
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+    volumes:
+      - ./apps/data-lake:/app
+      - ./data:/app/data
+      - /app/node_modules
+    networks:
+      - oonchiumpa-network
+    restart: unless-stopped
+    profiles:
+      - data-processing
+
+volumes:
+  postgres_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
+  elasticsearch_data:
+    driver: local
+  minio_data:
+    driver: local
+
+networks:
+  oonchiumpa-network:
+    driver: bridge
+    name: oonchiumpa-network

@@ -1,0 +1,472 @@
+// PROPOSED SCHEMA ENHANCEMENTS FOR COMPREHENSIVE TRACKING
+
+// 1. PARTNER TRACKING SYSTEM
+model Partner {
+  id              String    @id @default(cuid())
+  name            String
+  type            PartnerType
+  category        String?   // Government, NGO, Corporate, Community, Educational
+  description     String?
+  website         String?
+  contactPerson   String?
+  contactEmail    String?
+  contactPhone    String?
+  logo            String?   // URL to partner logo
+  
+  // Relationship details
+  relationshipStart DateTime?
+  relationshipEnd   DateTime?
+  isActive          Boolean   @default(true)
+  partnershipLevel  PartnershipLevel @default(COLLABORATOR)
+  
+  // Contributions
+  monetaryValue     Decimal?  // Total $ value contributed
+  inKindValue       Decimal?  // Estimated value of in-kind contributions
+  landContributed   String?   // Description of land/space provided
+  
+  // Location and community connections
+  location          String?
+  communityConnections String[] // Aboriginal communities they work with
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  fundingGrants     FundingGrant[]
+  projects          Project[]
+  collaborations    Collaboration[]
+
+  @@map("partners")
+}
+
+// 2. FUNDING AND GRANTS TRACKING
+model FundingGrant {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  grantorName     String
+  grantType       GrantType
+  
+  // Financial details
+  totalAmount     Decimal
+  amountReceived  Decimal   @default(0)
+  currency        String    @default("AUD")
+  
+  // Timeline
+  applicationDate DateTime?
+  approvalDate    DateTime?
+  startDate       DateTime?
+  endDate         DateTime?
+  reportingDue    DateTime?
+  
+  // Status tracking
+  status          GrantStatus @default(RESEARCHING)
+  priority        GrantPriority @default(MEDIUM)
+  
+  // Requirements and compliance
+  requirements    Json?     // Application requirements, reporting needs
+  restrictions    String?   // Usage restrictions or conditions
+  
+  // Allocation tracking
+  allocatedTo     String?   // Which programs/projects this funds
+  landAllocation  Decimal   @default(0)    // Amount for land-based programs
+  projectAllocation Decimal @default(0)    // Amount for specific projects  
+  serviceAllocation Decimal @default(0)    // Amount for fee-for-service delivery
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  partner         Partner?  @relation(fields: [partnerId], references: [id])
+  partnerId       String?
+  projects        Project[]
+  expenditures    Expenditure[]
+
+  @@map("funding_grants")
+}
+
+// 3. PHILANTHROPIST CONNECTION SYSTEM
+model Philanthropist {
+  id              String    @id @default(cuid())
+  name            String
+  type            PhilanthropistType // Individual, Family Foundation, Corporate Foundation
+  
+  // Contact details
+  email           String?
+  phone           String?
+  address         String?
+  website         String?
+  
+  // Interests and capacity
+  focusAreas      String[]  // Youth, Education, Culture, Land Rights, etc.
+  donationCapacity String?  // $1K-10K, $10K-100K, $100K+, etc.
+  preferredInvolvement String? // Financial only, Board involvement, Mentoring, etc.
+  
+  // Relationship management
+  relationshipStage RelationshipStage @default(PROSPECT)
+  lastContactDate   DateTime?
+  nextFollowUp      DateTime?
+  notes             String?
+  
+  // Connection tracking
+  introducedBy      String?
+  connectionStrength ConnectionStrength @default(COLD)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  
+  // Relations
+  donations         Donation[]
+  interactions      PhilanthropistInteraction[]
+
+  @@map("philanthropists")
+}
+
+model Donation {
+  id              String    @id @default(cuid())
+  amount          Decimal
+  currency        String    @default("AUD")
+  donationType    DonationType
+  
+  // Allocation
+  landPrograms    Decimal   @default(0)
+  projectFunding  Decimal   @default(0)
+  serviceFees     Decimal   @default(0)
+  operationalSupport Decimal @default(0)
+  
+  donationDate    DateTime
+  receiptIssued   Boolean   @default(false)
+  taxDeductible   Boolean   @default(false)
+  
+  // Purpose and restrictions
+  purpose         String?
+  restrictions    String?
+  recognition     String?   // How donor wants to be recognized
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  philanthropist  Philanthropist @relation(fields: [philanthropistId], references: [id])
+  philanthropistId String
+  project         Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
+
+  @@map("donations")
+}
+
+// 4. PROJECT AND RESOURCE ALLOCATION TRACKING
+model Project {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  category        ProjectCategory
+  
+  // Timeline
+  startDate       DateTime?
+  endDate         DateTime?
+  status          ProjectStatus @default(PLANNING)
+  
+  // Resource allocation
+  totalBudget     Decimal?
+  landComponent   Decimal   @default(0)    // Land-based program costs
+  projectComponent Decimal  @default(0)    // Direct project delivery costs
+  serviceComponent Decimal  @default(0)    // Fee-for-service revenue/costs
+  
+  // Location and community
+  location        String?
+  communityBenefit String?
+  participantCount Int?
+  
+  // Impact tracking
+  outcomes        String[]  // Measurable outcomes
+  kpis            Json?     // Key performance indicators
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  fundingGrants   FundingGrant[]
+  donations       Donation[]
+  partners        Partner[]
+  expenditures    Expenditure[]
+  stories         Story[]   // Stories generated from this project
+  outcomes        Outcome[] // Outcomes achieved
+
+  @@map("projects")
+}
+
+// 5. INTERVIEW AND CONTENT PIPELINE
+model Interview {
+  id              String    @id @default(cuid())
+  intervieweeType IntervieweeType
+  intervieweeName String?
+  interviewer     String?
+  
+  // Content
+  title           String?
+  description     String?
+  audioUrl        String?   // Link to audio recording
+  videoUrl        String?   // Link to video recording
+  transcript      String?   // Full transcript
+  keyQuotes       String[]  // Extracted compelling quotes
+  
+  // Processing status
+  status          ProcessingStatus @default(PENDING)
+  aiProcessed     Boolean   @default(false)
+  culturalReview  Boolean   @default(false)
+  
+  // Content extraction potential
+  storyPotential  Boolean   @default(false)  // Could become a story
+  outcomePotential Boolean  @default(false)  // Contains outcome data
+  mediaPotential  Boolean   @default(false)  // Contains usable media
+  
+  // Cultural considerations
+  sensitivityLevel SensitivityLevel @default(COMMUNITY)
+  culturalProtocols String[]  // Required cultural protocols
+  permissions     Json?     // Usage permissions and restrictions
+  
+  conductedAt     DateTime?
+  location        String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations - content that can be generated from interviews
+  generatedStories Story[]
+  generatedOutcomes Outcome[]
+  relatedProject  Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
+
+  @@map("interviews")
+}
+
+// SUPPORTING MODELS
+
+model Collaboration {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  type            CollaborationType
+  
+  startDate       DateTime?
+  endDate         DateTime?
+  status          String    @default("active")
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  partners        Partner[]
+  project         Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
+
+  @@map("collaborations")
+}
+
+model Expenditure {
+  id              String    @id @default(cuid())
+  description     String
+  amount          Decimal
+  category        ExpenseCategory
+  
+  // Resource type allocation
+  resourceType    ResourceType
+  
+  expenditureDate DateTime
+  receiptUrl      String?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  fundingGrant    FundingGrant? @relation(fields: [grantId], references: [id])
+  grantId         String?
+  project         Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
+
+  @@map("expenditures")
+}
+
+model PhilanthropistInteraction {
+  id              String    @id @default(cuid())
+  type            InteractionType
+  description     String?
+  outcome         String?
+  nextSteps       String?
+  
+  interactionDate DateTime
+  followUpDate    DateTime?
+  
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  
+  // Relations
+  philanthropist  Philanthropist @relation(fields: [philanthropistId], references: [id])
+  philanthropistId String
+
+  @@map("philanthropist_interactions")
+}
+
+// Add to existing relations in schema
+// Add these to existing models:
+// - Add projectId to Story model
+// - Add projectId to Outcome model
+// - Add interviewId to Story model (for content sourced from interviews)
+
+// ENUMS
+
+enum PartnerType {
+  GOVERNMENT
+  NGO
+  CORPORATE
+  COMMUNITY_ORGANIZATION
+  EDUCATIONAL
+  RESEARCH_INSTITUTE
+  FUNDING_BODY
+  CULTURAL_ORGANIZATION
+}
+
+enum PartnershipLevel {
+  PROSPECT
+  COLLABORATOR
+  STRATEGIC_PARTNER
+  CORE_PARTNER
+  LEGACY_PARTNER
+}
+
+enum GrantType {
+  GOVERNMENT
+  FOUNDATION
+  CORPORATE
+  COMMUNITY
+  RESEARCH
+  CAPACITY_BUILDING
+  INFRASTRUCTURE
+  PROGRAM_DELIVERY
+}
+
+enum GrantStatus {
+  RESEARCHING
+  PREPARING
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  ACTIVE
+  COMPLETED
+  REPORTING
+}
+
+enum GrantPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum PhilanthropistType {
+  INDIVIDUAL
+  FAMILY_FOUNDATION
+  CORPORATE_FOUNDATION
+  PRIVATE_FOUNDATION
+  GIVING_CIRCLE
+}
+
+enum RelationshipStage {
+  PROSPECT
+  INITIAL_CONTACT
+  ENGAGED
+  COMMITTED
+  DONOR
+  MAJOR_DONOR
+  LEGACY
+}
+
+enum ConnectionStrength {
+  COLD
+  WARM
+  HOT
+  TRUSTED
+}
+
+enum DonationType {
+  ONE_TIME
+  RECURRING
+  PLEDGE
+  IN_KIND
+  LAND_CONTRIBUTION
+  SERVICE_CONTRIBUTION
+}
+
+enum ProjectCategory {
+  YOUTH_PROGRAMS
+  CULTURAL_PRESERVATION
+  EDUCATION
+  LAND_BASED
+  COMMUNITY_DEVELOPMENT
+  RESEARCH
+  ADVOCACY
+  CAPACITY_BUILDING
+}
+
+enum ProjectStatus {
+  PLANNING
+  APPROVED
+  ACTIVE
+  ON_HOLD
+  COMPLETED
+  CANCELLED
+}
+
+enum IntervieweeType {
+  COMMUNITY_MEMBER
+  ELDER
+  YOUTH_PARTICIPANT
+  PARTNER
+  STAFF
+  BENEFICIARY
+  EXPERT
+  VISITOR
+}
+
+enum CollaborationType {
+  FORMAL_PARTNERSHIP
+  INFORMAL_COLLABORATION
+  SERVICE_AGREEMENT
+  RESEARCH_COLLABORATION
+  ADVOCACY_ALLIANCE
+}
+
+enum ResourceType {
+  LAND_PROGRAMS
+  PROJECT_DELIVERY
+  FEE_FOR_SERVICE
+  OPERATIONAL
+  INFRASTRUCTURE
+  CAPACITY_BUILDING
+}
+
+enum ExpenseCategory {
+  SALARIES
+  RENT
+  UTILITIES
+  SUPPLIES
+  TRAVEL
+  PROFESSIONAL_SERVICES
+  EQUIPMENT
+  MARKETING
+  EVENTS
+  TRAINING
+}
+
+enum InteractionType {
+  EMAIL
+  PHONE_CALL
+  MEETING
+  EVENT_ENCOUNTER
+  SITE_VISIT
+  PROPOSAL_PRESENTATION
+  FOLLOW_UP
+  THANK_YOU
+}

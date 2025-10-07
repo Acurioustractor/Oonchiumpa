@@ -1,0 +1,378 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      UserRole @default(COMMUNITY_MEMBER)
+  password  String
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  stories         Story[]
+  outcomes        Outcome[]
+  mediaItems      MediaItem[]
+  approvals       ContentApproval[]
+  uploadedReports ReportDocument[]
+  generatedContent GeneratedContent[]
+  requestedConsultations CulturalConsultation[]
+
+  @@map("users")
+}
+
+model Story {
+  id                   String       @id @default(cuid())
+  title                String
+  subtitle             String?
+  content              String
+  author               String?
+  category             String
+  culturalSignificance String?
+  tags                 String[]
+  status               ContentStatus @default(DRAFT)
+  sensitivityLevel     SensitivityLevel @default(COMMUNITY)
+  publishedAt          DateTime?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  
+  // Relations
+  authorUser        User?            @relation(fields: [authorUserId], references: [id])
+  authorUserId      String?
+  mediaItems        MediaItem[]
+  extractionSource  ReportDocument?  @relation(fields: [extractionSourceId], references: [id])
+  extractionSourceId String?
+  approvals         ContentApproval[]
+
+  @@map("stories")
+}
+
+model Outcome {
+  id               String       @id @default(cuid())
+  title            String
+  description      String
+  impact           String
+  category         String
+  location         String?
+  beneficiaries    Int?
+  date             DateTime?
+  status           ContentStatus @default(DRAFT)
+  sensitivityLevel SensitivityLevel @default(COMMUNITY)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  
+  // Relations
+  authorUser         User?            @relation(fields: [authorUserId], references: [id])
+  authorUserId       String?
+  metrics            OutcomeMetric[]
+  mediaItems         MediaItem[]
+  extractionSource   ReportDocument?  @relation(fields: [extractionSourceId], references: [id])
+  extractionSourceId String?
+  approvals          ContentApproval[]
+
+  @@map("outcomes")
+}
+
+model OutcomeMetric {
+  id        String @id @default(cuid())
+  label     String
+  value     String
+  outcomeId String
+  outcome   Outcome @relation(fields: [outcomeId], references: [id], onDelete: Cascade)
+
+  @@map("outcome_metrics")
+}
+
+model MediaItem {
+  id               String       @id @default(cuid())
+  type             MediaType
+  originalUrl      String
+  thumbnailUrl     String?
+  cdnUrl           String
+  title            String?
+  description      String?
+  altText          String?
+  tags             String[]
+  processingStatus ProcessingStatus @default(PENDING)
+  sensitivityLevel SensitivityLevel @default(COMMUNITY)
+  
+  // AI-generated data
+  aiDescription    String?
+  aiTags           String[]
+  culturalContext  String?
+  
+  // Metadata
+  filename         String
+  fileSize         Int?
+  mimeType         String?
+  width            Int?
+  height           Int?
+  duration         Int? // for videos
+  
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  
+  // Relations
+  uploadedBy       User?        @relation(fields: [uploadedById], references: [id])
+  uploadedById     String?
+  stories          Story[]
+  outcomes         Outcome[]
+  extractionSource ReportDocument? @relation(fields: [extractionSourceId], references: [id])
+  extractionSourceId String?
+
+  @@map("media_items")
+}
+
+model ReportDocument {
+  id               String       @id @default(cuid())
+  filename         String
+  originalUrl      String
+  type             DocumentType
+  extractionStatus ProcessingStatus @default(PENDING)
+  extractedData    Json?
+  uploadedAt       DateTime     @default(now())
+  processedAt      DateTime?
+  
+  // Relations
+  uploadedBy       User?        @relation(fields: [uploadedById], references: [id])
+  uploadedById     String?
+  extractedStories Story[]
+  extractedOutcomes Outcome[]
+  extractedMedia   MediaItem[]
+
+  @@map("report_documents")
+}
+
+model ContentApproval {
+  id          String        @id @default(cuid())
+  status      ApprovalStatus @default(PENDING)
+  comments    String?
+  approvedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  
+  // Relations
+  approver    User          @relation(fields: [approverId], references: [id])
+  approverId  String
+  story       Story?        @relation(fields: [storyId], references: [id])
+  storyId     String?
+  outcome     Outcome?      @relation(fields: [outcomeId], references: [id])
+  outcomeId   String?
+
+  @@map("content_approvals")
+}
+
+model ContentWidget {
+  id               String       @id @default(cuid())
+  name             String
+  type             WidgetType
+  configuration    Json
+  filters          Json
+  displayOptions   Json
+  updateFrequency  UpdateFrequency @default(DAILY)
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@map("content_widgets")
+}
+
+model CulturalAdvisor {
+  id             String    @id @default(cuid())
+  name           String
+  title          String?
+  community      String?
+  specialties    String[]
+  contactEmail   String?
+  contactPhone   String?
+  isActive       Boolean   @default(true)
+  bio            String?
+  profileImage   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  consultations  CulturalConsultation[]
+  protocols      DreamingStoryProtocol[]
+
+  @@map("cultural_advisors")
+}
+
+model CulturalConsultation {
+  id                        String    @id @default(cuid())
+  contentType               String
+  contentId                 String
+  purpose                   String
+  status                    ConsultationStatus @default(REQUESTED)
+  priority                  ConsultationPriority @default(MEDIUM)
+  scheduledAt               DateTime?
+  completedAt               DateTime?
+  notes                     String?
+  recommendations           String?
+  culturalSensitivityRating Int?
+  approvalStatus            ApprovalStatus @default(PENDING)
+  followUpRequired          Boolean   @default(false)
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+
+  // Relations
+  requestedBy               User      @relation(fields: [requestedById], references: [id])
+  requestedById             String
+  advisor                   CulturalAdvisor @relation(fields: [advisorId], references: [id])
+  advisorId                 String
+
+  @@map("cultural_consultations")
+}
+
+model DreamingStoryProtocol {
+  id                  String    @id @default(cuid())
+  storyTitle          String
+  storyType           String
+  traditionalOwners   String[]
+  geographicOrigin    String?
+  seasonalRestrictions String[]
+  genderRestrictions  String?
+  ageRestrictions     String?
+  ceremonialContext   String?
+  sharingPermissions  SharingPermission
+  consultationRequired Boolean  @default(true)
+  validatedAt         DateTime?
+  expiresAt           DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  // Relations
+  advisor             CulturalAdvisor @relation(fields: [advisorId], references: [id])
+  advisorId           String
+
+  @@map("dreaming_story_protocols")
+}
+
+// Enums
+enum UserRole {
+  ADMIN
+  ELDER
+  COMMUNITY_COORDINATOR
+  COMMUNITY_MEMBER
+}
+
+enum ContentStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum SensitivityLevel {
+  PUBLIC
+  COMMUNITY
+  RESTRICTED
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
+}
+
+enum DocumentType {
+  PDF
+  DOCX
+  TXT
+}
+
+enum ProcessingStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CHANGES_REQUESTED
+}
+
+enum WidgetType {
+  STORIES_FEED
+  OUTCOMES_SHOWCASE
+  MEDIA_GALLERY
+  VIDEO_SHOWCASE
+  IMPACT_METRICS
+}
+
+enum UpdateFrequency {
+  REAL_TIME
+  HOURLY
+  DAILY
+  WEEKLY
+}
+
+enum ConsultationStatus {
+  REQUESTED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum ConsultationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum SharingPermission {
+  PUBLIC_UNRESTRICTED
+  PUBLIC_WITH_ATTRIBUTION
+  COMMUNITY_ONLY
+  RESTRICTED_ELDERS
+  SACRED_NO_SHARING
+}
+
+model GeneratedContent {
+  id          String        @id @default(cuid())
+  title       String
+  excerpt     String
+  content     String        @db.Text
+  type        ContentType
+  status      ContentStatus @default(DRAFT)
+  
+  // Metadata
+  metaData    Json?
+  seoData     Json?
+  
+  // Timestamps
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  publishedAt DateTime?
+  
+  // Relations
+  author      User?         @relation(fields: [authorUserId], references: [id])
+  authorUserId String?
+  
+  @@map("generated_content")
+}
+
+enum ContentType {
+  BLOG_POST
+  TEAM_PROFILE
+  HISTORICAL_PIECE
+  TRANSFORMATION_STORY
+  COMMUNITY_STORY
+  CULTURAL_INSIGHT
+  YOUTH_WORK
+}
