@@ -19,10 +19,86 @@ export const StorySection: React.FC<StorySectionProps> = ({
   imageAlt,
   reversed = false
 }) => {
+  const hasImage = Boolean(imageUrl);
+  const JourneyVisual = () => {
+    const pillars = [
+      {
+        label: 'Cultural Authority',
+        description: 'Traditional Owner leadership (Kristy Bloomfield) grounding every decision in Country, kinship, and Elder-guided protocols.',
+      },
+      {
+        label: 'Systems Navigation',
+        description: 'Strategic advocacy and legal expertise (Tanya Turner) translating community priorities into agreements, policy, and resourcing.',
+      },
+      {
+        label: 'Community Activation',
+        description: 'Stories become programs, evidence, and partnerships that sustain healing-led change across regions and sectors.',
+      },
+    ];
+
+    return (
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-earth-900 via-earth-800 to-earth-900 text-white shadow-2xl border border-white/5">
+        <div className="absolute -top-32 -left-28 w-80 h-80 rounded-full bg-ochre-500/20 blur-3xl" />
+        <div className="absolute -bottom-36 -right-24 w-96 h-96 rounded-full bg-eucalyptus-500/20 blur-3xl" />
+
+        <div className="relative px-8 md:px-10 py-10 space-y-10">
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-end space-x-2">
+                <span className="block w-11 h-11 rounded-full border-[6px] border-ochre-500" />
+                <span className="block w-11 h-11 rounded-full border-[6px] border-eucalyptus-600 -ml-3" />
+              </div>
+              <span className="px-4 py-1 text-xs font-semibold uppercase tracking-[0.3em] bg-white/10 border border-white/20 rounded-full">
+                Oonchiumpa Two-World Model
+              </span>
+            </div>
+            <p className="text-sm text-white/75 leading-relaxed max-w-3xl">
+              Two-world leadership weaving cultural truth with contemporary systems so Aboriginal knowledge guides every platform, partner, and policy decision.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {pillars.map((pillar) => (
+              <div key={pillar.label} className="flex items-start space-x-4 bg-white/6 border border-white/15 rounded-2xl p-5 backdrop-blur-sm">
+                <span className="mt-1 flex items-center justify-center w-10 h-10 rounded-full bg-white/12 border border-white/25 text-lg font-display">
+                  •
+                </span>
+                <div className="space-y-2">
+                  <h3 className="text-xl font-display text-white">{pillar.label}</h3>
+                  <p className="text-sm text-white/80 leading-relaxed">{pillar.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-5 bg-white/8 border border-white/15 rounded-2xl p-6 backdrop-blur-sm">
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold uppercase tracking-[0.25em] text-ochre-200">Kristy Bloomfield · Cultural Leadership</h4>
+              <p className="text-sm text-white/80 leading-relaxed">
+                Traditional Owner authority on Arrernte Country, stewarding Elder councils, knowledge protocols, and community healing practices.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <h4 className="text-sm font-semibold uppercase tracking-[0.25em] text-eucalyptus-200">Tanya Turner · Systems Navigation</h4>
+              <p className="text-sm text-white/80 leading-relaxed">
+                Contemporary legal excellence translating community stories into advocacy, justice reform, and sustainable funding pathways.
+              </p>
+            </div>
+            <div className="bg-black/20 border border-white/10 rounded-xl p-5">
+              <p className="text-sm text-white/85 leading-relaxed">
+                Together they steward the Oonchiumpa model, a living system where stories travel from Country to Story to Impact, guiding governance, measurement, and future planning across both cultural and corporate worlds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Section className="relative">
-      <div className={`grid md:grid-cols-2 gap-12 items-center ${reversed ? 'md:flex-row-reverse' : ''}`}>
-        <div className={`space-y-6 ${reversed ? 'md:order-2' : ''}`}>
+      <div className={`grid ${hasImage ? 'md:grid-cols-2' : ''} gap-12 items-center ${reversed && hasImage ? 'md:flex-row-reverse' : ''}`}>
+        <div className={`space-y-6 ${reversed && hasImage ? 'md:order-2' : ''}`}>
           {subtitle && (
             <span className="inline-block px-4 py-2 text-sm font-semibold text-eucalyptus-700 bg-eucalyptus-100 rounded-full">
               {subtitle}
@@ -41,20 +117,18 @@ export const StorySection: React.FC<StorySectionProps> = ({
           </div>
         </div>
         
-        <div className={`relative ${reversed ? 'md:order-1' : ''}`}>
-          {imageUrl ? (
+        {hasImage && (
+          <div className={`relative ${reversed ? 'md:order-1' : ''}`}>
             <img
-              src={imageUrl}
+              src={imageUrl!}
               alt={imageAlt || title}
               className="w-full rounded-2xl shadow-xl"
             />
-          ) : (
-            <div className="aspect-video bg-gradient-to-br from-ochre-100 to-eucalyptus-100 rounded-2xl flex items-center justify-center relative overflow-hidden">
-              <CirclePattern className="absolute inset-0 w-full h-full text-ochre-300 opacity-20" />
-              <span className="text-earth-600 font-medium z-10">Story Visual</span>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
+      <div className="mt-12">
+        <JourneyVisual />
       </div>
     </Section>
   );

@@ -15,7 +15,7 @@ Today, as we face environmental challenges, these ancient stories offer wisdom a
     author: 'Elder Mary Thompson',
     date: '2024-01-15',
     category: 'Dreamtime Stories',
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/stories/IMG_9698.jpg',
     tags: ['dreamtime', 'spirituality', 'environment', 'creation'],
     culturalSignificance: 'This story connects us to Country and teaches sustainable living practices that have been passed down for thousands of years.'
   },
@@ -33,7 +33,7 @@ The completed artwork now hangs in our community center, serving as a daily remi
     author: 'David Nguyen',
     date: '2024-02-20',
     category: 'Community Programs',
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/stories/IMG_9713.jpg',
     videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     tags: ['art', 'healing', 'community', 'tradition'],
     culturalSignificance: 'Art serves as both cultural preservation and contemporary healing, maintaining our connection to ancestral practices.'
@@ -52,7 +52,7 @@ These teaching sessions happen on Country, walking the same paths our ancestors 
     author: 'James Mitchell',
     date: '2024-03-10',
     category: 'Traditional Knowledge',
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/hero/hero-main.jpg',
     tags: ['seasons', 'ecology', 'education', 'elders'],
     culturalSignificance: 'Traditional ecological knowledge demonstrates the sophisticated understanding of Country that sustained our people for millennia.'
   }
@@ -72,7 +72,7 @@ export const mockOutcomes: Outcome[] = [
     date: '2024-02-01',
     location: 'Greater Sydney Region',
     beneficiaries: 523,
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/stories/IMG_9698.jpg',
     category: 'Education'
   },
   {
@@ -88,7 +88,7 @@ export const mockOutcomes: Outcome[] = [
     date: '2024-01-15',
     location: 'Circular Quay, Sydney',
     beneficiaries: 85,
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/stories/IMG_9713.jpg',
     category: 'Art & Culture'
   },
   {
@@ -104,7 +104,7 @@ export const mockOutcomes: Outcome[] = [
     date: '2023-12-01',
     location: 'Redfern Community Centre',
     beneficiaries: 156,
-    imageUrl: '/api/placeholder/600/400',
+    imageUrl: '/images/hero/hero-main.jpg',
     category: 'Health & Wellbeing'
   }
 ];
@@ -113,7 +113,7 @@ export const mockPhotos: Media[] = [
   {
     id: '1',
     type: 'image',
-    url: '/api/placeholder/400/600',
+    url: '/images/stories/IMG_9698.jpg',
     title: 'Community Gathering',
     description: 'Annual community gathering celebrating culture and connection',
     tags: ['community', 'celebration', 'culture'],
@@ -122,7 +122,7 @@ export const mockPhotos: Media[] = [
   {
     id: '2',
     type: 'image',
-    url: '/api/placeholder/600/400',
+    url: '/images/stories/IMG_9713.jpg',
     title: 'Traditional Art Workshop',
     description: 'Elders teaching traditional dot painting techniques',
     tags: ['art', 'education', 'traditional'],
@@ -131,7 +131,7 @@ export const mockPhotos: Media[] = [
   {
     id: '3',
     type: 'image',
-    url: '/api/placeholder/500/700',
+    url: '/images/hero/hero-main.jpg',
     title: 'Country Walk',
     description: 'Learning about native plants and their traditional uses',
     tags: ['country', 'education', 'plants'],

@@ -107,12 +107,11 @@ const ImpactMetrics = () => {
         {/* Powerful Quote Section */}
         <div className="bg-earth-800 rounded-xl p-8 text-center">
           <blockquote className="text-xl md:text-2xl text-white font-medium italic mb-4">
-            "Despite a significant increase in young people on the books, 
-            Oonchiumpa is still operating with the same funding allocated 
-            to operate for and service 18 clients"
+            "We're able to lead this youth space because cultural authority guides every decision;
+            our young people see their future on Country, not in someone else's program."
           </blockquote>
           <cite className="text-ochre-300 font-semibold">
-            — Kristy Bloofield, Director, Oonchiumpa
+            Kristy Bloomfield, Director, Oonchiumpa
           </cite>
         </div>
       </div>

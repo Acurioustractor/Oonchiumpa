@@ -73,9 +73,25 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Copyright */}
         <div className="py-6 border-t border-earth-700">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sand-400 text-sm">
-              {copyright}
-            </p>
+            <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
+              <p className="text-sand-400 text-sm">
+                {copyright}
+              </p>
+              <div className="flex space-x-4 text-xs text-sand-500">
+                <a
+                  href="/login"
+                  className="hover:text-ochre-400 transition-colors duration-200"
+                >
+                  Staff Login
+                </a>
+                <a
+                  href="/demo"
+                  className="hover:text-ochre-400 transition-colors duration-200"
+                >
+                  Demo Access
+                </a>
+              </div>
+            </div>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <a
                 href="#"
