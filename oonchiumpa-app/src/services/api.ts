@@ -34,6 +34,7 @@ export type Story = {
   themes?: string[];
   cultural_themes?: string[];
   imageUrl?: string;
+  media_urls?: string[];
   videoUrl?: string;
   tags?: string[];
   culturalSignificance?: string;
