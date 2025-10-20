@@ -129,7 +129,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
             </h2>
             <p className="text-earth-700 mb-4">
               This page requires cultural authority to access. Only Elders and
-              authorized Traditional Owners can access this content.
+              authorised Traditional Owners can access this content.
             </p>
             <div className="bg-ochre-50 border border-ochre-200 rounded-lg p-4 mt-4">
               <p className="text-sm text-ochre-800">

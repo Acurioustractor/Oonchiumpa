@@ -3,6 +3,7 @@ import { Layout } from "../components/Layout";
 import { HomePage } from "../pages/HomePage";
 import { AboutPage } from "../pages/AboutPage";
 import { ServicesPage } from "../pages/ServicesPage";
+import { ServiceDetailPage } from "../pages/ServiceDetailPage";
 import { StoriesPage } from "../pages/StoriesPage";
 import { EnhancedStoryDetailPage } from "../pages/EnhancedStoryDetailPage";
 import { OutcomesPage } from "../pages/OutcomesPage";
@@ -44,6 +45,7 @@ export const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="services" element={<ServicesPage />} />
+        <Route path="services/:serviceId" element={<ServiceDetailPage />} />
         <Route path="stories" element={<StoriesPage />} />
         <Route path="stories/:id" element={<EnhancedStoryDetailPage />} />
         <Route path="outcomes" element={<OutcomesPage />} />

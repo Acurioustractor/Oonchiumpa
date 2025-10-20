@@ -166,7 +166,7 @@ Every young person deserves access to programs that see their potential, honor t
 
 For over 65,000 years, Aboriginal communities have had sophisticated systems for raising young people, dealing with conflict, and maintaining community harmony. These knowledge systems didn't disappear with colonization - they've been waiting for the right conditions to flourish again.
 
-Today, we're witnessing a remarkable renaissance as traditional knowledge systems are being recognized, respected, and integrated into contemporary youth work practice.
+Today, we're witnessing a remarkable renaissance as traditional knowledge systems are being recognised, respected, and integrated into contemporary youth work practice.
 
 ### The Wisdom of the Ancestors
 
@@ -192,7 +192,7 @@ Working with Elders and Traditional Owners, we've developed program approaches t
 
 Young people who participate in culturally-grounded programs report profound changes:
 
-"Learning about my ancestors changed everything for me. I realized I came from warriors, survivors, knowledge keepers. That strength is in my blood." - Program participant
+"Learning about my ancestors changed everything for me. I realised I came from warriors, survivors, knowledge keepers. That strength is in my blood." - Program participant
 
 "When the Elder told me my traditional name, I felt like I was finally home. Like I finally knew who I was." - Program participant
 

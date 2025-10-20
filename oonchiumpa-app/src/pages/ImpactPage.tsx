@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Hero } from '../components/Hero';
 import { Section } from '../components/Section';
+import { GeographicReachMap } from '../components/GeographicReachMap';
 
 interface MetricCardProps {
   value: string;
@@ -130,62 +131,7 @@ const Testimonial: React.FC<TestimonialProps> = ({ quote, author, role, image })
   );
 };
 
-const GeographicImpactMap: React.FC = () => {
-  const communities = [
-    { name: 'Alice Springs', participants: 19, primary: true },
-    { name: 'Hermannsburg', language: 'Western Arrernte' },
-    { name: 'Santa Teresa', language: 'Eastern Arrernte' },
-    { name: 'Papunya', language: 'Luritja' },
-    { name: 'Kintore', language: 'Pitjantjatjara' },
-    { name: 'Yuendumu', language: 'Warlpiri' },
-    { name: 'Yuelamu', language: 'Anmatyerr' }
-  ];
-
-  return (
-    <div className="bg-gradient-to-br from-earth-50 to-sand-50 rounded-2xl p-8 border border-earth-200">
-      <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-earth-900 mb-2">Geographic Reach</h3>
-        <p className="text-earth-600">Serving Aboriginal communities across Central Australia</p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {communities.map((community, idx) => (
-          <div
-            key={idx}
-            className={`p-4 rounded-lg transition-all duration-300 ${
-              community.primary
-                ? 'bg-ochre-500 text-white font-bold'
-                : 'bg-white border border-earth-200 hover:border-ochre-300'
-            }`}
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <div className={community.primary ? 'text-lg' : 'text-base font-semibold text-earth-900'}>
-                  {community.name}
-                </div>
-                {community.language && (
-                  <div className="text-sm text-earth-600 mt-1">{community.language}</div>
-                )}
-              </div>
-              {community.participants && (
-                <div className="text-2xl font-bold">{community.participants}</div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 text-center">
-        <div className="inline-flex items-center space-x-2 text-ochre-600 font-semibold">
-          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"/>
-          </svg>
-          <span>7 Language Groups Represented</span>
-        </div>
-      </div>
-    </div>
-  );
-};
+// GeographicImpactMap component moved to separate file
 
 const CostEffectivenessChart: React.FC = () => {
   return (
@@ -469,7 +415,7 @@ export const ImpactPage: React.FC = () => {
 
       {/* Geographic Impact */}
       <Section pattern>
-        <GeographicImpactMap />
+        <GeographicReachMap />
       </Section>
 
       {/* Testimonials */}

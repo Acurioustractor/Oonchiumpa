@@ -66,7 +66,7 @@ export const ContentDashboardPage: React.FC = () => {
             📋 Content Management Dashboard
           </h1>
           <p className="text-lg md:text-xl text-earth-700 mb-8">
-            Centralized hub for creating, managing, and organizing all
+            Centralized hub for creating, managing, and organising all
             Oonchiumpa platform content
           </p>
           <div className="flex items-center justify-center space-x-4 text-sm text-earth-600">
@@ -130,7 +130,7 @@ export const ContentDashboardPage: React.FC = () => {
                   Media Management
                 </h3>
                 <p className="text-earth-700 text-sm mb-4">
-                  Upload and organize photos, videos, and audio content
+                  Upload and organise photos, videos, and audio content
                 </p>
                 <Button
                   variant="secondary"
@@ -238,7 +238,7 @@ export const ContentDashboardPage: React.FC = () => {
                 📸 Media Management
               </h2>
               <p className="text-earth-700">
-                Upload, organize, and manage photos, videos, and audio content
+                Upload, organise, and manage photos, videos, and audio content
                 for stories and blog posts
               </p>
             </div>

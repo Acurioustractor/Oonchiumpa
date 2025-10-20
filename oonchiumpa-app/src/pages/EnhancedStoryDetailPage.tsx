@@ -269,22 +269,6 @@ export const EnhancedStoryDetailPage: React.FC = () => {
                 </Card>
               )}
 
-              {/* Cultural Sensitivity Notice */}
-              <Card className="p-6 bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200">
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">🛡️</span>
-                  <div>
-                    <h3 className="text-sm font-bold text-amber-900 mb-2">
-                      Cultural Protocols Observed
-                    </h3>
-                    <p className="text-xs text-amber-800 leading-relaxed">
-                      This story has been shared with respect for Aboriginal cultural protocols
-                      and community voice.
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
               {/* Share */}
               <Card className="p-6 bg-white border border-earth-100">
                 <h3 className="text-lg font-bold text-earth-900 mb-4">Share this story</h3>

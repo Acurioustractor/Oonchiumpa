@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Section } from '../components/Section';
+import { blogService } from '../services/blogAPI';
+import { Loading } from '../components/Loading';
 
 interface BlogPost {
   id: string;
@@ -46,104 +48,85 @@ const BlogPostDetailPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Load blog post data - in real app this would come from API
-    const samplePost: BlogPost = {
-      id: id || '1',
-      title: 'Kristy Bloomfield: Leading with Cultural Authority',
-      excerpt: 'From the heartache of stolen generation trauma to the strength of traditional ownership, Kristy\'s story embodies the resilience that drives Oonchiumpa\'s exceptional outcomes.',
-      content: `Kristy Bloomfield's voice carries the weight of generations when she speaks about her family's journey. "My grandfather was stolen generation," she explains, her words connecting past trauma to present strength. "He didn't want that same experience for his own children."
+    const loadBlogPost = async () => {
+      if (!id) {
+        navigate('/blog');
+        return;
+      }
 
-This profound understanding of intergenerational impact shapes everything Kristy does as Director of Oonchiumpa. Standing on the traditional lands of her ancestors, she leads with an authority that comes not from institutions, but from country itself.
+      try {
+        setIsLoading(true);
+        const blogPost = await blogService.getBlogPost(id);
 
-## Cultural Authority in Action
+        // Transform to match the component's interface
+        const transformedPost: BlogPost = {
+          id: blogPost.id,
+          title: blogPost.title,
+          excerpt: blogPost.excerpt,
+          content: blogPost.content,
+          author: blogPost.author,
+          authorRole: blogPost.curatedBy || 'Oonchiumpa Editorial Team',
+          publishedAt: blogPost.publishedAt,
+          readTime: blogPost.readTime,
+          tags: blogPost.tags,
+          type: blogPost.type,
+          isAIGenerated: false,
+          images: {
+            hero: blogPost.heroImage || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+            gallery: blogPost.gallery || []
+          },
+          stats: {
+            views: 0, // TODO: Implement view tracking
+            likes: 0,
+            shares: 0
+          },
+          culturalSensitivity: 'high',
+          elderApproved: blogPost.elder_approved
+        };
 
-"We're able to lead this youth space and lead most of our programs and services," Kristy explains, describing how cultural authority translates into practical outcomes. "Having that strength and empowerment from our old people, we know what we want to do to build on our legacy."
+        setPost(transformedPost);
 
-The numbers speak volumes: 87-95% engagement rates where other services struggle. But behind every statistic is a story of cultural connection.
+        // Load related stories from the gallery field (which now contains story IDs)
+        if (blogPost.gallery && blogPost.gallery.length > 0) {
+          // Import supabase client
+          const { createClient } = await import('@supabase/supabase-js');
+          const supabase = createClient(
+            import.meta.env.VITE_SUPABASE_URL,
+            import.meta.env.VITE_SUPABASE_ANON_KEY
+          );
 
-### Daily Realities
+          const { data: stories } = await supabase
+            .from('stories')
+            .select('id, title, summary, story_image_url, themes')
+            .in('id', blogPost.gallery)
+            .limit(3);
 
-Kristy's days are filled with the real work of community engagement. "We're always on the go. We go to one place with one client then go to another and spend hours with them," she describes. This isn't just service delivery - it's relationship building grounded in cultural understanding.
-
-When young people act out, Kristy doesn't reward bad behavior like many services do. "We're in a position to pull 'em up when they are doing naughty things," she explains. This ability to hold young people accountable while maintaining connection comes from deep family and cultural relationships.
-
-## Building Economic Empowerment
-
-Looking to the future, Kristy sees economic empowerment on traditional lands. "Why don't we then create our own generational wealth and bring those entities with us," she says, speaking about partnerships with cattle and mining industries.
-
-Her vision extends beyond individual transformation to community healing: "We wanna be able to share that history and showcase the Aboriginal art, the aboriginal photos and history."
-
-### The Loves Creek Vision
-
-At Loves Creek Station, Kristy envisions a multimillion-dollar operation that provides:
-
-- **Training and development programs** for young people on country
-- **Employment pathways** in the stock camp and stations across the region  
-- **Cultural tourism** sharing both Aboriginal and non-Aboriginal history
-- **Generational wealth** building on Aboriginal land
-
-"Communities don't need saving. They need their solutions valued, documented, and funded," reflects the broader team philosophy that drives this vision.
-
-## Leadership Through Connection
-
-This is leadership that honors the past while building the future - exactly what makes Oonchiumpa's approach so powerful. When traditional owners lead with cultural authority, supported by community and family connections, the results speak for themselves.
-
-As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as our old people, have led the way for us."`,
-      author: 'Generated from Interview',
-      authorRole: 'AI Content Generator',
-      publishedAt: '2025-08-22T10:30:00Z',
-      readTime: 6,
-      tags: ['Leadership', 'Cultural Authority', 'Traditional Ownership', 'Youth Work', 'Economic Development'],
-      type: 'community-story',
-      isAIGenerated: true,
-      images: {
-        hero: 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-        gallery: [
-          'https://images.unsplash.com/photo-1607274018776-c20d3aa9ad59?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-          'https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-        ]
-      },
-      stats: {
-        views: 1247,
-        likes: 156,
-        shares: 23
-      },
-      culturalSensitivity: 'high',
-      elderApproved: true
+          if (stories && stories.length > 0) {
+            const related = stories.map(story => ({
+              id: story.id,
+              title: story.title,
+              excerpt: story.summary || '',
+              type: 'story',
+              readTime: 5, // Default read time for stories
+              image: story.story_image_url || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+            }));
+            setRelatedPosts(related);
+          } else {
+            setRelatedPosts([]);
+          }
+        } else {
+          setRelatedPosts([]);
+        }
+      } catch (error) {
+        console.error('Error loading blog post:', error);
+        navigate('/blog');
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    const sampleRelated: RelatedPost[] = [
-      {
-        id: '2',
-        title: 'The Intervention Kids: Understanding Today\'s Crisis',
-        excerpt: 'AI-generated analysis connecting historical policy to present realities...',
-        type: 'historical-truth',
-        readTime: 5,
-        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-      },
-      {
-        id: '3',
-        title: 'From Don Dale to Mentorship: Jacqueline\'s Journey',
-        excerpt: 'A powerful transformation story showing community-led success...',
-        type: 'transformation',
-        readTime: 4,
-        image: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-      },
-      {
-        id: '4',
-        title: 'Tanya Turner: Legal Excellence Serving Community',
-        excerpt: 'Professional journey from Supreme Court to community advocacy...',
-        type: 'community-story',
-        readTime: 4,
-        image: 'https://images.unsplash.com/photo-1589482125992-8a7ba6dc9e20?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-      }
-    ];
-
-    setPost(samplePost);
-    setRelatedPosts(sampleRelated);
-    setIsLoading(false);
-  }, [id]);
+    loadBlogPost();
+  }, [id, navigate]);
 
   if (isLoading) {
     return (
@@ -193,8 +176,8 @@ As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as
         
         {/* Back Button */}
         <div className="absolute top-8 left-8 z-10">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="secondary"
             onClick={() => navigate('/blog')}
             className="bg-white/90 backdrop-blur-sm border-white text-earth-900 hover:bg-white"
           >
@@ -208,19 +191,6 @@ As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className={`px-3 py-1 bg-${typeColor}-500 text-white rounded-full text-sm font-medium capitalize`}>
                 {post.type.replace('-', ' ')}
-              </span>
-              {post.isAIGenerated && (
-                <span className="px-3 py-1 bg-purple-500 text-white rounded-full text-sm font-medium">
-                  🤖 AI-Generated
-                </span>
-              )}
-              {post.elderApproved && (
-                <span className="px-3 py-1 bg-green-500 text-white rounded-full text-sm font-medium">
-                  ✅ Elder Approved
-                </span>
-              )}
-              <span className={`px-3 py-1 bg-red-500 text-white rounded-full text-sm font-medium`}>
-                🛡️ {post.culturalSensitivity.toUpperCase()} Sensitivity
               </span>
             </div>
             
@@ -259,19 +229,23 @@ As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as
         <div className="max-w-4xl mx-auto">
           {/* Article Body */}
           <div className="prose prose-lg max-w-none mb-12">
-            <div 
+            <div
               className="text-earth-800 leading-relaxed"
-              dangerouslySetInnerHTML={{ 
+              dangerouslySetInnerHTML={{
                 __html: post.content
-                  .replace(/\n\n/g, '</p><p>')
-                  .replace(/^/, '<p>')
-                  .replace(/$/, '</p>')
+                  // Convert markdown images first
+                  .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full rounded-lg shadow-lg my-8" />')
+                  // Then handle markdown formatting
                   .replace(/## (.*?)\n/g, '<h2 class="text-2xl font-bold text-earth-900 mt-8 mb-4">$1</h2>')
                   .replace(/### (.*?)\n/g, '<h3 class="text-xl font-semibold text-earth-800 mt-6 mb-3">$1</h3>')
                   .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-earth-900">$1</strong>')
                   .replace(/- \*\*(.*?)\*\*/g, '<li class="mb-2"><strong class="font-semibold text-earth-900">$1</strong></li>')
                   .replace(/^"(.*?)"$/gm, '<blockquote class="border-l-4 border-ochre-400 pl-6 italic text-earth-700 my-6">$1</blockquote>')
-              }} 
+                  // Finally handle paragraphs
+                  .replace(/\n\n/g, '</p><p>')
+                  .replace(/^/, '<p>')
+                  .replace(/$/, '</p>')
+              }}
             />
           </div>
 
@@ -328,39 +302,6 @@ As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as
               </div>
             </div>
           </Card>
-
-          {/* Cultural Protocol Notice */}
-          <Card className="p-6 mb-12 bg-ochre-50 border border-ochre-200">
-            <div className="flex items-start space-x-4">
-              <div className="text-3xl">🛡️</div>
-              <div>
-                <h3 className="text-lg font-semibold text-ochre-800 mb-2">
-                  Cultural Protocols Observed
-                </h3>
-                <p className="text-ochre-700 text-sm mb-4">
-                  This content has been generated with respect for Aboriginal cultural protocols 
-                  and community voice. All AI-generated content undergoes cultural sensitivity 
-                  analysis and community review.
-                </p>
-                <div className="flex items-center space-x-4 text-sm">
-                  <div className="flex items-center space-x-1">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span>Community Reviewed</span>
-                  </div>
-                  {post.elderApproved && (
-                    <div className="flex items-center space-x-1">
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                      <span>Elder Approved</span>
-                    </div>
-                  )}
-                  <div className="flex items-center space-x-1">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    <span>AI-Assisted</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
         </div>
       </Section>
 
@@ -373,10 +314,10 @@ As Kristy puts it: "Self-determination for us as aboriginal people, as we've, as
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedPosts.map((relatedPost) => (
-              <Card 
+              <Card
                 key={relatedPost.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow duration-300"
-                onClick={() => navigate(`/blog/${relatedPost.id}`)}
+                onClick={() => navigate(`/stories/${relatedPost.id}`)}
               >
                 <img 
                   src={relatedPost.image} 

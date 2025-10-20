@@ -146,7 +146,7 @@ export const ContentSeeder: React.FC = () => {
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-left">
               <div className="space-y-2 text-sm text-earth-700">
-                <div>✅ Review and customize seeded content</div>
+                <div>✅ Review and customise seeded content</div>
                 <div>✅ Add team photos to media library</div>
                 <div>✅ Create additional stories using Story Editor</div>
                 <div>✅ Generate blog posts from stories</div>
@@ -165,7 +165,7 @@ export const ContentSeeder: React.FC = () => {
               <strong>Note:</strong> This seeding process creates sample content
               to demonstrate platform capabilities. All content reflects
               authentic Oonchiumpa values and community experiences, but should
-              be reviewed and customized by the team before publication.
+              be reviewed and customised by the team before publication.
             </p>
           </div>
         </div>

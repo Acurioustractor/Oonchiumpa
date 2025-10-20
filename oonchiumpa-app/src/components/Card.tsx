@@ -5,19 +5,24 @@ interface CardProps {
   className?: string;
   hoverable?: boolean;
   bordered?: boolean;
+  onClick?: () => void;
 }
 
 export const Card: React.FC<CardProps> = ({
   children,
   className = '',
   hoverable = true,
-  bordered = false
+  bordered = false,
+  onClick
 }) => {
   const hoverClass = hoverable ? 'hover:shadow-xl hover:-translate-y-1' : '';
   const borderClass = bordered ? 'border border-earth-200' : '';
-  
+
   return (
-    <div className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${hoverClass} ${borderClass} ${className}`}>
+    <div
+      className={`bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 ${hoverClass} ${borderClass} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </div>
   );

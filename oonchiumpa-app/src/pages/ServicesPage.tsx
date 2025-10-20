@@ -9,30 +9,35 @@ export const ServicesPage: React.FC = () => {
 
   const services = [
     {
-      id: 'consulting',
-      title: 'Cultural Consulting',
-      description: 'Expert guidance for organizations seeking to respectfully engage with Aboriginal culture and communities.',
+      id: 'youth-mentorship',
+      title: 'Youth Mentorship & Cultural Healing',
+      description: 'Culturally-led mentorship for at-risk Aboriginal young people, providing connection to culture, education, and pathways to healing.',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1758764611530_test-photo.jpg',
       features: [
-        'Cultural awareness training',
-        'Protocol development',
-        'Community engagement strategies',
-        'Reconciliation planning'
+        'One-on-one mentorship by Aboriginal staff',
+        'School re-engagement support (95% success rate)',
+        'Life skills and independence training',
+        'Connection to family and cultural identity',
+        'Mental health and wellbeing support'
       ],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
         </svg>
       )
     },
     {
-      id: 'education',
-      title: 'Education Programs',
-      description: 'Transformative learning experiences that honor Aboriginal knowledge systems and ways of knowing.',
+      id: 'law-students',
+      title: 'True Justice: Deep Listening on Country',
+      description: 'Transformative legal education program where law students learn from Traditional Owners on country, understanding Aboriginal law, justice, and lived experiences beyond what textbooks can teach.',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/bfde4125-ec37-4456-a1c5-b3b61a32eec0/2.png',
       features: [
-        'School curriculum development',
-        'Teacher training workshops',
-        'Student cultural immersion',
-        'Elder-in-residence programs'
+        'Week-long immersive on-country experience in Central Australia',
+        'Deep listening to Aboriginal lore and lived experiences of law',
+        'Travel from Alice Springs through Arrernte Country to Uluru',
+        'Aboriginal conceptions of justice and kinship systems',
+        'Designed and led by Traditional Owners Kristy Bloomfield and Tanya Turner',
+        'Partnership with ANU Law School since 2022'
       ],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,34 +46,40 @@ export const ServicesPage: React.FC = () => {
       )
     },
     {
-      id: 'community',
-      title: 'Community Engagement',
-      description: 'Building lasting relationships through authentic dialogue and collaborative partnerships.',
+      id: 'atnarpa-homestead',
+      title: 'Atnarpa Homestead On-Country Experiences',
+      description: 'Experience Eastern Arrernte country at Loves Creek Station. Accommodation, cultural tourism, and healing programs on Traditional Owner-led country.',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/eee28c15-fba7-4a5c-bd06-290f0df4cb46/2.jpeg',
       features: [
-        'Community forums',
-        'Stakeholder consultation',
-        'Partnership development',
-        'Event planning and facilitation'
+        'Accommodation and camping facilities',
+        'On-country cultural learning experiences',
+        'Bush medicine workshops and knowledge sharing',
+        'Storytelling and cultural connection',
+        'School group hosting and education programs',
+        'Cultural tourism experiences'
       ],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
         </svg>
       )
     },
     {
-      id: 'art',
-      title: 'Art & Design',
-      description: 'Creating visual narratives that celebrate and preserve Aboriginal artistic traditions.',
+      id: 'cultural-brokerage',
+      title: 'Cultural Brokerage & Service Navigation',
+      description: 'Connecting Aboriginal young people and families to essential services through trusted partnerships with over 32 community organizations.',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/bfde4125-ec37-4456-a1c5-b3b61a32eec0/3.png',
       features: [
-        'Traditional art workshops',
-        'Digital storytelling',
-        'Exhibition curation',
-        'Artist mentorship programs'
+        'Service coordination with 32+ partner organizations',
+        'Health service connections (Congress, Headspace)',
+        'Education pathway support',
+        'Employment and training referrals',
+        'Housing and accommodation assistance',
+        'Legal and justice system navigation'
       ],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM7 21h10a2 2 0 002-2v-5a2 2 0 00-2-2H9a2 2 0 00-2 2v5a2 2 0 002 2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       )
     }
@@ -95,23 +106,33 @@ export const ServicesPage: React.FC = () => {
       <Section>
         <div className="grid md:grid-cols-2 gap-8">
           {services.map((service) => (
-            <Card key={service.id} className="h-full">
-              <CardHeader>
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 rounded-full bg-ochre-100 flex items-center justify-center text-ochre-600 flex-shrink-0">
-                    {service.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold text-earth-900 mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-earth-600">
-                      {service.description}
-                    </p>
+            <Card key={service.id} className="h-full overflow-hidden group">
+              {/* Hero Image */}
+              {service.image && (
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-earth-900/60 via-earth-900/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="w-16 h-16 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center text-ochre-600 mb-3 shadow-lg">
+                      {service.icon}
+                    </div>
                   </div>
                 </div>
+              )}
+
+              <CardHeader>
+                <h3 className="text-2xl font-semibold text-earth-900 mb-2">
+                  {service.title}
+                </h3>
+                <p className="text-earth-600">
+                  {service.description}
+                </p>
               </CardHeader>
-              
+
               <CardBody>
                 <h4 className="font-semibold text-earth-900 mb-4">What's Included:</h4>
                 <ul className="space-y-2 mb-6">
@@ -124,10 +145,10 @@ export const ServicesPage: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-                <Button 
-                  variant="secondary" 
-                  fullWidth 
-                  onClick={() => navigate(`/contact?service=${service.id}`)}
+                <Button
+                  variant="secondary"
+                  fullWidth
+                  onClick={() => navigate(`/services/${service.id}`)}
                 >
                   Learn More
                 </Button>

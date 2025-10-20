@@ -106,7 +106,7 @@ export const AboutPage: React.FC = () => {
     },
     {
       title: "National Model",
-      description: "Recognized as a scalable model for Aboriginal-led youth services across Australia"
+      description: "Recognised as a scalable model for Aboriginal-led youth services across Australia"
     },
     {
       title: "Research Partnership",
@@ -212,7 +212,7 @@ export const AboutPage: React.FC = () => {
                   <div className="text-sm font-semibold text-sunset-600 mb-2">2024</div>
                   <h3 className="text-lg font-bold text-earth-900 mb-2">National Recognition</h3>
                   <p className="text-earth-700 text-sm">
-                    NIAA funding secured. Recognized as national model for Aboriginal-led youth diversion. Research shows 97.6% more cost-effective than detention. Of 21 Operation Luna youth, only 1 remained on list by December.
+                    NIAA funding secured. Recognised as national model for Aboriginal-led youth diversion. Research shows 97.6% more cost-effective than detention. Of 21 Operation Luna youth, only 1 remained on list by December.
                   </p>
                 </div>
               </div>

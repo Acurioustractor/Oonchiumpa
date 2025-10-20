@@ -218,7 +218,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
               🛡️ Cultural protocols and Elder consultation requirements apply
             </p>
             <p>📝 All content is reviewed before publication</p>
-            <p>🔒 Secure access for authorized Oonchiumpa staff only</p>
+            <p>🔒 Secure access for authorised Oonchiumpa staff only</p>
           </div>
         </div>
       </Card>

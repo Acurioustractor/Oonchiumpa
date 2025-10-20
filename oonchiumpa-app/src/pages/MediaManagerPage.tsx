@@ -8,7 +8,7 @@ import { type MediaFile } from "../services/mediaService";
 
 export const MediaManagerPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<
-    "all" | "team-photos" | "story-media" | "upload"
+    "all" | "team-photos" | "story-media" | "service-photos" | "upload"
   >("all");
   const [showUpload, setShowUpload] = useState(false);
 
@@ -16,6 +16,7 @@ export const MediaManagerPage: React.FC = () => {
     { id: "all", label: "All Media", icon: "📁" },
     { id: "team-photos", label: "Team Photos", icon: "👥" },
     { id: "story-media", label: "Story Media", icon: "📖" },
+    { id: "service-photos", label: "Service Photos", icon: "🎯" },
     { id: "upload", label: "Upload New", icon: "📤" },
   ];
 
@@ -158,6 +159,106 @@ export const MediaManagerPage: React.FC = () => {
             </div>
           )}
 
+          {/* Service Photos */}
+          {activeTab === "service-photos" && !showUpload && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-semibold text-earth-900">
+                  🎯 Service Photos
+                </h2>
+                <Button variant="primary" onClick={() => setShowUpload(true)}>
+                  📤 Upload Service Photo
+                </Button>
+              </div>
+
+              {/* Service Categories */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
+                  <CardBody className="p-6 text-center">
+                    <div className="text-3xl mb-2">💚</div>
+                    <h3 className="font-semibold text-earth-900 mb-1">Youth Mentorship</h3>
+                    <p className="text-sm text-earth-600">Cultural healing programs</p>
+                    <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
+                  </CardBody>
+                </Card>
+
+                <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
+                  <CardBody className="p-6 text-center">
+                    <div className="text-3xl mb-2">📚</div>
+                    <h3 className="font-semibold text-earth-900 mb-1">True Justice</h3>
+                    <p className="text-sm text-earth-600">Law student training</p>
+                    <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
+                  </CardBody>
+                </Card>
+
+                <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
+                  <CardBody className="p-6 text-center">
+                    <div className="text-3xl mb-2">🏡</div>
+                    <h3 className="font-semibold text-earth-900 mb-1">Atnarpa Homestead</h3>
+                    <p className="text-sm text-earth-600">On-country experiences</p>
+                    <div className="mt-3 text-xs text-ochre-600 font-medium">13 Photos</div>
+                  </CardBody>
+                </Card>
+
+                <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
+                  <CardBody className="p-6 text-center">
+                    <div className="text-3xl mb-2">🤝</div>
+                    <h3 className="font-semibold text-earth-900 mb-1">Cultural Brokerage</h3>
+                    <p className="text-sm text-earth-600">Service navigation</p>
+                    <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
+                  </CardBody>
+                </Card>
+              </div>
+
+              {/* Instructions */}
+              <Card className="bg-gradient-to-r from-eucalyptus-50 to-sand-50 border-eucalyptus-200">
+                <CardBody className="p-6">
+                  <h3 className="text-lg font-semibold text-earth-900 mb-4 flex items-center gap-2">
+                    <span className="text-2xl">💡</span>
+                    How to Tag Photos for Services
+                  </h3>
+                  <div className="space-y-3 text-earth-700">
+                    <p className="flex items-start gap-2">
+                      <span className="text-ochre-600 font-bold">1.</span>
+                      <span>Upload photos to gallery using the "Upload New" tab</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <span className="text-ochre-600 font-bold">2.</span>
+                      <span>Add relevant tags like "youth-mentorship", "true-justice", "atnarpa-homestead"</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <span className="text-ochre-600 font-bold">3.</span>
+                      <span>Photos will automatically appear on the service detail pages</span>
+                    </p>
+                    <p className="flex items-start gap-2">
+                      <span className="text-ochre-600 font-bold">4.</span>
+                      <span>Ensure all photos have Elder approval before making public</span>
+                    </p>
+                  </div>
+                </CardBody>
+              </Card>
+
+              {/* Current Atnarpa Photos */}
+              <Card>
+                <CardBody className="p-6">
+                  <h3 className="text-xl font-semibold text-earth-900 mb-4">
+                    🏡 Current Atnarpa Homestead Photos (13 photos)
+                  </h3>
+                  <p className="text-earth-600 mb-4">Photos automatically pulled from "Returning Home to Atnarpa" and "Healing Journey" stories</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[1, 2, 3, 4].map((i) => (
+                      <div key={i} className="aspect-square bg-earth-100 rounded-lg flex items-center justify-center text-earth-400">
+                        <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    ))}
+                  </div>
+                </CardBody>
+              </Card>
+            </div>
+          )}
+
           {/* Media Management Guidelines */}
           <Card className="bg-gradient-to-r from-earth-800 to-earth-900">
             <CardBody className="p-8 text-center">
@@ -200,7 +301,7 @@ export const MediaManagerPage: React.FC = () => {
                     📋 Review Pending
                   </Button>
                   <Button variant="secondary" size="sm">
-                    🗂️ Organize by Tags
+                    🗂️ Organise by Tags
                   </Button>
                   <Button variant="secondary" size="sm">
                     📈 View Statistics

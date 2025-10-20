@@ -75,7 +75,7 @@ export class BlogService {
   ): Promise<{ posts: BlogPost[]; total: number }> {
     let query = supabase
       .from("blog_posts")
-      .select("*, storytellers(full_name)", { count: "exact" })
+      .select("*", { count: "exact" })
       .eq("status", "published")
       .eq("elder_approved", true);
 
@@ -115,7 +115,7 @@ export class BlogService {
       title: post.title,
       excerpt: post.excerpt,
       content: post.content,
-      author: post.author || post.storytellers?.full_name || "Oonchiumpa Team",
+      author: post.author || "Oonchiumpa Team",
       publishedAt: post.published_at || post.created_at,
       tags: post.tags || [],
       type: post.type,
@@ -138,7 +138,7 @@ export class BlogService {
   async getBlogPost(id: string): Promise<BlogPost> {
     let query = supabase
       .from("blog_posts")
-      .select("*, storytellers(full_name)")
+      .select("*")
       .eq("id", id);
 
     query = applyProjectFilter(query);
@@ -153,7 +153,7 @@ export class BlogService {
       title: data.title,
       excerpt: data.excerpt,
       content: data.content,
-      author: data.author || data.storytellers?.full_name || "Oonchiumpa Team",
+      author: data.author || "Oonchiumpa Team",
       publishedAt: data.published_at || data.created_at,
       tags: data.tags || [],
       type: data.type,
@@ -188,7 +188,7 @@ export class BlogService {
     const { data, error } = await supabase
       .from("blog_posts")
       .insert(postData)
-      .select("*, storytellers(full_name)")
+      .select("*")
       .single();
 
     if (error) throw error;
@@ -198,7 +198,7 @@ export class BlogService {
       title: data.title,
       excerpt: data.excerpt,
       content: data.content,
-      author: data.author || data.storytellers?.full_name || "Oonchiumpa Team",
+      author: data.author || "Oonchiumpa Team",
       publishedAt: data.published_at || data.created_at,
       tags: data.tags || [],
       type: data.type,
@@ -238,7 +238,7 @@ export class BlogService {
       .from("blog_posts")
       .update(updateData)
       .eq("id", id)
-      .select("*, storytellers(full_name)");
+      .select("*");
 
     query = applyProjectFilter(query);
 
@@ -251,7 +251,7 @@ export class BlogService {
       title: data.title,
       excerpt: data.excerpt,
       content: data.content,
-      author: data.author || data.storytellers?.full_name || "Oonchiumpa Team",
+      author: data.author || "Oonchiumpa Team",
       publishedAt: data.published_at || data.created_at,
       tags: data.tags || [],
       type: data.type,
@@ -287,7 +287,7 @@ export class BlogService {
       .from("blog_posts")
       .update(updates)
       .eq("id", id)
-      .select("*, storytellers(full_name)");
+      .select("*");
 
     query = applyProjectFilter(query);
 
@@ -300,7 +300,7 @@ export class BlogService {
       title: data.title,
       excerpt: data.excerpt,
       content: data.content,
-      author: data.author || data.storytellers?.full_name || "Oonchiumpa Team",
+      author: data.author || "Oonchiumpa Team",
       publishedAt: data.published_at || data.created_at,
       tags: data.tags || [],
       type: data.type,
@@ -381,7 +381,7 @@ export class BlogService {
     // Get the story content from Supabase
     const { data: story, error } = await supabase
       .from("stories")
-      .select("*, storytellers(full_name)")
+      .select("*")
       .eq("id", storyId)
       .single();
 
@@ -451,7 +451,7 @@ ${story.tags && story.tags.length > 0 ? `**Related Topics**: ${story.tags.join("
   ): Promise<BlogPost[]> {
     let searchQuery = supabase
       .from("blog_posts")
-      .select("*, storytellers(full_name)")
+      .select("*")
       .eq("status", "published")
       .eq("elder_approved", true)
       .or(
@@ -480,7 +480,7 @@ ${story.tags && story.tags.length > 0 ? `**Related Topics**: ${story.tags.join("
       title: post.title,
       excerpt: post.excerpt,
       content: post.content,
-      author: post.author || post.storytellers?.full_name || "Oonchiumpa Team",
+      author: post.author || "Oonchiumpa Team",
       publishedAt: post.published_at || post.created_at,
       tags: post.tags || [],
       type: post.type,
