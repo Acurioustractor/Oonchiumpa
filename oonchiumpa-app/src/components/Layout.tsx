@@ -17,48 +17,23 @@ export const Layout = () => {
 
   const footerSections = [
     {
-      title: "Company",
+      title: "About",
       links: [
         { label: "About Us", href: "/about" },
-        { label: "Our Story", href: "/about#story" },
-        { label: "Team", href: "/about#team" },
-        { label: "Careers", href: "/contact" },
+        { label: "Our Impact", href: "/impact" },
       ],
     },
     {
       title: "Services",
       links: [
-        { label: "Cultural Consulting", href: "/services#consulting" },
-        { label: "Education Programs", href: "/services#education" },
-        { label: "Community Engagement", href: "/services#community" },
-        { label: "Art & Design", href: "/services#art" },
+        { label: "Our Services", href: "/services" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { label: "Our Impact", href: "/impact" },
         { label: "Stories", href: "/stories" },
-        { label: "Community Blog", href: "/blog" },
-        { label: "Outcomes", href: "/outcomes" },
-        { label: "AI Content Generator", href: "/content-generator" },
-        { label: "Upload Gallery Media", href: "/gallery-upload" },
-      ],
-    },
-    {
-      title: "Connect",
-      links: [
-        { label: "Contact Us", href: "/contact" },
-        { label: "Support", href: "/contact#support" },
-        { label: "Partnerships", href: "/contact#partnerships" },
-        { label: "Media Kit", href: "/contact#media" },
-      ],
-    },
-    {
-      title: "Internal Access",
-      links: [
-        { label: "Staff Login", href: "/login" },
-        { label: "Demo Access", href: "/demo" },
+        { label: "Blog", href: "/blog" },
       ],
     },
   ];
