@@ -236,24 +236,26 @@ export const Navigation: React.FC<NavigationProps> = ({
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-earth-100 transition-colors"
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              isScrolled ? 'hover:bg-earth-100' : 'hover:bg-white/10'
+            }`}
             aria-label="Toggle mobile menu"
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
               <span
-                className={`block h-0.5 bg-earth-800 transition-all duration-300 ${
-                  isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                }`}
+                className={`block h-0.5 transition-all duration-300 ${
+                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                } ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
               ></span>
               <span
-                className={`block h-0.5 bg-earth-800 transition-all duration-300 ${
-                  isMobileMenuOpen ? "opacity-0" : ""
-                }`}
+                className={`block h-0.5 transition-all duration-300 ${
+                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                } ${isMobileMenuOpen ? "opacity-0" : ""}`}
               ></span>
               <span
-                className={`block h-0.5 bg-earth-800 transition-all duration-300 ${
-                  isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
+                className={`block h-0.5 transition-all duration-300 ${
+                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                } ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
               ></span>
             </div>
           </button>
@@ -261,8 +263,8 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 overflow-hidden ${
-            isMobileMenuOpen ? "max-h-96" : "max-h-0"
+          className={`md:hidden transition-all duration-300 overflow-hidden bg-white/98 backdrop-blur-md shadow-lg ${
+            isMobileMenuOpen ? "max-h-96 border-t border-earth-200" : "max-h-0"
           }`}
         >
           <div className="py-4 space-y-3">

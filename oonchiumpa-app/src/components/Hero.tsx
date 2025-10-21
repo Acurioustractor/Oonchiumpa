@@ -32,7 +32,7 @@ export const Hero: React.FC<HeroProps> = ({
   const hasBackgroundMedia = backgroundImage || backgroundVideo;
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-20">
       {/* Background Media */}
       <div className="absolute inset-0">
         {backgroundVideo ? (
