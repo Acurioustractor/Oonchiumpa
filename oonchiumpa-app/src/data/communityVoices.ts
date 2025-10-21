@@ -11,18 +11,6 @@ export interface CommunityVoice {
 
 export const communityVoices: CommunityVoice[] = [
   {
-    name: "Aunty Bev and Uncle Terry",
-    role: "Cultural Custodians of Alice Springs",
-    quote:
-      "The media puts a lot of stuff on, but people say that it's a beautiful town.",
-    context:
-      "Cherished custodians of Alice Springs' vibrant history since the 1960s, Aunty Bev and Uncle Terry hold deep knowledge of country and community. Their connection to Alice Springs and its people spans generations, offering invaluable perspective on community resilience and cultural continuity.",
-    avatar: "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/profile-images/storytellers/aunty_bev_and_uncle_terry.jpg",
-    specialties: ["Community Resilience", "Cultural Heritage", "Local Knowledge"],
-    source: "Aunty Bev & Uncle Terry interview (Alice Springs, 2024)",
-    impactStatement: "Aunty Bev and Uncle Terry's deep connection to Alice Springs provides Oonchiumpa with essential local knowledge and community relationships. As custodians of Alice Springs history since the 1960s, their perspective grounds our work in authentic community understanding, countering deficit narratives with lived experience and cultural strength.",
-  },
-  {
     name: "Adelaide Hayes",
     role: "Law Student, ANU",
     quote:
