@@ -263,7 +263,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 overflow-hidden bg-white/98 backdrop-blur-md shadow-lg ${
+          className={`md:hidden transition-all duration-300 overflow-hidden bg-white backdrop-blur-md shadow-xl ${
             isMobileMenuOpen ? "max-h-96 border-t border-earth-200" : "max-h-0"
           }`}
         >
