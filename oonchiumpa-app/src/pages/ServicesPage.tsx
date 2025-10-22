@@ -12,7 +12,7 @@ export const ServicesPage: React.FC = () => {
       id: 'youth-mentorship',
       title: 'Youth Mentorship & Cultural Healing',
       description: 'Culturally-led mentorship for at-risk Aboriginal young people, providing connection to culture, education, and pathways to healing.',
-      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/eee28c15-fba7-4a5c-bd06-290f0df4cb46/5.jpeg',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/services/service-mentoring.jpg',
       features: [
         'One-on-one mentorship by Aboriginal staff',
         'School re-engagement support (95% success rate)',
@@ -30,7 +30,7 @@ export const ServicesPage: React.FC = () => {
       id: 'law-students',
       title: 'True Justice: Deep Listening on Country',
       description: 'Transformative legal education program where law students learn from Traditional Owners on country, understanding Aboriginal law, justice, and lived experiences beyond what textbooks can teach.',
-      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/bfde4125-ec37-4456-a1c5-b3b61a32eec0/2.png',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/services/service-law.jpg',
       features: [
         'Week-long immersive on-country experience in Central Australia',
         'Deep listening to Aboriginal lore and lived experiences of law',
@@ -49,7 +49,7 @@ export const ServicesPage: React.FC = () => {
       id: 'atnarpa-homestead',
       title: 'Atnarpa Homestead On-Country Experiences',
       description: 'Experience Eastern Arrernte country at Loves Creek Station. Accommodation, cultural tourism, and healing programs on Traditional Owner-led country.',
-      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/eee28c15-fba7-4a5c-bd06-290f0df4cb46/4.jpeg',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/services/service-homestead.jpg',
       features: [
         'Accommodation and camping facilities',
         'On-country cultural learning experiences',
@@ -68,7 +68,7 @@ export const ServicesPage: React.FC = () => {
       id: 'cultural-brokerage',
       title: 'Cultural Brokerage & Service Navigation',
       description: 'Connecting Aboriginal young people and families to essential services through trusted partnerships with over 32 community organizations.',
-      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/story-images/stories/eee28c15-fba7-4a5c-bd06-290f0df4cb46/8.jpeg',
+      image: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/services/service-brokerage.jpg',
       features: [
         'Service coordination with 32+ partner organizations',
         'Health service connections (Congress, Headspace)',
