@@ -20,7 +20,27 @@ if (!supabaseUrl || !supabaseAnonKey) {
 }
 
 // Create Supabase client for frontend using env-provided values
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true,
+    flowType: 'pkce',
+  },
+  global: {
+    headers: {
+      'x-application-name': 'oonchiumpa-app',
+    },
+  },
+  db: {
+    schema: 'public',
+  },
+  realtime: {
+    params: {
+      eventsPerSecond: 2,
+    },
+  },
+});
 
 export const SUPABASE_PROJECT_ID =
   import.meta.env.VITE_SUPABASE_PROJECT_ID ||
