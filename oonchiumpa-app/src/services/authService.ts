@@ -55,19 +55,28 @@ export class AuthService {
   // Sign in with email and password
   async signIn({ email, password }: LoginCredentials): Promise<AuthResponse> {
     try {
+      console.log('🔐 Starting sign in...', { email });
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
+      console.log('🔐 Supabase auth response:', { hasUser: !!data?.user, error: error?.message });
+
       if (error) throw error;
 
       if (data.user) {
+        console.log('🔐 Getting user profile...');
         // Get user profile from our custom users table
         const userProfile = await this.getUserProfile(data.user.id);
 
-        // Update last login
-        await this.updateLastLogin(data.user.id);
+        console.log('🔐 User profile retrieved:', { hasProfile: !!userProfile });
+
+        // Update last login (don't await - do in background)
+        this.updateLastLogin(data.user.id).catch(err =>
+          console.warn('Failed to update last login:', err)
+        );
 
         return {
           user: userProfile,
@@ -77,6 +86,7 @@ export class AuthService {
 
       return { user: null, session: null, error: "No user found" };
     } catch (error: any) {
+      console.error('🔐 Sign in error:', error);
       return { user: null, session: null, error: error.message };
     }
   }
