@@ -1,72 +1,72 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Section } from "../components/Section";
 import { Card, CardBody } from "../components/Card";
+import { Loading } from "../components/Loading";
 import {
   CirclePattern,
   DotPattern,
   SpiralPattern,
 } from "../design-system/symbols";
+import { supabase } from "../config/supabase";
+
+interface TeamMember {
+  name: string;
+  role: string;
+  tribe: string | null;
+  description: string | null;
+  avatar_url: string | null;
+  quote: string | null;
+}
+
+interface ImpactStat {
+  number: string;
+  label: string;
+  description: string | null;
+  icon: string | null;
+}
 
 export const AboutPage: React.FC = () => {
-  const teamMembers = [
-    {
-      name: "Kristy Bloomfield",
-      role: "Director & Traditional Owner",
-      tribe: "Central & Eastern Arrernte Woman",
-      description:
-        "Leading with cultural authority as a Traditional Owner of Mparntwe (Alice Springs), Kristy brings deep connection to Country and community. Her vision has transformed youth diversion in Central Australia.",
-      image: "/images/team/kristy.jpg",
-      quote: "We're not just changing young lives - we're reclaiming our community, our culture, and our future."
-    },
-    {
-      name: "Tanya Turner",
-      role: "Legal Advocate & Community Educator",
-      tribe: "Eastern Arrernte Woman",
-      description:
-        "UWA law graduate, former Supreme Court Associate, and passionate advocate. Tanya combines professional legal excellence with deep cultural knowledge to create pathways for justice and healing.",
-      image: "/images/team/tanya.jpg",
-      quote: "These kids aren't the problem - they're collateral in a bigger issue. We're here to change that system."
-    },
-  ];
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [impactStats, setImpactStats] = useState<ImpactStat[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const impactStats = [
-    {
-      number: "95%",
-      label: "Diversion Success",
-      description: "Of youth diverted from justice system",
-      icon: "shield"
-    },
-    {
-      number: "97.6%",
-      label: "More Cost-Effective",
-      description: "Than youth detention",
-      icon: "dollar"
-    },
-    {
-      number: "100%",
-      label: "Aboriginal Employment",
-      description: "Led by Arrernte Traditional Owners",
-      icon: "users"
-    },
-    {
-      number: "72%",
-      label: "Returned to Education",
-      description: "After disengagement from school",
-      icon: "book"
-    },
-    {
-      number: "30+",
-      label: "Youth Supported",
-      description: "From 7 language groups",
-      icon: "heart"
-    },
-    {
-      number: "90%",
-      label: "Retention Rate",
-      description: "Young people engaged consistently",
-      icon: "check"
-    },
-  ];
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    const [teamResult, statsResult] = await Promise.all([
+      supabase
+        .from('team_members')
+        .select('name, role, tribe, description, avatar_url, quote')
+        .eq('is_visible', true)
+        .order('display_order'),
+      supabase
+        .from('impact_stats')
+        .select('number, label, description, icon')
+        .eq('is_visible', true)
+        .eq('section', 'about')
+        .order('display_order')
+    ]);
+
+    if (teamResult.error) {
+      console.error('Error loading team:', teamResult.error);
+    } else {
+      setTeamMembers(teamResult.data || []);
+    }
+
+    if (statsResult.error) {
+      console.error('Error loading stats:', statsResult.error);
+    } else {
+      setImpactStats(statsResult.data || []);
+    }
+
+    setLoading(false);
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   const values = [
     {
@@ -398,9 +398,9 @@ export const AboutPage: React.FC = () => {
           {teamMembers.map((member, index) => (
             <Card key={index} className="overflow-hidden">
               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-ochre-100 to-eucalyptus-100 flex items-center justify-center">
-                {member.image ? (
+                {member.avatar_url ? (
                   <img
-                    src={member.image}
+                    src={member.avatar_url}
                     alt={member.name}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                   />

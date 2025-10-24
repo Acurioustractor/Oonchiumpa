@@ -1,0 +1,18 @@
+{
+  "Other": [
+    {
+      "id": "d7af05c4-aec0-48d0-b221-8224274b92d0",
+      "url": "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1758792433828_20250921-DJI_0196.jpg",
+      "caption": "",
+      "number": 1
+    }
+  ],
+  "Test photo added via API": [
+    {
+      "id": "efd3aad0-70ce-4ac5-9f16-a783a78ca45c",
+      "url": "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1758764611530_test-photo.jpg",
+      "caption": "Test photo added via API",
+      "number": 1
+    }
+  ]
+}

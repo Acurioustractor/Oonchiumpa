@@ -6,6 +6,10 @@ import { Loading } from "./Loading";
 import { useAdminData } from "../hooks/useAdminData";
 import { useAIStatus } from "../hooks/useAIStatus";
 import ContentSeeder from "./ContentSeeder";
+import { ServicesManager } from "./ServicesManager";
+import { TeamManager } from "./TeamManager";
+import { StatsManager } from "./StatsManager";
+import { TestimonialsManager } from "./TestimonialsManager";
 
 interface DashboardStats {
   totalContent: number;
@@ -35,7 +39,7 @@ const AdminDashboard: React.FC = () => {
   const { aiStatus, loading: aiLoading } = useAIStatus();
 
   const [selectedTab, setSelectedTab] = useState<
-    "overview" | "content" | "ai" | "cultural" | "seeder"
+    "overview" | "content" | "ai" | "cultural" | "seeder" | "cms"
   >("overview");
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -92,6 +96,7 @@ const AdminDashboard: React.FC = () => {
 
   const tabs = [
     { id: "overview", name: "Overview", icon: "📊" },
+    { id: "cms", name: "Content CMS", icon: "⚙️" },
     { id: "content", name: "Content Library", icon: "📚" },
     { id: "seeder", name: "Content Seeder", icon: "🌱" },
     { id: "ai", name: "AI System", icon: "🤖" },
@@ -472,6 +477,11 @@ const AdminDashboard: React.FC = () => {
         </div>
       )}
 
+      {/* Content CMS Tab */}
+      {selectedTab === "cms" && (
+        <CMSTabContent />
+      )}
+
       {/* Content Seeder Tab */}
       {selectedTab === "seeder" && (
         <div className="space-y-6">
@@ -562,6 +572,46 @@ const AdminDashboard: React.FC = () => {
           </Card>
         </div>
       )}
+    </div>
+  );
+};
+
+// CMS Tab Content Component
+const CMSTabContent: React.FC = () => {
+  const [cmsTab, setCmsTab] = useState<'services' | 'team' | 'stats' | 'testimonials'>('services');
+
+  const cmsTabs = [
+    { id: 'services', name: 'Services', icon: '🎯' },
+    { id: 'team', name: 'Team Members', icon: '👥' },
+    { id: 'stats', name: 'Impact Stats', icon: '📊' },
+    { id: 'testimonials', name: 'Testimonials', icon: '💬' }
+  ];
+
+  return (
+    <div className="space-y-6">
+      {/* Sub-tabs for CMS */}
+      <div className="flex space-x-1 bg-earth-100 rounded-lg p-1">
+        {cmsTabs.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setCmsTab(tab.id as any)}
+            className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+              cmsTab === tab.id
+                ? "bg-white text-earth-900 shadow-sm"
+                : "text-earth-600 hover:text-earth-900"
+            }`}
+          >
+            <span>{tab.icon}</span>
+            <span>{tab.name}</span>
+          </button>
+        ))}
+      </div>
+
+      {/* CMS Content */}
+      {cmsTab === 'services' && <ServicesManager />}
+      {cmsTab === 'team' && <TeamManager />}
+      {cmsTab === 'stats' && <StatsManager />}
+      {cmsTab === 'testimonials' && <TestimonialsManager />}
     </div>
   );
 };
