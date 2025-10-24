@@ -25,20 +25,16 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true,
-    flowType: 'pkce',
+    flowType: 'implicit',  // Changed from 'pkce' to 'implicit' for better browser compatibility
   },
   global: {
     headers: {
       'x-application-name': 'oonchiumpa-app',
+      'apikey': supabaseAnonKey,  // Explicitly add API key to all requests
     },
   },
   db: {
     schema: 'public',
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 2,
-    },
   },
 });
 
