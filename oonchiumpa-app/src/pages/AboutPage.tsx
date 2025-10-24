@@ -25,9 +25,16 @@ interface ImpactStat {
   icon: string | null;
 }
 
+interface Partner {
+  name: string;
+  category: string;
+  website: string | null;
+}
+
 export const AboutPage: React.FC = () => {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [impactStats, setImpactStats] = useState<ImpactStat[]>([]);
+  const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -35,7 +42,7 @@ export const AboutPage: React.FC = () => {
   }, []);
 
   const loadData = async () => {
-    const [teamResult, statsResult] = await Promise.all([
+    const [teamResult, statsResult, partnersResult] = await Promise.all([
       supabase
         .from('team_members')
         .select('name, role, tribe, description, avatar_url, quote')
@@ -46,6 +53,12 @@ export const AboutPage: React.FC = () => {
         .select('number, label, description, icon')
         .eq('is_visible', true)
         .eq('section', 'about')
+        .order('display_order'),
+      supabase
+        .from('partners')
+        .select('name, category, website')
+        .eq('is_visible', true)
+        .order('category')
         .order('display_order')
     ]);
 
@@ -59,6 +72,12 @@ export const AboutPage: React.FC = () => {
       console.error('Error loading stats:', statsResult.error);
     } else {
       setImpactStats(statsResult.data || []);
+    }
+
+    if (partnersResult.error) {
+      console.error('Error loading partners:', partnersResult.error);
+    } else {
+      setPartners(partnersResult.data || []);
     }
 
     setLoading(false);
@@ -507,33 +526,49 @@ export const AboutPage: React.FC = () => {
             <div>
               <h3 className="font-semibold text-earth-900 mb-4 text-lg">Aboriginal Organizations</h3>
               <ul className="space-y-2 text-earth-700">
-                <li>Tangentyere Employment</li>
-                <li>Congress (Health Services)</li>
-                <li>Lhere Artepe Aboriginal Corporation</li>
-                <li>NAAJA (Legal Services)</li>
-                <li>Akeyulerre Healing Centre</li>
-                <li>NPY Lands</li>
+                {partners.filter(p => p.category === 'aboriginal').map((partner, idx) => (
+                  <li key={idx}>
+                    {partner.website ? (
+                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
+                        {partner.name}
+                      </a>
+                    ) : (
+                      partner.name
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-earth-900 mb-4 text-lg">Education & Training</h3>
               <ul className="space-y-2 text-earth-700">
-                <li>St Joseph's School</li>
-                <li>Yipirinya School</li>
-                <li>Yirara College</li>
-                <li>YORET (Training)</li>
-                <li>Sadadeen School</li>
+                {partners.filter(p => p.category === 'education').map((partner, idx) => (
+                  <li key={idx}>
+                    {partner.website ? (
+                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
+                        {partner.name}
+                      </a>
+                    ) : (
+                      partner.name
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
               <h3 className="font-semibold text-earth-900 mb-4 text-lg">Support Services</h3>
               <ul className="space-y-2 text-earth-700">
-                <li>Saltbush (Bail Support)</li>
-                <li>Territory Families</li>
-                <li>NT Youth Justice</li>
-                <li>Gap Youth Centre</li>
-                <li>Centrelink</li>
-                <li>Housing Services</li>
+                {partners.filter(p => p.category === 'support').map((partner, idx) => (
+                  <li key={idx}>
+                    {partner.website ? (
+                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
+                        {partner.name}
+                      </a>
+                    ) : (
+                      partner.name
+                    )}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

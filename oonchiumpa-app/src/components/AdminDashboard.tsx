@@ -10,6 +10,8 @@ import { ServicesManager } from "./ServicesManager";
 import { TeamManager } from "./TeamManager";
 import { StatsManager } from "./StatsManager";
 import { TestimonialsManager } from "./TestimonialsManager";
+import { PartnersManager } from "./PartnersManager";
+import { MediaLibraryManager } from "./MediaLibraryManager";
 
 interface DashboardStats {
   totalContent: number;
@@ -578,13 +580,15 @@ const AdminDashboard: React.FC = () => {
 
 // CMS Tab Content Component
 const CMSTabContent: React.FC = () => {
-  const [cmsTab, setCmsTab] = useState<'services' | 'team' | 'stats' | 'testimonials'>('services');
+  const [cmsTab, setCmsTab] = useState<'services' | 'team' | 'stats' | 'testimonials' | 'partners' | 'media'>('services');
 
   const cmsTabs = [
     { id: 'services', name: 'Services', icon: '🎯' },
     { id: 'team', name: 'Team Members', icon: '👥' },
     { id: 'stats', name: 'Impact Stats', icon: '📊' },
-    { id: 'testimonials', name: 'Testimonials', icon: '💬' }
+    { id: 'testimonials', name: 'Testimonials', icon: '💬' },
+    { id: 'partners', name: 'Partners', icon: '🤝' },
+    { id: 'media', name: 'Media Library', icon: '📸' }
   ];
 
   return (
@@ -612,6 +616,8 @@ const CMSTabContent: React.FC = () => {
       {cmsTab === 'team' && <TeamManager />}
       {cmsTab === 'stats' && <StatsManager />}
       {cmsTab === 'testimonials' && <TestimonialsManager />}
+      {cmsTab === 'partners' && <PartnersManager />}
+      {cmsTab === 'media' && <MediaLibraryManager />}
     </div>
   );
 };

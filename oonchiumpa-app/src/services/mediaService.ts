@@ -10,6 +10,7 @@ export type MediaFile = {
   category:
     | "story-media"
     | "team-photos"
+    | "service-photos"
     | "cultural-artifacts"
     | "community-events"
     | "educational";
