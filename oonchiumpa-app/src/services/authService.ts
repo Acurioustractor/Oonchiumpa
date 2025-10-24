@@ -161,9 +161,10 @@ export class AuthService {
     }
   }
 
-  // Get user profile from custom table
+  // Get user profile from auth metadata (fallback if users table doesn't exist)
   async getUserProfile(userId: string): Promise<User | null> {
     try {
+      // First try to get from users table
       let query = supabase
         .from("users")
         .select("*")
@@ -176,8 +177,34 @@ export class AuthService {
 
       const { data, error } = await query.single();
 
-      if (error) throw error;
-      return data;
+      if (data && !error) {
+        return data;
+      }
+
+      // Fallback: Use auth metadata if users table doesn't exist
+      console.log("Users table not found, using auth metadata");
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+      if (authError || !user || user.id !== userId) {
+        return null;
+      }
+
+      // Build user object from auth metadata
+      const metadata = user.user_metadata || {};
+      return {
+        id: user.id,
+        email: user.email || '',
+        full_name: metadata.full_name || metadata.name || 'User',
+        role: metadata.role || 'contributor',
+        project_id: PROJECT_ID || '',
+        avatar_url: metadata.avatar_url,
+        permissions: this.getDefaultPermissions(metadata.role || 'contributor'),
+        created_at: user.created_at,
+        last_login: user.last_sign_in_at || user.created_at,
+        is_active: true,
+        cultural_authority: metadata.role === 'elder' || metadata.role === 'admin',
+        can_approve_content: metadata.role === 'elder' || metadata.role === 'admin',
+      };
     } catch (error) {
       console.error("Error fetching user profile:", error);
       return null;
