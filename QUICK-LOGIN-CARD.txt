@@ -1,0 +1,117 @@
+═══════════════════════════════════════════════════════════════
+               OONCHIUMPA CMS - QUICK LOGIN CARD
+═══════════════════════════════════════════════════════════════
+
+🌐 LOGIN URL
+   https://www.fromthecentre.com/login
+
+   OR: Click "Staff Login" button (top-right of any page)
+
+───────────────────────────────────────────────────────────────
+
+🔐 TEST ACCOUNT CREDENTIALS
+
+   Email:    test@oonchiumpa.org
+   Password: OonchiumpaTest2024!
+
+   ⚠️  Password is case-sensitive!
+       Capital O, Capital T, ends with !
+
+───────────────────────────────────────────────────────────────
+
+📋 AFTER LOGIN - ACCESS ADMIN
+
+   1. Look top-right for profile icon (shows "TA")
+   2. Click profile icon
+   3. Click "⚙️ Admin Dashboard" from dropdown
+
+   OR: Go directly to https://www.fromthecentre.com/admin
+
+───────────────────────────────────────────────────────────────
+
+🎯 WHAT YOU CAN DO
+
+   CMS Tabs (Content Management):
+   ✓ Services Manager       - Edit service descriptions
+   ✓ Team Members Manager   - Add/edit team profiles
+   ✓ Impact Stats Manager   - Update statistics
+   ✓ Testimonials Manager   - Manage testimonials
+   ✓ Partners Manager       - Manage 17 partners ★ NEW
+   ✓ Media Library          - Upload photos ★ NEW
+
+───────────────────────────────────────────────────────────────
+
+📸 QUICK TEST: UPLOAD A PHOTO
+
+   1. Admin Dashboard → CMS → Media Library
+   2. Click "Upload" button
+   3. Drag photo from computer
+   4. Fill in title, description, tags
+   5. Choose cultural sensitivity level
+   6. Click "Upload 1 file"
+   7. View in Gallery!
+
+   NOTE: Requires media_files table setup first
+         (See RUN-THIS-SQL.md)
+
+───────────────────────────────────────────────────────────────
+
+🆘 TROUBLESHOOTING
+
+   "Authentication failed"
+   → Check password: OonchiumpaTest2024! (case-sensitive)
+   → No spaces before/after email or password
+   → Try typing manually instead of pasting
+
+   Can't access Admin Dashboard
+   → Make sure you're logged in (see profile icon)
+   → Click profile icon → Admin Dashboard
+   → Or go to: /admin
+
+   Forgot password
+   → Go to Supabase Dashboard
+   → Auth → Users → test@oonchiumpa.org
+   → Set new password
+
+───────────────────────────────────────────────────────────────
+
+📚 FULL DOCUMENTATION
+
+   • LOGIN-TROUBLESHOOTING.md  - Detailed help
+   • TEST-LOGIN-CREDENTIALS.md - All accounts
+   • MEDIA-LIBRARY-USER-GUIDE.md - Upload guide
+   • HOW-TO-ACCESS-ADMIN.md    - Admin access
+
+───────────────────────────────────────────────────────────────
+
+✅ VERIFICATION CHECKLIST
+
+   After successful login, you should see:
+   □ Profile icon with "TA" initials (top-right)
+   □ Clicking icon shows dropdown menu
+   □ Menu shows "Test Admin" and email
+   □ Menu has "⚙️ Admin Dashboard" option
+   □ Clicking it opens CMS with 6 tabs
+
+───────────────────────────────────────────────────────────────
+
+🔑 OTHER ADMIN ACCOUNTS (If You Know Passwords)
+
+   Primary:   admin@oonchiumpa.org (Kristy Bloomfield)
+   Secondary: benjamin@act.place (Benjamin Knight)
+
+───────────────────────────────────────────────────────────────
+
+💡 REMEMBER
+
+   The test account WORKS - you logged in at 4:20 PM today!
+
+   If login fails:
+   • Double-check password capitalization
+   • Try copying/pasting password from this card
+   • Clear browser cookies and try again
+   • Use incognito/private window
+
+═══════════════════════════════════════════════════════════════
+              Print or save this card for quick reference
+═══════════════════════════════════════════════════════════════
