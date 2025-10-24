@@ -230,7 +230,18 @@ export const Navigation: React.FC<NavigationProps> = ({
                   </div>
                 )}
               </div>
-            ) : null}
+            ) : (
+              <Link
+                to="/login"
+                className={`ml-4 px-5 py-2.5 rounded-full transition-all duration-200 font-medium ${
+                  isScrolled
+                    ? 'bg-ochre-600 text-white hover:bg-ochre-700'
+                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+                }`}
+              >
+                Staff Login
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -289,6 +300,15 @@ export const Navigation: React.FC<NavigationProps> = ({
               >
                 {ctaButton.label}
               </button>
+            )}
+            {!isAuthenticated() && (
+              <Link
+                to="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white text-center rounded-full hover:bg-ochre-700 transition-all duration-200"
+              >
+                Staff Login
+              </Link>
             )}
           </div>
         </div>
