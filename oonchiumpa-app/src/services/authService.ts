@@ -379,7 +379,7 @@ export class AuthService {
   }
 
   // Listen for auth state changes
-  onAuthStateChange(callback: (user | null) => void) {
+  onAuthStateChange(callback: (user: User | null) => void) {
     return supabase.auth.onAuthStateChange((event, session) => {
       // IMPORTANT: Do NOT await database operations in this callback!
       // Awaiting in onAuthStateChange causes subsequent auth operations to hang
