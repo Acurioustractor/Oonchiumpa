@@ -35,6 +35,17 @@ const customFetch: typeof fetch = async (input, init) => {
       signal: controller.signal,
     });
     console.log('✅ Fetch response:', response.status, response.statusText);
+
+    // Clone the response so we can log the body without consuming it
+    const clonedResponse = response.clone();
+
+    // Log response body in background (don't await)
+    clonedResponse.json().then(body => {
+      console.log('📦 Response body:', body);
+    }).catch(err => {
+      console.log('⚠️ Could not parse response as JSON:', err.message);
+    });
+
     return response;
   } catch (error) {
     console.error('❌ Fetch error:', error);

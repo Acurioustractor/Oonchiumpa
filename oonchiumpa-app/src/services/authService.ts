@@ -58,12 +58,18 @@ export class AuthService {
       console.log('🔐 Starting sign in...', { email });
       console.log('🔐 Calling supabase.auth.signInWithPassword...');
 
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const authPromise = supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      console.log('🔐 Supabase auth response:', { hasUser: !!data?.user, error: error?.message });
+      console.log('🔐 Auth promise created, awaiting result...');
+      const result = await authPromise;
+      console.log('🔐 Auth promise resolved!');
+
+      const { data, error } = result;
+
+      console.log('🔐 Supabase auth response:', { hasUser: !!data?.user, hasSession: !!data?.session, error: error?.message });
 
       if (error) throw error;
 
