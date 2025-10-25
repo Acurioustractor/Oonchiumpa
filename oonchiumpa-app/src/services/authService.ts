@@ -185,7 +185,6 @@ export class AuthService {
       }
 
       // Fallback: Use auth metadata if users table doesn't exist
-      console.log("Users table not found, using auth metadata");
       const { data: { user }, error: authError } = await supabase.auth.getUser();
 
       if (authError || !user || user.id !== userId) {
