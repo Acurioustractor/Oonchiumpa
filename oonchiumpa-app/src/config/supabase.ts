@@ -19,19 +19,45 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
+// Custom fetch with logging and timeout
+const customFetch: typeof fetch = async (input, init) => {
+  console.log('🌐 Fetch request:', typeof input === 'string' ? input : input.url);
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => {
+    console.log('⏰ Fetch timeout after 30s');
+    controller.abort();
+  }, 30000);
+
+  try {
+    const response = await fetch(input, {
+      ...init,
+      signal: controller.signal,
+    });
+    console.log('✅ Fetch response:', response.status, response.statusText);
+    return response;
+  } catch (error) {
+    console.error('❌ Fetch error:', error);
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+};
+
 // Create Supabase client for frontend using env-provided values
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true,
-    flowType: 'implicit',  // Changed from 'pkce' to 'implicit' for better browser compatibility
+    flowType: 'implicit',
   },
   global: {
     headers: {
       'x-application-name': 'oonchiumpa-app',
-      'apikey': supabaseAnonKey,  // Explicitly add API key to all requests
+      'apikey': supabaseAnonKey,
     },
+    fetch: customFetch,  // Use custom fetch with logging
   },
   db: {
     schema: 'public',

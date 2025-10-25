@@ -52,47 +52,20 @@ export class AuthService {
     return AuthService.instance;
   }
 
-  // Sign in with email and password - DIRECT API CALL
+  // Sign in with email and password
   async signIn({ email, password }: LoginCredentials): Promise<AuthResponse> {
     try {
       console.log('🔐 Starting sign in...', { email });
+      console.log('🔐 Calling supabase.auth.signInWithPassword...');
 
-      const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-      const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-      console.log('🔐 Making direct API call to Supabase...');
-
-      // Call Supabase auth API directly using fetch
-      const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      console.log('🔐 Direct API response status:', response.status);
+      console.log('🔐 Supabase auth response:', { hasUser: !!data?.user, error: error?.message });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log('🔐 API error:', errorData);
-        throw new Error(errorData.error_description || errorData.msg || 'Authentication failed');
-      }
-
-      const data = await response.json();
-      console.log('🔐 Auth successful, user ID:', data.user?.id);
-
-      // Set the session in Supabase client
-      if (data.access_token) {
-        await supabase.auth.setSession({
-          access_token: data.access_token,
-          refresh_token: data.refresh_token,
-        });
-      }
+      if (error) throw error;
 
       if (data.user) {
         console.log('🔐 Getting user profile...');
@@ -108,11 +81,7 @@ export class AuthService {
 
         return {
           user: userProfile,
-          session: {
-            access_token: data.access_token,
-            refresh_token: data.refresh_token,
-            user: data.user,
-          },
+          session: data.session,
         };
       }
 
