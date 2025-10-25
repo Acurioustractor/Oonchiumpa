@@ -55,22 +55,16 @@ export class AuthService {
   // Sign in with email and password
   async signIn({ email, password }: LoginCredentials): Promise<AuthResponse> {
     try {
-      console.log('🔐 Starting sign in...', { email });
-      console.log('🔐 Calling supabase.auth.signInWithPassword...');
-
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      console.log('🔐 Auth response received:', { hasUser: !!data?.user, hasSession: !!data?.session, error: error?.message });
+      if (error) throw error;
 
       if (data.user) {
-        console.log('🔐 Getting user profile...');
         // Get user profile from our custom users table
         const userProfile = await this.getUserProfile(data.user.id);
-
-        console.log('🔐 User profile retrieved:', { hasProfile: !!userProfile });
 
         // Update last login (don't await - do in background)
         this.updateLastLogin(data.user.id).catch(err =>
@@ -380,10 +374,26 @@ export class AuthService {
 
   // Listen for auth state changes
   onAuthStateChange(callback: (user: User | null) => void) {
+    let lastUserId: string | null = null;
+
     return supabase.auth.onAuthStateChange((event, session) => {
       // IMPORTANT: Do NOT await database operations in this callback!
       // Awaiting in onAuthStateChange causes subsequent auth operations to hang
       // See: https://github.com/supabase/gotrue-js/issues/762
+
+      // Only process SIGNED_IN and SIGNED_OUT events to avoid duplicate calls
+      if (event !== 'SIGNED_IN' && event !== 'SIGNED_OUT' && event !== 'INITIAL_SESSION') {
+        return;
+      }
+
+      const currentUserId = session?.user?.id || null;
+
+      // Skip if user hasn't changed (prevents duplicate calls)
+      if (currentUserId === lastUserId) {
+        return;
+      }
+
+      lastUserId = currentUserId;
 
       if (session?.user) {
         // Fetch user profile asynchronously without blocking the callback

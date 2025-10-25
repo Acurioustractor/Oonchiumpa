@@ -7,25 +7,16 @@ const supabaseAnonKey =
   import.meta.env.VITE_SUPABASE_ANON_KEY ||
   process.env.REACT_APP_SUPABASE_ANON_KEY;
 
-console.log('Supabase Config:', {
-  hasUrl: !!supabaseUrl,
-  hasKey: !!supabaseAnonKey,
-  url: supabaseUrl?.substring(0, 30) + '...'
-});
-
 if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error(
     "Missing Supabase configuration. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.",
   );
 }
 
-// Custom fetch with logging and timeout
+// Custom fetch with timeout (logging disabled for production)
 const customFetch: typeof fetch = async (input, init) => {
-  console.log('🌐 Fetch request:', typeof input === 'string' ? input : input.url);
-
   const controller = new AbortController();
   const timeoutId = setTimeout(() => {
-    console.log('⏰ Fetch timeout after 30s');
     controller.abort();
   }, 30000);
 
@@ -34,21 +25,9 @@ const customFetch: typeof fetch = async (input, init) => {
       ...init,
       signal: controller.signal,
     });
-    console.log('✅ Fetch response:', response.status, response.statusText);
-
-    // Clone the response so we can log the body without consuming it
-    const clonedResponse = response.clone();
-
-    // Log response body in background (don't await)
-    clonedResponse.json().then(body => {
-      console.log('📦 Response body:', body);
-    }).catch(err => {
-      console.log('⚠️ Could not parse response as JSON:', err.message);
-    });
-
     return response;
   } catch (error) {
-    console.error('❌ Fetch error:', error);
+    console.error('Supabase fetch error:', error);
     throw error;
   } finally {
     clearTimeout(timeoutId);
