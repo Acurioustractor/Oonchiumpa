@@ -58,20 +58,12 @@ export class AuthService {
       console.log('🔐 Starting sign in...', { email });
       console.log('🔐 Calling supabase.auth.signInWithPassword...');
 
-      const authPromise = supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      console.log('🔐 Auth promise created, awaiting result...');
-      const result = await authPromise;
-      console.log('🔐 Auth promise resolved!');
-
-      const { data, error } = result;
-
-      console.log('🔐 Supabase auth response:', { hasUser: !!data?.user, hasSession: !!data?.session, error: error?.message });
-
-      if (error) throw error;
+      console.log('🔐 Auth response received:', { hasUser: !!data?.user, hasSession: !!data?.session, error: error?.message });
 
       if (data.user) {
         console.log('🔐 Getting user profile...');
@@ -387,11 +379,20 @@ export class AuthService {
   }
 
   // Listen for auth state changes
-  onAuthStateChange(callback: (user: User | null) => void) {
-    return supabase.auth.onAuthStateChange(async (event, session) => {
+  onAuthStateChange(callback: (user | null) => void) {
+    return supabase.auth.onAuthStateChange((event, session) => {
+      // IMPORTANT: Do NOT await database operations in this callback!
+      // Awaiting in onAuthStateChange causes subsequent auth operations to hang
+      // See: https://github.com/supabase/gotrue-js/issues/762
+
       if (session?.user) {
-        const userProfile = await this.getUserProfile(session.user.id);
-        callback(userProfile);
+        // Fetch user profile asynchronously without blocking the callback
+        this.getUserProfile(session.user.id).then(userProfile => {
+          callback(userProfile);
+        }).catch(err => {
+          console.error('Error fetching user profile in auth state change:', err);
+          callback(null);
+        });
       } else {
         callback(null);
       }

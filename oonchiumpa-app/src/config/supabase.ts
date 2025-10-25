@@ -58,11 +58,10 @@ const customFetch: typeof fetch = async (input, init) => {
 // Create Supabase client for frontend using env-provided values
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    autoRefreshToken: false,  // Disable auto-refresh to avoid hanging
-    persistSession: false,     // Disable session persistence - might be causing hang
-    detectSessionInUrl: false, // Disable URL detection
+    autoRefreshToken: true,
+    persistSession: true,      // Re-enabled - root cause was await in onAuthStateChange
+    detectSessionInUrl: true,
     flowType: 'implicit',
-    storage: undefined,        // Don't use any storage - pure in-memory
   },
   global: {
     headers: {
