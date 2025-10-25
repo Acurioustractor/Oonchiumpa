@@ -168,17 +168,12 @@ export class AuthService {
   async getUserProfile(userId: string): Promise<User | null> {
     try {
       // First try to get from users table
-      let query = supabase
+      const { data, error } = await supabase
         .from("users")
         .select("*")
         .eq("id", userId)
-        .eq("is_active", true);
-
-      if (PROJECT_ID) {
-        query = query.eq("project_id", PROJECT_ID);
-      }
-
-      const { data, error } = await query.single();
+        .eq("is_active", true)
+        .maybeSingle();
 
       if (data && !error) {
         return data;
