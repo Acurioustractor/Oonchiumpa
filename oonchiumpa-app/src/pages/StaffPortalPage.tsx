@@ -8,6 +8,7 @@ import ImageUpload from '../components/ImageUpload';
 import LiveContentPreview from '../components/LiveContentPreview';
 import DocumentProcessor from '../components/DocumentProcessor';
 import { Loading } from '../components/Loading';
+import { supabase } from '../config/supabase';
 
 interface StaffMember {
   id: string;
@@ -41,43 +42,52 @@ const StaffPortalPage: React.FC = () => {
   }, []);
 
   const loadDashboardData = async () => {
-    if (!token) {
-      setStats({ documentsPending: 0, storiesInReview: 0, publishedThisMonth: 0 });
-      setContentQueue([]);
-      setRecentDocuments([]);
-      return;
-    }
-
     try {
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
+      // Get current month start date
+      const now = new Date();
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
 
-      // Load dashboard stats
-      const statsResponse = await fetch('http://localhost:3001/api/content/dashboard-stats', { headers });
-      
-      // Load content queue  
-      const queueResponse = await fetch('http://localhost:3001/api/content/queue', { headers });
-      
-      // Load recent documents
-      const docsResponse = await fetch('http://localhost:3001/api/upload/images', { headers });
-      
-      if (statsResponse.ok) {
-        const statsData = await statsResponse.json();
-        setStats(statsData.stats);
-      }
-      
-      if (queueResponse.ok) {
-        const queueData = await queueResponse.json();
-        setContentQueue(queueData.queue || []);
-      }
-      
-      if (docsResponse.ok) {
-        const docsData = await docsResponse.json();
-        setRecentDocuments(docsData.images || []);
-      }
-      
+      // Count published blog posts this month
+      const { count: publishedCount } = await supabase
+        .from('blog_posts')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'published')
+        .gte('created_at', monthStart);
+
+      // Count stories in review (not public yet)
+      const { count: reviewCount } = await supabase
+        .from('stories')
+        .select('*', { count: 'exact', head: true })
+        .eq('is_public', false);
+
+      // Count media files (documents)
+      const { count: mediaCount } = await supabase
+        .from('media_files')
+        .select('*', { count: 'exact', head: true });
+
+      // Get recent gallery photos as "documents"
+      const { data: recentPhotos } = await supabase
+        .from('gallery_photos')
+        .select('id, photo_url, created_at')
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      // Get recent stories for content queue
+      const { data: recentStories } = await supabase
+        .from('stories')
+        .select('id, title, story_category, is_public, created_at')
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      setStats({
+        documentsPending: mediaCount || 0,
+        storiesInReview: reviewCount || 0,
+        publishedThisMonth: publishedCount || 0
+      });
+
+      setRecentDocuments(recentPhotos || []);
+      setContentQueue(recentStories || []);
+
     } catch (error) {
       console.error('Error loading dashboard data:', error);
       setStats({ documentsPending: 0, storiesInReview: 0, publishedThisMonth: 0 });
