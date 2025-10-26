@@ -6,9 +6,10 @@ import { Button } from '../components/Button';
 import ContentGenerator from '../components/ContentGenerator';
 import ImageUpload from '../components/ImageUpload';
 import LiveContentPreview from '../components/LiveContentPreview';
-import DocumentProcessor from '../components/DocumentProcessor';
+import { DocumentUpload } from '../components/DocumentUpload';
 import { Loading } from '../components/Loading';
 import { supabase } from '../config/supabase';
+import { documentService } from '../services/documentService';
 
 // Oonchiumpa Organization Constants
 const OONCHIUMPA_ORG_ID = 'c53077e1-98de-4216-9149-6268891ff62e';
@@ -303,8 +304,71 @@ const StaffPortalPage: React.FC = () => {
         )}
 
         {activeTab === 'documents' && (
-          <div>
-            <DocumentProcessor />
+          <div className="space-y-8">
+            <Card className="p-8">
+              <h2 className="text-3xl font-bold text-earth-900 mb-6">📄 Document Upload & Management</h2>
+              <p className="text-earth-700 mb-8">
+                Upload interview recordings, transcripts, and documents. All uploads are automatically linked to Oonchiumpa organization.
+              </p>
+              <DocumentUpload
+                maxFiles={10}
+                onUploadComplete={async (doc) => {
+                  console.log('Document uploaded:', doc);
+                  // Reload dashboard stats
+                  await loadDashboardData();
+                }}
+                onUploadError={(error) => {
+                  console.error('Upload error:', error);
+                  alert(`Upload failed: ${error.message}`);
+                }}
+              />
+            </Card>
+
+            <Card className="p-8">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold text-earth-900">Recent Documents</h3>
+                  <p className="text-earth-600 mt-1">View and manage your uploaded documents</p>
+                </div>
+                <a
+                  href="/staff-portal/documents"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                  View All Documents →
+                </a>
+              </div>
+
+              {recentDocuments.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="text-4xl mb-4">📤</div>
+                  <h4 className="text-lg font-semibold text-earth-700 mb-2">No Documents Yet</h4>
+                  <p className="text-earth-600">Upload your first document above to get started</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {recentDocuments.map((doc) => (
+                    <div key={doc.id} className="flex items-center justify-between p-4 bg-earth-50 rounded-lg border border-earth-200">
+                      <div className="flex items-center space-x-3">
+                        <div className="text-2xl">
+                          {doc.video_url ? '🎥' : doc.audio_url ? '🎵' : '📄'}
+                        </div>
+                        <div>
+                          <div className="font-medium text-earth-900">{doc.title || 'Untitled'}</div>
+                          <div className="text-sm text-earth-500">
+                            {new Date(doc.created_at).toLocaleDateString()}
+                            {doc.status && (
+                              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                                {doc.status}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Card>
           </div>
         )}
 

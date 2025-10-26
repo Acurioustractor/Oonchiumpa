@@ -24,6 +24,7 @@ import EmpathyLedgerPage from "../pages/EmpathyLedgerPage";
 import MediaManagerPage from "../pages/MediaManagerPage";
 import ContentDashboardPage from "../pages/ContentDashboardPage";
 import { GalleryUploadPage } from "../pages/GalleryUploadPage";
+import DocumentsPage from "../pages/DocumentsPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export const AppRoutes = () => {
@@ -37,6 +38,7 @@ export const AppRoutes = () => {
 
       {/* Staff Portal - No main layout (has its own header) */}
       <Route path="/staff-portal" element={<StaffPortalPage />} />
+      <Route path="/staff-portal/documents" element={<DocumentsPage />} />
       <Route path="/staff" element={<StaffPortalPage />} />
       <Route path="/presentation" element={<PresentationPage />} />
 
