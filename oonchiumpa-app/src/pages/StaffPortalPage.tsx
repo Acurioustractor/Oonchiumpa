@@ -10,6 +10,10 @@ import DocumentProcessor from '../components/DocumentProcessor';
 import { Loading } from '../components/Loading';
 import { supabase } from '../config/supabase';
 
+// Oonchiumpa Organization Constants
+const OONCHIUMPA_ORG_ID = 'c53077e1-98de-4216-9149-6268891ff62e';
+const OONCHIUMPA_TENANT_ID = '8891e1a9-92ae-423f-928b-cec602660011';
+
 interface StaffMember {
   id: string;
   name: string;
@@ -47,45 +51,60 @@ const StaffPortalPage: React.FC = () => {
       const now = new Date();
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
 
-      // Count published blog posts this month
+      // Count published blog posts this month (using project_id for blog_posts)
       const { count: publishedCount } = await supabase
         .from('blog_posts')
         .select('*', { count: 'exact', head: true })
+        .eq('project_id', '5b853f55-c01e-4f1d-9e16-b99290ee1a2c') // Original project_id
         .eq('status', 'published')
         .gte('created_at', monthStart);
 
-      // Count stories in review (not public yet)
+      // Count stories in review (not public yet) - FILTERED BY ORGANIZATION
       const { count: reviewCount } = await supabase
         .from('stories')
         .select('*', { count: 'exact', head: true })
+        .eq('organization_id', OONCHIUMPA_ORG_ID)
         .eq('is_public', false);
 
-      // Count media files (documents)
-      const { count: mediaCount } = await supabase
-        .from('media_files')
-        .select('*', { count: 'exact', head: true });
+      // Count transcripts (documents pending) - FILTERED BY STORYTELLER TENANT
+      // First get Oonchiumpa storytellers
+      const { data: storytellers } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('tenant_id', OONCHIUMPA_TENANT_ID)
+        .contains('tenant_roles', ['storyteller']);
 
-      // Get recent gallery photos as "documents"
-      const { data: recentPhotos } = await supabase
-        .from('gallery_photos')
-        .select('id, photo_url, created_at')
+      const storytellerIds = storytellers?.map(s => s.id) || [];
+
+      // Then count transcripts belonging to those storytellers
+      const { count: transcriptsCount } = await supabase
+        .from('transcripts')
+        .select('*', { count: 'exact', head: true })
+        .in('storyteller_id', storytellerIds.length > 0 ? storytellerIds : ['00000000-0000-0000-0000-000000000000']);
+
+      // Get recent transcripts as "documents"
+      const { data: recentTranscripts } = await supabase
+        .from('transcripts')
+        .select('id, title, created_at, status')
+        .in('storyteller_id', storytellerIds.length > 0 ? storytellerIds : ['00000000-0000-0000-0000-000000000000'])
         .order('created_at', { ascending: false })
         .limit(5);
 
-      // Get recent stories for content queue
+      // Get recent stories for content queue - FILTERED BY ORGANIZATION
       const { data: recentStories } = await supabase
         .from('stories')
         .select('id, title, story_category, is_public, created_at')
+        .eq('organization_id', OONCHIUMPA_ORG_ID)
         .order('created_at', { ascending: false })
         .limit(10);
 
       setStats({
-        documentsPending: mediaCount || 0,
+        documentsPending: transcriptsCount || 0,
         storiesInReview: reviewCount || 0,
         publishedThisMonth: publishedCount || 0
       });
 
-      setRecentDocuments(recentPhotos || []);
+      setRecentDocuments(recentTranscripts || []);
       setContentQueue(recentStories || []);
 
     } catch (error) {
