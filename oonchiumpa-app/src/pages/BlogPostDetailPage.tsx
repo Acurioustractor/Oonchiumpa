@@ -166,7 +166,7 @@ const BlogPostDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-sand-50">
       {/* Hero Section */}
-      <div className="relative h-[500px] overflow-hidden mt-16">
+      <div className="relative h-[500px] overflow-hidden mt-20 md:mt-24">
         <img
           src={post.images.hero}
           alt={post.title}
@@ -175,7 +175,7 @@ const BlogPostDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-900/70 to-transparent"></div>
 
         {/* Back Button */}
-        <div className="absolute top-6 left-8 z-10">
+        <div className="absolute top-16 md:top-20 left-4 md:left-8 z-10">
           <Button
             variant="secondary"
             onClick={() => navigate('/blog')}
