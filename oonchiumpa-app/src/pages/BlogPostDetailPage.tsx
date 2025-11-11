@@ -86,36 +86,57 @@ const BlogPostDetailPage: React.FC = () => {
 
         setPost(transformedPost);
 
-        // Load related stories from the gallery field (which now contains story IDs)
-        if (blogPost.gallery && blogPost.gallery.length > 0) {
-          // Import supabase client
-          const { createClient } = await import('@supabase/supabase-js');
-          const supabase = createClient(
-            import.meta.env.VITE_SUPABASE_URL,
-            import.meta.env.VITE_SUPABASE_ANON_KEY
-          );
+        // Load related blog posts based on matching tags and type
+        const { createClient } = await import('@supabase/supabase-js');
+        const supabase = createClient(
+          import.meta.env.VITE_SUPABASE_URL,
+          import.meta.env.VITE_SUPABASE_ANON_KEY
+        );
 
-          const { data: stories } = await supabase
-            .from('stories')
-            .select('id, title, summary, story_image_url, themes')
-            .in('id', blogPost.gallery)
+        const { data: relatedBlogPosts } = await supabase
+          .from('blog_posts')
+          .select('id, title, excerpt, type, hero_image, tags, read_time, published_at')
+          .neq('id', blogPost.id) // Exclude current post
+          .eq('status', 'published')
+          .eq('elder_approved', true)
+          .overlaps('tags', blogPost.tags || []) // Posts with matching tags
+          .order('published_at', { ascending: false })
+          .limit(3);
+
+        if (relatedBlogPosts && relatedBlogPosts.length > 0) {
+          const related = relatedBlogPosts.map(post => ({
+            id: post.id,
+            title: post.title,
+            excerpt: post.excerpt || '',
+            type: post.type,
+            readTime: post.read_time || 5,
+            image: post.hero_image || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+          }));
+          setRelatedPosts(related);
+        } else {
+          // If no posts with matching tags, just get recent posts
+          const { data: recentPosts } = await supabase
+            .from('blog_posts')
+            .select('id, title, excerpt, type, hero_image, tags, read_time, published_at')
+            .neq('id', blogPost.id)
+            .eq('status', 'published')
+            .eq('elder_approved', true)
+            .order('published_at', { ascending: false })
             .limit(3);
 
-          if (stories && stories.length > 0) {
-            const related = stories.map(story => ({
-              id: story.id,
-              title: story.title,
-              excerpt: story.summary || '',
-              type: 'story',
-              readTime: 5, // Default read time for stories
-              image: story.story_image_url || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
+          if (recentPosts && recentPosts.length > 0) {
+            const related = recentPosts.map(post => ({
+              id: post.id,
+              title: post.title,
+              excerpt: post.excerpt || '',
+              type: post.type,
+              readTime: post.read_time || 5,
+              image: post.hero_image || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
             }));
             setRelatedPosts(related);
           } else {
             setRelatedPosts([]);
           }
-        } else {
-          setRelatedPosts([]);
         }
       } catch (error) {
         console.error('Error loading blog post:', error);
@@ -282,7 +303,7 @@ const BlogPostDetailPage: React.FC = () => {
             <h3 className="text-lg font-semibold text-earth-900 mb-4">Tags</h3>
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag, index) => (
-                <span 
+                <span
                   key={index}
                   className={`px-3 py-1 bg-${typeColor}-100 text-${typeColor}-800 rounded-full text-sm`}
                 >
@@ -291,69 +312,50 @@ const BlogPostDetailPage: React.FC = () => {
               ))}
             </div>
           </div>
-
-          {/* Engagement Stats */}
-          <Card className="p-6 mb-12 bg-gradient-to-r from-ochre-50 to-eucalyptus-50">
-            <div className="text-center">
-              <h3 className="text-lg font-semibold text-earth-900 mb-4">Community Engagement</h3>
-              <div className="grid grid-cols-3 gap-6">
-                <div>
-                  <div className="text-2xl font-bold text-ochre-600">{post.stats.views.toLocaleString()}</div>
-                  <div className="text-earth-600">Views</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-eucalyptus-600">{post.stats.likes}</div>
-                  <div className="text-earth-600">Likes</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-earth-600">{post.stats.shares}</div>
-                  <div className="text-earth-600">Shares</div>
-                </div>
-              </div>
-            </div>
-          </Card>
         </div>
       </Section>
 
       {/* Related Posts */}
-      <Section className="bg-earth-50 py-16">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-earth-900 mb-8 text-center">
-            Related Stories
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {relatedPosts.map((relatedPost) => (
-              <Card
-                key={relatedPost.id}
-                className="cursor-pointer hover:shadow-lg transition-shadow duration-300"
-                onClick={() => navigate(`/stories/${relatedPost.id}`)}
-              >
-                <img 
-                  src={relatedPost.image} 
-                  alt={relatedPost.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <span className="inline-block px-3 py-1 bg-earth-100 text-earth-800 rounded-full text-xs font-medium capitalize mb-3">
-                    {relatedPost.type.replace('-', ' ')}
-                  </span>
-                  <h3 className="text-lg font-bold text-earth-900 mb-2 line-clamp-2">
-                    {relatedPost.title}
-                  </h3>
-                  <p className="text-earth-700 text-sm mb-4 line-clamp-3">
-                    {relatedPost.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-sm text-earth-600">
-                    <span>{relatedPost.readTime} min read</span>
-                    <span className="text-ochre-600 font-medium">Read more →</span>
+      {relatedPosts.length > 0 && (
+        <Section className="bg-earth-50 py-16">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-3xl font-bold text-earth-900 mb-8 text-center">
+              Related Stories
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {relatedPosts.map((relatedPost) => (
+                <Card
+                  key={relatedPost.id}
+                  className="cursor-pointer hover:shadow-lg transition-shadow duration-300"
+                  onClick={() => navigate(`/blog/${relatedPost.id}`)}
+                >
+                  <img
+                    src={relatedPost.image}
+                    alt={relatedPost.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="p-6">
+                    <span className="inline-block px-3 py-1 bg-earth-100 text-earth-800 rounded-full text-xs font-medium capitalize mb-3">
+                      {relatedPost.type.replace('-', ' ')}
+                    </span>
+                    <h3 className="text-lg font-bold text-earth-900 mb-2 line-clamp-2">
+                      {relatedPost.title}
+                    </h3>
+                    <p className="text-earth-700 text-sm mb-4 line-clamp-3">
+                      {relatedPost.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-sm text-earth-600">
+                      <span>{relatedPost.readTime} min read</span>
+                      <span className="text-ochre-600 font-medium">Read more →</span>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </Section>
+        </Section>
+      )}
     </div>
   );
 };
