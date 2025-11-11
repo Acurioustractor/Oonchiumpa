@@ -232,19 +232,33 @@ const BlogPostDetailPage: React.FC = () => {
             <div
               className="text-earth-800 leading-relaxed"
               dangerouslySetInnerHTML={{
-                __html: post.content
-                  // Convert markdown images first
-                  .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full rounded-lg shadow-lg my-8" />')
-                  // Then handle markdown formatting
-                  .replace(/## (.*?)\n/g, '<h2 class="text-2xl font-bold text-earth-900 mt-8 mb-4">$1</h2>')
-                  .replace(/### (.*?)\n/g, '<h3 class="text-xl font-semibold text-earth-800 mt-6 mb-3">$1</h3>')
-                  .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-earth-900">$1</strong>')
-                  .replace(/- \*\*(.*?)\*\*/g, '<li class="mb-2"><strong class="font-semibold text-earth-900">$1</strong></li>')
-                  .replace(/^"(.*?)"$/gm, '<blockquote class="border-l-4 border-ochre-400 pl-6 italic text-earth-700 my-6">$1</blockquote>')
-                  // Finally handle paragraphs
-                  .replace(/\n\n/g, '</p><p>')
-                  .replace(/^/, '<p>')
-                  .replace(/$/, '</p>')
+                __html: (() => {
+                  let html = post.content;
+
+                  // Convert markdown images
+                  html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full rounded-lg shadow-lg my-8" />');
+
+                  // Convert headings
+                  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-3xl font-bold text-earth-900 mt-8 mb-4">$1</h1>');
+                  html = html.replace(/^## (.*?)$/gm, '<h2 class="text-2xl font-bold text-earth-900 mt-8 mb-4">$1</h2>');
+                  html = html.replace(/^### (.*?)$/gm, '<h3 class="text-xl font-semibold text-earth-800 mt-6 mb-3">$1</h3>');
+
+                  // Convert bullet lists
+                  html = html.replace(/((?:^- .*$\n?)+)/gm, (match) => {
+                    const items = match.trim().split('\n').map(line =>
+                      line.replace(/^- (.*)$/, '<li class="mb-2">$1</li>')
+                    ).join('');
+                    return `<ul class="list-disc ml-6 my-4">${items}</ul>`;
+                  });
+
+                  // Convert bold text
+                  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-earth-900">$1</strong>');
+
+                  // Convert paragraphs (only plain text lines, not HTML)
+                  html = html.replace(/^(?!<|$)(.+)$/gm, '<p class="mb-4">$1</p>');
+
+                  return html;
+                })()
               }}
             />
           </div>

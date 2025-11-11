@@ -25,6 +25,15 @@ import MediaManagerPage from "../pages/MediaManagerPage";
 import ContentDashboardPage from "../pages/ContentDashboardPage";
 import { GalleryUploadPage } from "../pages/GalleryUploadPage";
 import DocumentsPage from "../pages/DocumentsPage";
+import DocumentAnalysisPage from "../pages/DocumentAnalysisPage";
+import ImpactOverviewPage from "../pages/ImpactOverviewPage";
+import ServiceImpactDashboard from "../pages/ServiceImpactDashboard";
+import AddOutcomePage from "../pages/AddOutcomePage";
+import ImpactReportPage from "../pages/ImpactReportPage";
+import EnhancedMediaManagerPage from "../pages/EnhancedMediaManagerPage";
+import EmpathyLedgerManagementPage from "../pages/EmpathyLedgerManagementPage";
+import EmpathyLedgerTestPage from "../pages/EmpathyLedgerTestPage";
+import VideoGalleryPage from "../pages/VideoGalleryPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export const AppRoutes = () => {
@@ -39,6 +48,14 @@ export const AppRoutes = () => {
       {/* Staff Portal - No main layout (has its own header) */}
       <Route path="/staff-portal" element={<StaffPortalPage />} />
       <Route path="/staff-portal/documents" element={<DocumentsPage />} />
+      <Route path="/staff-portal/documents/:documentId/analysis" element={<DocumentAnalysisPage />} />
+      <Route path="/staff-portal/impact" element={<ImpactOverviewPage />} />
+      <Route path="/staff-portal/impact/add-outcome" element={<AddOutcomePage />} />
+      <Route path="/staff-portal/impact/report" element={<ImpactReportPage />} />
+      <Route path="/staff-portal/impact/:serviceArea" element={<ServiceImpactDashboard />} />
+      <Route path="/staff-portal/media-manager" element={<EnhancedMediaManagerPage />} />
+      <Route path="/staff-portal/empathy-ledger-test" element={<EmpathyLedgerTestPage />} />
+      <Route path="/staff-portal/empathy-ledger" element={<EmpathyLedgerManagementPage />} />
       <Route path="/staff" element={<StaffPortalPage />} />
       <Route path="/presentation" element={<PresentationPage />} />
 
@@ -55,6 +72,7 @@ export const AppRoutes = () => {
         <Route path="contact" element={<ContactPage />} />
         <Route path="blog" element={<BlogPage />} />
         <Route path="blog/:id" element={<BlogPostDetailPage />} />
+        <Route path="videos" element={<VideoGalleryPage />} />
         <Route
           path="content-generator"
           element={
