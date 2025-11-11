@@ -166,43 +166,43 @@ const BlogPostDetailPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-sand-50">
       {/* Hero Section */}
-      <div className="relative h-96 overflow-hidden">
-        <img 
-          src={post.images.hero} 
+      <div className="relative h-[500px] overflow-hidden mt-16">
+        <img
+          src={post.images.hero}
           alt={post.title}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-900/70 to-transparent"></div>
-        
+
         {/* Back Button */}
-        <div className="absolute top-8 left-8 z-10">
+        <div className="absolute top-6 left-8 z-10">
           <Button
             variant="secondary"
             onClick={() => navigate('/blog')}
-            className="bg-white/90 backdrop-blur-sm border-white text-earth-900 hover:bg-white"
+            className="bg-white/90 backdrop-blur-sm border-white text-earth-900 hover:bg-white shadow-lg"
           >
             ← Back to Blog
           </Button>
         </div>
 
         {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8">
+        <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-wrap items-center gap-3 mb-4">
               <span className={`px-3 py-1 bg-${typeColor}-500 text-white rounded-full text-sm font-medium capitalize`}>
                 {post.type.replace('-', ' ')}
               </span>
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
               {post.title}
             </h1>
-            
+
             <p className="text-xl text-white/90 mb-6 max-w-3xl">
               {post.excerpt}
             </p>
-            
-            <div className="flex items-center space-x-6 text-white/80">
+
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80">
               <div className="flex items-center space-x-2">
                 <span>📝</span>
                 <span>{post.author}</span>
@@ -214,10 +214,6 @@ const BlogPostDetailPage: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <span>⏱️</span>
                 <span>{post.readTime} min read</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span>👁️</span>
-                <span>{post.stats.views.toLocaleString()} views</span>
               </div>
             </div>
           </div>

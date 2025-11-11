@@ -361,6 +361,10 @@ async function syncNotionToSupabase() {
       // Embed videos in content (convert URLs to iframes)
       content = embedVideosInContent(content);
 
+      // Extract first image for hero image
+      const firstImageMatch = content.match(/!\[Image\]\((https:\/\/[^)]+)\)/);
+      const heroImage = firstImageMatch ? firstImageMatch[1] : null;
+
       // Extract excerpt (before HTML, for clean text)
       const excerpt = content.substring(0, 200).replace(/[#\n<>]/g, '').trim() + '...';
 
@@ -391,6 +395,7 @@ async function syncNotionToSupabase() {
             cultural_review: true,
             elder_approved: true,
             project_id: SUPABASE_PROJECT_ID,
+            hero_image: heroImage,
           })
           .eq('id', existingPost.id)
           .select()
@@ -419,6 +424,7 @@ async function syncNotionToSupabase() {
             elder_approved: true,
             source_notion_page_id: notionPageId,
             project_id: SUPABASE_PROJECT_ID,
+            hero_image: heroImage,
           })
           .select()
           .single();
