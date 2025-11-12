@@ -26,24 +26,11 @@ interface BlogPost {
   culturalReview?: string;
 }
 
-interface ContentStats {
-  totalPosts: number;
-  weeklyViews: number;
-  communityEngagement: number;
-  culturalStories: number;
-}
-
 const DynamicBlog: React.FC = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState(false);
-  const [stats, setStats] = useState<ContentStats>({
-    totalPosts: 0,
-    weeklyViews: 0,
-    communityEngagement: 0,
-    culturalStories: 0,
-  });
 
   const categories = [
     { id: "all", name: "All Stories", icon: "📚", color: "ochre" },
@@ -86,25 +73,10 @@ const DynamicBlog: React.FC = () => {
         limit: 50, // Load up to 50 posts
       });
 
-      const stats = await blogService.getBlogStats();
-
       setPosts(blogPosts);
-      setStats({
-        totalPosts: stats.totalPosts,
-        weeklyViews: stats.weeklyViews,
-        communityEngagement:
-          Math.round((stats.publishedPosts / stats.totalPosts) * 100) || 0,
-        culturalStories: stats.culturalStories,
-      });
     } catch (error) {
       console.error("Error loading blog posts:", error);
       setPosts([]);
-      setStats({
-        totalPosts: 0,
-        weeklyViews: 0,
-        communityEngagement: 0,
-        culturalStories: 0,
-      });
     }
   };
 
@@ -137,7 +109,6 @@ const DynamicBlog: React.FC = () => {
       };
 
       setPosts((prev) => [newPost, ...prev]);
-      setStats((prev) => ({ ...prev, totalPosts: prev.totalPosts + 1 }));
     } catch (error) {
       console.error("Content generation error:", error);
     } finally {
@@ -157,34 +128,6 @@ const DynamicBlog: React.FC = () => {
           cultural knowledge, and the truth about our work in youth justice and
           healing.
         </p>
-      </div>
-
-      {/* Stats Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        <Card className="text-center p-6 bg-gradient-to-br from-ochre-50 to-ochre-100">
-          <div className="text-3xl font-bold text-ochre-800 mb-2">
-            {stats.totalPosts}
-          </div>
-          <div className="text-ochre-600 font-medium">Total Stories</div>
-        </Card>
-        <Card className="text-center p-6 bg-gradient-to-br from-eucalyptus-50 to-eucalyptus-100">
-          <div className="text-3xl font-bold text-eucalyptus-800 mb-2">
-            {stats.weeklyViews}
-          </div>
-          <div className="text-eucalyptus-600 font-medium">Weekly Views</div>
-        </Card>
-        <Card className="text-center p-6 bg-gradient-to-br from-earth-50 to-earth-100">
-          <div className="text-3xl font-bold text-earth-800 mb-2">
-            {stats.communityEngagement}%
-          </div>
-          <div className="text-earth-600 font-medium">Engagement Rate</div>
-        </Card>
-        <Card className="text-center p-6 bg-gradient-to-br from-sand-50 to-sand-100">
-          <div className="text-3xl font-bold text-sand-800 mb-2">
-            {stats.culturalStories}
-          </div>
-          <div className="text-sand-600 font-medium">Cultural Insights</div>
-        </Card>
       </div>
 
       {/* Category Filter & Generate Button */}
