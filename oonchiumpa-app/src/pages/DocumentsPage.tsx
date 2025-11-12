@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { DocumentUpload } from '../components/DocumentUpload';
 import {
   documentService,
   type TranscriptRecord
 } from '../services/documentService';
+import analysisResults from '../document-analysis-results.json';
+import { StaffPortalHeader } from '../components/StaffPortalHeader';
 
 export const DocumentsPage: React.FC = () => {
   const [documents, setDocuments] = useState<TranscriptRecord[]>([]);
@@ -129,9 +132,11 @@ export const DocumentsPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Header */}
-      <div className="mb-8">
+    <>
+      <StaffPortalHeader />
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Documents</h1>
@@ -286,6 +291,15 @@ export const DocumentsPage: React.FC = () => {
                   </div>
 
                   <div className="flex items-center space-x-2 ml-4">
+                    {analysisResults.find((a: any) => a.documentId === doc.id) && (
+                      <Link
+                        to={`/staff-portal/documents/${doc.id}/analysis`}
+                        className="px-3 py-1.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-md transition-colors"
+                        title="View AI Analysis"
+                      >
+                        🔍 Analysis
+                      </Link>
+                    )}
                     <button
                       onClick={() => handleDownload(doc.id)}
                       className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
@@ -317,6 +331,7 @@ export const DocumentsPage: React.FC = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
