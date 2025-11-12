@@ -208,7 +208,7 @@ const DynamicBlog: React.FC = () => {
               {post.culturalReview && (
                 <div className="mb-3">
                   <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">
-                    ✓ {post.culturalReview}
+                    ✓ {post.culturalReview === true || post.culturalReview === 'true' ? 'Elder Approved' : post.culturalReview}
                   </span>
                 </div>
               )}
