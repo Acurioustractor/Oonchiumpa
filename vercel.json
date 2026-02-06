@@ -5,6 +5,10 @@
   "installCommand": "cd oonchiumpa-app && npm install",
   "rewrites": [
     {
+      "source": "/atnarpa-snow",
+      "destination": "/atnarpa-snow/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

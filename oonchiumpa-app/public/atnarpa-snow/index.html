@@ -1,0 +1,822 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atnarpa Proposal - Visual Pitch</title>
+  <style>
+    :root {
+      --brand-500: #2f8f64;
+      --brand-600: #1f734f;
+      --ocean-500: #3b82f6;
+      --clay-50: #f8fafc;
+      --clay-100: #f1f5f9;
+      --clay-900: #0f172a;
+      --earth-500: #d97706;
+      --white: #ffffff;
+      --shadow: 0 18px 44px rgba(15, 23, 42, 0.15);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: var(--clay-900);
+      background:
+        radial-gradient(circle at 12% 2%, rgba(47, 143, 100, 0.2), transparent 38%),
+        radial-gradient(circle at 88% 10%, rgba(59, 130, 246, 0.2), transparent 42%),
+        linear-gradient(180deg, #f8fafc 0%, #eef3f7 100%);
+      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 14px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-family: "Avenir Next Condensed", "Franklin Gothic Medium", "Segoe UI", sans-serif;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #1f2f44;
+      max-width: 74ch;
+    }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 60px 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #041d3f;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(3, 10, 30, 0.22), rgba(3, 10, 30, 0.84));
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 3;
+      padding: 56px 0 72px;
+      color: var(--white);
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 84px);
+      margin-bottom: 16px;
+      max-width: 18ch;
+    }
+
+    .subtitle {
+      font-size: clamp(19px, 2.4vw, 30px);
+      color: #d9ecff;
+      margin-bottom: 14px;
+      max-width: 28ch;
+    }
+
+    .byline {
+      font-size: 16px;
+      color: #d5e4f2;
+      margin-bottom: 26px;
+      max-width: 72ch;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 10px 18px;
+      border: 0;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .button.primary {
+      color: var(--white);
+      background: linear-gradient(120deg, var(--brand-500), #2aa27b);
+      box-shadow: 0 8px 22px rgba(47, 143, 100, 0.45);
+    }
+
+    .button.secondary {
+      color: #0b2341;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .card {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .acknowledge {
+      margin-top: -34px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .image-card {
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-height: 300px;
+      position: relative;
+      background: #d9e6ef;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: var(--white);
+      background: linear-gradient(180deg, transparent, rgba(2, 12, 36, 0.84));
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .quote {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(120deg, #fff9eb, #ffefd8);
+      border-left: 4px solid var(--earth-500);
+      font-size: 18px;
+      color: #3a2b12;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .timeline .card { border-top: 5px solid var(--brand-500); }
+
+    .phase {
+      font-weight: 800;
+      color: var(--brand-600);
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .pillars .card h3 { font-size: 24px; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      padding: 9px 14px;
+      background: #ffffff;
+      font-size: 14px;
+      color: #29415c;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(160deg, #ffffff, #e8f3ee);
+      border: 1px solid rgba(47, 143, 100, 0.2);
+    }
+
+    .metric h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #1f734f;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .journal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      color: #124d7a;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(18, 77, 122, 0.3);
+      padding-bottom: 4px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .video-card video {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #0f172a;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-card .meta {
+      padding: 14px 16px 16px;
+      font-size: 14px;
+      color: #334a62;
+      font-weight: 600;
+    }
+
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .family-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .family-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .family-card blockquote {
+      margin: 0;
+      padding: 14px 16px 8px;
+      font-size: 16px;
+      color: #2a3647;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+      min-height: 105px;
+    }
+
+    .family-card cite {
+      display: block;
+      padding: 0 16px 6px;
+      color: #49607a;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .photo-file {
+      display: block;
+      padding: 0 16px 16px;
+      color: #6c8097;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .closing {
+      color: var(--white);
+      background:
+        linear-gradient(160deg, rgba(2, 29, 58, 0.9), rgba(11, 54, 78, 0.96)),
+        url("assets/atnarpa/originals/img-032.jpg") center / cover no-repeat;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .closing p { color: #edf5ff; }
+
+    .footer {
+      color: #54687f;
+      font-size: 13px;
+      text-align: center;
+      padding: 24px 0 44px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .grid-2,
+      .grid-3,
+      .timeline,
+      .metrics,
+      .pillars,
+      .video-grid,
+      .family-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero { min-height: 76vh; }
+      .family-card img { height: 280px; }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      .section { padding: 20px 0; }
+
+      .hero {
+        min-height: 400px;
+        background:
+          linear-gradient(180deg, rgba(3, 10, 30, 0.22), rgba(3, 10, 30, 0.84)),
+          url("assets/videos/light/posters/header-dji-0323-light.jpg") center / cover no-repeat;
+      }
+
+      .hero-video,
+      .button,
+      .video-card video,
+      .journal-link {
+        display: none !important;
+      }
+
+      .card,
+      .image-card,
+      .closing,
+      .video-card,
+      .family-card {
+        box-shadow: none;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/videos/light/posters/header-dji-0323-light.jpg">
+      <source src="assets/videos/light/header-dji-0323-light.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="container hero-body reveal">
+      <span class="tag">Atnarpa Proposal 2026-2036</span>
+      <h1>Building Family Wealth and Cultural Continuity on Country</h1>
+      <p class="subtitle">Traditional Owners of Loves Creek Station and Oonchiumpa Consultancy and Services</p>
+      <p class="byline">Supported by A Curious Tractor. A ten-year pathway for intergenerational opportunity, cultural leadership, and community-led enterprise in and around Alice Springs.</p>
+      <div class="action-row">
+        <a class="button primary" href="https://www.snowfoundation.org.au/" target="_blank" rel="noreferrer">Snow Foundation</a>
+        <a class="button secondary" href="https://www.act.place/blog/historys-wounds-and-tomorrows-possibilities" target="_blank" rel="noreferrer">Read Build Story</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section acknowledge">
+      <div class="container">
+        <article class="card reveal">
+          <h2>Acknowledgement of Country</h2>
+          <p>We acknowledge the Traditional Owners of Atnarpa and Loves Creek Station, and we pay our respects to Elders past and present. This proposal is our commitment to care for Country and strengthen culture, community, and family through our own leadership.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <article class="card reveal">
+          <span class="tag">Legacy</span>
+          <h2>Building on Our Family Legacy</h2>
+          <p>Our family legacy carries responsibility and pride. The homestead and surrounding Country hold both the weight of history and the strength of survival.</p>
+          <p class="quote">"We know what we wanna do on our land, and we know how to get there." - Kristy Bloomfield</p>
+          <p>We continue this work through cultural authority, practical delivery, and shared commitment to future generations.</p>
+        </article>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-001.jpg" alt="Family legacy photograph" />
+          <figcaption class="image-caption">Family history and continuity at Atnarpa</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Continuity</span>
+        <h2 class="reveal">From Pastoralist to Tourism and On-Country Learning</h2>
+        <p class="reveal">Our ancestors shared knowledge through pastoral life, station work, and family teaching. That practice continues through cultural tourism, educational immersion, and intergenerational transfer of knowledge.</p>
+        <div class="grid-3">
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-003.jpg" alt="Pastoral and cultural tourism history" />
+            <figcaption class="image-caption">Knowledge sharing from station life to visitor engagement</figcaption>
+          </figure>
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-008.jpg" alt="On-country educational training" />
+            <figcaption class="image-caption">On-country educational training and youth learning</figcaption>
+          </figure>
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-004.jpg" alt="Loves Creek Station heritage" />
+            <figcaption class="image-caption">Family-led cultural education on Country</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-012.jpg" alt="Love's Creek Land Claim ceremony" />
+          <figcaption class="image-caption">Land claim recognition and community ceremony</figcaption>
+        </figure>
+        <article class="card reveal">
+          <span class="tag">Land Rights</span>
+          <h2>Land Claim and Present-Day Stewardship</h2>
+          <p>Land rights recognition enables us to lead our own future at Atnarpa. It allows restoration, activation, and long-term planning under Traditional Owner leadership.</p>
+          <p>Today, we continue sharing culture with care and invite respectful participation guided by our rules and values.</p>
+          <p class="quote">"Our kids 10 years time, that's our focus at the moment." - Kylie Bloomfield</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <article class="card reveal">
+          <span class="tag">Project Journal</span>
+          <h2>Last Build Story</h2>
+          <p>The previous build week and partnership context is documented in this story from A Curious Tractor. It can sit beside this pitch as supporting evidence of delivery and trust.</p>
+          <a class="journal-link" href="https://www.act.place/blog/historys-wounds-and-tomorrows-possibilities" target="_blank" rel="noreferrer">History's wounds and tomorrow's possibilities</a>
+        </article>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-013.jpg" alt="Bloomfield family team portrait" />
+          <figcaption class="image-caption">Current leadership and family stewardship</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Work on the Station</span>
+        <h2 class="reveal">Video Gallery</h2>
+        <p class="reveal">These clips show day-to-day work, land care, and family-led activity on station. Videos are click-to-play.</p>
+        <div class="video-grid">
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-01-light.jpg">
+              <source src="assets/videos/light/work-on-station-01-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 01</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-02-light.jpg">
+              <source src="assets/videos/light/work-on-station-02-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 02</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-03-light.jpg">
+              <source src="assets/videos/light/work-on-station-03-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 03</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-04-light.jpg">
+              <source src="assets/videos/light/work-on-station-04-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 04</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-05-light.jpg">
+              <source src="assets/videos/light/work-on-station-05-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 05</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Family Voices</span>
+        <h2 class="reveal">Interview Quotes and Family Profiles</h2>
+        <div class="family-grid">
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-013.jpg" alt="Family profile on station" />
+            <blockquote>"This week has made a huge impact on our family and creating our own history."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+            <span class="photo-file">Photo file: img-013.jpg</span>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-001.jpg" alt="Family elder portrait" />
+            <blockquote>"Growing up here, mate, it's God's country."</blockquote>
+            <cite>Shane Bloomfield</cite>
+            <span class="photo-file">Photo file: img-001.jpg</span>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-002.jpg" alt="Family ancestor profile" />
+            <blockquote>"We know what we wanna do on our land, and we know how to get there."</blockquote>
+            <cite>Kristy Bloomfield</cite>
+            <span class="photo-file">Photo file: img-002.jpg</span>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-006.jpg" alt="Family tourism leadership image" />
+            <blockquote>"Our kids 10 years time, that's our focus at the moment."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+            <span class="photo-file">Photo file: img-006.jpg</span>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-011.jpg" alt="Family and community recognition" />
+            <blockquote>"It's just good to be coming home, to grow my kids up here."</blockquote>
+            <cite>Henry Bloomfield</cite>
+            <span class="photo-file">Photo file: img-011.jpg</span>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-012.jpg" alt="Family and community gathering" />
+            <blockquote>"What they created here with us this week was unbelievable."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+            <span class="photo-file">Photo file: img-012.jpg</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">10-Year Pathway</span>
+        <h2 class="reveal">Delivery Approach and Phasing (2026-2036)</h2>
+        <div class="timeline">
+          <article class="card reveal">
+            <div class="phase">Phase 1 - 2026 to 2028</div>
+            <h3>Design and Enabling Works</h3>
+            <p>Complete design, approvals, and site-enabling works while launching early cultural and youth programs.</p>
+          </article>
+          <article class="card reveal">
+            <div class="phase">Phase 2 - 2029 to 2031</div>
+            <h3>Core Build and Launch</h3>
+            <p>Deliver the function space, covered connections, and essential services. Open for education, events, and tourism activity.</p>
+          </article>
+          <article class="card reveal">
+            <div class="phase">Phase 3 - 2032 to 2036</div>
+            <h3>Growth and Refinement</h3>
+            <p>Scale programs, refine operations, and transfer leadership pathways across family and community.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Program Pillars</span>
+        <h2 class="reveal">Community-Centered Activities</h2>
+        <div class="pillars">
+          <article class="card reveal">
+            <h3>On-Country Workshops</h3>
+            <p>Cultural learning, storytelling, and identity-strengthening led by Traditional Owners and mentors.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Youth Training Pathways</h3>
+            <p>Skill development for employment in hospitality, land care, logistics, and cultural program delivery.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Community Events</h3>
+            <p>Shared gatherings, intergenerational exchange, and respectful visitor engagement on Country.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Cultural Enterprise</h3>
+            <p>Story sharing and locally led offerings that build family income and protect cultural authority.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container grid-2">
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-029.jpg" alt="Current site and landscape view" />
+          <figcaption class="image-caption">Function room and gathering space context</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-020.jpg" alt="Outdoor deck and event area concept" />
+          <figcaption class="image-caption">Activated event and workshop area concept</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Scope and Quote</span>
+        <h2 class="reveal">High-Level Scope Categories</h2>
+        <div class="chips reveal">
+          <span class="chip">Project management and community engagement</span>
+          <span class="chip">Design, approvals, and compliance</span>
+          <span class="chip">Site prep, access, and services</span>
+          <span class="chip">Construction and fit-out</span>
+          <span class="chip">Program delivery and facilitation</span>
+          <span class="chip">Operations, maintenance, and evaluation</span>
+          <span class="chip">Contingency and remote logistics allowances</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Outcomes</span>
+        <h2 class="reveal">Measurement Framework</h2>
+        <div class="metrics">
+          <article class="metric reveal">
+            <h3>Participation</h3>
+            <p>Workshop attendance, program completion, and event engagement across age groups.</p>
+          </article>
+          <article class="metric reveal">
+            <h3>Pathways</h3>
+            <p>Youth training uptake and progression into employment and leadership roles.</p>
+          </article>
+          <article class="metric reveal">
+            <h3>Delivery</h3>
+            <p>Site-readiness milestones, build completion stages, and ongoing operational stability.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <article class="closing reveal">
+          <span class="tag">Closing Invitation</span>
+          <h2>Partnership That Respects Community Leadership</h2>
+          <p>Atnarpa is a place of memory and possibility. We are seeking partnership that strengthens our capacity to deliver our own vision over the next ten years.</p>
+          <p>We invite Snow Foundation to walk with us as we build family wealth, cultural continuity, and opportunity for young people and the wider Alice Springs community.</p>
+          <p>"We know what we want to do on our land, and we know how to get there."</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Visual draft prepared for Atnarpa proposal development. Designed for web review and PDF export.
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    const autoVideos = Array.from(document.querySelectorAll("[data-auto-video]"));
+    const autoVideoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    autoVideos.forEach((video) => {
+      video.muted = true;
+      video.playsInline = true;
+      autoVideoObserver.observe(video);
+    });
+
+    const isVisibleEnough = (video) => {
+      const rect = video.getBoundingClientRect();
+      const viewport = window.innerHeight || document.documentElement.clientHeight;
+      const visiblePx = Math.min(rect.bottom, viewport) - Math.max(rect.top, 0);
+      const basis = Math.min(rect.height, viewport);
+      return basis > 0 && visiblePx / basis > 0.2;
+    };
+
+    const syncAutoVideos = () => {
+      autoVideos.forEach((video) => {
+        if (isVisibleEnough(video)) {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    };
+
+    window.addEventListener("scroll", syncAutoVideos, { passive: true });
+    window.addEventListener("resize", syncAutoVideos);
+    window.addEventListener("load", syncAutoVideos);
+    setTimeout(syncAutoVideos, 300);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        autoVideos.forEach((video) => video.pause());
+      }
+    });
+  </script>
+</body>
+</html>
