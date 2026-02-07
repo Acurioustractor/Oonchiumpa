@@ -9,6 +9,10 @@
       "destination": "/atnarpa-snow/index.html"
     },
     {
+      "source": "/atnarpa-snow/(.*)",
+      "destination": "/atnarpa-snow/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

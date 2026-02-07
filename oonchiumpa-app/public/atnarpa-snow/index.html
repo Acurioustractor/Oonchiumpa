@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/atnarpa-snow/" />
   <title>Atnarpa Proposal - Visual Pitch</title>
   <style>
     :root {
@@ -389,6 +390,24 @@
       border: 1px solid rgba(255, 255, 255, 0.8);
       box-shadow: var(--shadow);
       background: #d8e5f1;
+    }
+
+    .drone-map-wrap:fullscreen,
+    .drone-map-wrap:-webkit-full-screen {
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+      border: 0;
+      display: grid;
+      place-items: center;
+      background: #081527;
+    }
+
+    .drone-map-wrap:fullscreen img,
+    .drone-map-wrap:-webkit-full-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .drone-map-wrap img {
@@ -1055,6 +1074,7 @@
           <article class="card reveal">
             <div class="drone-toolbar">
               <button class="button secondary small" id="toggleDrawButton" type="button">Draw Overlay: Off</button>
+              <button class="button secondary small" id="toggleFullscreenButton" type="button">Open Full Screen</button>
               <button class="button secondary small" id="clearDrawButton" type="button">Clear Drawing</button>
             </div>
             <div class="drone-map-wrap" id="droneMapWrap">
@@ -1299,6 +1319,7 @@
     const droneMapImage = document.getElementById("droneMapImage");
     const droneDrawLayer = document.getElementById("droneDrawLayer");
     const toggleDrawButton = document.getElementById("toggleDrawButton");
+    const toggleFullscreenButton = document.getElementById("toggleFullscreenButton");
     const clearDrawButton = document.getElementById("clearDrawButton");
 
     let drawEnabled = false;
@@ -1332,11 +1353,52 @@
       return { ctx, x, y };
     };
 
-    if (toggleDrawButton && droneMapWrap) {
+      if (toggleDrawButton && droneMapWrap) {
       toggleDrawButton.addEventListener("click", () => {
         drawEnabled = !drawEnabled;
         droneMapWrap.classList.toggle("draw-enabled", drawEnabled);
         toggleDrawButton.textContent = drawEnabled ? "Draw Overlay: On" : "Draw Overlay: Off";
+      });
+    }
+
+    const isFullscreenActive = () => {
+      return document.fullscreenElement === droneMapWrap || document.webkitFullscreenElement === droneMapWrap;
+    };
+
+    const syncFullscreenLabel = () => {
+      if (!toggleFullscreenButton) return;
+      toggleFullscreenButton.textContent = isFullscreenActive() ? "Exit Full Screen" : "Open Full Screen";
+      resizeDrawLayer();
+    };
+
+    const openFullscreen = async () => {
+      if (!droneMapWrap) return;
+      if (droneMapWrap.requestFullscreen) {
+        await droneMapWrap.requestFullscreen();
+        return;
+      }
+      if (droneMapWrap.webkitRequestFullscreen) {
+        droneMapWrap.webkitRequestFullscreen();
+      }
+    };
+
+    const closeFullscreen = async () => {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        await document.exitFullscreen();
+        return;
+      }
+      if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    };
+
+    if (toggleFullscreenButton) {
+      toggleFullscreenButton.addEventListener("click", async () => {
+        if (isFullscreenActive()) {
+          await closeFullscreen();
+        } else {
+          await openFullscreen();
+        }
       });
     }
 
@@ -1373,10 +1435,13 @@
     }
 
     window.addEventListener("resize", resizeDrawLayer);
+    document.addEventListener("fullscreenchange", syncFullscreenLabel);
+    document.addEventListener("webkitfullscreenchange", syncFullscreenLabel);
     if (droneMapImage) {
       droneMapImage.addEventListener("load", resizeDrawLayer);
     }
     resizeDrawLayer();
+    syncFullscreenLabel();
     setActiveZone("zoneA");
   </script>
 </body>
