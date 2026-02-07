@@ -266,6 +266,227 @@
       color: #29415c;
     }
 
+    .cost-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .cost-item {
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #ffffff;
+    }
+
+    .cost-item h3 {
+      font-size: 21px;
+      margin-bottom: 6px;
+      color: #163756;
+    }
+
+    .cost-item p {
+      font-size: 14px;
+      color: #4b6179;
+      margin-bottom: 12px;
+    }
+
+    .cost-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .cost-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .cost-field.wide {
+      grid-column: span 2;
+    }
+
+    .cost-field label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: #38506a;
+    }
+
+    .cost-field input,
+    .cost-field textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      background: #f9fbff;
+      color: #13263b;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+
+    .cost-field textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    .cost-summary {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .cost-total {
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: linear-gradient(130deg, #ffffff, #edf6ff);
+    }
+
+    .cost-total strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #3d5670;
+      margin-bottom: 5px;
+    }
+
+    .cost-total span {
+      font-size: 24px;
+      font-weight: 800;
+      color: #12385a;
+    }
+
+    .drone-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .drone-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .button.small {
+      min-height: 36px;
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 9px;
+    }
+
+    .drone-map-wrap {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow);
+      background: #d8e5f1;
+    }
+
+    .drone-map-wrap img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .drone-draw-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .drone-map-wrap.draw-enabled .drone-draw-layer {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+
+    .zone-pin {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      background: rgba(14, 93, 160, 0.9);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
+    .zone-pin.active {
+      background: rgba(217, 119, 6, 0.95);
+    }
+
+    .zone-a { top: 51%; left: 36%; }
+    .zone-b { top: 38%; left: 64%; }
+    .zone-c { top: 62%; left: 53%; }
+    .zone-d { top: 31%; left: 22%; }
+    .zone-e { top: 70%; left: 73%; }
+
+    .map-help {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #45617d;
+    }
+
+    .zone-panel video {
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+      background: #0f172a;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      aspect-ratio: 16 / 9;
+    }
+
+    .zone-title {
+      margin-top: 4px;
+      font-size: 22px;
+      color: #16395b;
+    }
+
+    .zone-note {
+      margin-top: 8px;
+      color: #45617d;
+      font-size: 14px;
+    }
+
+    .zone-selector {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .zone-selector button {
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #ffffff;
+      color: #204565;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .zone-selector button.active {
+      background: #eaf5ff;
+      border-color: rgba(21, 93, 157, 0.4);
+    }
+
     .metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -414,8 +635,16 @@
       .metrics,
       .pillars,
       .video-grid,
-      .family-grid {
+      .family-grid,
+      .drone-layout,
+      .cost-summary {
         grid-template-columns: 1fr;
+      }
+      .cost-fields {
+        grid-template-columns: 1fr;
+      }
+      .cost-field.wide {
+        grid-column: span 1;
       }
       .hero { min-height: 76vh; }
       .family-card img { height: 280px; }
@@ -439,7 +668,8 @@
       .hero-video,
       .button,
       .video-card video,
-      .journal-link {
+      .journal-link,
+      .drone-toolbar {
         display: none !important;
       }
 
@@ -704,6 +934,162 @@
 
     <section class="section">
       <div class="container">
+        <span class="tag reveal">Costing and Dream Plan</span>
+        <h2 class="reveal">Area Costing Worksheet</h2>
+        <p class="reveal">Use these fields to enter base build costings and dream-plan extensions for each delivery area. Figures can be revised live with partners and contractors.</p>
+        <div class="cost-grid">
+          <article class="cost-item reveal">
+            <h3>Function Room, Kitchen and Toilets</h3>
+            <p>Core enclosed facility for workshops, events, and year-round operation.</p>
+            <div class="cost-fields">
+              <div class="cost-field">
+                <label>Current Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="base" placeholder="e.g. 420000" />
+              </div>
+              <div class="cost-field">
+                <label>Dream Plan Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="dream" placeholder="e.g. 520000" />
+              </div>
+              <div class="cost-field wide">
+                <label>Dream Plan Additions</label>
+                <textarea placeholder="Examples: solar integration, expanded indoor learning space, stronger acoustics, cultural display fit-out."></textarea>
+              </div>
+            </div>
+          </article>
+
+          <article class="cost-item reveal">
+            <h3>Covered Connection Between Structures</h3>
+            <p>Shaded transition zone with airflow, fan points, and protected circulation.</p>
+            <div class="cost-fields">
+              <div class="cost-field">
+                <label>Current Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="base" placeholder="e.g. 85000" />
+              </div>
+              <div class="cost-field">
+                <label>Dream Plan Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="dream" placeholder="e.g. 130000" />
+              </div>
+              <div class="cost-field wide">
+                <label>Dream Plan Additions</label>
+                <textarea placeholder="Examples: weather-rated lighting, integrated cooling, cultural pattern screening, additional shade width."></textarea>
+              </div>
+            </div>
+          </article>
+
+          <article class="cost-item reveal">
+            <h3>Ground Preparation, Boulders, Access and Services</h3>
+            <p>Site leveling, drainage, heavy access, cultural landscape treatment, and utility readiness.</p>
+            <div class="cost-fields">
+              <div class="cost-field">
+                <label>Current Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="base" placeholder="e.g. 160000" />
+              </div>
+              <div class="cost-field">
+                <label>Dream Plan Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="dream" placeholder="e.g. 240000" />
+              </div>
+              <div class="cost-field wide">
+                <label>Dream Plan Additions</label>
+                <textarea placeholder="Examples: upgraded arrivals path, additional boulder terracing, stronger all-weather access, expanded service trenching."></textarea>
+              </div>
+            </div>
+          </article>
+
+          <article class="cost-item reveal">
+            <h3>External Seating and Gathering Areas</h3>
+            <p>Outdoor event spaces for dining, storytelling, training, and visitor hosting.</p>
+            <div class="cost-fields">
+              <div class="cost-field">
+                <label>Current Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="base" placeholder="e.g. 110000" />
+              </div>
+              <div class="cost-field">
+                <label>Dream Plan Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="dream" placeholder="e.g. 180000" />
+              </div>
+              <div class="cost-field wide">
+                <label>Dream Plan Additions</label>
+                <textarea placeholder="Examples: expanded decking, elevated viewing points, fire-circle upgrades, additional event power."></textarea>
+              </div>
+            </div>
+          </article>
+
+          <article class="cost-item reveal">
+            <h3>Programs, Operations and Cultural Facilitation</h3>
+            <p>On-country programming, youth pathways, delivery staffing, and annual operations.</p>
+            <div class="cost-fields">
+              <div class="cost-field">
+                <label>Current Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="base" placeholder="e.g. 95000" />
+              </div>
+              <div class="cost-field">
+                <label>Dream Plan Cost (AUD)</label>
+                <input type="text" inputmode="decimal" data-cost-kind="dream" placeholder="e.g. 160000" />
+              </div>
+              <div class="cost-field wide">
+                <label>Dream Plan Additions</label>
+                <textarea placeholder="Examples: extra mentor roles, more youth placements, stronger visitor orientation, monitoring and evaluation support."></textarea>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="cost-summary reveal">
+          <div class="cost-total">
+            <strong>Total Current Cost (AUD)</strong>
+            <span id="totalBaseCost">$0</span>
+          </div>
+          <div class="cost-total">
+            <strong>Total Dream Plan Cost (AUD)</strong>
+            <span id="totalDreamCost">$0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="tag reveal">Drone Masterplan</span>
+        <h2 class="reveal">Build Zone Overlay and Flyover Planner</h2>
+        <p class="reveal">Use this drone image to map build zones, trace boundaries, and connect each zone to flyover footage. You can draw directly over the image while planning.</p>
+        <div class="drone-layout">
+          <article class="card reveal">
+            <div class="drone-toolbar">
+              <button class="button secondary small" id="toggleDrawButton" type="button">Draw Overlay: Off</button>
+              <button class="button secondary small" id="clearDrawButton" type="button">Clear Drawing</button>
+            </div>
+            <div class="drone-map-wrap" id="droneMapWrap">
+              <img src="assets/atnarpa/originals/img-009.jpg" alt="Drone overview image for Atnarpa masterplan zoning" id="droneMapImage" />
+              <canvas class="drone-draw-layer" id="droneDrawLayer"></canvas>
+              <button type="button" class="zone-pin zone-a active" data-zone-key="zoneA">A</button>
+              <button type="button" class="zone-pin zone-b" data-zone-key="zoneB">B</button>
+              <button type="button" class="zone-pin zone-c" data-zone-key="zoneC">C</button>
+              <button type="button" class="zone-pin zone-d" data-zone-key="zoneD">D</button>
+              <button type="button" class="zone-pin zone-e" data-zone-key="zoneE">E</button>
+            </div>
+            <p class="map-help">Pin Guide: A Function Hall Precinct, B Services Cluster, C Covered Link Spine, D Arrival and Cultural Welcome, E Gathering and Event Edge.</p>
+          </article>
+
+          <article class="card zone-panel reveal">
+            <span class="tag">Zone Flyover</span>
+            <h3 class="zone-title" id="zoneTitle">Zone A: Function Hall Precinct</h3>
+            <p class="zone-note" id="zoneDescription">Primary location for enclosed function room, kitchen, and toilets. Use this as the anchor footprint for the first major build package.</p>
+            <video id="zoneVideo" autoplay muted loop controls playsinline preload="metadata" poster="assets/videos/light/posters/header-dji-0323-light.jpg">
+              <source id="zoneVideoSource" src="assets/videos/light/header-dji-0323-light.mp4" type="video/mp4" />
+            </video>
+            <div class="zone-selector">
+              <button type="button" class="active" data-zone-key="zoneA">Zone A</button>
+              <button type="button" data-zone-key="zoneB">Zone B</button>
+              <button type="button" data-zone-key="zoneC">Zone C</button>
+              <button type="button" data-zone-key="zoneD">Zone D</button>
+              <button type="button" data-zone-key="zoneE">Zone E</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
         <span class="tag reveal">Scope and Quote</span>
         <h2 class="reveal">High-Level Scope Categories</h2>
         <div class="chips reveal">
@@ -817,6 +1203,181 @@
         autoVideos.forEach((video) => video.pause());
       }
     });
+
+    const parseCostValue = (value) => {
+      const cleaned = String(value || "").replace(/[^0-9.]/g, "");
+      const parsed = Number.parseFloat(cleaned);
+      return Number.isFinite(parsed) ? parsed : 0;
+    };
+
+    const formatAud = (value) => {
+      return new Intl.NumberFormat("en-AU", {
+        style: "currency",
+        currency: "AUD",
+        maximumFractionDigits: 0
+      }).format(value);
+    };
+
+    const updateCostTotals = () => {
+      const baseInputs = Array.from(document.querySelectorAll('input[data-cost-kind="base"]'));
+      const dreamInputs = Array.from(document.querySelectorAll('input[data-cost-kind="dream"]'));
+      const baseTotal = baseInputs.reduce((sum, input) => sum + parseCostValue(input.value), 0);
+      const dreamTotal = dreamInputs.reduce((sum, input) => sum + parseCostValue(input.value), 0);
+      const baseTarget = document.getElementById("totalBaseCost");
+      const dreamTarget = document.getElementById("totalDreamCost");
+      if (baseTarget) baseTarget.textContent = formatAud(baseTotal);
+      if (dreamTarget) dreamTarget.textContent = formatAud(dreamTotal);
+    };
+
+    document.querySelectorAll('input[data-cost-kind]').forEach((input) => {
+      input.addEventListener("input", updateCostTotals);
+    });
+    updateCostTotals();
+
+    const zoneData = {
+      zoneA: {
+        title: "Zone A: Function Hall Precinct",
+        description: "Primary location for enclosed function room, kitchen, and toilets. Use this as the anchor footprint for the first major build package.",
+        video: "assets/videos/light/header-dji-0323-light.mp4",
+        poster: "assets/videos/light/posters/header-dji-0323-light.jpg"
+      },
+      zoneB: {
+        title: "Zone B: Services Cluster",
+        description: "Potential area for utility support, storage, and delivery access that backs the function room operations.",
+        video: "assets/videos/light/work-on-station-02-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-02-light.jpg"
+      },
+      zoneC: {
+        title: "Zone C: Covered Link Spine",
+        description: "Shaded connection between structures, pedestrian flow, and all-weather movement corridor.",
+        video: "assets/videos/light/work-on-station-01-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-01-light.jpg"
+      },
+      zoneD: {
+        title: "Zone D: Arrival and Cultural Welcome",
+        description: "Entry zone for orientation, welcome moments, and wayfinding into the active project area.",
+        video: "assets/videos/light/work-on-station-03-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-03-light.jpg"
+      },
+      zoneE: {
+        title: "Zone E: Gathering and Event Edge",
+        description: "Outdoor seating, event spill-out, and landscape-based gathering spaces aligned to views and cultural use.",
+        video: "assets/videos/light/work-on-station-04-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-04-light.jpg"
+      }
+    };
+
+    const zoneVideo = document.getElementById("zoneVideo");
+    const zoneVideoSource = document.getElementById("zoneVideoSource");
+    const zoneTitle = document.getElementById("zoneTitle");
+    const zoneDescription = document.getElementById("zoneDescription");
+    const zonePins = Array.from(document.querySelectorAll(".zone-pin"));
+    const zoneButtons = Array.from(document.querySelectorAll(".zone-selector button"));
+
+    const setActiveZone = (zoneKey) => {
+      const zone = zoneData[zoneKey];
+      if (!zone || !zoneVideo || !zoneVideoSource || !zoneTitle || !zoneDescription) return;
+      zoneTitle.textContent = zone.title;
+      zoneDescription.textContent = zone.description;
+      zoneVideo.setAttribute("poster", zone.poster);
+      zoneVideoSource.setAttribute("src", zone.video);
+      zoneVideo.load();
+      const p = zoneVideo.play();
+      if (p && typeof p.catch === "function") p.catch(() => {});
+      zonePins.forEach((pin) => pin.classList.toggle("active", pin.dataset.zoneKey === zoneKey));
+      zoneButtons.forEach((button) => button.classList.toggle("active", button.dataset.zoneKey === zoneKey));
+    };
+
+    zonePins.forEach((pin) => {
+      pin.addEventListener("click", () => setActiveZone(pin.dataset.zoneKey));
+    });
+    zoneButtons.forEach((button) => {
+      button.addEventListener("click", () => setActiveZone(button.dataset.zoneKey));
+    });
+
+    const droneMapWrap = document.getElementById("droneMapWrap");
+    const droneMapImage = document.getElementById("droneMapImage");
+    const droneDrawLayer = document.getElementById("droneDrawLayer");
+    const toggleDrawButton = document.getElementById("toggleDrawButton");
+    const clearDrawButton = document.getElementById("clearDrawButton");
+
+    let drawEnabled = false;
+    let drawing = false;
+
+    const resizeDrawLayer = () => {
+      if (!droneMapImage || !droneDrawLayer) return;
+      const rect = droneMapImage.getBoundingClientRect();
+      const pixelRatio = window.devicePixelRatio || 1;
+      droneDrawLayer.width = Math.floor(rect.width * pixelRatio);
+      droneDrawLayer.height = Math.floor(rect.height * pixelRatio);
+      droneDrawLayer.style.width = rect.width + "px";
+      droneDrawLayer.style.height = rect.height + "px";
+      const ctx = droneDrawLayer.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(pixelRatio, pixelRatio);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "rgba(236, 119, 40, 0.95)";
+    };
+
+    const getDrawContextAndPoint = (event) => {
+      if (!droneDrawLayer) return null;
+      const rect = droneDrawLayer.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const ctx = droneDrawLayer.getContext("2d");
+      if (!ctx) return null;
+      return { ctx, x, y };
+    };
+
+    if (toggleDrawButton && droneMapWrap) {
+      toggleDrawButton.addEventListener("click", () => {
+        drawEnabled = !drawEnabled;
+        droneMapWrap.classList.toggle("draw-enabled", drawEnabled);
+        toggleDrawButton.textContent = drawEnabled ? "Draw Overlay: On" : "Draw Overlay: Off";
+      });
+    }
+
+    if (clearDrawButton && droneDrawLayer) {
+      clearDrawButton.addEventListener("click", () => {
+        const ctx = droneDrawLayer.getContext("2d");
+        if (!ctx) return;
+        ctx.clearRect(0, 0, droneDrawLayer.width, droneDrawLayer.height);
+      });
+    }
+
+    if (droneDrawLayer) {
+      droneDrawLayer.addEventListener("pointerdown", (event) => {
+        if (!drawEnabled) return;
+        const point = getDrawContextAndPoint(event);
+        if (!point) return;
+        drawing = true;
+        point.ctx.beginPath();
+        point.ctx.moveTo(point.x, point.y);
+      });
+      droneDrawLayer.addEventListener("pointermove", (event) => {
+        if (!drawEnabled || !drawing) return;
+        const point = getDrawContextAndPoint(event);
+        if (!point) return;
+        point.ctx.lineTo(point.x, point.y);
+        point.ctx.stroke();
+      });
+      droneDrawLayer.addEventListener("pointerup", () => {
+        drawing = false;
+      });
+      droneDrawLayer.addEventListener("pointerleave", () => {
+        drawing = false;
+      });
+    }
+
+    window.addEventListener("resize", resizeDrawLayer);
+    if (droneMapImage) {
+      droneMapImage.addEventListener("load", resizeDrawLayer);
+    }
+    resizeDrawLayer();
+    setActiveZone("zoneA");
   </script>
 </body>
 </html>
