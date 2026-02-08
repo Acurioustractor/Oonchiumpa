@@ -392,24 +392,6 @@
       background: #d8e5f1;
     }
 
-    .drone-map-wrap:fullscreen,
-    .drone-map-wrap:-webkit-full-screen {
-      width: 100vw;
-      height: 100vh;
-      border-radius: 0;
-      border: 0;
-      display: grid;
-      place-items: center;
-      background: #081527;
-    }
-
-    .drone-map-wrap:fullscreen img,
-    .drone-map-wrap:-webkit-full-screen img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
     .drone-map-wrap img {
       width: 100%;
       display: block;
@@ -504,6 +486,184 @@
     .zone-selector button.active {
       background: #eaf5ff;
       border-color: rgba(21, 93, 157, 0.4);
+    }
+
+    .zone-gallery {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .zone-gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: #f5f8fc;
+    }
+
+    .zone-gallery-item img {
+      width: 100%;
+      height: 76px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .zone-gallery-item span {
+      display: block;
+      padding: 6px 8px 8px;
+      font-size: 11px;
+      color: #3d5772;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .zone-focus {
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: #fff;
+    }
+
+    .zone-focus img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+    }
+
+    .zone-focus-caption {
+      padding: 9px 11px;
+      font-size: 12px;
+      color: #3f5a75;
+      font-weight: 700;
+    }
+
+    .planner-shell {
+      display: contents;
+    }
+
+    .planner-shell:fullscreen,
+    .planner-shell:-webkit-full-screen {
+      background: #081427;
+      color: #dbe9f7;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 0;
+      align-items: stretch;
+      width: 100vw;
+      height: 100vh;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .planner-shell:fullscreen .planner-left,
+    .planner-shell:-webkit-full-screen .planner-left {
+      position: relative;
+      padding: 14px 16px 12px;
+      background: #081427;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .planner-shell:fullscreen .planner-right,
+    .planner-shell:-webkit-full-screen .planner-right {
+      display: block;
+      border-left: 1px solid rgba(148, 177, 206, 0.2);
+      background: #102138;
+      color: #dce9f7;
+      overflow: auto;
+      padding: 18px 16px 24px;
+    }
+
+    .planner-shell:fullscreen .zone-panel,
+    .planner-shell:-webkit-full-screen .zone-panel {
+      box-shadow: none;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .planner-shell:fullscreen .zone-panel .tag,
+    .planner-shell:-webkit-full-screen .zone-panel .tag {
+      background: rgba(255, 255, 255, 0.12);
+      color: #dce9f7;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .planner-shell:fullscreen .zone-title,
+    .planner-shell:-webkit-full-screen .zone-title {
+      color: #f2f7ff;
+    }
+
+    .planner-shell:fullscreen .zone-note,
+    .planner-shell:-webkit-full-screen .zone-note {
+      color: #c9d9eb;
+    }
+
+    .planner-shell:fullscreen .zone-selector button,
+    .planner-shell:-webkit-full-screen .zone-selector button {
+      background: rgba(255, 255, 255, 0.14);
+      color: #eff6ff;
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+
+    .planner-shell:fullscreen .zone-selector button.active,
+    .planner-shell:-webkit-full-screen .zone-selector button.active {
+      background: rgba(72, 153, 226, 0.35);
+      border-color: rgba(130, 192, 249, 0.5);
+    }
+
+    .planner-shell:fullscreen .zone-gallery-item,
+    .planner-shell:-webkit-full-screen .zone-gallery-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(199, 220, 242, 0.24);
+    }
+
+    .planner-shell:fullscreen .zone-gallery-item span,
+    .planner-shell:-webkit-full-screen .zone-gallery-item span,
+    .planner-shell:fullscreen .zone-focus-caption,
+    .planner-shell:-webkit-full-screen .zone-focus-caption {
+      color: #d8e8fa;
+    }
+
+    .planner-shell:fullscreen .drone-map-wrap,
+    .planner-shell:-webkit-full-screen .drone-map-wrap {
+      flex: 1;
+      min-height: 0;
+      border-radius: 12px;
+      border: 1px solid rgba(205, 223, 241, 0.25);
+      background: #0f2034;
+      overflow: hidden;
+    }
+
+    .planner-shell:fullscreen .drone-map-wrap img,
+    .planner-shell:-webkit-full-screen .drone-map-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #0d1b2c;
+    }
+
+    .planner-shell:fullscreen .map-help,
+    .planner-shell:-webkit-full-screen .map-help {
+      margin-top: 8px;
+      color: #b9cfe5;
+    }
+
+    .planner-shell:fullscreen .drone-toolbar,
+    .planner-shell:-webkit-full-screen .drone-toolbar {
+      margin-bottom: 8px;
+    }
+
+    .planner-shell:fullscreen .drone-toolbar .button.secondary,
+    .planner-shell:-webkit-full-screen .drone-toolbar .button.secondary {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.24);
+      color: #f0f6ff;
     }
 
     .metrics {
@@ -1070,11 +1230,12 @@
         <span class="tag reveal">Drone Masterplan</span>
         <h2 class="reveal">Build Zone Overlay and Flyover Planner</h2>
         <p class="reveal">Use this drone image to map build zones, trace boundaries, and connect each zone to flyover footage. You can draw directly over the image while planning.</p>
-        <div class="drone-layout">
-          <article class="card reveal">
+        <div class="drone-layout planner-shell" id="plannerShell">
+          <article class="card reveal planner-left">
             <div class="drone-toolbar">
               <button class="button secondary small" id="toggleDrawButton" type="button">Draw Overlay: Off</button>
               <button class="button secondary small" id="toggleFullscreenButton" type="button">Open Full Screen</button>
+              <button class="button secondary small" id="toggleSidebarButton" type="button">Hide Sidebar</button>
               <button class="button secondary small" id="clearDrawButton" type="button">Clear Drawing</button>
             </div>
             <div class="drone-map-wrap" id="droneMapWrap">
@@ -1089,13 +1250,18 @@
             <p class="map-help">Pin Guide: A Function Hall Precinct, B Services Cluster, C Covered Link Spine, D Arrival and Cultural Welcome, E Gathering and Event Edge.</p>
           </article>
 
-          <article class="card zone-panel reveal">
+          <article class="card zone-panel reveal planner-right" id="plannerSidebar">
             <span class="tag">Zone Flyover</span>
             <h3 class="zone-title" id="zoneTitle">Zone A: Function Hall Precinct</h3>
             <p class="zone-note" id="zoneDescription">Primary location for enclosed function room, kitchen, and toilets. Use this as the anchor footprint for the first major build package.</p>
             <video id="zoneVideo" autoplay muted loop controls playsinline preload="metadata" poster="assets/videos/light/posters/header-dji-0323-light.jpg">
               <source id="zoneVideoSource" src="assets/videos/light/header-dji-0323-light.mp4" type="video/mp4" />
             </video>
+            <figure class="zone-focus">
+              <img id="zoneFocusImage" src="assets/atnarpa/originals/img-018.jpg" alt="Selected zone reference image" />
+              <figcaption class="zone-focus-caption" id="zoneFocusCaption">Current footprint and topography for Zone A.</figcaption>
+            </figure>
+            <div class="zone-gallery" id="zoneGallery"></div>
             <div class="zone-selector">
               <button type="button" class="active" data-zone-key="zoneA">Zone A</button>
               <button type="button" data-zone-key="zoneB">Zone B</button>
@@ -1259,31 +1425,56 @@
         title: "Zone A: Function Hall Precinct",
         description: "Primary location for enclosed function room, kitchen, and toilets. Use this as the anchor footprint for the first major build package.",
         video: "assets/videos/light/header-dji-0323-light.mp4",
-        poster: "assets/videos/light/posters/header-dji-0323-light.jpg"
+        poster: "assets/videos/light/posters/header-dji-0323-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-018.jpg", caption: "Main function space footprint and mountain outlook." },
+          { src: "assets/atnarpa/originals/img-029.jpg", caption: "Current edge condition for hall and event orientation." },
+          { src: "assets/atnarpa/originals/img-023.jpg", caption: "Wider site reference for arrival and circulation planning." }
+        ]
       },
       zoneB: {
         title: "Zone B: Services Cluster",
         description: "Potential area for utility support, storage, and delivery access that backs the function room operations.",
         video: "assets/videos/light/work-on-station-02-light.mp4",
-        poster: "assets/videos/light/posters/work-on-station-02-light.jpg"
+        poster: "assets/videos/light/posters/work-on-station-02-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-017.jpg", caption: "Existing services and temporary infrastructure layout." },
+          { src: "assets/atnarpa/originals/img-019.jpg", caption: "Service-side condition for staging and access improvements." },
+          { src: "assets/atnarpa/originals/img-024.jpg", caption: "Reference edge where utilities and event operations meet." }
+        ]
       },
       zoneC: {
         title: "Zone C: Covered Link Spine",
         description: "Shaded connection between structures, pedestrian flow, and all-weather movement corridor.",
         video: "assets/videos/light/work-on-station-01-light.mp4",
-        poster: "assets/videos/light/posters/work-on-station-01-light.jpg"
+        poster: "assets/videos/light/posters/work-on-station-01-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-019.jpg", caption: "Potential line for covered connection and pathways." },
+          { src: "assets/atnarpa/originals/img-025.jpg", caption: "Deck and transition precedent for shaded movement." },
+          { src: "assets/atnarpa/originals/img-030.jpg", caption: "Ground condition reference for linking structures." }
+        ]
       },
       zoneD: {
         title: "Zone D: Arrival and Cultural Welcome",
         description: "Entry zone for orientation, welcome moments, and wayfinding into the active project area.",
         video: "assets/videos/light/work-on-station-03-light.mp4",
-        poster: "assets/videos/light/posters/work-on-station-03-light.jpg"
+        poster: "assets/videos/light/posters/work-on-station-03-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-021.jpg", caption: "Arrival-facing context for welcome and storytelling points." },
+          { src: "assets/atnarpa/originals/img-013.jpg", caption: "Family-led welcome and on-country hosting context." },
+          { src: "assets/atnarpa/originals/img-003.jpg", caption: "Historical continuity reference for cultural entry narrative." }
+        ]
       },
       zoneE: {
         title: "Zone E: Gathering and Event Edge",
         description: "Outdoor seating, event spill-out, and landscape-based gathering spaces aligned to views and cultural use.",
         video: "assets/videos/light/work-on-station-04-light.mp4",
-        poster: "assets/videos/light/posters/work-on-station-04-light.jpg"
+        poster: "assets/videos/light/posters/work-on-station-04-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-020.jpg", caption: "Existing event edge and deck precedent." },
+          { src: "assets/atnarpa/originals/img-022.jpg", caption: "Gathering zone orientation with sunset and terrain." },
+          { src: "assets/atnarpa/originals/img-016.jpg", caption: "Dinner and tourism activation precedent for event edge." }
+        ]
       }
     };
 
@@ -1291,8 +1482,14 @@
     const zoneVideoSource = document.getElementById("zoneVideoSource");
     const zoneTitle = document.getElementById("zoneTitle");
     const zoneDescription = document.getElementById("zoneDescription");
+    const zoneGallery = document.getElementById("zoneGallery");
+    const zoneFocusImage = document.getElementById("zoneFocusImage");
+    const zoneFocusCaption = document.getElementById("zoneFocusCaption");
     const zonePins = Array.from(document.querySelectorAll(".zone-pin"));
     const zoneButtons = Array.from(document.querySelectorAll(".zone-selector button"));
+    const plannerShell = document.getElementById("plannerShell");
+    const plannerSidebar = document.getElementById("plannerSidebar");
+    const toggleSidebarButton = document.getElementById("toggleSidebarButton");
 
     const setActiveZone = (zoneKey) => {
       const zone = zoneData[zoneKey];
@@ -1304,6 +1501,28 @@
       zoneVideo.load();
       const p = zoneVideo.play();
       if (p && typeof p.catch === "function") p.catch(() => {});
+
+      if (zoneGallery && zoneFocusImage && zoneFocusCaption) {
+        zoneGallery.innerHTML = "";
+        const photos = Array.isArray(zone.photos) ? zone.photos : [];
+        if (photos.length > 0) {
+          zoneFocusImage.setAttribute("src", photos[0].src);
+          zoneFocusCaption.textContent = photos[0].caption || "Zone reference image";
+        }
+        photos.forEach((photo, idx) => {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = "zone-gallery-item";
+          item.setAttribute("aria-label", "Open zone image " + (idx + 1));
+          item.innerHTML = `<img src="${photo.src}" alt="Zone reference ${idx + 1}" /><span>${photo.caption || "Zone image"}</span>`;
+          item.addEventListener("click", () => {
+            zoneFocusImage.setAttribute("src", photo.src);
+            zoneFocusCaption.textContent = photo.caption || "Zone reference image";
+          });
+          zoneGallery.appendChild(item);
+        });
+      }
+
       zonePins.forEach((pin) => pin.classList.toggle("active", pin.dataset.zoneKey === zoneKey));
       zoneButtons.forEach((button) => button.classList.toggle("active", button.dataset.zoneKey === zoneKey));
     };
@@ -1399,6 +1618,15 @@
         } else {
           await openFullscreen();
         }
+      });
+    }
+
+    if (toggleSidebarButton && plannerSidebar && plannerShell) {
+      toggleSidebarButton.addEventListener("click", () => {
+        const hidden = plannerSidebar.style.display === "none";
+        plannerSidebar.style.display = hidden ? "" : "none";
+        toggleSidebarButton.textContent = hidden ? "Hide Sidebar" : "Show Sidebar";
+        if (isFullscreenActive()) resizeDrawLayer();
       });
     }
 
