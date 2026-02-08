@@ -500,11 +500,15 @@
       overflow: hidden;
       border: 1px solid rgba(15, 23, 42, 0.16);
       background: #f5f8fc;
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
     }
 
     .zone-gallery-item img {
       width: 100%;
-      height: 76px;
+      height: 96px;
       object-fit: cover;
       display: block;
     }
@@ -540,29 +544,49 @@
       font-weight: 700;
     }
 
-    .planner-shell {
-      display: contents;
+    .sidebar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
+
+    .sidebar-close {
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #edf6ff;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+    }
+
+    .planner-shell { position: relative; }
 
     .planner-shell:fullscreen,
     .planner-shell:-webkit-full-screen {
-      background: #081427;
-      color: #dbe9f7;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 0;
-      align-items: stretch;
+      position: relative;
+      display: block;
       width: 100vw;
       height: 100vh;
       padding: 0;
       overflow: hidden;
+      background: #081427;
+      color: #dbe9f7;
     }
 
     .planner-shell:fullscreen .planner-left,
     .planner-shell:-webkit-full-screen .planner-left {
-      position: relative;
-      padding: 14px 16px 12px;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+      box-shadow: none;
       background: #081427;
+      padding: 14px 16px 12px;
       display: flex;
       flex-direction: column;
       min-height: 0;
@@ -570,21 +594,39 @@
 
     .planner-shell:fullscreen .planner-right,
     .planner-shell:-webkit-full-screen .planner-right {
-      display: block;
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(380px, 36vw);
+      min-width: 320px;
+      height: 100%;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
       border-left: 1px solid rgba(148, 177, 206, 0.2);
+      box-shadow: none;
       background: #102138;
       color: #dce9f7;
       overflow: auto;
       padding: 18px 16px 24px;
+      z-index: 10;
+    }
+
+    .planner-shell.sidebar-open:fullscreen .planner-right,
+    .planner-shell.sidebar-open:-webkit-full-screen .planner-right {
+      display: block;
+    }
+
+    .planner-shell.sidebar-open:fullscreen .planner-left,
+    .planner-shell.sidebar-open:-webkit-full-screen .planner-left {
+      padding-right: min(400px, 38vw);
     }
 
     .planner-shell:fullscreen .zone-panel,
     .planner-shell:-webkit-full-screen .zone-panel {
       box-shadow: none;
-      border: 0;
-      background: transparent;
       color: inherit;
-      padding: 0;
     }
 
     .planner-shell:fullscreen .zone-panel .tag,
@@ -628,6 +670,21 @@
     .planner-shell:fullscreen .zone-focus-caption,
     .planner-shell:-webkit-full-screen .zone-focus-caption {
       color: #d8e8fa;
+    }
+
+    .planner-shell:fullscreen .zone-focus,
+    .planner-shell:-webkit-full-screen .zone-focus {
+      display: block;
+    }
+
+    .planner-shell:fullscreen .zone-gallery,
+    .planner-shell:-webkit-full-screen .zone-gallery {
+      display: grid;
+    }
+
+    .planner-shell:fullscreen .sidebar-close,
+    .planner-shell:-webkit-full-screen .sidebar-close {
+      display: inline-flex;
     }
 
     .planner-shell:fullscreen .drone-map-wrap,
@@ -1235,7 +1292,6 @@
             <div class="drone-toolbar">
               <button class="button secondary small" id="toggleDrawButton" type="button">Draw Overlay: Off</button>
               <button class="button secondary small" id="toggleFullscreenButton" type="button">Open Full Screen</button>
-              <button class="button secondary small" id="toggleSidebarButton" type="button">Hide Sidebar</button>
               <button class="button secondary small" id="clearDrawButton" type="button">Clear Drawing</button>
             </div>
             <div class="drone-map-wrap" id="droneMapWrap">
@@ -1251,7 +1307,10 @@
           </article>
 
           <article class="card zone-panel reveal planner-right" id="plannerSidebar">
-            <span class="tag">Zone Flyover</span>
+            <div class="sidebar-head">
+              <span class="tag">Zone Flyover</span>
+              <button type="button" class="sidebar-close" id="closeSidebarButton">Close</button>
+            </div>
             <h3 class="zone-title" id="zoneTitle">Zone A: Function Hall Precinct</h3>
             <p class="zone-note" id="zoneDescription">Primary location for enclosed function room, kitchen, and toilets. Use this as the anchor footprint for the first major build package.</p>
             <video id="zoneVideo" autoplay muted loop controls playsinline preload="metadata" poster="assets/videos/light/posters/header-dji-0323-light.jpg">
@@ -1489,9 +1548,23 @@
     const zoneButtons = Array.from(document.querySelectorAll(".zone-selector button"));
     const plannerShell = document.getElementById("plannerShell");
     const plannerSidebar = document.getElementById("plannerSidebar");
-    const toggleSidebarButton = document.getElementById("toggleSidebarButton");
+    const closeSidebarButton = document.getElementById("closeSidebarButton");
 
-    const setActiveZone = (zoneKey) => {
+    const isFullscreenActive = () => {
+      return document.fullscreenElement === plannerShell || document.webkitFullscreenElement === plannerShell;
+    };
+
+    const setSidebarOpen = (open) => {
+      if (!plannerShell || !plannerSidebar) return;
+      const fullscreen = isFullscreenActive();
+      plannerShell.classList.toggle("sidebar-open", fullscreen && open);
+      plannerSidebar.setAttribute("aria-hidden", fullscreen ? (open ? "false" : "true") : "false");
+      if (typeof resizeDrawLayer === "function") {
+        requestAnimationFrame(() => resizeDrawLayer());
+      }
+    };
+
+    const setActiveZone = (zoneKey, options = {}) => {
       const zone = zoneData[zoneKey];
       if (!zone || !zoneVideo || !zoneVideoSource || !zoneTitle || !zoneDescription) return;
       zoneTitle.textContent = zone.title;
@@ -1525,13 +1598,21 @@
 
       zonePins.forEach((pin) => pin.classList.toggle("active", pin.dataset.zoneKey === zoneKey));
       zoneButtons.forEach((button) => button.classList.toggle("active", button.dataset.zoneKey === zoneKey));
+
+      if (options.openSidebar && isFullscreenActive()) {
+        setSidebarOpen(true);
+      }
     };
 
     zonePins.forEach((pin) => {
-      pin.addEventListener("click", () => setActiveZone(pin.dataset.zoneKey));
+      pin.addEventListener("click", () => {
+        setActiveZone(pin.dataset.zoneKey, { openSidebar: true });
+      });
     });
     zoneButtons.forEach((button) => {
-      button.addEventListener("click", () => setActiveZone(button.dataset.zoneKey));
+      button.addEventListener("click", () => {
+        setActiveZone(button.dataset.zoneKey, { openSidebar: true });
+      });
     });
 
     const droneMapWrap = document.getElementById("droneMapWrap");
@@ -1580,24 +1661,22 @@
       });
     }
 
-    const isFullscreenActive = () => {
-      return document.fullscreenElement === droneMapWrap || document.webkitFullscreenElement === droneMapWrap;
-    };
-
     const syncFullscreenLabel = () => {
       if (!toggleFullscreenButton) return;
       toggleFullscreenButton.textContent = isFullscreenActive() ? "Exit Full Screen" : "Open Full Screen";
+      if (!isFullscreenActive()) setSidebarOpen(false);
       resizeDrawLayer();
     };
 
     const openFullscreen = async () => {
-      if (!droneMapWrap) return;
-      if (droneMapWrap.requestFullscreen) {
-        await droneMapWrap.requestFullscreen();
+      if (!plannerShell) return;
+      setSidebarOpen(false);
+      if (plannerShell.requestFullscreen) {
+        await plannerShell.requestFullscreen();
         return;
       }
-      if (droneMapWrap.webkitRequestFullscreen) {
-        droneMapWrap.webkitRequestFullscreen();
+      if (plannerShell.webkitRequestFullscreen) {
+        plannerShell.webkitRequestFullscreen();
       }
     };
 
@@ -1621,12 +1700,10 @@
       });
     }
 
-    if (toggleSidebarButton && plannerSidebar && plannerShell) {
-      toggleSidebarButton.addEventListener("click", () => {
-        const hidden = plannerSidebar.style.display === "none";
-        plannerSidebar.style.display = hidden ? "" : "none";
-        toggleSidebarButton.textContent = hidden ? "Hide Sidebar" : "Show Sidebar";
-        if (isFullscreenActive()) resizeDrawLayer();
+    if (closeSidebarButton) {
+      closeSidebarButton.addEventListener("click", () => {
+        setSidebarOpen(false);
+        resizeDrawLayer();
       });
     }
 
