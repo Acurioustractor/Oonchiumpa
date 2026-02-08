@@ -2036,6 +2036,9 @@
     }
 
     const draftStorageKey = "atnarpa-local-draft-v1";
+    const repoDraftFileName = "editor-draft.json";
+    const repoRootPath = "/Users/benknight/Code/Oochiumpa";
+    const repoDraftRelativePath = "oonchiumpa-app/public/atnarpa-snow/editor-draft.json";
 
     const copyTextToClipboard = async (value) => {
       try {
@@ -2045,6 +2048,106 @@
         }
       } catch (_) {}
       return false;
+    };
+
+    const padNumber = (value) => String(value).padStart(2, "0");
+
+    const buildBranchAndDeployCommands = () => {
+      const now = new Date();
+      const stamp = [
+        now.getFullYear(),
+        padNumber(now.getMonth() + 1),
+        padNumber(now.getDate())
+      ].join("") + "-" + [padNumber(now.getHours()), padNumber(now.getMinutes())].join("");
+      const branchName = "codex/atnarpa-editor-" + stamp;
+      return [
+        "cd " + repoRootPath,
+        "git checkout -b " + branchName,
+        "git add oonchiumpa-app/public/atnarpa-snow/index.html " + repoDraftRelativePath,
+        "git commit -m \"Update Atnarpa local editor content\"",
+        "git push -u origin HEAD",
+        "cd oonchiumpa-app",
+        "vercel deploy"
+      ].join("\n");
+    };
+
+    const openNestedDirectory = async (rootHandle, pathParts) => {
+      let current = rootHandle;
+      for (const part of pathParts) {
+        current = await current.getDirectoryHandle(part);
+      }
+      return current;
+    };
+
+    const resolveProjectDraftDirectory = async (pickedHandle) => {
+      if (!pickedHandle) return null;
+      if (pickedHandle.name === "atnarpa-snow") return pickedHandle;
+      const candidatePaths = [
+        ["oonchiumpa-app", "public", "atnarpa-snow"],
+        ["public", "atnarpa-snow"],
+        ["atnarpa-snow"]
+      ];
+      for (const pathParts of candidatePaths) {
+        try {
+          const candidate = await openNestedDirectory(pickedHandle, pathParts);
+          if (candidate) return candidate;
+        } catch (_) {}
+      }
+      return pickedHandle;
+    };
+
+    const saveDraftToProjectFile = async (draft) => {
+      if (!window.showDirectoryPicker) {
+        window.alert("This browser does not support direct file save. Use Export Draft instead.");
+        return false;
+      }
+      try {
+        const pickedHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+        const targetDirectory = await resolveProjectDraftDirectory(pickedHandle);
+        if (!targetDirectory) return false;
+        const fileHandle = await targetDirectory.getFileHandle(repoDraftFileName, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(JSON.stringify(draft, null, 2));
+        await writable.close();
+        return true;
+      } catch (error) {
+        if (error && error.name === "AbortError") return false;
+        window.alert("Could not save editor-draft.json to the selected folder.");
+        return false;
+      }
+    };
+
+    const collectEditorTargets = () => {
+      const textTargets = Array.from(document.querySelectorAll(
+        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main blockquote, main cite, main figcaption, .footer .container"
+      )).filter((el) => {
+        return !el.closest(".zone-panel")
+          && !el.closest(".cost-field")
+          && !el.closest(".cost-summary")
+          && !el.closest(".drone-toolbar")
+          && !el.closest("#editorDock");
+      });
+
+      textTargets.forEach((el, index) => {
+        if (!el.dataset.editorId) {
+          el.dataset.editorId = "text-" + String(index + 1);
+        }
+      });
+
+      const imageTargets = Array.from(document.querySelectorAll("img")).filter((img) => {
+        if (img.id === "zoneFocusImage") return false;
+        if (img.closest(".zone-gallery-item")) return false;
+        if (img.closest("#editorDock")) return false;
+        return true;
+      });
+
+      imageTargets.forEach((img, index) => {
+        if (!img.dataset.editorImageId) {
+          img.dataset.editorImageId = "image-" + String(index + 1);
+        }
+      });
+
+      return { textTargets, imageTargets };
     };
 
     const buildDraftPayload = (textTargets, imageTargets) => {
@@ -2120,37 +2223,10 @@
       setActiveZone(activeZone);
     };
 
-    const setupLocalEditor = () => {
+    const setupLocalEditor = async () => {
       const zoneKeys = Object.keys(zoneData);
       if (zoneKeys.length === 0) return;
-
-      const textTargets = Array.from(document.querySelectorAll(
-        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main blockquote, main cite, main figcaption, .footer .container"
-      )).filter((el) => {
-        return !el.closest(".zone-panel")
-          && !el.closest(".cost-field")
-          && !el.closest(".cost-summary")
-          && !el.closest(".drone-toolbar");
-      });
-
-      textTargets.forEach((el, index) => {
-        if (!el.dataset.editorId) {
-          el.dataset.editorId = "text-" + String(index + 1);
-        }
-      });
-
-      const imageTargets = Array.from(document.querySelectorAll("img")).filter((img) => {
-        if (img.id === "zoneFocusImage") return false;
-        if (img.closest(".zone-gallery-item")) return false;
-        if (img.closest("#editorDock")) return false;
-        return true;
-      });
-
-      imageTargets.forEach((img, index) => {
-        if (!img.dataset.editorImageId) {
-          img.dataset.editorImageId = "image-" + String(index + 1);
-        }
-      });
+      const { textTargets, imageTargets } = collectEditorTargets();
 
       const launchButton = document.createElement("button");
       launchButton.type = "button";
@@ -2167,7 +2243,7 @@
           <button type="button" id="editorCloseButton">Close</button>
         </div>
         <div class="editor-body">
-          <p class="editor-note">Turn on Text/Image Edit, then edit copy directly. Click any image to swap it (local upload or path/URL), and click zone title/description/caption in the pin panel to update zone copy.</p>
+          <p class="editor-note">Turn on Text/Image Edit, then edit copy directly. Click any image to swap it (local upload or path/URL), and click zone title/description/caption in the pin panel to update zone copy. Save To Project File writes <code>editor-draft.json</code> into this site folder.</p>
           <div class="editor-actions">
             <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
             <button type="button" id="editorTogglePins">Pin Drag: Off</button>
@@ -2175,6 +2251,8 @@
             <button type="button" id="editorExportDraft">Export Draft</button>
             <button type="button" id="editorImportDraft">Import Draft</button>
             <button type="button" id="editorResetDraft">Reset Draft</button>
+            <button type="button" id="editorSaveRepoFile">Save To Project File</button>
+            <button type="button" id="editorCopyBranchDeploy">Copy Branch + Deploy Cmds</button>
           </div>
           <input type="file" id="editorImportInput" accept="application/json" hidden />
           <input type="file" id="editorLocalImageInput" accept="image/*" hidden />
@@ -2233,6 +2311,8 @@
       const exportDraftButton = dock.querySelector("#editorExportDraft");
       const importDraftButton = dock.querySelector("#editorImportDraft");
       const resetDraftButton = dock.querySelector("#editorResetDraft");
+      const saveRepoFileButton = dock.querySelector("#editorSaveRepoFile");
+      const copyBranchDeployButton = dock.querySelector("#editorCopyBranchDeploy");
       const importInput = dock.querySelector("#editorImportInput");
       const localImageInput = dock.querySelector("#editorLocalImageInput");
       const zoneSelect = dock.querySelector("#editorZoneSelect");
@@ -2515,6 +2595,31 @@
         });
       }
 
+      if (saveRepoFileButton) {
+        saveRepoFileButton.addEventListener("click", async () => {
+          Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
+          const draft = buildDraftPayload(textTargets, imageTargets);
+          const ok = await saveDraftToProjectFile(draft);
+          if (ok) {
+            localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+            saveRepoFileButton.textContent = "Saved editor-draft.json";
+            setTimeout(() => { saveRepoFileButton.textContent = "Save To Project File"; }, 1700);
+          }
+        });
+      }
+
+      if (copyBranchDeployButton) {
+        copyBranchDeployButton.addEventListener("click", async () => {
+          const commandText = buildBranchAndDeployCommands();
+          const copied = await copyTextToClipboard(commandText);
+          if (!copied) {
+            window.prompt("Copy branch/deploy commands", commandText);
+          }
+          copyBranchDeployButton.textContent = copied ? "Copied Commands" : "Showed Commands";
+          setTimeout(() => { copyBranchDeployButton.textContent = "Copy Branch + Deploy Cmds"; }, 1700);
+        });
+      }
+
       if (zoneSelect) {
         zoneSelect.addEventListener("change", () => {
           const zoneKey = zoneSelect.value;
@@ -2566,12 +2671,24 @@
         refreshZoneForm(zoneKey);
       };
 
+      let hasLocalDraft = false;
       try {
         const savedDraftRaw = localStorage.getItem(draftStorageKey);
         if (savedDraftRaw) {
           applyDraftPayload(JSON.parse(savedDraftRaw), textTargets, imageTargets);
+          hasLocalDraft = true;
         }
       } catch (_) {}
+
+      if (!hasLocalDraft) {
+        try {
+          const response = await fetch(repoDraftFileName + "?ts=" + Date.now(), { cache: "no-store" });
+          if (response.ok) {
+            const repoDraft = await response.json();
+            applyDraftPayload(repoDraft, textTargets, imageTargets);
+          }
+        } catch (_) {}
+      }
 
       refreshZoneForm("zoneA");
       setDockOpen(false);
@@ -2582,7 +2699,7 @@
       || window.location.hostname === "localhost";
 
     if (localEditorEnabled) {
-      setupLocalEditor();
+      setupLocalEditor().catch(() => {});
     }
 
     window.addEventListener("resize", resizeDrawLayer);
