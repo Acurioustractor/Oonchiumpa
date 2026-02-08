@@ -853,6 +853,182 @@
       padding: 24px 0 44px;
     }
 
+    .editor-dock {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: min(420px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      z-index: 1200;
+      border-radius: 14px;
+      background: rgba(8, 20, 39, 0.95);
+      color: #e9f3ff;
+      border: 1px solid rgba(140, 173, 204, 0.28);
+      box-shadow: 0 24px 48px rgba(5, 14, 29, 0.45);
+      display: none;
+      overflow: hidden;
+    }
+
+    .editor-dock.open {
+      display: block;
+    }
+
+    .editor-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(140, 173, 204, 0.24);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .editor-head strong {
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .editor-head button {
+      border: 1px solid rgba(214, 229, 244, 0.35);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f3f8ff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .editor-body {
+      max-height: calc(100vh - 100px);
+      overflow: auto;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .editor-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .editor-actions button,
+    .editor-block button,
+    .editor-inline-button {
+      min-height: 34px;
+      border: 1px solid rgba(214, 229, 244, 0.35);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f3f8ff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .editor-actions button.active {
+      background: rgba(63, 142, 215, 0.42);
+      border-color: rgba(157, 206, 251, 0.62);
+    }
+
+    .editor-note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #c2d8ef;
+    }
+
+    .editor-block {
+      border: 1px solid rgba(140, 173, 204, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .editor-block h4 {
+      margin: 0;
+      font-size: 13px;
+      color: #f1f8ff;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .editor-block label {
+      display: grid;
+      gap: 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #b6cee6;
+      font-weight: 700;
+    }
+
+    .editor-block input,
+    .editor-block textarea,
+    .editor-block select {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(214, 229, 244, 0.34);
+      background: rgba(9, 25, 44, 0.8);
+      color: #f4f9ff;
+      font-size: 12px;
+      font-family: inherit;
+      padding: 7px 9px;
+    }
+
+    .editor-block textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .editor-launch {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1199;
+      min-height: 42px;
+      border: 1px solid rgba(18, 35, 57, 0.35);
+      border-radius: 999px;
+      background: #ec7728;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 9px 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 14px 28px rgba(236, 119, 40, 0.3);
+      display: none;
+    }
+
+    .editor-launch.visible {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .editor-text-mode [data-editor-id] {
+      outline: 1px dashed rgba(236, 119, 40, 0.95);
+      outline-offset: 2px;
+      background: rgba(236, 119, 40, 0.08);
+      cursor: text;
+    }
+
+    .editor-image-mode [data-editor-image-id] {
+      outline: 2px dashed rgba(130, 192, 249, 0.9);
+      outline-offset: 2px;
+      cursor: pointer;
+    }
+
+    .pin-edit-on .zone-pin {
+      cursor: grab;
+      box-shadow: 0 0 0 3px rgba(236, 119, 40, 0.24), 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -905,7 +1081,9 @@
       .button,
       .video-card video,
       .journal-link,
-      .drone-toolbar {
+      .drone-toolbar,
+      .editor-dock,
+      .editor-launch {
         display: none !important;
       }
 
@@ -1549,6 +1727,38 @@
     const plannerShell = document.getElementById("plannerShell");
     const plannerSidebar = document.getElementById("plannerSidebar");
     const closeSidebarButton = document.getElementById("closeSidebarButton");
+    let onZoneChange = null;
+
+    const defaultZonePositions = {
+      zoneA: { top: 51, left: 36 },
+      zoneB: { top: 38, left: 64 },
+      zoneC: { top: 62, left: 53 },
+      zoneD: { top: 31, left: 22 },
+      zoneE: { top: 70, left: 73 }
+    };
+
+    const zonePositions = JSON.parse(JSON.stringify(defaultZonePositions));
+
+    const clampPercent = (value) => Math.max(2, Math.min(98, value));
+
+    const applyPinPositions = () => {
+      zonePins.forEach((pin) => {
+        const key = pin.dataset.zoneKey;
+        const pos = zonePositions[key];
+        if (!pos) return;
+        pin.style.top = clampPercent(pos.top) + "%";
+        pin.style.left = clampPercent(pos.left) + "%";
+      });
+    };
+
+    const updatePinPosition = (zoneKey, top, left) => {
+      if (!zonePositions[zoneKey]) return;
+      zonePositions[zoneKey].top = clampPercent(Number(top) || zonePositions[zoneKey].top);
+      zonePositions[zoneKey].left = clampPercent(Number(left) || zonePositions[zoneKey].left);
+      applyPinPositions();
+    };
+
+    applyPinPositions();
 
     const isFullscreenActive = () => {
       return document.fullscreenElement === plannerShell || document.webkitFullscreenElement === plannerShell;
@@ -1598,20 +1808,64 @@
 
       zonePins.forEach((pin) => pin.classList.toggle("active", pin.dataset.zoneKey === zoneKey));
       zoneButtons.forEach((button) => button.classList.toggle("active", button.dataset.zoneKey === zoneKey));
+      if (typeof onZoneChange === "function") onZoneChange(zoneKey);
 
       if (options.openSidebar && isFullscreenActive()) {
         setSidebarOpen(true);
       }
     };
 
+    let suppressPinClickUntil = 0;
+
     zonePins.forEach((pin) => {
       pin.addEventListener("click", () => {
+        if (Date.now() < suppressPinClickUntil) return;
         setActiveZone(pin.dataset.zoneKey, { openSidebar: true });
       });
     });
     zoneButtons.forEach((button) => {
       button.addEventListener("click", () => {
         setActiveZone(button.dataset.zoneKey, { openSidebar: true });
+      });
+    });
+
+    zonePins.forEach((pin) => {
+      pin.addEventListener("pointerdown", (event) => {
+        if (!pinEditEnabled) return;
+        draggingPin = pin;
+        pinDragMoved = false;
+        if (typeof pin.setPointerCapture === "function") {
+          pin.setPointerCapture(event.pointerId);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      pin.addEventListener("pointermove", (event) => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        const point = getPinPointInMap(event);
+        if (!point) return;
+        pinDragMoved = true;
+        updatePinPosition(pin.dataset.zoneKey, point.top, point.left);
+        if (typeof onPinMoved === "function") {
+          onPinMoved(pin.dataset.zoneKey);
+        }
+      });
+
+      pin.addEventListener("pointerup", (event) => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        if (pinDragMoved) suppressPinClickUntil = Date.now() + 300;
+        if (typeof pin.releasePointerCapture === "function" && pin.hasPointerCapture(event.pointerId)) {
+          pin.releasePointerCapture(event.pointerId);
+        }
+        draggingPin = null;
+        pinDragMoved = false;
+      });
+
+      pin.addEventListener("pointercancel", () => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        draggingPin = null;
+        pinDragMoved = false;
       });
     });
 
@@ -1624,6 +1878,26 @@
 
     let drawEnabled = false;
     let drawing = false;
+    let pinEditEnabled = false;
+    let draggingPin = null;
+    let pinDragMoved = false;
+    let onPinMoved = null;
+
+    const getPinPointInMap = (event) => {
+      if (!droneMapImage) return null;
+      const rect = droneMapImage.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const left = clampPercent(((event.clientX - rect.left) / rect.width) * 100);
+      const top = clampPercent(((event.clientY - rect.top) / rect.height) * 100);
+      return { top, left };
+    };
+
+    const setPinEditMode = (enabled) => {
+      pinEditEnabled = enabled;
+      if (droneMapWrap) {
+        droneMapWrap.classList.toggle("pin-edit-on", enabled);
+      }
+    };
 
     const resizeDrawLayer = () => {
       if (!droneMapImage || !droneDrawLayer) return;
@@ -1737,6 +2011,427 @@
       droneDrawLayer.addEventListener("pointerleave", () => {
         drawing = false;
       });
+    }
+
+    const draftStorageKey = "atnarpa-local-draft-v1";
+
+    const copyTextToClipboard = async (value) => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(value);
+          return true;
+        }
+      } catch (_) {}
+      return false;
+    };
+
+    const buildDraftPayload = (textTargets, imageTargets) => {
+      const text = {};
+      const images = {};
+      textTargets.forEach((el) => {
+        if (!el.dataset.editorId) return;
+        text[el.dataset.editorId] = el.innerHTML;
+      });
+      imageTargets.forEach((img) => {
+        if (!img.dataset.editorImageId) return;
+        images[img.dataset.editorImageId] = {
+          src: img.getAttribute("src") || "",
+          alt: img.getAttribute("alt") || ""
+        };
+      });
+      return {
+        version: 1,
+        updatedAt: new Date().toISOString(),
+        text,
+        images,
+        zoneData: JSON.parse(JSON.stringify(zoneData)),
+        zonePositions: JSON.parse(JSON.stringify(zonePositions))
+      };
+    };
+
+    const applyDraftPayload = (draft, textTargets, imageTargets) => {
+      if (!draft || typeof draft !== "object") return;
+      if (draft.text && typeof draft.text === "object") {
+        textTargets.forEach((el) => {
+          const id = el.dataset.editorId;
+          if (!id || typeof draft.text[id] !== "string") return;
+          el.innerHTML = draft.text[id];
+        });
+      }
+      if (draft.images && typeof draft.images === "object") {
+        imageTargets.forEach((img) => {
+          const id = img.dataset.editorImageId;
+          const item = id ? draft.images[id] : null;
+          if (!item || typeof item !== "object") return;
+          if (typeof item.src === "string" && item.src.trim()) img.setAttribute("src", item.src.trim());
+          if (typeof item.alt === "string") img.setAttribute("alt", item.alt);
+        });
+      }
+      if (draft.zoneData && typeof draft.zoneData === "object") {
+        Object.keys(zoneData).forEach((key) => {
+          const incoming = draft.zoneData[key];
+          if (!incoming || typeof incoming !== "object") return;
+          if (typeof incoming.title === "string" && incoming.title.trim()) zoneData[key].title = incoming.title.trim();
+          if (typeof incoming.description === "string" && incoming.description.trim()) zoneData[key].description = incoming.description.trim();
+          if (typeof incoming.video === "string" && incoming.video.trim()) zoneData[key].video = incoming.video.trim();
+          if (typeof incoming.poster === "string" && incoming.poster.trim()) zoneData[key].poster = incoming.poster.trim();
+          if (Array.isArray(incoming.photos)) {
+            const photos = incoming.photos
+              .map((photo) => ({
+                src: String(photo && photo.src ? photo.src : "").trim(),
+                caption: String(photo && photo.caption ? photo.caption : "").trim()
+              }))
+              .filter((photo) => photo.src);
+            if (photos.length > 0) zoneData[key].photos = photos;
+          }
+        });
+      }
+      if (draft.zonePositions && typeof draft.zonePositions === "object") {
+        Object.keys(zonePositions).forEach((key) => {
+          const incoming = draft.zonePositions[key];
+          if (!incoming || typeof incoming !== "object") return;
+          updatePinPosition(key, incoming.top, incoming.left);
+        });
+      }
+      const activeZone = zoneButtons.find((button) => button.classList.contains("active"))?.dataset.zoneKey || "zoneA";
+      setActiveZone(activeZone);
+    };
+
+    const setupLocalEditor = () => {
+      const zoneKeys = Object.keys(zoneData);
+      if (zoneKeys.length === 0) return;
+
+      const textTargets = Array.from(document.querySelectorAll(
+        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main blockquote, main cite, main figcaption, .footer .container"
+      )).filter((el) => {
+        return !el.closest(".zone-panel")
+          && !el.closest(".cost-field")
+          && !el.closest(".cost-summary")
+          && !el.closest(".drone-toolbar");
+      });
+
+      textTargets.forEach((el, index) => {
+        if (!el.dataset.editorId) {
+          el.dataset.editorId = "text-" + String(index + 1);
+        }
+      });
+
+      const imageTargets = Array.from(document.querySelectorAll("img")).filter((img) => {
+        return img.id !== "zoneFocusImage" && !img.closest(".zone-gallery-item");
+      });
+
+      imageTargets.forEach((img, index) => {
+        if (!img.dataset.editorImageId) {
+          img.dataset.editorImageId = "image-" + String(index + 1);
+        }
+      });
+
+      const launchButton = document.createElement("button");
+      launchButton.type = "button";
+      launchButton.className = "editor-launch visible";
+      launchButton.id = "editorLaunchButton";
+      launchButton.textContent = "Edit Local";
+
+      const dock = document.createElement("aside");
+      dock.className = "editor-dock";
+      dock.id = "editorDock";
+      dock.innerHTML = `
+        <div class="editor-head">
+          <strong>Local Content Editor</strong>
+          <button type="button" id="editorCloseButton">Close</button>
+        </div>
+        <div class="editor-body">
+          <p class="editor-note">Turn on Text/Image Edit, then edit text directly on the page and click any image to swap its file path.</p>
+          <div class="editor-actions">
+            <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
+            <button type="button" id="editorTogglePins">Pin Drag: Off</button>
+            <button type="button" id="editorSaveDraft">Save Draft</button>
+            <button type="button" id="editorExportDraft">Export Draft</button>
+            <button type="button" id="editorImportDraft">Import Draft</button>
+            <button type="button" id="editorResetDraft">Reset Draft</button>
+          </div>
+          <input type="file" id="editorImportInput" accept="application/json" hidden />
+          <section class="editor-block">
+            <h4>Pin Details</h4>
+            <label>
+              Zone
+              <select id="editorZoneSelect">
+                ${zoneKeys.map((key) => `<option value="${key}">${key.toUpperCase()}</option>`).join("")}
+              </select>
+            </label>
+            <label>
+              Zone Title
+              <input type="text" id="editorZoneTitle" />
+            </label>
+            <label>
+              Zone Description
+              <textarea id="editorZoneDescription"></textarea>
+            </label>
+            <label>
+              Flyover Video Path
+              <input type="text" id="editorZoneVideo" />
+            </label>
+            <label>
+              Video Poster Path
+              <input type="text" id="editorZonePoster" />
+            </label>
+            <label>
+              Photos (one per line: path | caption)
+              <textarea id="editorZonePhotos"></textarea>
+            </label>
+            <label>
+              Pin Top (%)
+              <input type="number" step="0.1" id="editorPinTop" />
+            </label>
+            <label>
+              Pin Left (%)
+              <input type="number" step="0.1" id="editorPinLeft" />
+            </label>
+            <div class="editor-actions">
+              <button type="button" id="editorApplyZone">Apply Zone Details</button>
+              <button type="button" id="editorApplyPin">Apply Pin Position</button>
+              <button type="button" id="editorCopyPins">Copy Pin JSON</button>
+            </div>
+          </section>
+        </div>
+      `;
+
+      document.body.appendChild(launchButton);
+      document.body.appendChild(dock);
+
+      const closeButton = dock.querySelector("#editorCloseButton");
+      const toggleTextButton = dock.querySelector("#editorToggleText");
+      const togglePinsButton = dock.querySelector("#editorTogglePins");
+      const saveDraftButton = dock.querySelector("#editorSaveDraft");
+      const exportDraftButton = dock.querySelector("#editorExportDraft");
+      const importDraftButton = dock.querySelector("#editorImportDraft");
+      const resetDraftButton = dock.querySelector("#editorResetDraft");
+      const importInput = dock.querySelector("#editorImportInput");
+      const zoneSelect = dock.querySelector("#editorZoneSelect");
+      const zoneTitleInput = dock.querySelector("#editorZoneTitle");
+      const zoneDescriptionInput = dock.querySelector("#editorZoneDescription");
+      const zoneVideoInput = dock.querySelector("#editorZoneVideo");
+      const zonePosterInput = dock.querySelector("#editorZonePoster");
+      const zonePhotosInput = dock.querySelector("#editorZonePhotos");
+      const pinTopInput = dock.querySelector("#editorPinTop");
+      const pinLeftInput = dock.querySelector("#editorPinLeft");
+      const applyZoneButton = dock.querySelector("#editorApplyZone");
+      const applyPinButton = dock.querySelector("#editorApplyPin");
+      const copyPinsButton = dock.querySelector("#editorCopyPins");
+
+      let textImageEditEnabled = false;
+
+      const setDockOpen = (open) => {
+        dock.classList.toggle("open", open);
+        launchButton.style.display = open ? "none" : "inline-flex";
+      };
+
+      const setTextImageEditMode = (enabled) => {
+        textImageEditEnabled = enabled;
+        document.body.classList.toggle("editor-text-mode", enabled);
+        document.body.classList.toggle("editor-image-mode", enabled);
+        textTargets.forEach((el) => {
+          el.contentEditable = enabled ? "true" : "false";
+          if (!enabled) el.blur();
+        });
+        if (toggleTextButton) {
+          toggleTextButton.textContent = enabled ? "Text/Image Edit: On" : "Text/Image Edit: Off";
+          toggleTextButton.classList.toggle("active", enabled);
+        }
+      };
+
+      const setPinModeUI = (enabled) => {
+        setPinEditMode(enabled);
+        if (togglePinsButton) {
+          togglePinsButton.textContent = enabled ? "Pin Drag: On" : "Pin Drag: Off";
+          togglePinsButton.classList.toggle("active", enabled);
+        }
+      };
+
+      const parseZonePhotos = (raw) => {
+        return String(raw || "")
+          .split("\n")
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .map((line) => {
+            const parts = line.split("|");
+            const src = (parts[0] || "").trim();
+            const caption = (parts.slice(1).join("|") || "").trim();
+            return { src, caption };
+          })
+          .filter((photo) => photo.src);
+      };
+
+      const refreshZoneForm = (zoneKey) => {
+        const zone = zoneData[zoneKey];
+        const pos = zonePositions[zoneKey];
+        if (!zone || !zoneSelect) return;
+        zoneSelect.value = zoneKey;
+        if (zoneTitleInput) zoneTitleInput.value = zone.title || "";
+        if (zoneDescriptionInput) zoneDescriptionInput.value = zone.description || "";
+        if (zoneVideoInput) zoneVideoInput.value = zone.video || "";
+        if (zonePosterInput) zonePosterInput.value = zone.poster || "";
+        if (zonePhotosInput) {
+          zonePhotosInput.value = Array.isArray(zone.photos)
+            ? zone.photos.map((photo) => `${photo.src || ""} | ${photo.caption || ""}`).join("\n")
+            : "";
+        }
+        if (pinTopInput && pos) pinTopInput.value = String(Number(pos.top || 0).toFixed(1));
+        if (pinLeftInput && pos) pinLeftInput.value = String(Number(pos.left || 0).toFixed(1));
+      };
+
+      const saveDraft = () => {
+        const draft = buildDraftPayload(textTargets, imageTargets);
+        localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+      };
+
+      imageTargets.forEach((img) => {
+        img.addEventListener("click", (event) => {
+          if (!textImageEditEnabled) return;
+          event.preventDefault();
+          event.stopPropagation();
+          const currentSrc = img.getAttribute("src") || "";
+          const nextSrc = window.prompt("Set image path or URL", currentSrc);
+          if (nextSrc === null) return;
+          const cleaned = nextSrc.trim();
+          if (cleaned) img.setAttribute("src", cleaned);
+          const currentAlt = img.getAttribute("alt") || "";
+          const nextAlt = window.prompt("Set image alt text", currentAlt);
+          if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
+        });
+      });
+
+      launchButton.addEventListener("click", () => setDockOpen(true));
+      if (closeButton) closeButton.addEventListener("click", () => setDockOpen(false));
+
+      if (toggleTextButton) {
+        toggleTextButton.addEventListener("click", () => {
+          setTextImageEditMode(!textImageEditEnabled);
+        });
+      }
+
+      if (togglePinsButton) {
+        togglePinsButton.addEventListener("click", () => {
+          setPinModeUI(!pinEditEnabled);
+        });
+      }
+
+      if (saveDraftButton) {
+        saveDraftButton.addEventListener("click", () => {
+          saveDraft();
+          saveDraftButton.textContent = "Saved";
+          setTimeout(() => { saveDraftButton.textContent = "Save Draft"; }, 1100);
+        });
+      }
+
+      if (exportDraftButton) {
+        exportDraftButton.addEventListener("click", () => {
+          const draft = buildDraftPayload(textTargets, imageTargets);
+          const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "atnarpa-local-draft.json";
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+        });
+      }
+
+      if (importDraftButton && importInput) {
+        importDraftButton.addEventListener("click", () => importInput.click());
+        importInput.addEventListener("change", async () => {
+          const file = importInput.files && importInput.files[0];
+          if (!file) return;
+          try {
+            const text = await file.text();
+            const parsed = JSON.parse(text);
+            applyDraftPayload(parsed, textTargets, imageTargets);
+            refreshZoneForm(zoneSelect.value || "zoneA");
+            saveDraft();
+          } catch (_) {
+            window.alert("Could not import draft JSON.");
+          }
+          importInput.value = "";
+        });
+      }
+
+      if (resetDraftButton) {
+        resetDraftButton.addEventListener("click", () => {
+          localStorage.removeItem(draftStorageKey);
+          window.location.reload();
+        });
+      }
+
+      if (zoneSelect) {
+        zoneSelect.addEventListener("change", () => {
+          const zoneKey = zoneSelect.value;
+          setActiveZone(zoneKey);
+          refreshZoneForm(zoneKey);
+        });
+      }
+
+      if (applyZoneButton) {
+        applyZoneButton.addEventListener("click", () => {
+          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
+          const zone = zoneData[zoneKey];
+          if (!zone) return;
+          if (zoneTitleInput && zoneTitleInput.value.trim()) zone.title = zoneTitleInput.value.trim();
+          if (zoneDescriptionInput && zoneDescriptionInput.value.trim()) zone.description = zoneDescriptionInput.value.trim();
+          if (zoneVideoInput && zoneVideoInput.value.trim()) zone.video = zoneVideoInput.value.trim();
+          if (zonePosterInput && zonePosterInput.value.trim()) zone.poster = zonePosterInput.value.trim();
+          const photos = parseZonePhotos(zonePhotosInput ? zonePhotosInput.value : "");
+          if (photos.length > 0) zone.photos = photos;
+          setActiveZone(zoneKey);
+          refreshZoneForm(zoneKey);
+        });
+      }
+
+      if (applyPinButton) {
+        applyPinButton.addEventListener("click", () => {
+          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
+          updatePinPosition(zoneKey, pinTopInput ? pinTopInput.value : null, pinLeftInput ? pinLeftInput.value : null);
+          refreshZoneForm(zoneKey);
+        });
+      }
+
+      if (copyPinsButton) {
+        copyPinsButton.addEventListener("click", async () => {
+          const ok = await copyTextToClipboard(JSON.stringify(zonePositions, null, 2));
+          copyPinsButton.textContent = ok ? "Copied Pin JSON" : "Copy Failed";
+          setTimeout(() => { copyPinsButton.textContent = "Copy Pin JSON"; }, 1200);
+        });
+      }
+
+      onPinMoved = (zoneKey) => {
+        if (zoneSelect && zoneSelect.value === zoneKey) {
+          refreshZoneForm(zoneKey);
+        }
+      };
+
+      onZoneChange = (zoneKey) => {
+        if (zoneSelect) zoneSelect.value = zoneKey;
+        refreshZoneForm(zoneKey);
+      };
+
+      try {
+        const savedDraftRaw = localStorage.getItem(draftStorageKey);
+        if (savedDraftRaw) {
+          applyDraftPayload(JSON.parse(savedDraftRaw), textTargets, imageTargets);
+        }
+      } catch (_) {}
+
+      refreshZoneForm("zoneA");
+      setDockOpen(false);
+    };
+
+    const localEditorEnabled = window.location.search.includes("edit=1")
+      || window.location.hostname === "127.0.0.1"
+      || window.location.hostname === "localhost";
+
+    if (localEditorEnabled) {
+      setupLocalEditor();
     }
 
     window.addEventListener("resize", resizeDrawLayer);
