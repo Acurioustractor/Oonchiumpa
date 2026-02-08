@@ -506,6 +506,11 @@
       cursor: pointer;
     }
 
+    .zone-gallery-item.active {
+      border-color: rgba(21, 93, 157, 0.48);
+      box-shadow: 0 0 0 2px rgba(112, 176, 232, 0.24);
+    }
+
     .zone-gallery-item img {
       width: 100%;
       height: 96px;
@@ -1728,6 +1733,8 @@
     const plannerSidebar = document.getElementById("plannerSidebar");
     const closeSidebarButton = document.getElementById("closeSidebarButton");
     let onZoneChange = null;
+    let activeZoneKey = "zoneA";
+    let activeZonePhotoIndex = 0;
 
     const defaultZonePositions = {
       zoneA: { top: 51, left: 36 },
@@ -1777,30 +1784,45 @@
     const setActiveZone = (zoneKey, options = {}) => {
       const zone = zoneData[zoneKey];
       if (!zone || !zoneVideo || !zoneVideoSource || !zoneTitle || !zoneDescription) return;
+      activeZoneKey = zoneKey;
       zoneTitle.textContent = zone.title;
       zoneDescription.textContent = zone.description;
-      zoneVideo.setAttribute("poster", zone.poster);
-      zoneVideoSource.setAttribute("src", zone.video);
-      zoneVideo.load();
-      const p = zoneVideo.play();
-      if (p && typeof p.catch === "function") p.catch(() => {});
+      if (!options.skipVideo) {
+        zoneVideo.setAttribute("poster", zone.poster);
+        zoneVideoSource.setAttribute("src", zone.video);
+        zoneVideo.load();
+        const p = zoneVideo.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      }
 
       if (zoneGallery && zoneFocusImage && zoneFocusCaption) {
         zoneGallery.innerHTML = "";
         const photos = Array.isArray(zone.photos) ? zone.photos : [];
-        if (photos.length > 0) {
-          zoneFocusImage.setAttribute("src", photos[0].src);
-          zoneFocusCaption.textContent = photos[0].caption || "Zone reference image";
+        const requestedPhotoIndex = Number(options.photoIndex);
+        const safePhotoIndex = Number.isFinite(requestedPhotoIndex)
+          ? Math.max(0, Math.min(photos.length - 1, requestedPhotoIndex))
+          : 0;
+        activeZonePhotoIndex = safePhotoIndex;
+        if (photos.length > 0 && photos[safePhotoIndex]) {
+          const focusPhoto = photos[safePhotoIndex];
+          zoneFocusImage.setAttribute("src", focusPhoto.src);
+          zoneFocusImage.setAttribute("alt", focusPhoto.alt || focusPhoto.caption || ("Zone reference " + (safePhotoIndex + 1)));
+          zoneFocusImage.dataset.zoneKey = zoneKey;
+          zoneFocusImage.dataset.photoIndex = String(safePhotoIndex);
+          zoneFocusCaption.textContent = focusPhoto.caption || "Zone reference image";
+          zoneFocusCaption.dataset.zoneKey = zoneKey;
+          zoneFocusCaption.dataset.photoIndex = String(safePhotoIndex);
         }
         photos.forEach((photo, idx) => {
           const item = document.createElement("button");
           item.type = "button";
-          item.className = "zone-gallery-item";
+          item.className = "zone-gallery-item" + (idx === safePhotoIndex ? " active" : "");
           item.setAttribute("aria-label", "Open zone image " + (idx + 1));
-          item.innerHTML = `<img src="${photo.src}" alt="Zone reference ${idx + 1}" /><span>${photo.caption || "Zone image"}</span>`;
+          item.dataset.zoneKey = zoneKey;
+          item.dataset.photoIndex = String(idx);
+          item.innerHTML = `<img src="${photo.src}" alt="${photo.alt || photo.caption || ("Zone reference " + (idx + 1))}" data-zone-key="${zoneKey}" data-photo-index="${idx}" /><span>${photo.caption || "Zone image"}</span>`;
           item.addEventListener("click", () => {
-            zoneFocusImage.setAttribute("src", photo.src);
-            zoneFocusCaption.textContent = photo.caption || "Zone reference image";
+            setActiveZone(zoneKey, { photoIndex: idx, skipVideo: true });
           });
           zoneGallery.appendChild(item);
         });
@@ -2079,7 +2101,8 @@
             const photos = incoming.photos
               .map((photo) => ({
                 src: String(photo && photo.src ? photo.src : "").trim(),
-                caption: String(photo && photo.caption ? photo.caption : "").trim()
+                caption: String(photo && photo.caption ? photo.caption : "").trim(),
+                alt: String(photo && photo.alt ? photo.alt : "").trim()
               }))
               .filter((photo) => photo.src);
             if (photos.length > 0) zoneData[key].photos = photos;
@@ -2117,7 +2140,10 @@
       });
 
       const imageTargets = Array.from(document.querySelectorAll("img")).filter((img) => {
-        return img.id !== "zoneFocusImage" && !img.closest(".zone-gallery-item");
+        if (img.id === "zoneFocusImage") return false;
+        if (img.closest(".zone-gallery-item")) return false;
+        if (img.closest("#editorDock")) return false;
+        return true;
       });
 
       imageTargets.forEach((img, index) => {
@@ -2141,7 +2167,7 @@
           <button type="button" id="editorCloseButton">Close</button>
         </div>
         <div class="editor-body">
-          <p class="editor-note">Turn on Text/Image Edit, then edit text directly on the page and click any image to swap its file path.</p>
+          <p class="editor-note">Turn on Text/Image Edit, then edit copy directly, click any image to swap it, and click zone title/description/caption in the pin panel to update zone copy.</p>
           <div class="editor-actions">
             <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
             <button type="button" id="editorTogglePins">Pin Drag: Off</button>
@@ -2176,7 +2202,7 @@
               <input type="text" id="editorZonePoster" />
             </label>
             <label>
-              Photos (one per line: path | caption)
+              Photos (one per line: path | caption | alt optional)
               <textarea id="editorZonePhotos"></textarea>
             </label>
             <label>
@@ -2220,6 +2246,21 @@
       const copyPinsButton = dock.querySelector("#editorCopyPins");
 
       let textImageEditEnabled = false;
+      let nextImageId = imageTargets.length;
+
+      const isZonePhotoImage = (img) => {
+        return img && (img.id === "zoneFocusImage" || !!img.closest(".zone-gallery-item"));
+      };
+
+      const ensureImageId = (img) => {
+        if (!img || isZonePhotoImage(img)) return;
+        if (!img.dataset.editorImageId) {
+          nextImageId += 1;
+          img.dataset.editorImageId = "image-" + String(nextImageId);
+        }
+      };
+
+      imageTargets.forEach((img) => ensureImageId(img));
 
       const setDockOpen = (open) => {
         dock.classList.toggle("open", open);
@@ -2256,8 +2297,9 @@
           .map((line) => {
             const parts = line.split("|");
             const src = (parts[0] || "").trim();
-            const caption = (parts.slice(1).join("|") || "").trim();
-            return { src, caption };
+            const caption = (parts[1] || "").trim();
+            const alt = (parts.slice(2).join("|") || "").trim();
+            return { src, caption, alt };
           })
           .filter((photo) => photo.src);
       };
@@ -2273,7 +2315,7 @@
         if (zonePosterInput) zonePosterInput.value = zone.poster || "";
         if (zonePhotosInput) {
           zonePhotosInput.value = Array.isArray(zone.photos)
-            ? zone.photos.map((photo) => `${photo.src || ""} | ${photo.caption || ""}`).join("\n")
+            ? zone.photos.map((photo) => `${photo.src || ""} | ${photo.caption || ""} | ${photo.alt || ""}`).join("\n")
             : "";
         }
         if (pinTopInput && pos) pinTopInput.value = String(Number(pos.top || 0).toFixed(1));
@@ -2281,25 +2323,99 @@
       };
 
       const saveDraft = () => {
+        Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
         const draft = buildDraftPayload(textTargets, imageTargets);
         localStorage.setItem(draftStorageKey, JSON.stringify(draft));
       };
 
-      imageTargets.forEach((img) => {
-        img.addEventListener("click", (event) => {
-          if (!textImageEditEnabled) return;
+      const editRegularImage = (img) => {
+        ensureImageId(img);
+        const currentSrc = img.getAttribute("src") || "";
+        const nextSrc = window.prompt("Set image path or URL", currentSrc);
+        if (nextSrc === null) return;
+        const cleaned = nextSrc.trim();
+        if (cleaned) img.setAttribute("src", cleaned);
+        const currentAlt = img.getAttribute("alt") || "";
+        const nextAlt = window.prompt("Set image alt text", currentAlt);
+        if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
+      };
+
+      const editZonePhoto = (zoneKey, photoIndex) => {
+        const zone = zoneData[zoneKey];
+        if (!zone || !Array.isArray(zone.photos) || !zone.photos[photoIndex]) return;
+        const photo = zone.photos[photoIndex];
+        const nextSrc = window.prompt("Set zone image path", photo.src || "");
+        if (nextSrc === null) return;
+        const cleanedSrc = nextSrc.trim();
+        if (cleanedSrc) photo.src = cleanedSrc;
+        const nextCaption = window.prompt("Set zone image caption", photo.caption || "");
+        if (nextCaption !== null) photo.caption = nextCaption.trim();
+        const nextAlt = window.prompt("Set zone image alt text", photo.alt || photo.caption || "");
+        if (nextAlt !== null) photo.alt = nextAlt.trim();
+        setActiveZone(zoneKey, { photoIndex, skipVideo: true });
+        refreshZoneForm(zoneKey);
+      };
+
+      document.addEventListener("click", (event) => {
+        if (!textImageEditEnabled) return;
+        const target = event.target;
+        if (!target || !(target instanceof Element)) return;
+        if (target.closest("#editorDock")) return;
+
+        const zoneCopyTarget = target.closest("#zoneTitle, #zoneDescription, #zoneFocusCaption");
+        if (zoneCopyTarget) {
           event.preventDefault();
           event.stopPropagation();
-          const currentSrc = img.getAttribute("src") || "";
-          const nextSrc = window.prompt("Set image path or URL", currentSrc);
-          if (nextSrc === null) return;
-          const cleaned = nextSrc.trim();
-          if (cleaned) img.setAttribute("src", cleaned);
-          const currentAlt = img.getAttribute("alt") || "";
-          const nextAlt = window.prompt("Set image alt text", currentAlt);
-          if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
-        });
-      });
+          const zone = zoneData[activeZoneKey];
+          if (!zone) return;
+          if (zoneCopyTarget.id === "zoneTitle") {
+            const nextTitle = window.prompt("Set zone title", zone.title || "");
+            if (nextTitle !== null && nextTitle.trim()) zone.title = nextTitle.trim();
+          } else if (zoneCopyTarget.id === "zoneDescription") {
+            const nextDescription = window.prompt("Set zone description", zone.description || "");
+            if (nextDescription !== null && nextDescription.trim()) zone.description = nextDescription.trim();
+          } else if (zoneCopyTarget.id === "zoneFocusCaption") {
+            const zonePhoto = Array.isArray(zone.photos) ? zone.photos[activeZonePhotoIndex] : null;
+            if (zonePhoto) {
+              const nextCaption = window.prompt("Set zone image caption", zonePhoto.caption || "");
+              if (nextCaption !== null) zonePhoto.caption = nextCaption.trim();
+            }
+          }
+          setActiveZone(activeZoneKey, { photoIndex: activeZonePhotoIndex, skipVideo: true });
+          refreshZoneForm(activeZoneKey);
+          return;
+        }
+
+        const zoneVideoTarget = target.closest("#zoneVideo");
+        if (zoneVideoTarget) {
+          event.preventDefault();
+          event.stopPropagation();
+          const zone = zoneData[activeZoneKey];
+          if (!zone) return;
+          const nextVideo = window.prompt("Set zone video path", zone.video || "");
+          if (nextVideo !== null && nextVideo.trim()) zone.video = nextVideo.trim();
+          const nextPoster = window.prompt("Set zone video poster path", zone.poster || "");
+          if (nextPoster !== null && nextPoster.trim()) zone.poster = nextPoster.trim();
+          setActiveZone(activeZoneKey);
+          refreshZoneForm(activeZoneKey);
+          return;
+        }
+
+        const imageTarget = target.closest("img");
+        if (!imageTarget) return;
+        if (imageTarget.closest("#editorDock")) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        if (isZonePhotoImage(imageTarget)) {
+          const zoneKey = imageTarget.dataset.zoneKey || activeZoneKey;
+          const rawPhotoIndex = Number(imageTarget.dataset.photoIndex);
+          const photoIndex = Number.isFinite(rawPhotoIndex) ? rawPhotoIndex : activeZonePhotoIndex;
+          editZonePhoto(zoneKey, photoIndex);
+          return;
+        }
+        editRegularImage(imageTarget);
+      }, true);
 
       launchButton.addEventListener("click", () => setDockOpen(true));
       if (closeButton) closeButton.addEventListener("click", () => setDockOpen(false));
