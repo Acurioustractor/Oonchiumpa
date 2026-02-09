@@ -804,6 +804,23 @@
       border: 1px solid rgba(255, 255, 255, 0.7);
     }
 
+    .camp-plan {
+      padding-top: 18px;
+    }
+
+    .camp-plan .camp-hero {
+      min-height: 380px;
+      margin-top: 14px;
+    }
+
+    .camp-plan .grid-2 {
+      margin-top: 18px;
+    }
+
+    .camp-plan .video-grid {
+      margin-top: 18px;
+    }
+
     .family-card img {
       width: 100%;
       height: 240px;
@@ -1552,6 +1569,53 @@
     </section>
   </main>
 
+  <section class="section camp-plan">
+    <div class="container">
+      <span class="tag reveal">Camping Areas Plan</span>
+      <h2 class="reveal">Camp Layout, Decking, and Cover Works</h2>
+      <p class="reveal">This camp section extends the current masterplan so we can scope living support spaces, deck and cover connections, and camp-to-homestead movement for staged delivery.</p>
+
+      <figure class="image-card reveal camp-hero">
+        <img src="assets/atnarpa/campsite/IMG_9412.jpg" alt="Campsite context for deck and cover planning" />
+        <figcaption class="image-caption">Campsite context image for planning deck, cover, and support-area staging.</figcaption>
+      </figure>
+
+      <div class="grid-2">
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4798.jpg" alt="Inside donger rooms at camp" />
+          <figcaption class="image-caption">Inside donger rooms for camp accommodation planning.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4803.jpg" alt="Outside donger layout" />
+          <figcaption class="image-caption">Outside view of donger layout and circulation between structures.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4816.jpg" alt="Campfire and roof option area" />
+          <figcaption class="image-caption">Campfire and central roof option area for gathering and shade.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4819.jpg" alt="Camp bathroom facilities" />
+          <figcaption class="image-caption">Existing bathroom facilities to inform services upgrades and staging.</figcaption>
+        </figure>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card reveal">
+          <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/camp-to-house-drone-follow-light.jpg">
+            <source src="assets/videos/light/camp-to-house-drone-follow-light.mp4" type="video/mp4" />
+          </video>
+          <div class="meta">Campsite to homestead drone follow (light version).</div>
+        </article>
+        <article class="video-card reveal">
+          <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/camp-cut-20s-light.jpg">
+            <source src="assets/videos/light/camp-cut-20s-light.mp4" type="video/mp4" />
+          </video>
+          <div class="meta">Campsite drone overview, first 20 seconds cut for planning context.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="container">
       Visual draft prepared for Atnarpa proposal development. Designed for web review and PDF export.
@@ -1705,6 +1769,44 @@
         ]
       }
     };
+
+    const zoneVideoPresets = [
+      {
+        label: "Header drone (DJI_0323)",
+        video: "assets/videos/light/header-dji-0323-light.mp4",
+        poster: "assets/videos/light/posters/header-dji-0323-light.jpg"
+      },
+      {
+        label: "Work on station 01",
+        video: "assets/videos/light/work-on-station-01-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-01-light.jpg"
+      },
+      {
+        label: "Work on station 02",
+        video: "assets/videos/light/work-on-station-02-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-02-light.jpg"
+      },
+      {
+        label: "Work on station 03",
+        video: "assets/videos/light/work-on-station-03-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-03-light.jpg"
+      },
+      {
+        label: "Work on station 04",
+        video: "assets/videos/light/work-on-station-04-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-04-light.jpg"
+      },
+      {
+        label: "Campsite to homestead drone follow",
+        video: "assets/videos/light/camp-to-house-drone-follow-light.mp4",
+        poster: "assets/videos/light/posters/camp-to-house-drone-follow-light.jpg"
+      },
+      {
+        label: "Campsite cut (first 20s)",
+        video: "assets/videos/light/camp-cut-20s-light.mp4",
+        poster: "assets/videos/light/posters/camp-cut-20s-light.jpg"
+      }
+    ];
 
     const zoneVideo = document.getElementById("zoneVideo");
     const zoneVideoSource = document.getElementById("zoneVideoSource");
@@ -2271,6 +2373,13 @@
               <textarea id="editorZoneDescription"></textarea>
             </label>
             <label>
+              Video Library
+              <select id="editorZoneVideoPreset">
+                <option value="">Choose preset</option>
+                ${zoneVideoPresets.map((preset, index) => `<option value="${index}">${preset.label}</option>`).join("")}
+              </select>
+            </label>
+            <label>
               Flyover Video Path
               <input type="text" id="editorZoneVideo" />
             </label>
@@ -2316,6 +2425,7 @@
       const zoneSelect = dock.querySelector("#editorZoneSelect");
       const zoneTitleInput = dock.querySelector("#editorZoneTitle");
       const zoneDescriptionInput = dock.querySelector("#editorZoneDescription");
+      const zoneVideoPresetSelect = dock.querySelector("#editorZoneVideoPreset");
       const zoneVideoInput = dock.querySelector("#editorZoneVideo");
       const zonePosterInput = dock.querySelector("#editorZonePoster");
       const zonePhotosInput = dock.querySelector("#editorZonePhotos");
@@ -2391,6 +2501,12 @@
         zoneSelect.value = zoneKey;
         if (zoneTitleInput) zoneTitleInput.value = zone.title || "";
         if (zoneDescriptionInput) zoneDescriptionInput.value = zone.description || "";
+        if (zoneVideoPresetSelect) {
+          const presetIndex = zoneVideoPresets.findIndex((preset) => {
+            return preset.video === (zone.video || "") && preset.poster === (zone.poster || "");
+          });
+          zoneVideoPresetSelect.value = presetIndex >= 0 ? String(presetIndex) : "";
+        }
         if (zoneVideoInput) zoneVideoInput.value = zone.video || "";
         if (zonePosterInput) zonePosterInput.value = zone.poster || "";
         if (zonePhotosInput) {
@@ -2621,6 +2737,24 @@
       if (zoneSelect) {
         zoneSelect.addEventListener("change", () => {
           const zoneKey = zoneSelect.value;
+          setActiveZone(zoneKey);
+          refreshZoneForm(zoneKey);
+        });
+      }
+
+      if (zoneVideoPresetSelect) {
+        zoneVideoPresetSelect.addEventListener("change", () => {
+          const rawValue = zoneVideoPresetSelect.value;
+          if (rawValue === "") return;
+          const preset = zoneVideoPresets[Number(rawValue)];
+          if (!preset) return;
+          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
+          const zone = zoneData[zoneKey];
+          if (!zone) return;
+          zone.video = preset.video;
+          zone.poster = preset.poster;
+          if (zoneVideoInput) zoneVideoInput.value = preset.video;
+          if (zonePosterInput) zonePosterInput.value = preset.poster;
           setActiveZone(zoneKey);
           refreshZoneForm(zoneKey);
         });
