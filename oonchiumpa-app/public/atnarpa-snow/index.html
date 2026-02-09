@@ -2207,7 +2207,7 @@
 
     const collectEditorTargets = () => {
       const textTargets = Array.from(document.querySelectorAll(
-        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main blockquote, main cite, main figcaption, .footer .container"
+        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main blockquote, main cite, main figcaption, .camp-plan .tag, .camp-plan h2, .camp-plan h3, .camp-plan p, .camp-plan figcaption"
       )).filter((el) => {
         return !el.closest(".zone-panel")
           && !el.closest(".cost-field")
