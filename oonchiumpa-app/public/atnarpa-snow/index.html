@@ -2223,6 +2223,18 @@
       setActiveZone(activeZone);
     };
 
+    const loadRepoDraftIntoPage = async (textTargets, imageTargets) => {
+      try {
+        const response = await fetch(repoDraftFileName + "?ts=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) return false;
+        const repoDraft = await response.json();
+        applyDraftPayload(repoDraft, textTargets, imageTargets);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    };
+
     const setupLocalEditor = async () => {
       const zoneKeys = Object.keys(zoneData);
       if (zoneKeys.length === 0) return;
@@ -2681,13 +2693,7 @@
       } catch (_) {}
 
       if (!hasLocalDraft) {
-        try {
-          const response = await fetch(repoDraftFileName + "?ts=" + Date.now(), { cache: "no-store" });
-          if (response.ok) {
-            const repoDraft = await response.json();
-            applyDraftPayload(repoDraft, textTargets, imageTargets);
-          }
-        } catch (_) {}
+        await loadRepoDraftIntoPage(textTargets, imageTargets);
       }
 
       refreshZoneForm("zoneA");
@@ -2698,9 +2704,17 @@
       || window.location.hostname === "127.0.0.1"
       || window.location.hostname === "localhost";
 
-    if (localEditorEnabled) {
-      setupLocalEditor().catch(() => {});
-    }
+    const startPage = async () => {
+      if (localEditorEnabled) {
+        await setupLocalEditor().catch(() => {});
+      } else {
+        const { textTargets, imageTargets } = collectEditorTargets();
+        await loadRepoDraftIntoPage(textTargets, imageTargets);
+      }
+      resizeDrawLayer();
+      syncFullscreenLabel();
+      setActiveZone("zoneA");
+    };
 
     window.addEventListener("resize", resizeDrawLayer);
     document.addEventListener("fullscreenchange", syncFullscreenLabel);
@@ -2708,9 +2722,7 @@
     if (droneMapImage) {
       droneMapImage.addEventListener("load", resizeDrawLayer);
     }
-    resizeDrawLayer();
-    syncFullscreenLabel();
-    setActiveZone("zoneA");
+    startPage().catch(() => {});
   </script>
 </body>
 </html>
