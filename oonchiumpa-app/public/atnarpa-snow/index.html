@@ -3434,10 +3434,10 @@
         <div class="editor-body">
           <p class="editor-note">
             <strong>How to edit:</strong><br>
-            1. Turn on "Text/Image Edit" to edit text directly or click any image to replace it<br>
-            2. Turn on "Pin Drag" to drag homestead map points with your mouse<br>
-            3. Use the "Homestead Map Points" panel to edit point labels and positions precisely<br>
-            4. Click "Save To Project File" to download editor-draft.json to your atnarpa-snow folder
+            1. <strong>Text/Image Edit ON</strong>: Click any text to edit it directly. Click any image to instantly replace it with a file from your computer.<br>
+            2. <strong>Pin Drag ON</strong>: Drag homestead map pins with your mouse to reposition them.<br>
+            3. Use the <strong>Homestead Map Points</strong> panel to edit point labels and positions precisely.<br>
+            4. Click <strong>Save To Project File</strong> to save editor-draft.json to your atnarpa-snow folder.
           </p>
           <div class="editor-actions">
             <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
@@ -3554,7 +3554,7 @@
         localStorage.setItem(draftStorageKey, JSON.stringify(draft));
       };
 
-      const pickLocalImageAsDataUrl = () => {
+      const pickLocalImageAsFile = () => {
         return new Promise((resolve) => {
           if (!localImageInput) {
             resolve(null);
@@ -3568,7 +3568,7 @@
               return;
             }
             const reader = new FileReader();
-            reader.onload = () => resolve(String(reader.result || ""));
+            reader.onload = () => resolve({ dataUrl: String(reader.result || ""), file });
             reader.onerror = () => resolve(null);
             reader.readAsDataURL(file);
           };
@@ -3577,32 +3577,14 @@
         });
       };
 
-      const promptForImageSource = async (currentSrc) => {
-        const choice = window.prompt(
-          "Replace image:\n- Type 'local' to upload from your computer\n- Type 'url' to enter a path/URL\n- Or paste a direct image URL",
-          currentSrc || ""
-        );
-        if (choice === null) return null;
-        const trimmed = choice.trim();
-        if (trimmed.toLowerCase() === "local") {
-          const localDataUrl = await pickLocalImageAsDataUrl();
-          return localDataUrl || null;
-        }
-        if (trimmed.toLowerCase() === "url") {
-          const url = window.prompt("Enter image path or URL:", currentSrc || "");
-          return url ? url.trim() : null;
-        }
-        return trimmed || null;
-      };
-
       const editRegularImage = async (img) => {
         ensureImageId(img);
-        const currentSrc = img.getAttribute("src") || "";
-        const nextSrc = await promptForImageSource(currentSrc);
-        if (!nextSrc) return;
-        img.setAttribute("src", nextSrc);
+        const result = await pickLocalImageAsFile();
+        if (!result || !result.dataUrl) return;
+        img.setAttribute("src", result.dataUrl);
         const currentAlt = img.getAttribute("alt") || "";
-        const nextAlt = window.prompt("Set image alt text:", currentAlt);
+        const defaultAlt = result.file ? result.file.name.replace(/\.[^/.]+$/, "") : currentAlt;
+        const nextAlt = window.prompt("Set image alt text:", defaultAlt);
         if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
       };
 
