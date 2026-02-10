@@ -3568,16 +3568,58 @@
         btnDragPins.classList.toggle("active", pinEditEnabled);
       });
 
-      // Save button
+      // Save button - with fallback download
       btnSave.addEventListener("click", async () => {
-        Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
-        const draft = buildDraftPayload(textTargets, imageTargets);
-        const ok = await saveDraftToProjectFile(draft);
-        if (ok) {
+        btnSave.textContent = "Saving...";
+        btnSave.disabled = true;
+        
+        try {
+          Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
+          const draft = buildDraftPayload(textTargets, imageTargets);
+          
+          // Always save to localStorage first
           localStorage.setItem(draftStorageKey, JSON.stringify(draft));
-          btnSave.textContent = "Saved!";
-          setTimeout(() => btnSave.textContent = "Save", 1000);
+          
+          // Try to save to file system (Chrome/Edge only)
+          let savedToFile = false;
+          if (window.showDirectoryPicker) {
+            try {
+              const ok = await saveDraftToProjectFile(draft);
+              if (ok) savedToFile = true;
+            } catch (e) {
+              console.log("File system save failed, using download fallback");
+            }
+          }
+          
+          // Fallback: download the file
+          if (!savedToFile) {
+            const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "editor-draft.json";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            
+            btnSave.textContent = "Downloaded!";
+            alert("Changes saved! The editor-draft.json file was downloaded.\n\nMove it to your atnarpa-snow folder to keep the changes.");
+          } else {
+            btnSave.textContent = "Saved!";
+            alert("Changes saved to editor-draft.json!");
+          }
+          
+        } catch (err) {
+          console.error("Save failed:", err);
+          btnSave.textContent = "Error!";
+          alert("Save failed. Try again.");
         }
+        
+        setTimeout(() => {
+          btnSave.textContent = "Save";
+          btnSave.disabled = false;
+        }, 2000);
       });
 
       // Image replacement on click
