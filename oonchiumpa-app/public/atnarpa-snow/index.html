@@ -3432,7 +3432,7 @@
     const setupLocalEditor = async () => {
       const { textTargets, imageTargets } = collectEditorTargets();
 
-      // Simple floating toolbar with just 3 buttons
+      // Simple floating toolbar
       const toolbar = document.createElement("div");
       toolbar.id = "editorToolbar";
       toolbar.innerHTML = `
@@ -3444,6 +3444,7 @@
         </style>
         <button type="button" id="btnEditText">Edit Text</button>
         <button type="button" id="btnDragPins">Drag Pins</button>
+        <button type="button" id="btnAddPhoto">Add Photo</button>
         <button type="button" id="btnSave">Save</button>
         <input type="file" id="imgInput" accept="image/*" hidden />
       `;
@@ -3451,6 +3452,7 @@
 
       const btnEditText = toolbar.querySelector("#btnEditText");
       const btnDragPins = toolbar.querySelector("#btnDragPins");
+      const btnAddPhoto = toolbar.querySelector("#btnAddPhoto");
       const btnSave = toolbar.querySelector("#btnSave");
       const imgInput = toolbar.querySelector("#imgInput");
 
@@ -3465,6 +3467,80 @@
         }
       };
       imageTargets.forEach((img) => ensureImageId(img));
+
+      // Add photo to section
+      btnAddPhoto.addEventListener("click", async () => {
+        // Show section picker
+        const sections = Array.from(document.querySelectorAll("section .grid-2, section .image-grid, .camp-plan .grid-2"));
+        if (sections.length === 0) {
+          alert("No photo grid found on page");
+          return;
+        }
+        
+        // Highlight sections
+        sections.forEach((sec, i) => {
+          sec.style.outline = "3px dashed #2f8f64";
+          sec.dataset.sectionIndex = i;
+          const label = document.createElement("div");
+          label.textContent = `Click to add photo here (${i + 1})`;
+          label.style.cssText = "position:absolute;top:0;left:0;background:#2f8f64;color:white;padding:4px 8px;font-size:12px;z-index:100;";
+          sec.style.position = "relative";
+          sec.appendChild(label);
+        });
+        
+        // Wait for click
+        const targetSection = await new Promise((resolve) => {
+          const handler = (e) => {
+            const section = e.target.closest(".grid-2, .image-grid");
+            if (section) {
+              document.removeEventListener("click", handler);
+              resolve(section);
+            }
+          };
+          document.addEventListener("click", handler);
+        });
+        
+        // Remove highlights
+        sections.forEach((sec) => {
+          sec.style.outline = "";
+          const label = sec.querySelector("div[style*='position:absolute']");
+          if (label) label.remove();
+        });
+        
+        if (!targetSection) return;
+        
+        // Pick image
+        imgInput.value = "";
+        imgInput.onchange = async () => {
+          const file = imgInput.files?.[0];
+          if (!file) return;
+          
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = reader.result;
+            const alt = prompt("Photo caption:", file.name.replace(/\.[^/.]+$/, "")) || "";
+            
+            // Create new figure
+            const figure = document.createElement("figure");
+            figure.className = "image-card reveal";
+            figure.innerHTML = `
+              <img src="${dataUrl}" alt="${alt}" />
+              <figcaption class="image-caption">${alt}</figcaption>
+            `;
+            
+            targetSection.appendChild(figure);
+            
+            // Track new image
+            const img = figure.querySelector("img");
+            ensureImageId(img);
+            imageTargets.push(img);
+            
+            alert("Photo added! Click Save when done.");
+          };
+          reader.readAsDataURL(file);
+        };
+        imgInput.click();
+      });
 
       // Toggle text editing
       btnEditText.addEventListener("click", () => {
