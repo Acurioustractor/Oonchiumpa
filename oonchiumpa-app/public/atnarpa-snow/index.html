@@ -2141,8 +2141,8 @@
             </video>
             <div class="meta">Main drone walkthrough of the campground area and connection back toward the homestead.</div>
           </article>
-          <article class="card reveal">
-            <h3>Additional Infrastructure at the Homestead</h3>
+          <article class="card reveal" id="homesteadPointsSection">
+            <h3>Homestead Map Points</h3>
             <p>These supporting works sit alongside the campground-first build and are staged as practical upgrades around the existing homestead footprint.</p>
             <div class="upgrade-map-wrap homestead-map-wrap">
               <img src="assets/atnarpa/campsite/homestead-additional-map.jpg" alt="Aerial homestead map with supporting-upgrade reference points" />
@@ -3336,7 +3336,9 @@
         images,
         zoneData: JSON.parse(JSON.stringify(zoneData)),
         zonePositions: JSON.parse(JSON.stringify(zonePositions)),
-        homesteadPointData: JSON.parse(JSON.stringify(homesteadPointData))
+        homesteadPointData: JSON.parse(JSON.stringify(homesteadPointData)),
+        homesteadPointLabels: JSON.parse(JSON.stringify(homesteadPointLabels)),
+        homesteadSectionTitle
       };
     };
 
@@ -3387,15 +3389,29 @@
         });
       }
       if (draft.homesteadPointData && typeof draft.homesteadPointData === "object") {
-        Object.keys(homesteadPointData).forEach((key) => {
+        // Clear existing data first
+        Object.keys(homesteadPointData).forEach((key) => delete homesteadPointData[key]);
+        Object.keys(draft.homesteadPointData).forEach((key) => {
           const incoming = draft.homesteadPointData[key];
           if (!incoming || typeof incoming !== "object") return;
-          updateHomesteadPointData(key, {
+          homesteadPointData[key] = {
             top: incoming.top,
             left: incoming.left,
             label: incoming.label
-          });
+          };
         });
+        applyHomesteadPointData();
+      }
+      if (draft.homesteadPointLabels && typeof draft.homesteadPointLabels === "object") {
+        Object.keys(homesteadPointLabels).forEach((key) => delete homesteadPointLabels[key]);
+        Object.keys(draft.homesteadPointLabels).forEach((key) => {
+          homesteadPointLabels[key] = draft.homesteadPointLabels[key];
+        });
+      }
+      if (draft.homesteadSectionTitle && typeof draft.homesteadSectionTitle === "string") {
+        homesteadSectionTitle = draft.homesteadSectionTitle;
+        const sectionHeading = document.querySelector("#homesteadPointsSection h3");
+        if (sectionHeading) sectionHeading.textContent = homesteadSectionTitle;
       }
       const activeZone = zoneButtons.find((button) => button.classList.contains("active"))?.dataset.zoneKey || "zoneA";
       setActiveZone(activeZone);
@@ -3453,6 +3469,10 @@
           <section class="editor-block">
             <h4>Homestead Map Points</h4>
             <label>
+              Section Title
+              <input type="text" id="editorHomesteadSectionTitle" value="Homestead Map Points" />
+            </label>
+            <label>
               Point
               <select id="editorHomesteadPointSelect">
                 ${homesteadPointKeys.map((key) => `<option value="${key}">${homesteadPointLabels[key] || key.toUpperCase()}</option>`).join("")}
@@ -3471,8 +3491,9 @@
               <input type="number" step="0.1" min="2" max="98" id="editorHomesteadPointLeft" />
             </label>
             <div class="editor-actions">
-              <button type="button" id="editorApplyHomesteadPoint">Apply Point Changes</button>
-              <button type="button" id="editorCopyHomesteadPoints">Copy Points JSON</button>
+              <button type="button" id="editorApplyHomesteadPoint">Apply Changes</button>
+              <button type="button" id="editorDeleteHomesteadPoint" style="background:#dc2626;color:#fff;">Delete Point</button>
+              <button type="button" id="editorAddHomesteadPoint">Add New Point</button>
             </div>
           </section>
         </div>
@@ -3495,10 +3516,13 @@
       const homesteadPointLabelInput = dock.querySelector("#editorHomesteadPointLabel");
       const homesteadPointTopInput = dock.querySelector("#editorHomesteadPointTop");
       const homesteadPointLeftInput = dock.querySelector("#editorHomesteadPointLeft");
+      const homesteadSectionTitleInput = dock.querySelector("#editorHomesteadSectionTitle");
       const applyHomesteadPointButton = dock.querySelector("#editorApplyHomesteadPoint");
-      const copyHomesteadPointsButton = dock.querySelector("#editorCopyHomesteadPoints");
+      const deleteHomesteadPointButton = dock.querySelector("#editorDeleteHomesteadPoint");
+      const addHomesteadPointButton = dock.querySelector("#editorAddHomesteadPoint");
 
       let textImageEditEnabled = false;
+      let homesteadSectionTitle = "Homestead Map Points";
       let nextImageId = imageTargets.length;
 
       const ensureImageId = (img) => {
@@ -3539,13 +3563,132 @@
       };
 
       const refreshHomesteadPointForm = (pointKey) => {
-        const key = pointKey && homesteadPointData[pointKey] ? pointKey : homesteadPointKeys[0];
+        const keys = Object.keys(homesteadPointData);
+        const key = pointKey && homesteadPointData[pointKey] ? pointKey : (keys[0] || null);
         const point = key ? homesteadPointData[key] : null;
-        if (!key || !point) return;
+        
+        // Refresh select options in case points were added/removed
+        if (homesteadPointSelect) {
+          const currentValue = homesteadPointSelect.value;
+          homesteadPointSelect.innerHTML = keys.map((k) => {
+            const label = homesteadPointLabels[k] || `${k.toUpperCase()} - ${(homesteadPointData[k]?.label || '').substring(0, 30)}...`;
+            return `<option value="${k}">${label}</option>`;
+          }).join("");
+          homesteadPointSelect.value = key || currentValue;
+        }
+        
+        if (homesteadSectionTitleInput) {
+          homesteadSectionTitleInput.value = homesteadSectionTitle;
+        }
+        
+        if (!key || !point) {
+          if (homesteadPointLabelInput) homesteadPointLabelInput.value = "";
+          if (homesteadPointTopInput) homesteadPointTopInput.value = "50";
+          if (homesteadPointLeftInput) homesteadPointLeftInput.value = "50";
+          return;
+        }
+        
         if (homesteadPointSelect) homesteadPointSelect.value = key;
         if (homesteadPointLabelInput) homesteadPointLabelInput.value = point.label || "";
         if (homesteadPointTopInput) homesteadPointTopInput.value = String(Number(point.top || 0).toFixed(1));
         if (homesteadPointLeftInput) homesteadPointLeftInput.value = String(Number(point.left || 0).toFixed(1));
+      };
+
+      const deleteHomesteadPoint = (pointKey) => {
+        if (!homesteadPointData[pointKey]) return;
+        const keys = Object.keys(homesteadPointData);
+        if (keys.length <= 1) {
+          window.alert("Cannot delete the last point. At least one point is required.");
+          return;
+        }
+        if (!window.confirm(`Delete point ${pointKey.toUpperCase()}?`)) return;
+        
+        // Remove from data
+        delete homesteadPointData[pointKey];
+        delete homesteadPointLabels[pointKey];
+        
+        // Remove pin from DOM
+        const pin = document.querySelector(`.upgrade-pin[data-homestead-point-key="${pointKey}"]`);
+        if (pin) pin.remove();
+        
+        // Refresh form with first remaining point
+        const remainingKeys = Object.keys(homesteadPointData);
+        refreshHomesteadPointForm(remainingKeys[0]);
+        saveDraft();
+      };
+
+      const addHomesteadPoint = () => {
+        // Find next available key (h1, h2, h3, etc.)
+        let nextNum = 1;
+        while (homesteadPointData[`h${nextNum}`]) {
+          nextNum++;
+        }
+        const newKey = `h${nextNum}`;
+        
+        // Add to data
+        homesteadPointData[newKey] = {
+          top: 50,
+          left: 50,
+          label: `New Point ${nextNum}`
+        };
+        homesteadPointLabels[newKey] = `Point ${nextNum} - New`;
+        
+        // Create new pin element
+        const mapWrap = document.querySelector(".homestead-map-wrap");
+        if (mapWrap) {
+          const newPin = document.createElement("div");
+          newPin.className = `upgrade-pin ${newKey}`;
+          newPin.dataset.homesteadPointKey = newKey;
+          newPin.innerHTML = `${nextNum}<span>New Point ${nextNum}</span>`;
+          newPin.style.top = "50%";
+          newPin.style.left = "50%";
+          mapWrap.appendChild(newPin);
+          
+          // Add drag listeners to new pin
+          newPin.addEventListener("pointerdown", (event) => {
+            if (!pinEditEnabled) return;
+            draggingHomesteadPin = newPin;
+            homesteadPinDragMoved = false;
+            newPin.classList.add("dragging");
+            if (typeof newPin.setPointerCapture === "function") {
+              newPin.setPointerCapture(event.pointerId);
+            }
+            event.preventDefault();
+            event.stopPropagation();
+          });
+
+          newPin.addEventListener("pointermove", (event) => {
+            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
+            const point = getPointInElement(event, mapWrap);
+            if (!point) return;
+            homesteadPinDragMoved = true;
+            updateHomesteadPointData(newKey, { top: point.top, left: point.left });
+            if (typeof onHomesteadPointMoved === "function") {
+              onHomesteadPointMoved(newKey);
+            }
+          });
+
+          newPin.addEventListener("pointerup", (event) => {
+            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
+            newPin.classList.remove("dragging");
+            if (typeof newPin.releasePointerCapture === "function" && newPin.hasPointerCapture(event.pointerId)) {
+              newPin.releasePointerCapture(event.pointerId);
+            }
+            draggingHomesteadPin = null;
+            homesteadPinDragMoved = false;
+          });
+
+          newPin.addEventListener("pointercancel", () => {
+            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
+            newPin.classList.remove("dragging");
+            draggingHomesteadPin = null;
+            homesteadPinDragMoved = false;
+          });
+        }
+        
+        // Refresh form and select new point
+        refreshHomesteadPointForm(newKey);
+        saveDraft();
       };
 
       const saveDraft = () => {
@@ -3681,22 +3824,37 @@
 
       if (applyHomesteadPointButton) {
         applyHomesteadPointButton.addEventListener("click", () => {
-          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0];
+          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : Object.keys(homesteadPointData)[0];
           if (!pointKey || !homesteadPointData[pointKey]) return;
+          
+          // Update section title
+          if (homesteadSectionTitleInput && homesteadSectionTitleInput.value.trim()) {
+            homesteadSectionTitle = homesteadSectionTitleInput.value.trim();
+            // Update the heading in the DOM
+            const sectionHeading = document.querySelector("#homesteadPointsSection h3");
+            if (sectionHeading) sectionHeading.textContent = homesteadSectionTitle;
+          }
+          
           updateHomesteadPointData(pointKey, {
             top: homesteadPointTopInput ? homesteadPointTopInput.value : undefined,
             left: homesteadPointLeftInput ? homesteadPointLeftInput.value : undefined,
             label: homesteadPointLabelInput ? homesteadPointLabelInput.value : undefined
           });
           refreshHomesteadPointForm(pointKey);
+          saveDraft();
         });
       }
 
-      if (copyHomesteadPointsButton) {
-        copyHomesteadPointsButton.addEventListener("click", async () => {
-          const ok = await copyTextToClipboard(JSON.stringify(homesteadPointData, null, 2));
-          copyHomesteadPointsButton.textContent = ok ? "Copied Point JSON" : "Copy Failed";
-          setTimeout(() => { copyHomesteadPointsButton.textContent = "Copy Points JSON"; }, 1200);
+      if (deleteHomesteadPointButton) {
+        deleteHomesteadPointButton.addEventListener("click", () => {
+          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : null;
+          if (pointKey) deleteHomesteadPoint(pointKey);
+        });
+      }
+
+      if (addHomesteadPointButton) {
+        addHomesteadPointButton.addEventListener("click", () => {
+          addHomesteadPoint();
         });
       }
 
