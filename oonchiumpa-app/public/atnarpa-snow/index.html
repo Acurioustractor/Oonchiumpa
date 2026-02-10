@@ -3430,99 +3430,31 @@
     };
 
     const setupLocalEditor = async () => {
-      const homesteadPointKeys = Object.keys(homesteadPointData);
       const { textTargets, imageTargets } = collectEditorTargets();
 
-      const launchButton = document.createElement("button");
-      launchButton.type = "button";
-      launchButton.className = "editor-launch visible";
-      launchButton.id = "editorLaunchButton";
-      launchButton.textContent = "Edit Local";
-
-      const dock = document.createElement("aside");
-      dock.className = "editor-dock";
-      dock.id = "editorDock";
-      dock.innerHTML = `
-        <div class="editor-head">
-          <strong>Local Content Editor</strong>
-          <button type="button" id="editorCloseButton">Close</button>
-        </div>
-        <div class="editor-body">
-          <p class="editor-note">
-            <strong>How to edit:</strong><br>
-            1. <strong>Text/Image Edit ON</strong>: Click any text to edit it directly. Click any image to instantly replace it with a file from your computer.<br>
-            2. <strong>Pin Drag ON</strong>: Drag homestead map pins with your mouse to reposition them.<br>
-            3. Use the <strong>Homestead Map Points</strong> panel to edit point labels and positions precisely.<br>
-            4. Click <strong>Save To Project File</strong> to save editor-draft.json to your atnarpa-snow folder.
-          </p>
-          <div class="editor-actions">
-            <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
-            <button type="button" id="editorTogglePins">Pin Drag: Off</button>
-            <button type="button" id="editorSaveDraft">Save Draft</button>
-            <button type="button" id="editorExportDraft">Export Draft</button>
-            <button type="button" id="editorImportDraft">Import Draft</button>
-            <button type="button" id="editorResetDraft">Reset Draft</button>
-            <button type="button" id="editorSaveRepoFile">Save To Project File</button>
-          </div>
-          <input type="file" id="editorImportInput" accept="application/json" hidden />
-          <input type="file" id="editorLocalImageInput" accept="image/*" hidden />
-          <section class="editor-block">
-            <h4>Homestead Map Points</h4>
-            <label>
-              Section Title
-              <input type="text" id="editorHomesteadSectionTitle" value="Homestead Map Points" />
-            </label>
-            <label>
-              Point
-              <select id="editorHomesteadPointSelect">
-                ${homesteadPointKeys.map((key) => `<option value="${key}">${homesteadPointLabels[key] || key.toUpperCase()}</option>`).join("")}
-              </select>
-            </label>
-            <label>
-              Point Label / Note
-              <textarea id="editorHomesteadPointLabel" placeholder="Enter the label text that appears when hovering"></textarea>
-            </label>
-            <label>
-              Position Top (%)
-              <input type="number" step="0.1" min="2" max="98" id="editorHomesteadPointTop" />
-            </label>
-            <label>
-              Position Left (%)
-              <input type="number" step="0.1" min="2" max="98" id="editorHomesteadPointLeft" />
-            </label>
-            <div class="editor-actions">
-              <button type="button" id="editorApplyHomesteadPoint">Apply Changes</button>
-              <button type="button" id="editorDeleteHomesteadPoint" style="background:#dc2626;color:#fff;">Delete Point</button>
-              <button type="button" id="editorAddHomesteadPoint">Add New Point</button>
-            </div>
-          </section>
-        </div>
+      // Simple floating toolbar with just 3 buttons
+      const toolbar = document.createElement("div");
+      toolbar.id = "editorToolbar";
+      toolbar.innerHTML = `
+        <style>
+          #editorToolbar { position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; gap: 8px; }
+          #editorToolbar button { padding: 8px 16px; border: none; border-radius: 6px; background: #2f8f64; color: white; font-size: 14px; cursor: pointer; }
+          #editorToolbar button:hover { background: #1f734f; }
+          #editorToolbar button.active { background: #d97706; }
+        </style>
+        <button type="button" id="btnEditText">Edit Text</button>
+        <button type="button" id="btnDragPins">Drag Pins</button>
+        <button type="button" id="btnSave">Save</button>
+        <input type="file" id="imgInput" accept="image/*" hidden />
       `;
+      document.body.appendChild(toolbar);
 
-      document.body.appendChild(launchButton);
-      document.body.appendChild(dock);
+      const btnEditText = toolbar.querySelector("#btnEditText");
+      const btnDragPins = toolbar.querySelector("#btnDragPins");
+      const btnSave = toolbar.querySelector("#btnSave");
+      const imgInput = toolbar.querySelector("#imgInput");
 
-      const closeButton = dock.querySelector("#editorCloseButton");
-      const toggleTextButton = dock.querySelector("#editorToggleText");
-      const togglePinsButton = dock.querySelector("#editorTogglePins");
-      const saveDraftButton = dock.querySelector("#editorSaveDraft");
-      const exportDraftButton = dock.querySelector("#editorExportDraft");
-      const importDraftButton = dock.querySelector("#editorImportDraft");
-      const resetDraftButton = dock.querySelector("#editorResetDraft");
-      const saveRepoFileButton = dock.querySelector("#editorSaveRepoFile");
-      const importInput = dock.querySelector("#editorImportInput");
-      const localImageInput = dock.querySelector("#editorLocalImageInput");
-      const homesteadPointSelect = dock.querySelector("#editorHomesteadPointSelect");
-      const homesteadPointLabelInput = dock.querySelector("#editorHomesteadPointLabel");
-      const homesteadPointTopInput = dock.querySelector("#editorHomesteadPointTop");
-      const homesteadPointLeftInput = dock.querySelector("#editorHomesteadPointLeft");
-      const homesteadSectionTitleInput = dock.querySelector("#editorHomesteadSectionTitle");
-      const applyHomesteadPointButton = dock.querySelector("#editorApplyHomesteadPoint");
-      const deleteHomesteadPointButton = dock.querySelector("#editorDeleteHomesteadPoint");
-      const addHomesteadPointButton = dock.querySelector("#editorAddHomesteadPoint");
-
-      let textImageEditEnabled = false;
-      let homesteadSectionTitle = "Homestead Map Points";
+      let textEditEnabled = false;
       let nextImageId = imageTargets.length;
 
       const ensureImageId = (img) => {
@@ -3532,359 +3464,75 @@
           img.dataset.editorImageId = "image-" + String(nextImageId);
         }
       };
-
       imageTargets.forEach((img) => ensureImageId(img));
 
-      const setDockOpen = (open) => {
-        dock.classList.toggle("open", open);
-        launchButton.style.display = open ? "none" : "inline-flex";
-      };
-
-      const setTextImageEditMode = (enabled) => {
-        textImageEditEnabled = enabled;
-        document.body.classList.toggle("editor-text-mode", enabled);
-        document.body.classList.toggle("editor-image-mode", enabled);
+      // Toggle text editing
+      btnEditText.addEventListener("click", () => {
+        textEditEnabled = !textEditEnabled;
         textTargets.forEach((el) => {
-          el.contentEditable = enabled ? "true" : "false";
-          if (!enabled) el.blur();
+          el.contentEditable = textEditEnabled ? "true" : "false";
+          if (!textEditEnabled) el.blur();
         });
-        if (toggleTextButton) {
-          toggleTextButton.textContent = enabled ? "Text/Image Edit: On" : "Text/Image Edit: Off";
-          toggleTextButton.classList.toggle("active", enabled);
-        }
-      };
+        btnEditText.textContent = textEditEnabled ? "Editing Text" : "Edit Text";
+        btnEditText.classList.toggle("active", textEditEnabled);
+      });
 
-      const setPinModeUI = (enabled) => {
-        setPinEditMode(enabled);
-        if (togglePinsButton) {
-          togglePinsButton.textContent = enabled ? "Pin Drag: On" : "Pin Drag: Off";
-          togglePinsButton.classList.toggle("active", enabled);
-        }
-      };
+      // Toggle pin dragging
+      btnDragPins.addEventListener("click", () => {
+        pinEditEnabled = !pinEditEnabled;
+        setPinEditMode(pinEditEnabled);
+        btnDragPins.textContent = pinEditEnabled ? "Dragging Pins" : "Drag Pins";
+        btnDragPins.classList.toggle("active", pinEditEnabled);
+      });
 
-      const refreshHomesteadPointForm = (pointKey) => {
-        const keys = Object.keys(homesteadPointData);
-        const key = pointKey && homesteadPointData[pointKey] ? pointKey : (keys[0] || null);
-        const point = key ? homesteadPointData[key] : null;
-        
-        // Refresh select options in case points were added/removed
-        if (homesteadPointSelect) {
-          const currentValue = homesteadPointSelect.value;
-          homesteadPointSelect.innerHTML = keys.map((k) => {
-            const label = homesteadPointLabels[k] || `${k.toUpperCase()} - ${(homesteadPointData[k]?.label || '').substring(0, 30)}...`;
-            return `<option value="${k}">${label}</option>`;
-          }).join("");
-          homesteadPointSelect.value = key || currentValue;
-        }
-        
-        if (homesteadSectionTitleInput) {
-          homesteadSectionTitleInput.value = homesteadSectionTitle;
-        }
-        
-        if (!key || !point) {
-          if (homesteadPointLabelInput) homesteadPointLabelInput.value = "";
-          if (homesteadPointTopInput) homesteadPointTopInput.value = "50";
-          if (homesteadPointLeftInput) homesteadPointLeftInput.value = "50";
-          return;
-        }
-        
-        if (homesteadPointSelect) homesteadPointSelect.value = key;
-        if (homesteadPointLabelInput) homesteadPointLabelInput.value = point.label || "";
-        if (homesteadPointTopInput) homesteadPointTopInput.value = String(Number(point.top || 0).toFixed(1));
-        if (homesteadPointLeftInput) homesteadPointLeftInput.value = String(Number(point.left || 0).toFixed(1));
-      };
-
-      const deleteHomesteadPoint = (pointKey) => {
-        if (!homesteadPointData[pointKey]) return;
-        const keys = Object.keys(homesteadPointData);
-        if (keys.length <= 1) {
-          window.alert("Cannot delete the last point. At least one point is required.");
-          return;
-        }
-        if (!window.confirm(`Delete point ${pointKey.toUpperCase()}?`)) return;
-        
-        // Remove from data
-        delete homesteadPointData[pointKey];
-        delete homesteadPointLabels[pointKey];
-        
-        // Remove pin from DOM
-        const pin = document.querySelector(`.upgrade-pin[data-homestead-point-key="${pointKey}"]`);
-        if (pin) pin.remove();
-        
-        // Refresh form with first remaining point
-        const remainingKeys = Object.keys(homesteadPointData);
-        refreshHomesteadPointForm(remainingKeys[0]);
-        saveDraft();
-      };
-
-      const addHomesteadPoint = () => {
-        // Find next available key (h1, h2, h3, etc.)
-        let nextNum = 1;
-        while (homesteadPointData[`h${nextNum}`]) {
-          nextNum++;
-        }
-        const newKey = `h${nextNum}`;
-        
-        // Add to data
-        homesteadPointData[newKey] = {
-          top: 50,
-          left: 50,
-          label: `New Point ${nextNum}`
-        };
-        homesteadPointLabels[newKey] = `Point ${nextNum} - New`;
-        
-        // Create new pin element
-        const mapWrap = document.querySelector(".homestead-map-wrap");
-        if (mapWrap) {
-          const newPin = document.createElement("div");
-          newPin.className = `upgrade-pin ${newKey}`;
-          newPin.dataset.homesteadPointKey = newKey;
-          newPin.innerHTML = `${nextNum}<span>New Point ${nextNum}</span>`;
-          newPin.style.top = "50%";
-          newPin.style.left = "50%";
-          mapWrap.appendChild(newPin);
-          
-          // Add drag listeners to new pin
-          newPin.addEventListener("pointerdown", (event) => {
-            if (!pinEditEnabled) return;
-            draggingHomesteadPin = newPin;
-            homesteadPinDragMoved = false;
-            newPin.classList.add("dragging");
-            if (typeof newPin.setPointerCapture === "function") {
-              newPin.setPointerCapture(event.pointerId);
-            }
-            event.preventDefault();
-            event.stopPropagation();
-          });
-
-          newPin.addEventListener("pointermove", (event) => {
-            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
-            const point = getPointInElement(event, mapWrap);
-            if (!point) return;
-            homesteadPinDragMoved = true;
-            updateHomesteadPointData(newKey, { top: point.top, left: point.left });
-            if (typeof onHomesteadPointMoved === "function") {
-              onHomesteadPointMoved(newKey);
-            }
-          });
-
-          newPin.addEventListener("pointerup", (event) => {
-            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
-            newPin.classList.remove("dragging");
-            if (typeof newPin.releasePointerCapture === "function" && newPin.hasPointerCapture(event.pointerId)) {
-              newPin.releasePointerCapture(event.pointerId);
-            }
-            draggingHomesteadPin = null;
-            homesteadPinDragMoved = false;
-          });
-
-          newPin.addEventListener("pointercancel", () => {
-            if (!pinEditEnabled || draggingHomesteadPin !== newPin) return;
-            newPin.classList.remove("dragging");
-            draggingHomesteadPin = null;
-            homesteadPinDragMoved = false;
-          });
-        }
-        
-        // Refresh form and select new point
-        refreshHomesteadPointForm(newKey);
-        saveDraft();
-      };
-
-      const saveDraft = () => {
+      // Save button
+      btnSave.addEventListener("click", async () => {
         Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
         const draft = buildDraftPayload(textTargets, imageTargets);
-        localStorage.setItem(draftStorageKey, JSON.stringify(draft));
-      };
+        const ok = await saveDraftToProjectFile(draft);
+        if (ok) {
+          localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+          btnSave.textContent = "Saved!";
+          setTimeout(() => btnSave.textContent = "Save", 1000);
+        }
+      });
 
-      const pickLocalImageAsFile = () => {
+      // Image replacement on click
+      const pickLocalImage = () => {
         return new Promise((resolve) => {
-          if (!localImageInput) {
-            resolve(null);
-            return;
-          }
-          localImageInput.value = "";
-          const onChange = () => {
-            const file = localImageInput.files && localImageInput.files[0];
-            if (!file) {
-              resolve(null);
-              return;
-            }
+          imgInput.value = "";
+          imgInput.onchange = () => {
+            const file = imgInput.files?.[0];
+            if (!file) { resolve(null); return; }
             const reader = new FileReader();
-            reader.onload = () => resolve({ dataUrl: String(reader.result || ""), file });
+            reader.onload = () => resolve({ dataUrl: reader.result, file });
             reader.onerror = () => resolve(null);
             reader.readAsDataURL(file);
           };
-          localImageInput.addEventListener("change", onChange, { once: true });
-          localImageInput.click();
+          imgInput.click();
         });
       };
 
-      const editRegularImage = async (img) => {
+      document.addEventListener("click", async (e) => {
+        if (!textEditEnabled) return;
+        const img = e.target.closest("img");
+        if (!img || img.closest("#editorToolbar")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const result = await pickLocalImage();
+        if (!result?.dataUrl) return;
         ensureImageId(img);
-        const result = await pickLocalImageAsFile();
-        if (!result || !result.dataUrl) return;
-        img.setAttribute("src", result.dataUrl);
-        const currentAlt = img.getAttribute("alt") || "";
-        const defaultAlt = result.file ? result.file.name.replace(/\.[^/.]+$/, "") : currentAlt;
-        const nextAlt = window.prompt("Set image alt text:", defaultAlt);
-        if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
-      };
-
-      document.addEventListener("click", async (event) => {
-        if (!textImageEditEnabled) return;
-        const target = event.target;
-        if (!target || !(target instanceof Element)) return;
-        if (target.closest("#editorDock")) return;
-
-        const imageTarget = target.closest("img");
-        if (!imageTarget) return;
-        if (imageTarget.closest("#editorDock")) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-        await editRegularImage(imageTarget);
+        img.src = result.dataUrl;
+        const alt = prompt("Alt text:", result.file.name.replace(/\.[^/.]+$/, ""));
+        if (alt !== null) img.alt = alt;
       }, true);
 
-      launchButton.addEventListener("click", () => setDockOpen(true));
-      if (closeButton) closeButton.addEventListener("click", () => setDockOpen(false));
-
-      if (toggleTextButton) {
-        toggleTextButton.addEventListener("click", () => {
-          setTextImageEditMode(!textImageEditEnabled);
-        });
-      }
-
-      if (togglePinsButton) {
-        togglePinsButton.addEventListener("click", () => {
-          setPinModeUI(!pinEditEnabled);
-        });
-      }
-
-      if (saveDraftButton) {
-        saveDraftButton.addEventListener("click", () => {
-          saveDraft();
-          saveDraftButton.textContent = "Saved";
-          setTimeout(() => { saveDraftButton.textContent = "Save Draft"; }, 1100);
-        });
-      }
-
-      if (exportDraftButton) {
-        exportDraftButton.addEventListener("click", () => {
-          const draft = buildDraftPayload(textTargets, imageTargets);
-          const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = "atnarpa-local-draft.json";
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          URL.revokeObjectURL(url);
-        });
-      }
-
-      if (importDraftButton && importInput) {
-        importDraftButton.addEventListener("click", () => importInput.click());
-        importInput.addEventListener("change", async () => {
-          const file = importInput.files && importInput.files[0];
-          if (!file) return;
-          try {
-            const text = await file.text();
-            const parsed = JSON.parse(text);
-            applyDraftPayload(parsed, textTargets, imageTargets);
-            refreshHomesteadPointForm(homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0]);
-            saveDraft();
-          } catch (_) {
-            window.alert("Could not import draft JSON.");
-          }
-          importInput.value = "";
-        });
-      }
-
-      if (resetDraftButton) {
-        resetDraftButton.addEventListener("click", () => {
-          localStorage.removeItem(draftStorageKey);
-          window.location.reload();
-        });
-      }
-
-      if (saveRepoFileButton) {
-        saveRepoFileButton.addEventListener("click", async () => {
-          Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
-          const draft = buildDraftPayload(textTargets, imageTargets);
-          const ok = await saveDraftToProjectFile(draft);
-          if (ok) {
-            localStorage.setItem(draftStorageKey, JSON.stringify(draft));
-            saveRepoFileButton.textContent = "Saved editor-draft.json";
-            setTimeout(() => { saveRepoFileButton.textContent = "Save To Project File"; }, 1700);
-          }
-        });
-      }
-
-      if (applyHomesteadPointButton) {
-        applyHomesteadPointButton.addEventListener("click", () => {
-          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : Object.keys(homesteadPointData)[0];
-          if (!pointKey || !homesteadPointData[pointKey]) return;
-          
-          // Update section title
-          if (homesteadSectionTitleInput && homesteadSectionTitleInput.value.trim()) {
-            homesteadSectionTitle = homesteadSectionTitleInput.value.trim();
-            // Update the heading in the DOM
-            const sectionHeading = document.querySelector("#homesteadPointsSection h3");
-            if (sectionHeading) sectionHeading.textContent = homesteadSectionTitle;
-          }
-          
-          updateHomesteadPointData(pointKey, {
-            top: homesteadPointTopInput ? homesteadPointTopInput.value : undefined,
-            left: homesteadPointLeftInput ? homesteadPointLeftInput.value : undefined,
-            label: homesteadPointLabelInput ? homesteadPointLabelInput.value : undefined
-          });
-          refreshHomesteadPointForm(pointKey);
-          saveDraft();
-        });
-      }
-
-      if (deleteHomesteadPointButton) {
-        deleteHomesteadPointButton.addEventListener("click", () => {
-          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : null;
-          if (pointKey) deleteHomesteadPoint(pointKey);
-        });
-      }
-
-      if (addHomesteadPointButton) {
-        addHomesteadPointButton.addEventListener("click", () => {
-          addHomesteadPoint();
-        });
-      }
-
-      onHomesteadPointMoved = (pointKey) => {
-        if (homesteadPointSelect && homesteadPointSelect.value === pointKey) {
-          refreshHomesteadPointForm(pointKey);
-        }
-      };
-
-      let hasLocalDraft = false;
-      if (!forceRepoDraft) {
-        try {
-          const savedDraftRaw = localStorage.getItem(draftStorageKey);
-          if (savedDraftRaw) {
-            applyDraftPayload(JSON.parse(savedDraftRaw), textTargets, imageTargets);
-            hasLocalDraft = true;
-          }
-        } catch (_) {}
-      } else {
-        try {
-          localStorage.removeItem(draftStorageKey);
-        } catch (_) {}
-      }
-
-      if (!hasLocalDraft) {
-        await loadRepoDraftIntoPage(textTargets, imageTargets);
-      }
-
-      refreshHomesteadPointForm(homesteadPointKeys[0]);
-      setDockOpen(false);
+      // Load saved draft
+      try {
+        const saved = localStorage.getItem(draftStorageKey);
+        if (saved) applyDraftPayload(JSON.parse(saved), textTargets, imageTargets);
+        else await loadRepoDraftIntoPage(textTargets, imageTargets);
+      } catch (_) { await loadRepoDraftIntoPage(textTargets, imageTargets); }
     };
 
     const localEditorEnabled = queryParams.get("edit") === "1"
