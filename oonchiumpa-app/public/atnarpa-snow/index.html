@@ -3337,8 +3337,7 @@
         zoneData: JSON.parse(JSON.stringify(zoneData)),
         zonePositions: JSON.parse(JSON.stringify(zonePositions)),
         homesteadPointData: JSON.parse(JSON.stringify(homesteadPointData)),
-        homesteadPointLabels: JSON.parse(JSON.stringify(homesteadPointLabels)),
-        homesteadSectionTitle
+        homesteadPointLabels: JSON.parse(JSON.stringify(homesteadPointLabels))
       };
     };
 
@@ -3407,11 +3406,6 @@
         Object.keys(draft.homesteadPointLabels).forEach((key) => {
           homesteadPointLabels[key] = draft.homesteadPointLabels[key];
         });
-      }
-      if (draft.homesteadSectionTitle && typeof draft.homesteadSectionTitle === "string") {
-        homesteadSectionTitle = draft.homesteadSectionTitle;
-        const sectionHeading = document.querySelector("#homesteadPointsSection h3");
-        if (sectionHeading) sectionHeading.textContent = homesteadSectionTitle;
       }
       const activeZone = zoneButtons.find((button) => button.classList.contains("active"))?.dataset.zoneKey || "zoneA";
       setActiveZone(activeZone);
