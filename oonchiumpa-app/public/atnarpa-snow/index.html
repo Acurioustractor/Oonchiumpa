@@ -1515,9 +1515,15 @@
       cursor: pointer;
     }
 
-    .pin-edit-on .zone-pin {
+    .pin-edit-on .zone-pin,
+    .pin-edit-on .upgrade-pin {
       cursor: grab;
       box-shadow: 0 0 0 3px rgba(236, 119, 40, 0.24), 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
+    .zone-pin.dragging,
+    .upgrade-pin.dragging {
+      cursor: grabbing;
     }
 
     .reveal {
@@ -2140,9 +2146,9 @@
             <p>These supporting works sit alongside the campground-first build and are staged as practical upgrades around the existing homestead footprint.</p>
             <div class="upgrade-map-wrap homestead-map-wrap">
               <img src="assets/atnarpa/campsite/homestead-additional-map.jpg" alt="Aerial homestead map with supporting-upgrade reference points" />
-              <div class="upgrade-pin h1">1<span>Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)</span></div>
-              <div class="upgrade-pin h2">2<span>Landscaping upgrades to define the campground edge and safe movement areas</span></div>
-              <div class="upgrade-pin h3">3<span>Homestead roof fixed and site prepared for safe next stages</span></div>
+              <div class="upgrade-pin h1" data-homestead-point-key="h1">1<span>Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)</span></div>
+              <div class="upgrade-pin h2" data-homestead-point-key="h2">2<span>Landscaping upgrades to define the campground edge and safe movement areas</span></div>
+              <div class="upgrade-pin h3" data-homestead-point-key="h3">3<span>Homestead roof fixed and site prepared for safe next stages</span></div>
             </div>
             <ul class="upgrade-point-list">
               <li><strong>Two toilet and shower blocks:</strong> installed and upgraded at the homestead location through reconfiguration of old cattle-block infrastructure.</li>
@@ -2810,8 +2816,61 @@
     };
 
     const zonePositions = JSON.parse(JSON.stringify(defaultZonePositions));
+    const homesteadPins = Array.from(document.querySelectorAll(".homestead-map-wrap .upgrade-pin[data-homestead-point-key]"));
+    const homesteadPointLabels = {
+      h1: "Point 1 - Toilets and showers",
+      h2: "Point 2 - Landscaping edge",
+      h3: "Point 3 - Roof and readiness"
+    };
+    const defaultHomesteadPointData = {
+      h1: {
+        top: 30,
+        left: 17,
+        label: "Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)"
+      },
+      h2: {
+        top: 22,
+        left: 69,
+        label: "Landscaping upgrades to define the campground edge and safe movement areas"
+      },
+      h3: {
+        top: 48,
+        left: 46,
+        label: "Homestead roof fixed and site prepared for safe next stages"
+      }
+    };
+    const homesteadPointData = JSON.parse(JSON.stringify(defaultHomesteadPointData));
 
     const clampPercent = (value) => Math.max(2, Math.min(98, value));
+
+    const applyHomesteadPointData = () => {
+      homesteadPins.forEach((pin) => {
+        const key = pin.dataset.homesteadPointKey;
+        const point = homesteadPointData[key];
+        if (!point) return;
+        pin.style.top = clampPercent(point.top) + "%";
+        pin.style.left = clampPercent(point.left) + "%";
+        const note = pin.querySelector("span");
+        if (note && typeof point.label === "string" && point.label.trim()) {
+          note.textContent = point.label.trim();
+        }
+      });
+    };
+
+    const updateHomesteadPointData = (pointKey, incoming = {}) => {
+      const point = homesteadPointData[pointKey];
+      if (!point) return;
+      if (incoming.top !== undefined) {
+        point.top = clampPercent(Number(incoming.top) || point.top);
+      }
+      if (incoming.left !== undefined) {
+        point.left = clampPercent(Number(incoming.left) || point.left);
+      }
+      if (typeof incoming.label === "string" && incoming.label.trim()) {
+        point.label = incoming.label.trim();
+      }
+      applyHomesteadPointData();
+    };
 
     const applyPinPositions = () => {
       zonePins.forEach((pin) => {
@@ -2831,6 +2890,7 @@
     };
 
     applyPinPositions();
+    applyHomesteadPointData();
 
     const isFullscreenActive = () => {
       return document.fullscreenElement === plannerShell || document.webkitFullscreenElement === plannerShell;
@@ -2921,6 +2981,7 @@
         if (!pinEditEnabled) return;
         draggingPin = pin;
         pinDragMoved = false;
+        pin.classList.add("dragging");
         if (typeof pin.setPointerCapture === "function") {
           pin.setPointerCapture(event.pointerId);
         }
@@ -2942,6 +3003,7 @@
       pin.addEventListener("pointerup", (event) => {
         if (!pinEditEnabled || draggingPin !== pin) return;
         if (pinDragMoved) suppressPinClickUntil = Date.now() + 300;
+        pin.classList.remove("dragging");
         if (typeof pin.releasePointerCapture === "function" && pin.hasPointerCapture(event.pointerId)) {
           pin.releasePointerCapture(event.pointerId);
         }
@@ -2951,8 +3013,52 @@
 
       pin.addEventListener("pointercancel", () => {
         if (!pinEditEnabled || draggingPin !== pin) return;
+        pin.classList.remove("dragging");
         draggingPin = null;
         pinDragMoved = false;
+      });
+    });
+
+    homesteadPins.forEach((pin) => {
+      pin.addEventListener("pointerdown", (event) => {
+        if (!pinEditEnabled) return;
+        draggingHomesteadPin = pin;
+        homesteadPinDragMoved = false;
+        pin.classList.add("dragging");
+        if (typeof pin.setPointerCapture === "function") {
+          pin.setPointerCapture(event.pointerId);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      pin.addEventListener("pointermove", (event) => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        const mapWrap = pin.closest(".upgrade-map-wrap");
+        const point = getPointInElement(event, mapWrap);
+        if (!point) return;
+        homesteadPinDragMoved = true;
+        updateHomesteadPointData(pin.dataset.homesteadPointKey, { top: point.top, left: point.left });
+        if (typeof onHomesteadPointMoved === "function") {
+          onHomesteadPointMoved(pin.dataset.homesteadPointKey);
+        }
+      });
+
+      pin.addEventListener("pointerup", (event) => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        pin.classList.remove("dragging");
+        if (typeof pin.releasePointerCapture === "function" && pin.hasPointerCapture(event.pointerId)) {
+          pin.releasePointerCapture(event.pointerId);
+        }
+        draggingHomesteadPin = null;
+        homesteadPinDragMoved = false;
+      });
+
+      pin.addEventListener("pointercancel", () => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        pin.classList.remove("dragging");
+        draggingHomesteadPin = null;
+        homesteadPinDragMoved = false;
       });
     });
 
@@ -2968,11 +3074,23 @@
     let pinEditEnabled = false;
     let draggingPin = null;
     let pinDragMoved = false;
+    let draggingHomesteadPin = null;
+    let homesteadPinDragMoved = false;
     let onPinMoved = null;
+    let onHomesteadPointMoved = null;
 
     const getPinPointInMap = (event) => {
       if (!droneMapImage) return null;
       const rect = droneMapImage.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const left = clampPercent(((event.clientX - rect.left) / rect.width) * 100);
+      const top = clampPercent(((event.clientY - rect.top) / rect.height) * 100);
+      return { top, left };
+    };
+
+    const getPointInElement = (event, element) => {
+      if (!element) return null;
+      const rect = element.getBoundingClientRect();
       if (!rect.width || !rect.height) return null;
       const left = clampPercent(((event.clientX - rect.left) / rect.width) * 100);
       const top = clampPercent(((event.clientY - rect.top) / rect.height) * 100);
@@ -3238,7 +3356,8 @@
         text,
         images,
         zoneData: JSON.parse(JSON.stringify(zoneData)),
-        zonePositions: JSON.parse(JSON.stringify(zonePositions))
+        zonePositions: JSON.parse(JSON.stringify(zonePositions)),
+        homesteadPointData: JSON.parse(JSON.stringify(homesteadPointData))
       };
     };
 
@@ -3288,6 +3407,17 @@
           updatePinPosition(key, incoming.top, incoming.left);
         });
       }
+      if (draft.homesteadPointData && typeof draft.homesteadPointData === "object") {
+        Object.keys(homesteadPointData).forEach((key) => {
+          const incoming = draft.homesteadPointData[key];
+          if (!incoming || typeof incoming !== "object") return;
+          updateHomesteadPointData(key, {
+            top: incoming.top,
+            left: incoming.left,
+            label: incoming.label
+          });
+        });
+      }
       const activeZone = zoneButtons.find((button) => button.classList.contains("active"))?.dataset.zoneKey || "zoneA";
       setActiveZone(activeZone);
     };
@@ -3307,6 +3437,7 @@
     const setupLocalEditor = async () => {
       const zoneKeys = Object.keys(zoneData);
       if (zoneKeys.length === 0) return;
+      const homesteadPointKeys = Object.keys(homesteadPointData);
       const { textTargets, imageTargets } = collectEditorTargets();
 
       const launchButton = document.createElement("button");
@@ -3324,7 +3455,7 @@
           <button type="button" id="editorCloseButton">Close</button>
         </div>
         <div class="editor-body">
-          <p class="editor-note">Turn on Text/Image Edit, then edit headings, paragraphs, list items, and captions directly. Click any image to swap it (local upload or path/URL), and use the pin panel for zone title/description/media updates. Save To Project File writes <code>editor-draft.json</code> into this site folder.</p>
+          <p class="editor-note">Turn on Text/Image Edit, then edit headings, paragraphs, list items, and captions directly. Click any image to swap it (local upload or path/URL), and use the pin panel for zone and homestead-point updates. Turn on Pin Drag to move points live on both maps. Save To Project File writes <code>editor-draft.json</code> into this site folder.</p>
           <div class="editor-actions">
             <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
             <button type="button" id="editorTogglePins">Pin Drag: Off</button>
@@ -3386,6 +3517,31 @@
               <button type="button" id="editorCopyPins">Copy Pin JSON</button>
             </div>
           </section>
+          <section class="editor-block">
+            <h4>Homestead Map Points</h4>
+            <label>
+              Point
+              <select id="editorHomesteadPointSelect">
+                ${homesteadPointKeys.map((key) => `<option value="${key}">${homesteadPointLabels[key] || key.toUpperCase()}</option>`).join("")}
+              </select>
+            </label>
+            <label>
+              Point Note
+              <textarea id="editorHomesteadPointLabel"></textarea>
+            </label>
+            <label>
+              Point Top (%)
+              <input type="number" step="0.1" id="editorHomesteadPointTop" />
+            </label>
+            <label>
+              Point Left (%)
+              <input type="number" step="0.1" id="editorHomesteadPointLeft" />
+            </label>
+            <div class="editor-actions">
+              <button type="button" id="editorApplyHomesteadPoint">Apply Homestead Point</button>
+              <button type="button" id="editorCopyHomesteadPoints">Copy Homestead Point JSON</button>
+            </div>
+          </section>
         </div>
       `;
 
@@ -3415,6 +3571,12 @@
       const applyZoneButton = dock.querySelector("#editorApplyZone");
       const applyPinButton = dock.querySelector("#editorApplyPin");
       const copyPinsButton = dock.querySelector("#editorCopyPins");
+      const homesteadPointSelect = dock.querySelector("#editorHomesteadPointSelect");
+      const homesteadPointLabelInput = dock.querySelector("#editorHomesteadPointLabel");
+      const homesteadPointTopInput = dock.querySelector("#editorHomesteadPointTop");
+      const homesteadPointLeftInput = dock.querySelector("#editorHomesteadPointLeft");
+      const applyHomesteadPointButton = dock.querySelector("#editorApplyHomesteadPoint");
+      const copyHomesteadPointsButton = dock.querySelector("#editorCopyHomesteadPoints");
 
       let textImageEditEnabled = false;
       let nextImageId = imageTargets.length;
@@ -3497,6 +3659,16 @@
         }
         if (pinTopInput && pos) pinTopInput.value = String(Number(pos.top || 0).toFixed(1));
         if (pinLeftInput && pos) pinLeftInput.value = String(Number(pos.left || 0).toFixed(1));
+      };
+
+      const refreshHomesteadPointForm = (pointKey) => {
+        const key = pointKey && homesteadPointData[pointKey] ? pointKey : homesteadPointKeys[0];
+        const point = key ? homesteadPointData[key] : null;
+        if (!key || !point) return;
+        if (homesteadPointSelect) homesteadPointSelect.value = key;
+        if (homesteadPointLabelInput) homesteadPointLabelInput.value = point.label || "";
+        if (homesteadPointTopInput) homesteadPointTopInput.value = String(Number(point.top || 0).toFixed(1));
+        if (homesteadPointLeftInput) homesteadPointLeftInput.value = String(Number(point.left || 0).toFixed(1));
       };
 
       const saveDraft = () => {
@@ -3675,6 +3847,7 @@
             const parsed = JSON.parse(text);
             applyDraftPayload(parsed, textTargets, imageTargets);
             refreshZoneForm(zoneSelect.value || "zoneA");
+            refreshHomesteadPointForm(homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0]);
             saveDraft();
           } catch (_) {
             window.alert("Could not import draft JSON.");
@@ -3720,6 +3893,12 @@
           const zoneKey = zoneSelect.value;
           setActiveZone(zoneKey);
           refreshZoneForm(zoneKey);
+        });
+      }
+
+      if (homesteadPointSelect) {
+        homesteadPointSelect.addEventListener("change", () => {
+          refreshHomesteadPointForm(homesteadPointSelect.value);
         });
       }
 
@@ -3773,6 +3952,27 @@
         });
       }
 
+      if (applyHomesteadPointButton) {
+        applyHomesteadPointButton.addEventListener("click", () => {
+          const pointKey = homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0];
+          if (!pointKey || !homesteadPointData[pointKey]) return;
+          updateHomesteadPointData(pointKey, {
+            top: homesteadPointTopInput ? homesteadPointTopInput.value : undefined,
+            left: homesteadPointLeftInput ? homesteadPointLeftInput.value : undefined,
+            label: homesteadPointLabelInput ? homesteadPointLabelInput.value : undefined
+          });
+          refreshHomesteadPointForm(pointKey);
+        });
+      }
+
+      if (copyHomesteadPointsButton) {
+        copyHomesteadPointsButton.addEventListener("click", async () => {
+          const ok = await copyTextToClipboard(JSON.stringify(homesteadPointData, null, 2));
+          copyHomesteadPointsButton.textContent = ok ? "Copied Point JSON" : "Copy Failed";
+          setTimeout(() => { copyHomesteadPointsButton.textContent = "Copy Homestead Point JSON"; }, 1200);
+        });
+      }
+
       onPinMoved = (zoneKey) => {
         if (zoneSelect && zoneSelect.value === zoneKey) {
           refreshZoneForm(zoneKey);
@@ -3782,6 +3982,12 @@
       onZoneChange = (zoneKey) => {
         if (zoneSelect) zoneSelect.value = zoneKey;
         refreshZoneForm(zoneKey);
+      };
+
+      onHomesteadPointMoved = (pointKey) => {
+        if (homesteadPointSelect && homesteadPointSelect.value === pointKey) {
+          refreshHomesteadPointForm(pointKey);
+        }
       };
 
       let hasLocalDraft = false;
@@ -3804,6 +4010,7 @@
       }
 
       refreshZoneForm("zoneA");
+      refreshHomesteadPointForm(homesteadPointKeys[0]);
       setDockOpen(false);
     };
 
