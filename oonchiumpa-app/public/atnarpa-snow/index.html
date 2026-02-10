@@ -3234,27 +3234,6 @@
       return false;
     };
 
-    const padNumber = (value) => String(value).padStart(2, "0");
-
-    const buildBranchAndDeployCommands = () => {
-      const now = new Date();
-      const stamp = [
-        now.getFullYear(),
-        padNumber(now.getMonth() + 1),
-        padNumber(now.getDate())
-      ].join("") + "-" + [padNumber(now.getHours()), padNumber(now.getMinutes())].join("");
-      const branchName = "codex/atnarpa-editor-" + stamp;
-      return [
-        "cd " + repoRootPath,
-        "git checkout -b " + branchName,
-        "git add oonchiumpa-app/public/atnarpa-snow/index.html " + repoDraftRelativePath,
-        "git commit -m \"Update Atnarpa local editor content\"",
-        "git push -u origin HEAD",
-        "cd oonchiumpa-app",
-        "vercel deploy"
-      ].join("\n");
-    };
-
     const openNestedDirectory = async (rootHandle, pathParts) => {
       let current = rootHandle;
       for (const part of pathParts) {
@@ -3435,8 +3414,6 @@
     };
 
     const setupLocalEditor = async () => {
-      const zoneKeys = Object.keys(zoneData);
-      if (zoneKeys.length === 0) return;
       const homesteadPointKeys = Object.keys(homesteadPointData);
       const { textTargets, imageTargets } = collectEditorTargets();
 
@@ -3455,7 +3432,13 @@
           <button type="button" id="editorCloseButton">Close</button>
         </div>
         <div class="editor-body">
-          <p class="editor-note">Turn on Text/Image Edit, then edit headings, paragraphs, list items, and captions directly. Click any image to swap it (local upload or path/URL), and use the pin panel for zone and homestead-point updates. Turn on Pin Drag to move points live on both maps. Save To Project File writes <code>editor-draft.json</code> into this site folder.</p>
+          <p class="editor-note">
+            <strong>How to edit:</strong><br>
+            1. Turn on "Text/Image Edit" to edit text directly or click any image to replace it<br>
+            2. Turn on "Pin Drag" to drag homestead map points with your mouse<br>
+            3. Use the "Homestead Map Points" panel to edit point labels and positions precisely<br>
+            4. Click "Save To Project File" to download editor-draft.json to your atnarpa-snow folder
+          </p>
           <div class="editor-actions">
             <button type="button" id="editorToggleText">Text/Image Edit: Off</button>
             <button type="button" id="editorTogglePins">Pin Drag: Off</button>
@@ -3464,59 +3447,9 @@
             <button type="button" id="editorImportDraft">Import Draft</button>
             <button type="button" id="editorResetDraft">Reset Draft</button>
             <button type="button" id="editorSaveRepoFile">Save To Project File</button>
-            <button type="button" id="editorCopyBranchDeploy">Copy Branch + Deploy Cmds</button>
           </div>
           <input type="file" id="editorImportInput" accept="application/json" hidden />
           <input type="file" id="editorLocalImageInput" accept="image/*" hidden />
-          <section class="editor-block">
-            <h4>Pin Details</h4>
-            <label>
-              Zone
-              <select id="editorZoneSelect">
-                ${zoneKeys.map((key) => `<option value="${key}">${key.toUpperCase()}</option>`).join("")}
-              </select>
-            </label>
-            <label>
-              Zone Title
-              <input type="text" id="editorZoneTitle" />
-            </label>
-            <label>
-              Zone Description
-              <textarea id="editorZoneDescription"></textarea>
-            </label>
-            <label>
-              Video Library
-              <select id="editorZoneVideoPreset">
-                <option value="">Choose preset</option>
-                ${zoneVideoPresets.map((preset, index) => `<option value="${index}">${preset.label}</option>`).join("")}
-              </select>
-            </label>
-            <label>
-              Flyover Video Path
-              <input type="text" id="editorZoneVideo" />
-            </label>
-            <label>
-              Video Poster Path
-              <input type="text" id="editorZonePoster" />
-            </label>
-            <label>
-              Photos (one per line: path | caption | alt optional)
-              <textarea id="editorZonePhotos"></textarea>
-            </label>
-            <label>
-              Pin Top (%)
-              <input type="number" step="0.1" id="editorPinTop" />
-            </label>
-            <label>
-              Pin Left (%)
-              <input type="number" step="0.1" id="editorPinLeft" />
-            </label>
-            <div class="editor-actions">
-              <button type="button" id="editorApplyZone">Apply Zone Details</button>
-              <button type="button" id="editorApplyPin">Apply Pin Position</button>
-              <button type="button" id="editorCopyPins">Copy Pin JSON</button>
-            </div>
-          </section>
           <section class="editor-block">
             <h4>Homestead Map Points</h4>
             <label>
@@ -3526,20 +3459,20 @@
               </select>
             </label>
             <label>
-              Point Note
-              <textarea id="editorHomesteadPointLabel"></textarea>
+              Point Label / Note
+              <textarea id="editorHomesteadPointLabel" placeholder="Enter the label text that appears when hovering"></textarea>
             </label>
             <label>
-              Point Top (%)
-              <input type="number" step="0.1" id="editorHomesteadPointTop" />
+              Position Top (%)
+              <input type="number" step="0.1" min="2" max="98" id="editorHomesteadPointTop" />
             </label>
             <label>
-              Point Left (%)
-              <input type="number" step="0.1" id="editorHomesteadPointLeft" />
+              Position Left (%)
+              <input type="number" step="0.1" min="2" max="98" id="editorHomesteadPointLeft" />
             </label>
             <div class="editor-actions">
-              <button type="button" id="editorApplyHomesteadPoint">Apply Homestead Point</button>
-              <button type="button" id="editorCopyHomesteadPoints">Copy Homestead Point JSON</button>
+              <button type="button" id="editorApplyHomesteadPoint">Apply Point Changes</button>
+              <button type="button" id="editorCopyHomesteadPoints">Copy Points JSON</button>
             </div>
           </section>
         </div>
@@ -3556,21 +3489,8 @@
       const importDraftButton = dock.querySelector("#editorImportDraft");
       const resetDraftButton = dock.querySelector("#editorResetDraft");
       const saveRepoFileButton = dock.querySelector("#editorSaveRepoFile");
-      const copyBranchDeployButton = dock.querySelector("#editorCopyBranchDeploy");
       const importInput = dock.querySelector("#editorImportInput");
       const localImageInput = dock.querySelector("#editorLocalImageInput");
-      const zoneSelect = dock.querySelector("#editorZoneSelect");
-      const zoneTitleInput = dock.querySelector("#editorZoneTitle");
-      const zoneDescriptionInput = dock.querySelector("#editorZoneDescription");
-      const zoneVideoPresetSelect = dock.querySelector("#editorZoneVideoPreset");
-      const zoneVideoInput = dock.querySelector("#editorZoneVideo");
-      const zonePosterInput = dock.querySelector("#editorZonePoster");
-      const zonePhotosInput = dock.querySelector("#editorZonePhotos");
-      const pinTopInput = dock.querySelector("#editorPinTop");
-      const pinLeftInput = dock.querySelector("#editorPinLeft");
-      const applyZoneButton = dock.querySelector("#editorApplyZone");
-      const applyPinButton = dock.querySelector("#editorApplyPin");
-      const copyPinsButton = dock.querySelector("#editorCopyPins");
       const homesteadPointSelect = dock.querySelector("#editorHomesteadPointSelect");
       const homesteadPointLabelInput = dock.querySelector("#editorHomesteadPointLabel");
       const homesteadPointTopInput = dock.querySelector("#editorHomesteadPointTop");
@@ -3581,12 +3501,8 @@
       let textImageEditEnabled = false;
       let nextImageId = imageTargets.length;
 
-      const isZonePhotoImage = (img) => {
-        return img && (img.id === "zoneFocusImage" || !!img.closest(".zone-gallery-item"));
-      };
-
       const ensureImageId = (img) => {
-        if (!img || isZonePhotoImage(img)) return;
+        if (!img) return;
         if (!img.dataset.editorImageId) {
           nextImageId += 1;
           img.dataset.editorImageId = "image-" + String(nextImageId);
@@ -3620,45 +3536,6 @@
           togglePinsButton.textContent = enabled ? "Pin Drag: On" : "Pin Drag: Off";
           togglePinsButton.classList.toggle("active", enabled);
         }
-      };
-
-      const parseZonePhotos = (raw) => {
-        return String(raw || "")
-          .split("\n")
-          .map((line) => line.trim())
-          .filter(Boolean)
-          .map((line) => {
-            const parts = line.split("|");
-            const src = (parts[0] || "").trim();
-            const caption = (parts[1] || "").trim();
-            const alt = (parts.slice(2).join("|") || "").trim();
-            return { src, caption, alt };
-          })
-          .filter((photo) => photo.src);
-      };
-
-      const refreshZoneForm = (zoneKey) => {
-        const zone = zoneData[zoneKey];
-        const pos = zonePositions[zoneKey];
-        if (!zone || !zoneSelect) return;
-        zoneSelect.value = zoneKey;
-        if (zoneTitleInput) zoneTitleInput.value = zone.title || "";
-        if (zoneDescriptionInput) zoneDescriptionInput.value = zone.description || "";
-        if (zoneVideoPresetSelect) {
-          const presetIndex = zoneVideoPresets.findIndex((preset) => {
-            return preset.video === (zone.video || "") && preset.poster === (zone.poster || "");
-          });
-          zoneVideoPresetSelect.value = presetIndex >= 0 ? String(presetIndex) : "";
-        }
-        if (zoneVideoInput) zoneVideoInput.value = zone.video || "";
-        if (zonePosterInput) zonePosterInput.value = zone.poster || "";
-        if (zonePhotosInput) {
-          zonePhotosInput.value = Array.isArray(zone.photos)
-            ? zone.photos.map((photo) => `${photo.src || ""} | ${photo.caption || ""} | ${photo.alt || ""}`).join("\n")
-            : "";
-        }
-        if (pinTopInput && pos) pinTopInput.value = String(Number(pos.top || 0).toFixed(1));
-        if (pinLeftInput && pos) pinLeftInput.value = String(Number(pos.left || 0).toFixed(1));
       };
 
       const refreshHomesteadPointForm = (pointKey) => {
@@ -3701,15 +3578,21 @@
       };
 
       const promptForImageSource = async (currentSrc) => {
-        const uploadLocal = window.confirm("Upload local image from your computer?\nOK = choose file, Cancel = enter path/URL");
-        if (uploadLocal) {
+        const choice = window.prompt(
+          "Replace image:\n- Type 'local' to upload from your computer\n- Type 'url' to enter a path/URL\n- Or paste a direct image URL",
+          currentSrc || ""
+        );
+        if (choice === null) return null;
+        const trimmed = choice.trim();
+        if (trimmed.toLowerCase() === "local") {
           const localDataUrl = await pickLocalImageAsDataUrl();
           return localDataUrl || null;
         }
-        const nextSrc = window.prompt("Set image path or URL", currentSrc || "");
-        if (nextSrc === null) return null;
-        const cleaned = nextSrc.trim();
-        return cleaned || null;
+        if (trimmed.toLowerCase() === "url") {
+          const url = window.prompt("Enter image path or URL:", currentSrc || "");
+          return url ? url.trim() : null;
+        }
+        return trimmed || null;
       };
 
       const editRegularImage = async (img) => {
@@ -3719,23 +3602,8 @@
         if (!nextSrc) return;
         img.setAttribute("src", nextSrc);
         const currentAlt = img.getAttribute("alt") || "";
-        const nextAlt = window.prompt("Set image alt text", currentAlt);
+        const nextAlt = window.prompt("Set image alt text:", currentAlt);
         if (nextAlt !== null) img.setAttribute("alt", nextAlt.trim());
-      };
-
-      const editZonePhoto = async (zoneKey, photoIndex) => {
-        const zone = zoneData[zoneKey];
-        if (!zone || !Array.isArray(zone.photos) || !zone.photos[photoIndex]) return;
-        const photo = zone.photos[photoIndex];
-        const nextSrc = await promptForImageSource(photo.src || "");
-        if (!nextSrc) return;
-        photo.src = nextSrc;
-        const nextCaption = window.prompt("Set zone image caption", photo.caption || "");
-        if (nextCaption !== null) photo.caption = nextCaption.trim();
-        const nextAlt = window.prompt("Set zone image alt text", photo.alt || photo.caption || "");
-        if (nextAlt !== null) photo.alt = nextAlt.trim();
-        setActiveZone(zoneKey, { photoIndex, skipVideo: true });
-        refreshZoneForm(zoneKey);
       };
 
       document.addEventListener("click", async (event) => {
@@ -3744,58 +3612,12 @@
         if (!target || !(target instanceof Element)) return;
         if (target.closest("#editorDock")) return;
 
-        const zoneCopyTarget = target.closest("#zoneTitle, #zoneDescription, #zoneFocusCaption");
-        if (zoneCopyTarget) {
-          event.preventDefault();
-          event.stopPropagation();
-          const zone = zoneData[activeZoneKey];
-          if (!zone) return;
-          if (zoneCopyTarget.id === "zoneTitle") {
-            const nextTitle = window.prompt("Set zone title", zone.title || "");
-            if (nextTitle !== null && nextTitle.trim()) zone.title = nextTitle.trim();
-          } else if (zoneCopyTarget.id === "zoneDescription") {
-            const nextDescription = window.prompt("Set zone description", zone.description || "");
-            if (nextDescription !== null && nextDescription.trim()) zone.description = nextDescription.trim();
-          } else if (zoneCopyTarget.id === "zoneFocusCaption") {
-            const zonePhoto = Array.isArray(zone.photos) ? zone.photos[activeZonePhotoIndex] : null;
-            if (zonePhoto) {
-              const nextCaption = window.prompt("Set zone image caption", zonePhoto.caption || "");
-              if (nextCaption !== null) zonePhoto.caption = nextCaption.trim();
-            }
-          }
-          setActiveZone(activeZoneKey, { photoIndex: activeZonePhotoIndex, skipVideo: true });
-          refreshZoneForm(activeZoneKey);
-          return;
-        }
-
-        const zoneVideoTarget = target.closest("#zoneVideo");
-        if (zoneVideoTarget) {
-          event.preventDefault();
-          event.stopPropagation();
-          const zone = zoneData[activeZoneKey];
-          if (!zone) return;
-          const nextVideo = window.prompt("Set zone video path", zone.video || "");
-          if (nextVideo !== null && nextVideo.trim()) zone.video = nextVideo.trim();
-          const nextPoster = window.prompt("Set zone video poster path", zone.poster || "");
-          if (nextPoster !== null && nextPoster.trim()) zone.poster = nextPoster.trim();
-          setActiveZone(activeZoneKey);
-          refreshZoneForm(activeZoneKey);
-          return;
-        }
-
         const imageTarget = target.closest("img");
         if (!imageTarget) return;
         if (imageTarget.closest("#editorDock")) return;
 
         event.preventDefault();
         event.stopPropagation();
-        if (isZonePhotoImage(imageTarget)) {
-          const zoneKey = imageTarget.dataset.zoneKey || activeZoneKey;
-          const rawPhotoIndex = Number(imageTarget.dataset.photoIndex);
-          const photoIndex = Number.isFinite(rawPhotoIndex) ? rawPhotoIndex : activeZonePhotoIndex;
-          await editZonePhoto(zoneKey, photoIndex);
-          return;
-        }
         await editRegularImage(imageTarget);
       }, true);
 
@@ -3846,7 +3668,6 @@
             const text = await file.text();
             const parsed = JSON.parse(text);
             applyDraftPayload(parsed, textTargets, imageTargets);
-            refreshZoneForm(zoneSelect.value || "zoneA");
             refreshHomesteadPointForm(homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0]);
             saveDraft();
           } catch (_) {
@@ -3876,82 +3697,6 @@
         });
       }
 
-      if (copyBranchDeployButton) {
-        copyBranchDeployButton.addEventListener("click", async () => {
-          const commandText = buildBranchAndDeployCommands();
-          const copied = await copyTextToClipboard(commandText);
-          if (!copied) {
-            window.prompt("Copy branch/deploy commands", commandText);
-          }
-          copyBranchDeployButton.textContent = copied ? "Copied Commands" : "Showed Commands";
-          setTimeout(() => { copyBranchDeployButton.textContent = "Copy Branch + Deploy Cmds"; }, 1700);
-        });
-      }
-
-      if (zoneSelect) {
-        zoneSelect.addEventListener("change", () => {
-          const zoneKey = zoneSelect.value;
-          setActiveZone(zoneKey);
-          refreshZoneForm(zoneKey);
-        });
-      }
-
-      if (homesteadPointSelect) {
-        homesteadPointSelect.addEventListener("change", () => {
-          refreshHomesteadPointForm(homesteadPointSelect.value);
-        });
-      }
-
-      if (zoneVideoPresetSelect) {
-        zoneVideoPresetSelect.addEventListener("change", () => {
-          const rawValue = zoneVideoPresetSelect.value;
-          if (rawValue === "") return;
-          const preset = zoneVideoPresets[Number(rawValue)];
-          if (!preset) return;
-          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
-          const zone = zoneData[zoneKey];
-          if (!zone) return;
-          zone.video = preset.video;
-          zone.poster = preset.poster;
-          if (zoneVideoInput) zoneVideoInput.value = preset.video;
-          if (zonePosterInput) zonePosterInput.value = preset.poster;
-          setActiveZone(zoneKey);
-          refreshZoneForm(zoneKey);
-        });
-      }
-
-      if (applyZoneButton) {
-        applyZoneButton.addEventListener("click", () => {
-          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
-          const zone = zoneData[zoneKey];
-          if (!zone) return;
-          if (zoneTitleInput && zoneTitleInput.value.trim()) zone.title = zoneTitleInput.value.trim();
-          if (zoneDescriptionInput && zoneDescriptionInput.value.trim()) zone.description = zoneDescriptionInput.value.trim();
-          if (zoneVideoInput && zoneVideoInput.value.trim()) zone.video = zoneVideoInput.value.trim();
-          if (zonePosterInput && zonePosterInput.value.trim()) zone.poster = zonePosterInput.value.trim();
-          const photos = parseZonePhotos(zonePhotosInput ? zonePhotosInput.value : "");
-          if (photos.length > 0) zone.photos = photos;
-          setActiveZone(zoneKey);
-          refreshZoneForm(zoneKey);
-        });
-      }
-
-      if (applyPinButton) {
-        applyPinButton.addEventListener("click", () => {
-          const zoneKey = zoneSelect ? zoneSelect.value : "zoneA";
-          updatePinPosition(zoneKey, pinTopInput ? pinTopInput.value : null, pinLeftInput ? pinLeftInput.value : null);
-          refreshZoneForm(zoneKey);
-        });
-      }
-
-      if (copyPinsButton) {
-        copyPinsButton.addEventListener("click", async () => {
-          const ok = await copyTextToClipboard(JSON.stringify(zonePositions, null, 2));
-          copyPinsButton.textContent = ok ? "Copied Pin JSON" : "Copy Failed";
-          setTimeout(() => { copyPinsButton.textContent = "Copy Pin JSON"; }, 1200);
-        });
-      }
-
       if (applyHomesteadPointButton) {
         applyHomesteadPointButton.addEventListener("click", () => {
           const pointKey = homesteadPointSelect ? homesteadPointSelect.value : homesteadPointKeys[0];
@@ -3969,20 +3714,9 @@
         copyHomesteadPointsButton.addEventListener("click", async () => {
           const ok = await copyTextToClipboard(JSON.stringify(homesteadPointData, null, 2));
           copyHomesteadPointsButton.textContent = ok ? "Copied Point JSON" : "Copy Failed";
-          setTimeout(() => { copyHomesteadPointsButton.textContent = "Copy Homestead Point JSON"; }, 1200);
+          setTimeout(() => { copyHomesteadPointsButton.textContent = "Copy Points JSON"; }, 1200);
         });
       }
-
-      onPinMoved = (zoneKey) => {
-        if (zoneSelect && zoneSelect.value === zoneKey) {
-          refreshZoneForm(zoneKey);
-        }
-      };
-
-      onZoneChange = (zoneKey) => {
-        if (zoneSelect) zoneSelect.value = zoneKey;
-        refreshZoneForm(zoneKey);
-      };
 
       onHomesteadPointMoved = (pointKey) => {
         if (homesteadPointSelect && homesteadPointSelect.value === pointKey) {
@@ -4009,7 +3743,6 @@
         await loadRepoDraftIntoPage(textTargets, imageTargets);
       }
 
-      refreshZoneForm("zoneA");
       refreshHomesteadPointForm(homesteadPointKeys[0]);
       setDockOpen(false);
     };
