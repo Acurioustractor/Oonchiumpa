@@ -3549,7 +3549,14 @@
           el.contentEditable = textEditEnabled ? "true" : "false";
           if (!textEditEnabled) el.blur();
         });
-        btnEditText.textContent = textEditEnabled ? "Editing Text" : "Edit Text";
+        // Highlight all images when in edit mode
+        document.querySelectorAll("img").forEach((img) => {
+          if (!img.closest("#editorToolbar")) {
+            img.style.outline = textEditEnabled ? "3px dashed #2f8f64" : "";
+            img.style.cursor = textEditEnabled ? "pointer" : "";
+          }
+        });
+        btnEditText.textContent = textEditEnabled ? "Editing (click photos!)" : "Edit Text";
         btnEditText.classList.toggle("active", textEditEnabled);
       });
 
