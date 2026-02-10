@@ -1334,7 +1334,8 @@
     }
 
     .closing p { color: #edf5ff; }
-    .closing h2 { color: #ffffff; }
+    .closing h2,
+    .closing h2 * { color: #ffffff !important; }
 
     .footer {
       color: #54687f;
@@ -2416,55 +2417,20 @@
 
     <section class="section" data-view-group="core">
       <div class="container">
-        <span class="tag reveal">Work Packages</span>
-        <h2 class="reveal">5 Build Work Packages (Campground First)</h2>
-        <p class="section-lead reveal" data-editor-static="true">These packages translate the drawings into practical, staged scope. Each package can be scaled based on available funding while preserving the core cultural and operational intent.</p>
-        <div class="work-packages" data-editor-static="true">
-          <article class="work-package pkg-a reveal">
-            <h3>Package A: Conference Core</h3>
-            <p>Two 40-foot containers and an enclosed roofed structure, fully air-conditioned, approximately 11m x 6m (66 sqm) for training, conferences, and community gatherings.</p>
-            <p>Primary impact: reliable all-season function and learning space.</p>
-          </article>
-          <article class="work-package pkg-b reveal">
-            <h3>Package B: Deck Link Network</h3>
-            <p>Open-air decking ring and link paths connecting the conference core to accommodation and kitchen access points.</p>
-            <p>Primary impact: safe circulation and practical event flow.</p>
-          </article>
-          <article class="work-package pkg-c reveal">
-            <h3>Package C: Firepit and Yarning Circle</h3>
-            <p>Central gathering/firepit space tied into deck links to support story sharing, teaching, and cultural exchange.</p>
-            <p>Primary impact: culturally anchored gathering infrastructure.</p>
-          </article>
-          <article class="work-package pkg-d reveal">
-            <h3>Package D: Amenities and Service Edge</h3>
-            <p>Campground amenities upgrades and service-edge reconfiguration for toilets, showers, and supporting utility access.</p>
-            <p>Primary impact: operational readiness for programs and visitors.</p>
-          </article>
-          <article class="work-package pkg-e reveal">
-            <h3>Package E: Homestead Minor Upgrades and Landscape</h3>
-            <p>Smaller staged homestead-side upgrades including landscape definition, ground preparation, and refinement of supporting facilities.</p>
-            <p>Primary impact: site legibility, safety, and long-term integration.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" data-view-group="core">
-      <div class="container">
         <span class="tag reveal">Outcomes</span>
         <h2 class="reveal">Measurement Framework</h2>
         <div class="metrics">
           <article class="metric reveal">
             <h3>Participation</h3>
-            <p>Workshop attendance, program completion, and event engagement across age groups.</p>
+            <p>Track how many families and young people from Alice Springs and surrounding homelands engage in Oonchiumpa-led workshops, cultural programs, tourism activities, and repeat visits on Country.</p>
           </article>
           <article class="metric reveal">
             <h3>Pathways</h3>
-            <p>Youth training uptake and progression into employment and leadership roles.</p>
+            <p>Track progression from first participation into training, paid work, mentoring, and enterprise roles so the Bloomfield children and regional youth build leadership, confidence, and practical skills on Country.</p>
           </article>
           <article class="metric reveal">
             <h3>Delivery</h3>
-            <p>Site-readiness milestones, build completion stages, and ongoing operational stability.</p>
+            <p>Track staged delivery of campground and homestead works, operational readiness, and transition planning through the current Hewett lease period so the next 10 years strengthen Indigenous wealth and create a family-led case study for the NT and Australia.</p>
           </article>
         </div>
       </div>
@@ -2570,6 +2536,7 @@
   <script>
     const queryParams = new URLSearchParams(window.location.search);
     const requestedViewMode = String(queryParams.get("view") || "full").toLowerCase();
+    const forceRepoDraft = queryParams.get("draft") === "repo" || queryParams.get("resetDraft") === "1";
     const pageViewMode = requestedViewMode === "send" ? "send" : "full";
     document.body.classList.add("view-" + pageViewMode);
     document.body.setAttribute("data-view-mode", pageViewMode);
@@ -3134,7 +3101,7 @@
     }
 
     const draftStorageKey = "atnarpa-local-draft-v1";
-    const draftLayoutVersion = 2;
+    const draftLayoutVersion = 3;
     const repoDraftFileName = "editor-draft.json";
     const repoRootPath = "/Users/benknight/Code/Oochiumpa";
     const repoDraftRelativePath = "oonchiumpa-app/public/atnarpa-snow/editor-draft.json";
@@ -3818,13 +3785,19 @@
       };
 
       let hasLocalDraft = false;
-      try {
-        const savedDraftRaw = localStorage.getItem(draftStorageKey);
-        if (savedDraftRaw) {
-          applyDraftPayload(JSON.parse(savedDraftRaw), textTargets, imageTargets);
-          hasLocalDraft = true;
-        }
-      } catch (_) {}
+      if (!forceRepoDraft) {
+        try {
+          const savedDraftRaw = localStorage.getItem(draftStorageKey);
+          if (savedDraftRaw) {
+            applyDraftPayload(JSON.parse(savedDraftRaw), textTargets, imageTargets);
+            hasLocalDraft = true;
+          }
+        } catch (_) {}
+      } else {
+        try {
+          localStorage.removeItem(draftStorageKey);
+        } catch (_) {}
+      }
 
       if (!hasLocalDraft) {
         await loadRepoDraftIntoPage(textTargets, imageTargets);
