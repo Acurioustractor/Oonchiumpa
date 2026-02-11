@@ -1,7 +1,7 @@
 {
   "version": 1,
   "layoutVersion": 3,
-  "updatedAt": "2026-02-10T23:45:59.552Z",
+  "updatedAt": "2026-02-11T01:00:48.554Z",
   "text": {
     "text-1": "Atnarpa Proposal 2026-2036",
     "text-2": "Building Family Wealth and Cultural Continuity on Country",
@@ -247,15 +247,18 @@
       "photos": [
         {
           "src": "assets/atnarpa/campsite/IMG_9412.jpg",
-          "caption": "Campground center proposed for the conference core."
+          "caption": "Campground center proposed for the conference core.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-018.jpg",
-          "caption": "Reference scale and orientation for enclosed function space."
+          "caption": "Reference scale and orientation for enclosed function space.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/20251103-DJI_0271.jpg",
-          "caption": "Drone context used to align core footprint and access paths."
+          "caption": "Drone context used to align core footprint and access paths.",
+          "alt": ""
         }
       ]
     },
@@ -267,15 +270,18 @@
       "photos": [
         {
           "src": "assets/atnarpa/campsite/20251103-1E5A4803.jpg",
-          "caption": "Donga layout and circulation that informs deck link planning."
+          "caption": "Donga layout and circulation that informs deck link planning.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/campsite/20251103-1E5A4798.jpg",
-          "caption": "Accommodation adjacency to central shared deck network."
+          "caption": "Accommodation adjacency to central shared deck network.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-025.jpg",
-          "caption": "Open-air deck precedent for movement and event flow."
+          "caption": "Open-air deck precedent for movement and event flow.",
+          "alt": ""
         }
       ]
     },
@@ -287,15 +293,18 @@
       "photos": [
         {
           "src": "assets/atnarpa/campsite/20251103-1E5A4816.jpg",
-          "caption": "Central firepit and roof-option area for yarning circle planning."
+          "caption": "Central firepit and roof-option area for yarning circle planning.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-021.jpg",
-          "caption": "Gathering and seating orientation reference."
+          "caption": "Gathering and seating orientation reference.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-030.jpg",
-          "caption": "Ground condition for circular gathering activation."
+          "caption": "Ground condition for circular gathering activation.",
+          "alt": ""
         }
       ]
     },
@@ -307,15 +316,18 @@
       "photos": [
         {
           "src": "assets/atnarpa/campsite/20251103-1E5A4819.jpg",
-          "caption": "Amenities area baseline for services upgrades."
+          "caption": "Amenities area baseline for services upgrades.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/campsite/20251103-1E5A4803.jpg",
-          "caption": "Service-side circulation and donga interface."
+          "caption": "Service-side circulation and donga interface.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-017.jpg",
-          "caption": "Utility and support edge reference condition."
+          "caption": "Utility and support edge reference condition.",
+          "alt": ""
         }
       ]
     },
@@ -327,15 +339,18 @@
       "photos": [
         {
           "src": "assets/atnarpa/originals/img-022.jpg",
-          "caption": "Homestead-side landscape edge for staged upgrades."
+          "caption": "Homestead-side landscape edge for staged upgrades.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-020.jpg",
-          "caption": "Event edge precedent informing long-term refinement."
+          "caption": "Event edge precedent informing long-term refinement.",
+          "alt": ""
         },
         {
           "src": "assets/atnarpa/originals/img-013.jpg",
-          "caption": "Family-led stewardship context for staged homestead works."
+          "caption": "Family-led stewardship context for staged homestead works.",
+          "alt": ""
         }
       ]
     }
@@ -364,18 +379,18 @@
   },
   "homesteadPointData": {
     "h1": {
-      "top": 30,
-      "left": 17,
+      "top": 52.89842453545307,
+      "left": 60.22655637386799,
       "label": "Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)"
     },
     "h2": {
-      "top": 22,
-      "left": 69,
+      "top": 25.01178013152773,
+      "left": 33.15433816633097,
       "label": "Landscaping upgrades to define the campground edge and safe movement areas"
     },
     "h3": {
-      "top": 48,
-      "left": 46,
+      "top": 41.55927967056606,
+      "left": 57.23450545057581,
       "label": "Homestead roof fixed and site prepared for safe next stages"
     }
   },
