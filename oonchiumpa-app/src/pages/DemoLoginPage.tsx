@@ -23,7 +23,7 @@ const DemoLoginPage: React.FC = () => {
         <CardBody className="p-8">
           <div className="text-center mb-6">
             <div className="text-4xl mb-4">🏛️</div>
-            <h1 className="text-2xl font-bold text-earth-900 mb-2">
+            <h1 className="text-2xl font-bold text-earth-950 mb-2">
               Demo Access
             </h1>
             <p className="text-earth-600">
@@ -60,7 +60,7 @@ const DemoLoginPage: React.FC = () => {
 
           <div className="space-y-4">
             <div className="bg-earth-100 p-4 rounded-lg">
-              <h3 className="font-semibold text-earth-900 mb-2">
+              <h3 className="font-semibold text-earth-950 mb-2">
                 Demo Admin Access:
               </h3>
               <ul className="text-sm text-earth-800 space-y-1">

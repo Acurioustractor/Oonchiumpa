@@ -80,7 +80,7 @@ export const InitialSetupPage: React.FC = () => {
         <CardBody className="p-8">
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">🏛️</div>
-            <h1 className="text-3xl font-bold text-earth-900 mb-4">
+            <h1 className="text-3xl font-bold text-earth-950 mb-4">
               Oonchiumpa Platform Setup
             </h1>
             <p className="text-earth-600 text-lg">
@@ -132,7 +132,7 @@ export const InitialSetupPage: React.FC = () => {
 
           <div className="space-y-4">
             <div className="bg-earth-100 p-6 rounded-lg">
-              <h3 className="font-semibold text-earth-900 mb-3">
+              <h3 className="font-semibold text-earth-950 mb-3">
                 Admin Credentials:
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

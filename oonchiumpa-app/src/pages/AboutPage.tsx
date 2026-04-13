@@ -1,716 +1,380 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Section } from "../components/Section";
 import { Card, CardBody } from "../components/Card";
-import { Loading } from "../components/Loading";
-import {
-  CirclePattern,
-  DotPattern,
-  SpiralPattern,
-} from "../design-system/symbols";
-import { supabase } from "../config/supabase";
+import { EditableImage } from "../components/EditableImage";
+import { ProgramGallery } from "../components/ProgramGallery";
+import { VideoSpotlight } from "../components/VideoSpotlight";
+import { useStorytellers } from "../hooks/useEmpathyLedger";
 
-interface TeamMember {
-  name: string;
-  role: string;
-  tribe: string | null;
-  description: string | null;
-  avatar_url: string | null;
-  quote: string | null;
-}
+const values = [
+  {
+    title: "Cultural Authority",
+    description:
+      "Traditional Owner leadership makes support credible, trusted, and accountable to community.",
+    accent: "ochre" as const,
+  },
+  {
+    title: "Aboriginal-Led Delivery",
+    description:
+      "Every service is run by Aboriginal staff and mentors who understand kinship and local realities.",
+    accent: "eucalyptus" as const,
+  },
+  {
+    title: "Whole-of-Family Support",
+    description:
+      "We work with young people, parents, carers, and services as one connected support system.",
+    accent: "sunset" as const,
+  },
+  {
+    title: "Two Worlds, One Future",
+    description:
+      "Young people are supported to stay strong in culture and confident across mainstream systems.",
+    accent: "earth" as const,
+  },
+];
 
-interface ImpactStat {
-  number: string;
-  label: string;
-  description: string | null;
-  icon: string | null;
-}
+const valueAccentClasses = {
+  ochre: "from-ochre-500 to-ochre-300",
+  eucalyptus: "from-eucalyptus-600 to-eucalyptus-400",
+  sunset: "from-sunset-500 to-sunset-300",
+  earth: "from-earth-700 to-earth-500",
+};
 
-interface Partner {
-  name: string;
-  category: string;
-  website: string | null;
-}
+const recognitionItems = [
+  {
+    title: "NIAA Funding",
+    description:
+      "Funded as a proven Aboriginal-led diversion model with measurable performance outcomes.",
+  },
+  {
+    title: "Operation Luna Results",
+    description:
+      "20 of 21 referred young people removed from active high-risk police tracking.",
+  },
+  {
+    title: "Cost Effectiveness",
+    description:
+      "$91/day support compared with $3,852/day incarceration.",
+  },
+  {
+    title: "Research Partnerships",
+    description:
+      "Evidence-building with academic and sector partners to scale what works.",
+  },
+];
+
+const practiceGallery = [
+  {
+    slotId: "about-practice-diversion",
+    defaultSrc: "/images/model/atnarpa-facilities.jpg",
+    defaultAlt: "Oonchiumpa team delivering youth diversion support",
+    imageCaption: "Daily support follows each young person through school, court, and community.",
+    kicker: "Youth diversion",
+    title: "Practical support with cultural authority",
+    description:
+      "Case workers coordinate justice, education, housing, and health support with consistent follow-through.",
+    proof: "95% diversion success and strong engagement across six-month reporting periods.",
+    method:
+      "Court advocacy, transport, mentoring, service coordination, and culturally safe case planning.",
+  },
+  {
+    slotId: "about-practice-country",
+    defaultSrc: "/images/model/community-on-country.jpg",
+    defaultAlt: "Families and young people on Country at Atnarpa",
+    imageCaption: "On Country programs reconnect identity, language, and belonging.",
+    kicker: "On Country healing",
+    title: "Programs led by Elders and Traditional Owners",
+    description:
+      "Atnarpa programs build pride, confidence, and cultural continuity through direct learning on Country.",
+    proof: "7 language groups represented with sustained participation in cultural activities.",
+    method:
+      "Elder-led cultural sessions, family participation, and integration with schooling and referrals.",
+  },
+  {
+    slotId: "about-practice-family",
+    defaultSrc: "/images/stories/IMG_9698.jpg",
+    defaultAlt: "Community members with Oonchiumpa staff",
+    imageCaption: "Family and kinship networks are active partners in every support plan.",
+    kicker: "Family and kinship",
+    title: "Whole-family coordination",
+    description:
+      "Support plans include carers, siblings, and trusted services to build durable protective networks.",
+    proof: "2,464 meaningful contacts and 71 successful service referrals over six months.",
+    method:
+      "Kinship-informed planning, practical coordination, and culturally safe communication across partners.",
+  },
+];
+
+const timeline = [
+  {
+    year: "2022",
+    title: "Program foundations",
+    copy: "Work began under NAAJA with culturally-led youth diversion designed by Traditional Owners.",
+  },
+  {
+    year: "2023",
+    title: "Independent organisation",
+    copy: "Oonchiumpa established independently and expanded participant and partner engagement rapidly.",
+  },
+  {
+    year: "2024",
+    title: "National attention",
+    copy: "NIAA support and external recognition validated outcomes and model viability.",
+  },
+  {
+    year: "2025+",
+    title: "Scaling impact",
+    copy: "Infrastructure, workforce, and policy collaborations are extending the model's reach.",
+  },
+];
 
 export const AboutPage: React.FC = () => {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-  const [impactStats, setImpactStats] = useState<ImpactStat[]>([]);
-  const [partners, setPartners] = useState<Partner[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    const [teamResult, statsResult, partnersResult] = await Promise.all([
-      supabase
-        .from('team_members')
-        .select('name, role, tribe, description, avatar_url, quote')
-        .eq('is_visible', true)
-        .order('display_order'),
-      supabase
-        .from('impact_stats')
-        .select('number, label, description, icon')
-        .eq('is_visible', true)
-        .eq('section', 'about')
-        .order('display_order'),
-      supabase
-        .from('partners')
-        .select('name, category, website')
-        .eq('is_visible', true)
-        .order('category')
-        .order('display_order')
-    ]);
-
-    if (teamResult.error) {
-      console.error('Error loading team:', teamResult.error);
-    } else {
-      setTeamMembers(teamResult.data || []);
-    }
-
-    if (statsResult.error) {
-      console.error('Error loading stats:', statsResult.error);
-    } else {
-      setImpactStats(statsResult.data || []);
-    }
-
-    if (partnersResult.error) {
-      console.error('Error loading partners:', partnersResult.error);
-    } else {
-      setPartners(partnersResult.data || []);
-    }
-
-    setLoading(false);
-  };
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  const values = [
-    {
-      title: "Cultural Authority",
-      description: "We lead from Country. As Traditional Owners of Mparntwe, we hold the cultural authority that makes our work uniquely effective. Young people feel deep responsibility to us - they don't want to let us down.",
-      icon: "⚫",
-      color: "ochre"
-    },
-    {
-      title: "Aboriginal-Led Solutions",
-      description: "100% Aboriginal employment isn't just a statistic - it's our foundation. Aboriginal people want to work with Aboriginal people. Our young people thrive with role models who understand their lived experience.",
-      icon: "🤝",
-      color: "eucalyptus"
-    },
-    {
-      title: "Holistic Approach",
-      description: "We see the whole person, the whole family, the whole community. From housing and food security to cultural healing and education - we address root causes, not just symptoms.",
-      icon: "🔄",
-      color: "sunset"
-    },
-    {
-      title: "Two Worlds, One Future",
-      description: "Our motto: 'Two Cultures, One World, Working Together.' We equip young people to navigate both Aboriginal and Western worlds with strength, pride, and practical skills.",
-      icon: "🌏",
-      color: "sky"
-    },
-  ];
-
-  const recognitionItems = [
-    {
-      title: "NIAA Funding",
-      description: "Secured National Indigenous Australians Agency funding as a proven model for youth diversion"
-    },
-    {
-      title: "Operation Luna Success",
-      description: "Of 21 young people on NT Police Operation Luna list, only 1 remained by December 2024"
-    },
-    {
-      title: "National Model",
-      description: "Recognised as a scalable model for Aboriginal-led youth services across Australia"
-    },
-    {
-      title: "Research Partnership",
-      description: "Partnering with Flinders University to establish best practices for culturally-grounded youth work"
-    },
-  ];
+  const navigate = useNavigate();
+  const { storytellers } = useStorytellers(40);
+  const activeTeam = storytellers.filter((s) => s.isActive);
 
   return (
-    <>
-      {/* Hero Section - Immediate Emotional Connection */}
-      <Section className="bg-gradient-to-br from-sand-50 via-ochre-50 to-eucalyptus-50 pt-24 pb-12">
-        <div className="text-center max-w-5xl mx-auto">
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-earth-900 mb-6 leading-tight">
-            The Power of <span className="text-gradient">Cultural Authority</span>
+    <div className="bg-white">
+      <section className="relative min-h-[72vh] flex items-end overflow-hidden">
+        <EditableImage
+          slotId="about-hero-main"
+          defaultSrc="/images/stories/IMG_9713.jpg"
+          defaultAlt="Oonchiumpa leadership with community"
+          className="absolute inset-0 w-full h-full object-cover"
+          wrapperClassName="absolute inset-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/45 to-transparent" />
+
+        <div className="relative z-10 container-custom pb-14 md:pb-20 pt-28 md:pt-40">
+          <p className="eyebrow text-ochre-200 mb-5">About Oonchiumpa</p>
+          <h1 className="heading-xl text-white max-w-4xl mb-6">
+            Traditional Owner leadership changing youth outcomes on Arrernte Country
           </h1>
-          <p className="text-xl md:text-2xl text-earth-700 mb-8 leading-relaxed">
-            What happens when Traditional Owners lead youth diversion?
-            <br />
-            <strong className="text-earth-900">95% diversion success. 97.6% more cost-effective than detention. 100% Aboriginal-led.</strong>
+          <p className="text-white/85 text-lg md:text-xl max-w-3xl leading-relaxed mb-10">
+            Oonchiumpa is an Aboriginal community-controlled organisation delivering youth diversion,
+            cultural healing, and family support that is accountable to community and grounded in Country.
           </p>
-          <p className="text-lg md:text-xl text-earth-600 max-w-3xl mx-auto leading-relaxed">
-            Oonchiumpa isn't another youth program. We're Traditional Owners reclaiming our community through cultural authority, family connection, and the simple truth that Aboriginal kids thrive when led by Aboriginal people.
-          </p>
+          <div className="flex flex-wrap gap-4">
+            <button
+              onClick={() => navigate("/services")}
+              className="btn-primary"
+            >
+              Explore services
+            </button>
+            <button
+              onClick={() => navigate("/contact")}
+              className="btn-secondary border-white/50 bg-white/10 text-white hover:bg-white/20"
+            >
+              Work with us
+            </button>
+          </div>
         </div>
-      </Section>
+      </section>
 
-      {/* The Problem We're Solving */}
+      <section className="bg-earth-950 text-white py-12">
+        <div className="container-custom grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { value: "95%", label: "Diversion success" },
+            { value: "$91/day", label: "Program cost" },
+            { value: "100%", label: "Aboriginal employment" },
+            { value: "20/21", label: "Removed from Op Luna" },
+          ].map((item) => (
+            <div key={item.label} className="text-center lg:text-left">
+              <p className="text-3xl md:text-4xl font-display text-ochre-300">{item.value}</p>
+              <p className="text-sm md:text-base text-white/75 mt-2">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <Section>
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-6 text-center">
-            The Crisis Behind The Headlines
-          </h2>
-          <div className="prose prose-lg max-w-none">
-            <p className="text-xl text-earth-700 leading-relaxed mb-6">
-              Alice Springs makes national news for all the wrong reasons. Young Aboriginal people portrayed as problems, not children in crisis. What the media doesn't show: the overcrowding, the hunger, the lack of safe places to sleep, the absence of culturally-grounded support.
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-6">
+            <p className="eyebrow mb-4">Why we exist</p>
+            <h2 className="heading-lg mb-5">Born from community urgency</h2>
+            <p className="lead-text mb-6">
+              Oonchiumpa was created because mainstream responses were failing young people and families.
+              The work started with local leadership, deep community trust, and practical support that
+              could hold both cultural and systems complexity.
             </p>
-            <div className="bg-earth-50 border-l-4 border-ochre-500 p-6 my-8">
-              <p className="text-lg text-earth-800 italic">
-                "Unfortunately, a lot of our young people do not have the opportunity that we grew up with. They're living in overcrowding, eating whatever food they can find, sleeping wherever there's space. They're out on the streets because there's nowhere else to go."
-              </p>
-              <p className="text-sm text-earth-600 mt-2">- Kristy Bloomfield, Director</p>
-            </div>
-            <p className="text-xl text-earth-700 leading-relaxed">
-              These aren't "bad kids" - they're children without basics many Australians take for granted. The system responds with detention that costs millions and changes nothing. We respond with cultural connection, practical support, and the authority that comes from being their Elders, their Traditional Owners, their family.
+            <p className="text-earth-700 leading-relaxed mb-8">
+              We do not separate justice, education, wellbeing, and identity. Our model is integrated,
+              relationship-based, and grounded in the authority of Traditional Owners to lead change on
+              their own Country.
             </p>
+
+            <EditableImage
+              slotId="about-origin-image"
+              defaultSrc="/images/model/atnarpa-land.jpg"
+              defaultAlt="Landscape on Arrernte Country"
+              className="w-full h-72 object-cover"
+              wrapperClassName="rounded-2xl overflow-hidden border border-earth-100 shadow-[0_12px_28px_rgba(47,30,26,0.12)]"
+            />
+          </div>
+
+          <div className="lg:col-span-6 space-y-4">
+            {timeline.map((item) => (
+              <div
+                key={item.year}
+                className="rounded-2xl border border-earth-100 bg-sand-50 p-5 md:p-6"
+              >
+                <p className="text-xs uppercase tracking-[0.22em] text-ochre-700 font-semibold mb-2">
+                  {item.year}
+                </p>
+                <h3 className="text-xl font-display text-earth-950 mb-2">{item.title}</h3>
+                <p className="text-earth-700 leading-relaxed">{item.copy}</p>
+              </div>
+            ))}
           </div>
         </div>
       </Section>
 
-      {/* Our Origin Story */}
-      <Section className="bg-earth-50">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
-          <div className="space-y-6">
-            <h2 className="text-4xl font-display font-bold text-earth-900">
-              Born From Necessity, Built on Strength
-            </h2>
-            <div className="space-y-4 text-earth-700 leading-relaxed">
-              <p className="text-lg">
-                In 2022, Kristy Bloomfield saw what everyone else saw - young Aboriginal people filling the justice system, making headlines, being failed by programs designed without cultural understanding. But as a Traditional Owner and director, she saw something else: the solution.
-              </p>
-              <p className="text-lg">
-                Working initially under NAAJA (North Australian Aboriginal Justice Agency), Kristy and Tanya Turner began something different. Not another well-meaning program, but leadership rooted in cultural authority, family connections, and the deep truth that these are their kids, their Country, their responsibility.
-              </p>
-              <p className="text-lg">
-                The results were immediate. Young people who'd burned bridges with every other service responded to cultural authority. Families who'd given up found hope. The NT Police Operation Luna taskforce saw their list of high-risk youth shrink dramatically.
-              </p>
-              <p className="text-lg font-semibold text-earth-900">
-                By 2023, Oonchiumpa became independent - a 100% Aboriginal-led organization proving what happens when the right people lead the work.
-              </p>
-            </div>
-          </div>
-          <div className="relative">
-            {/* Visual Story Timeline */}
-            <div className="space-y-6">
-              {/* 2022 - Foundation */}
-              <div className="relative pl-8 border-l-4 border-ochre-400 pb-6">
-                <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-ochre-500 border-4 border-white"></div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-sm font-semibold text-ochre-600 mb-2">2022</div>
-                  <h3 className="text-lg font-bold text-earth-900 mb-2">Foundation Under NAAJA</h3>
-                  <p className="text-earth-700 text-sm">
-                    Kristy Bloomfield establishes culturally-led youth diversion program. Recognition that young people needed Traditional Owner leadership and community-based support, not detention.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2023 - Independence & Growth */}
-              <div className="relative pl-8 border-l-4 border-eucalyptus-400 pb-6">
-                <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-eucalyptus-500 border-4 border-white"></div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-sm font-semibold text-eucalyptus-600 mb-2">2023</div>
-                  <h3 className="text-lg font-bold text-earth-900 mb-2">Independence & Rapid Growth</h3>
-                  <p className="text-earth-700 text-sm">
-                    Oonchiumpa becomes independent organization. Expanded from 14 to 30+ participants. Built partnerships with 30+ organizations. Proven 95% diversion success rate from justice system.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2024 - National Recognition */}
-              <div className="relative pl-8 border-l-4 border-sunset-400 pb-6">
-                <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-sunset-500 border-4 border-white"></div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-sm font-semibold text-sunset-600 mb-2">2024</div>
-                  <h3 className="text-lg font-bold text-earth-900 mb-2">National Recognition</h3>
-                  <p className="text-earth-700 text-sm">
-                    NIAA funding secured. Recognised as national model for Aboriginal-led youth diversion. Research shows 97.6% more cost-effective than detention. Of 21 Operation Luna youth, only 1 remained on list by December.
-                  </p>
-                </div>
-              </div>
-
-              {/* 2025 - Scaling Impact */}
-              <div className="relative pl-8 border-l-4 border-sky-400">
-                <div className="absolute -left-3 top-0 w-6 h-6 rounded-full bg-sky-500 border-4 border-white"></div>
-                <div className="bg-white rounded-xl p-6 shadow-md hover:shadow-lg transition-shadow">
-                  <div className="text-sm font-semibold text-sky-600 mb-2">2025 & Beyond</div>
-                  <h3 className="text-lg font-bold text-earth-900 mb-2">Scaling the Model</h3>
-                  <p className="text-earth-700 text-sm">
-                    Building sustainable pathways through education, employment, and cultural connection. Developing Oonchiumpa Hub - one-stop culturally-safe space for youth, families, and communities. Sharing model nationally.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Our Unique Approach - What Makes Us Different */}
-      <Section>
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
-            Why Cultural Authority Changes Everything
-          </h2>
-          <p className="text-xl text-earth-700 max-w-3xl mx-auto">
-            Our success isn't accidental. It's the result of Aboriginal leadership, cultural connection, and practical support meeting young people where they are.
+      <Section className="bg-sand-50">
+        <div className="max-w-5xl mx-auto text-center mb-12">
+          <p className="eyebrow mb-4">How we work</p>
+          <h2 className="heading-lg mb-5">A model shaped by culture, evidence, and trust</h2>
+          <p className="lead-text">
+            These principles guide service delivery decisions, workforce development, and partner collaboration.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {values.map((value, index) => (
-            <Card key={index}>
-              <CardBody className="p-8">
-                <div className="flex items-start space-x-4">
-                  <div className={`text-4xl flex-shrink-0 w-16 h-16 rounded-full bg-${value.color}-100 flex items-center justify-center`}>
-                    {value.icon}
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-semibold text-earth-900 mb-3">
-                      {value.title}
-                    </h3>
-                    <p className="text-earth-700 leading-relaxed">
-                      {value.description}
-                    </p>
-                  </div>
-                </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {values.map((value) => (
+            <Card key={value.title} className="h-full">
+              <CardBody className="p-7 md:p-8">
+                <div
+                  className={`h-1.5 w-20 rounded-full bg-gradient-to-r ${valueAccentClasses[value.accent]} mb-5`}
+                />
+                <h3 className="text-2xl font-display text-earth-950 mb-3">{value.title}</h3>
+                <p className="text-earth-700 leading-relaxed">{value.description}</p>
               </CardBody>
             </Card>
           ))}
         </div>
-
-        {/* What We Actually Do */}
-        <div className="bg-gradient-to-br from-eucalyptus-50 to-sand-50 rounded-3xl p-8 md:p-12">
-          <h3 className="text-3xl font-display font-bold text-earth-900 mb-6 text-center">
-            What This Looks Like In Practice
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">Cultural Brokerage</h4>
-              <p className="text-earth-700">
-                Connecting young people with Aboriginal-led programs, businesses, and services across Central Australia. Every referral maintains cultural connection and builds identity.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">Basic Needs Support</h4>
-              <p className="text-earth-700">
-                Housing assistance, food security, health appointments, Centrelink navigation, birth certificates. The basics that enable everything else.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">Education Pathways</h4>
-              <p className="text-earth-700">
-                School enrollment, daily pickup support, in-class assistance, alternative education options. 72% of disengaged youth returned to education.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">On Country Programs</h4>
-              <p className="text-earth-700">
-                Cultural camps, connection to Elders, learning traditional knowledge, understanding identity. The foundation that changes lives.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">Justice System Navigation</h4>
-              <p className="text-earth-700">
-                Court support, bail assistance, legal advocacy. Professional expertise meeting cultural understanding.
-              </p>
-            </div>
-            <div className="bg-white rounded-xl p-6 shadow-sm">
-              <h4 className="font-semibold text-earth-900 mb-3 text-lg">Family Engagement</h4>
-              <p className="text-earth-700">
-                Working with whole kinship systems. Supporting parents and siblings. Building protective networks around vulnerable youth.
-              </p>
-            </div>
-          </div>
-        </div>
       </Section>
 
-      {/* Impact & Outcomes - The Numbers That Matter */}
-      <Section className="bg-earth-50">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
-            Impact That Speaks For Itself
-          </h2>
-          <p className="text-xl text-earth-700 max-w-3xl mx-auto">
-            These aren't just statistics - they're young lives transformed, families reunited, futures reclaimed.
+      <ProgramGallery
+        eyebrow="Service delivery"
+        title="What this looks like in practice"
+        description="Program images and delivery details can be updated directly by your team, keeping the About page current without redesign work."
+        variant="rows"
+        items={practiceGallery}
+      />
+
+      <VideoSpotlight
+        eyebrow="Video stories"
+        title="See leadership and delivery in motion"
+        description="Use curated videos to show partners, funders, and families how the work operates on the ground."
+      />
+
+      <Section id="team" className="bg-white">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <p className="eyebrow mb-4">Leadership</p>
+          <h2 className="heading-lg mb-5">Led by community, accountable to community</h2>
+          <p className="lead-text">
+            Oonchiumpa leadership combines cultural authority, professional practice, and long-term commitment to families.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 mb-12">
-          {impactStats.map((stat, index) => (
-            <div key={index} className="bg-white rounded-2xl p-6 shadow-lg text-center transform hover:scale-105 transition-transform">
-              <div className="text-4xl md:text-5xl font-display font-bold text-gradient mb-2">
-                {stat.number}
-              </div>
-              <div className="text-lg font-semibold text-earth-900 mb-1">
-                {stat.label}
-              </div>
-              <div className="text-sm text-earth-600">
-                {stat.description}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Real Stories */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h3 className="text-3xl font-display font-bold text-earth-900 mb-6 text-center">
-            Stories of Transformation
-          </h3>
-
-          <Card>
-            <CardBody className="p-8">
-              <p className="text-lg text-earth-700 leading-relaxed italic mb-4">
-                "MS stated that they were from Alice Springs on first engagement. However, after talking about their family connections, language and cultural ties, the young person learnt that they had many family connections throughout Central Australia. Oonchiumpa was able to link MS with other family members. With our support, MS subsequently went on to develop close positive and meaningful relationships with these family members. MS hasn't re-offended since and we were able to close their file."
-              </p>
-              <p className="text-sm text-earth-600">- Case study from evaluation report</p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="p-8">
-              <p className="text-lg text-earth-700 leading-relaxed italic mb-4">
-                "I think other kids should work with you mob; I think everyone should work with Oonchiumpa. I like working with you because you mob are good and help, it's good working with you mob."
-              </p>
-              <p className="text-sm text-earth-600">- Young person in program</p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="p-8">
-              <p className="text-lg text-earth-700 leading-relaxed italic mb-4">
-                "You know I try get these kids up for school every day, try to wake them up to come with me but nothing, they don't get up. You mob come see them, they up straight away. It's good, they listen, get up straight away and get ready."
-              </p>
-              <p className="text-sm text-earth-600">- Family member</p>
-            </CardBody>
-          </Card>
-
-          <Card>
-            <CardBody className="p-8">
-              <p className="text-lg text-earth-700 leading-relaxed italic mb-4">
-                "CB understands since becoming a man he has more responsibility and is now becoming more of a role model and leader in the Town Camp. He didn't understand the importance of his cultural role before. He is now able to reflect on his actions in the past and feeling remorse. He knows he can be a leader."
-              </p>
-              <p className="text-sm text-earth-600">- Oonchiumpa Team Leader observation</p>
-            </CardBody>
-          </Card>
-        </div>
-      </Section>
-
-      {/* The Team - The People Behind The Impact */}
-      <Section id="team">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
-            Led by Traditional Owners
-          </h2>
-          <p className="text-xl text-earth-700 max-w-3xl mx-auto">
-            This isn't just our work - it's our Country, our people, our responsibility. Our leadership comes from cultural authority, professional expertise, and deep love for our community.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto mb-12">
-          {teamMembers.map((member, index) => (
-            <Card key={index} className="overflow-hidden">
-              <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-ochre-100 to-eucalyptus-100 flex items-center justify-center">
-                {member.avatar_url ? (
+        {activeTeam.length > 0 && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-7 max-w-5xl mx-auto mb-12">
+            {activeTeam.map((member) => (
+              <div key={member.id} className="text-center">
+                {member.avatarUrl ? (
                   <img
-                    src={member.avatar_url}
-                    alt={member.name}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                    src={member.avatarUrl}
+                    alt={member.displayName}
+                    className="w-24 h-24 rounded-full object-cover mx-auto mb-3 border border-earth-200"
                   />
                 ) : (
-                  <div className="text-center p-8">
-                    <div className="w-24 h-24 mx-auto mb-4 bg-ochre-200 rounded-full flex items-center justify-center">
-                      <span className="text-ochre-700 text-3xl font-semibold">
-                        {member.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </span>
-                    </div>
-                    <span className="text-earth-600 text-sm">
-                      Team Photo Coming Soon
+                  <div className="w-24 h-24 rounded-full bg-ochre-100 flex items-center justify-center mx-auto mb-3 border border-ochre-200">
+                    <span className="text-ochre-700 font-semibold text-xl">
+                      {member.displayName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
                     </span>
                   </div>
                 )}
+                <p className="text-earth-950 font-medium text-sm">{member.displayName}</p>
+                {member.isElder && <p className="text-ochre-700 text-xs">Elder</p>}
+                {member.role && <p className="text-earth-500 text-xs mt-0.5">{member.role}</p>}
               </div>
-              <CardBody className="p-8">
-                <h3 className="text-2xl font-semibold text-earth-900 mb-1">
-                  {member.name}
-                </h3>
-                <p className="text-ochre-600 font-semibold mb-2">{member.tribe}</p>
-                <p className="text-eucalyptus-600 font-medium mb-4">{member.role}</p>
-                <p className="text-earth-700 leading-relaxed mb-4">
-                  {member.description}
-                </p>
-                {member.quote && (
-                  <div className="border-l-4 border-ochre-400 pl-4 py-2 bg-sand-50 rounded">
-                    <p className="text-earth-700 italic text-sm">"{member.quote}"</p>
-                  </div>
-                )}
-              </CardBody>
-            </Card>
-          ))}
-        </div>
-
-        {/* Broader Team Context */}
-        <div className="bg-gradient-to-br from-sand-50 to-earth-50 rounded-3xl p-8 md:p-12 max-w-4xl mx-auto">
-          <h3 className="text-2xl font-display font-bold text-earth-900 mb-4 text-center">
-            Building Aboriginal Leadership
-          </h3>
-          <p className="text-lg text-earth-700 leading-relaxed text-center mb-6">
-            Beyond our directors, Oonchiumpa employs Aboriginal youth workers, cultural mentors, and support staff. We're not just helping young people - we're creating employment pathways for their role models. 100% Aboriginal employment means every interaction reinforces identity and possibility.
-          </p>
-          <div className="flex items-center justify-center space-x-4 pt-4">
-            <DotPattern className="w-8 h-8 text-ochre-500" />
-            <CirclePattern className="w-8 h-8 text-eucalyptus-500" />
-            <SpiralPattern className="w-8 h-8 text-sunset-500" />
+            ))}
           </div>
+        )}
+
+        <div className="max-w-4xl mx-auto rounded-3xl bg-earth-950 text-white p-8 md:p-10">
+          <h3 className="text-2xl font-display mb-4">Building Aboriginal workforce pathways</h3>
+          <p className="text-white/80 leading-relaxed text-lg">
+            Oonchiumpa is not only supporting young people. It is also creating pathways for Aboriginal workers,
+            mentors, and leaders whose lived experience and cultural grounding strengthen every outcome.
+          </p>
         </div>
       </Section>
 
-      {/* Recognition & Credibility */}
-      <Section className="bg-gradient-to-br from-eucalyptus-50 via-sand-50 to-ochre-50">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
-            National Recognition
-          </h2>
-          <p className="text-xl text-earth-700 max-w-3xl mx-auto">
-            Our results speak for themselves. Government, researchers, and communities are taking notice.
+      <Section className="bg-sand-50">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <p className="eyebrow mb-4">Recognition</p>
+          <h2 className="heading-lg mb-5">Outcomes recognised by partners and funders</h2>
+          <p className="lead-text">
+            Oonchiumpa's work is independently recognised for impact, value, and cultural legitimacy.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          {recognitionItems.map((item, index) => (
-            <div key={index} className="bg-white rounded-xl p-6 shadow-md">
-              <h3 className="text-xl font-semibold text-earth-900 mb-3">
-                {item.title}
-              </h3>
-              <p className="text-earth-700">
-                {item.description}
-              </p>
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-10">
+          {recognitionItems.map((item) => (
+            <div key={item.title} className="section-shell p-6 md:p-7">
+              <h3 className="text-2xl font-display text-earth-950 mb-3">{item.title}</h3>
+              <p className="text-earth-700 leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>
 
-        {/* External Validation */}
-        <div className="max-w-3xl mx-auto">
-          <Card>
-            <CardBody className="p-8">
-              <p className="text-lg text-earth-700 leading-relaxed mb-4">
-                <strong className="text-earth-900">From the evaluation report:</strong> "The program has had a significant positive impact on the broader community by addressing the underlying causes of youth offending and promoting cultural healing and cohesion. By reducing recidivism, the program has contributed to a measurable decline in youth-related offences perpetrated by the young people they are working with."
-              </p>
-            </CardBody>
-          </Card>
-        </div>
-      </Section>
-
-      {/* Partners & Community */}
-      <Section>
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
-            Working Together
-          </h2>
-          <p className="text-xl text-earth-700 max-w-3xl mx-auto">
-            We've built a network of 30+ partner organizations - Aboriginal-led businesses, mainstream services, government agencies, and community groups. Cultural brokerage means connecting young people to the right supports while maintaining cultural safety.
-          </p>
-        </div>
-
-        <div className="bg-earth-50 rounded-3xl p-8 md:p-12 max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="font-semibold text-earth-900 mb-4 text-lg">Aboriginal Organizations</h3>
-              <ul className="space-y-2 text-earth-700">
-                {partners.filter(p => p.category === 'aboriginal').map((partner, idx) => (
-                  <li key={idx}>
-                    {partner.website ? (
-                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
-                        {partner.name}
-                      </a>
-                    ) : (
-                      partner.name
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-earth-900 mb-4 text-lg">Education & Training</h3>
-              <ul className="space-y-2 text-earth-700">
-                {partners.filter(p => p.category === 'education').map((partner, idx) => (
-                  <li key={idx}>
-                    {partner.website ? (
-                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
-                        {partner.name}
-                      </a>
-                    ) : (
-                      partner.name
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-semibold text-earth-900 mb-4 text-lg">Support Services</h3>
-              <ul className="space-y-2 text-earth-700">
-                {partners.filter(p => p.category === 'support').map((partner, idx) => (
-                  <li key={idx}>
-                    {partner.website ? (
-                      <a href={partner.website} target="_blank" rel="noopener noreferrer" className="hover:text-ochre-600 transition-colors">
-                        {partner.name}
-                      </a>
-                    ) : (
-                      partner.name
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* The Vision - Where We're Going */}
-      <Section className="bg-gradient-to-br from-sand-50 via-ochre-50 to-sunset-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-6 text-center">
-            The Future We're Building
-          </h2>
-
-          <div className="prose prose-lg max-w-none mb-12">
-            <p className="text-xl text-earth-700 leading-relaxed">
-              This is just the beginning. Our vision extends beyond individual young people to transforming systems, building infrastructure, and creating generational change.
+        <Card className="max-w-4xl mx-auto">
+          <CardBody className="p-8 md:p-10">
+            <p className="text-earth-700 text-lg leading-relaxed">
+              <span className="font-semibold text-earth-950">Evaluation insight:</span>{" "}
+              "The program has had a significant positive impact on the broader community by addressing the underlying causes
+              of youth offending and promoting cultural healing and cohesion."
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <Card>
-              <CardBody className="p-8">
-                <h3 className="text-2xl font-semibold text-earth-900 mb-4">
-                  Oonchiumpa Hub
-                </h3>
-                <p className="text-earth-700 leading-relaxed">
-                  A culturally-safe one-stop space bringing together all services young people need. Indoor playground, meeting spaces, cultural activities, case management, and brokerage - all under one roof.
-                </p>
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody className="p-8">
-                <h3 className="text-2xl font-semibold text-earth-900 mb-4">
-                  Safe Sleeping Infrastructure
-                </h3>
-                <p className="text-earth-700 leading-relaxed">
-                  Residential facility providing safe, stable housing for young people experiencing homelessness. Every child deserves a bed, consistent meals, and a place to call home.
-                </p>
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody className="p-8">
-                <h3 className="text-2xl font-semibold text-earth-900 mb-4">
-                  Economic Development on Country
-                </h3>
-                <p className="text-earth-700 leading-relaxed">
-                  Training programs at Loves Creek Station (Nappa Homestead), tourism development, cattle industry pathways. Building generational wealth on Aboriginal land through traditional owner leadership.
-                </p>
-              </CardBody>
-            </Card>
-
-            <Card>
-              <CardBody className="p-8">
-                <h3 className="text-2xl font-semibold text-earth-900 mb-4">
-                  Scaling the Model
-                </h3>
-                <p className="text-earth-700 leading-relaxed">
-                  Sharing our approach nationally. Training other communities in cultural authority-based youth work. Proving that Aboriginal-led solutions work everywhere when properly supported.
-                </p>
-              </CardBody>
-            </Card>
-          </div>
-
-          {/* Closing Vision Statement */}
-          <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl">
-            <blockquote className="text-xl md:text-2xl text-earth-800 italic leading-relaxed mb-6 text-center">
-              "We're not just saving individual kids - we're reclaiming our community. We're bringing back cultural authority, creating employment for Aboriginal people, showing our young ones they have a future worth fighting for. This is about generational change."
-            </blockquote>
-            <p className="text-center text-earth-600 font-semibold">- Tanya Turner</p>
-          </div>
-        </div>
+          </CardBody>
+        </Card>
       </Section>
 
-      {/* How to Get Involved - Multiple CTAs */}
-      <Section className="bg-earth-50">
+      <Section className="bg-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-6">
-            Be Part of the Solution
-          </h2>
-          <p className="text-xl text-earth-700 mb-12 max-w-3xl mx-auto">
-            Whether you're a funder, partner organization, researcher, or community member - there are many ways to support our work.
+          <p className="eyebrow mb-4">Next chapter</p>
+          <h2 className="heading-lg mb-5">A stronger platform for long-term change</h2>
+          <p className="lead-text mb-10">
+            The next phase includes expanded service infrastructure, stronger data and evidence systems,
+            and deeper collaboration across community and government partners.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="bg-white rounded-2xl p-6 shadow-md">
-              <h3 className="font-semibold text-earth-900 mb-3 text-lg">For Funders</h3>
-              <p className="text-earth-700 mb-4">
-                Support proven, cost-effective, Aboriginal-led solutions. Every dollar invested prevents multiple dollars in detention costs.
-              </p>
-              <a href="mailto:admin@oonchiumpaconsultancy.com.au" className="text-ochre-600 hover:text-ochre-700 font-semibold">
-                Partner With Us →
-              </a>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 shadow-md">
-              <h3 className="font-semibold text-earth-900 mb-3 text-lg">For Organizations</h3>
-              <p className="text-earth-700 mb-4">
-                Join our network of 30+ partners. Collaborate on culturally-safe service delivery and youth engagement.
-              </p>
-              <a href="mailto:admin@oonchiumpaconsultancy.com.au" className="text-ochre-600 hover:text-ochre-700 font-semibold">
-                Collaborate →
-              </a>
-            </div>
-
-            <div className="bg-white rounded-2xl p-6 shadow-md">
-              <h3 className="font-semibold text-earth-900 mb-3 text-lg">For Researchers</h3>
-              <p className="text-earth-700 mb-4">
-                Partner with us to establish best practices for Aboriginal-led youth work and cultural authority models.
-              </p>
-              <a href="mailto:admin@oonchiumpaconsultancy.com.au" className="text-ochre-600 hover:text-ochre-700 font-semibold">
-                Research With Us →
-              </a>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-ochre-500 to-sunset-500 rounded-3xl p-12 text-white">
-            <h3 className="text-3xl font-display font-bold mb-4">
-              Ready to Make a Difference?
-            </h3>
-            <p className="text-xl mb-8 opacity-95">
-              Contact us to learn more about our work, explore partnership opportunities, or support young lives.
+          <div className="section-shell bg-earth-950 text-white p-8 md:p-12">
+            <h3 className="text-3xl font-display mb-4">Partner with Oonchiumpa</h3>
+            <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
+              If you are a funder, service partner, or researcher, we can work together on practical,
+              community-led outcomes for young people and families.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="mailto:admin@oonchiumpaconsultancy.com.au"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-white text-lg font-medium rounded-full text-white bg-transparent hover:bg-white hover:text-ochre-600 transition-all duration-200"
+            <div className="flex flex-wrap justify-center gap-4">
+              <button
+                onClick={() => navigate("/contact")}
+                className="btn-primary"
               >
-                Email Us
-              </a>
-              <a
-                href="tel:0474702523"
-                className="inline-flex items-center justify-center px-8 py-4 text-lg font-medium rounded-full text-ochre-600 bg-white hover:bg-sand-50 transition-all duration-200"
+                Contact the team
+              </button>
+              <button
+                onClick={() => navigate("/services")}
+                className="btn-secondary border-white/50 bg-white/10 text-white hover:bg-white/20"
               >
-                Call: 0474 702 523
-              </a>
+                View services
+              </button>
             </div>
           </div>
         </div>
       </Section>
-
-    </>
+    </div>
   );
 };

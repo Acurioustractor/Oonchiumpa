@@ -30,7 +30,7 @@ export const StoryDetailPage: React.FC = () => {
     return (
       <Section className="pt-24">
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-earth-900 mb-4">Story not found</h2>
+          <h2 className="text-2xl font-bold text-earth-950 mb-4">Story not found</h2>
           <p className="text-earth-600 mb-6">The story you're looking for doesn't exist or has been moved.</p>
           <Link to="/stories">
             <Button variant="primary">Back to Stories</Button>
@@ -63,7 +63,7 @@ export const StoryDetailPage: React.FC = () => {
             </span>
           )}
           
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-950 mb-4">
             {story.title}
           </h1>
           
@@ -115,7 +115,7 @@ export const StoryDetailPage: React.FC = () => {
           {/* Cultural Significance */}
           {story.culturalSignificance && (
             <div className="mt-12 p-8 bg-ochre-50 rounded-2xl">
-              <h3 className="text-2xl font-semibold text-earth-900 mb-4">
+              <h3 className="text-2xl font-semibold text-earth-950 mb-4">
                 Cultural Significance
               </h3>
               <p className="text-earth-700 leading-relaxed">
@@ -127,7 +127,7 @@ export const StoryDetailPage: React.FC = () => {
           {/* Tags */}
           {story.tags && story.tags.length > 0 && (
             <div className="mt-8 pt-8 border-t border-earth-200">
-              <h4 className="text-sm font-semibold text-earth-900 mb-3">Tags</h4>
+              <h4 className="text-sm font-semibold text-earth-950 mb-3">Tags</h4>
               <div className="flex flex-wrap gap-2">
                 {story.tags.map((tag, index) => (
                   <span

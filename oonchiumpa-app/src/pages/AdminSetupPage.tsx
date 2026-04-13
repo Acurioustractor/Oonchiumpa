@@ -40,14 +40,14 @@ export const AdminSetupPage: React.FC = () => {
         <Card className="w-full max-w-md">
           <CardBody className="p-8 text-center">
             <div className="text-6xl mb-4">✅</div>
-            <h1 className="text-2xl font-bold text-earth-900 mb-4">
+            <h1 className="text-2xl font-bold text-earth-950 mb-4">
               Admin Account Created!
             </h1>
             <p className="text-earth-700 mb-6">
               You can now login with your admin credentials.
             </p>
             <div className="bg-earth-100 p-4 rounded-lg mb-6 text-left">
-              <h3 className="font-semibold text-earth-900 mb-2">
+              <h3 className="font-semibold text-earth-950 mb-2">
                 Login Details:
               </h3>
               <p>
@@ -79,7 +79,7 @@ export const AdminSetupPage: React.FC = () => {
         <CardBody className="p-8">
           <div className="text-center mb-6">
             <div className="text-4xl mb-4">🏛️</div>
-            <h1 className="text-2xl font-bold text-earth-900 mb-2">
+            <h1 className="text-2xl font-bold text-earth-950 mb-2">
               Create Admin Account
             </h1>
             <p className="text-earth-600">

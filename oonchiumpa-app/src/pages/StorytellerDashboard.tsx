@@ -157,7 +157,7 @@ const StorytellerDashboardPage: React.FC = () => {
         <div className="max-w-4xl mx-auto px-6 py-12">
           <Card className="p-8 text-center">
             <div className="text-6xl mb-4">🎭</div>
-            <h1 className="text-3xl font-bold text-earth-900 mb-4">
+            <h1 className="text-3xl font-bold text-earth-950 mb-4">
               Empathy Ledger Registration Required
             </h1>
             <p className="text-earth-700 mb-6">
@@ -265,7 +265,7 @@ const StorytellerDashboardPage: React.FC = () => {
 
         {/* Empathy Ledger Explanation */}
         <Card className="p-6 mb-8 bg-gradient-to-r from-sand-50 to-eucalyptus-50">
-          <h2 className="text-2xl font-bold text-earth-900 mb-4">
+          <h2 className="text-2xl font-bold text-earth-950 mb-4">
             🎭 Your Empathy Ledger Control Center
           </h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -308,7 +308,7 @@ const StorytellerDashboardPage: React.FC = () => {
         {/* Stories Management */}
         <Card className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-earth-900">
+            <h2 className="text-2xl font-bold text-earth-950">
               📚 Your Stories
             </h2>
             <Button
@@ -327,7 +327,7 @@ const StorytellerDashboardPage: React.FC = () => {
           ) : stories.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">✍️</div>
-              <h3 className="text-xl font-bold text-earth-900 mb-2">
+              <h3 className="text-xl font-bold text-earth-950 mb-2">
                 No Stories Yet
               </h3>
               <p className="text-earth-600 mb-6">
@@ -355,7 +355,7 @@ const StorytellerDashboardPage: React.FC = () => {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center space-x-3 mb-2">
-                        <h3 className="text-lg font-semibold text-earth-900">
+                        <h3 className="text-lg font-semibold text-earth-950">
                           {story.title}
                         </h3>
                         <div className="flex items-center space-x-2">
@@ -519,7 +519,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
       <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-earth-900">
+            <h2 className="text-2xl font-bold text-earth-950">
               ⚙️ Story Settings
             </h2>
             <button
@@ -533,7 +533,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
           <div className="space-y-6">
             {/* Story Title */}
             <div className="p-4 bg-earth-50 rounded-lg">
-              <h3 className="font-semibold text-earth-900 mb-1">
+              <h3 className="font-semibold text-earth-950 mb-1">
                 {story.title}
               </h3>
               <p className="text-earth-600 text-sm">
@@ -543,7 +543,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
 
             {/* Visibility Level */}
             <div>
-              <label className="block text-sm font-medium text-earth-900 mb-3">
+              <label className="block text-sm font-medium text-earth-950 mb-3">
                 👀 Who can see this story?
               </label>
               <div className="space-y-2">
@@ -562,7 +562,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
                       className="text-ochre-600 focus:ring-ochre-500"
                     />
                     <div>
-                      <div className="font-medium text-earth-900">
+                      <div className="font-medium text-earth-950">
                         {storyUtils.getVisibilityDisplayName(level)}
                       </div>
                       <div className="text-sm text-earth-600">
@@ -585,7 +585,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
 
             {/* Control Level */}
             <div>
-              <label className="block text-sm font-medium text-earth-900 mb-3">
+              <label className="block text-sm font-medium text-earth-950 mb-3">
                 🎛️ Who can edit this story?
               </label>
               <div className="space-y-2">
@@ -602,7 +602,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
                       className="text-ochre-600 focus:ring-ochre-500"
                     />
                     <div>
-                      <div className="font-medium text-earth-900">
+                      <div className="font-medium text-earth-950">
                         {storyUtils.getControlDisplayName(level)}
                       </div>
                       <div className="text-sm text-earth-600">
@@ -623,7 +623,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
 
             {/* Cultural Sensitivity */}
             <div>
-              <label className="block text-sm font-medium text-earth-900 mb-3">
+              <label className="block text-sm font-medium text-earth-950 mb-3">
                 🛡️ Cultural sensitivity level
               </label>
               <div className="space-y-2">
@@ -644,7 +644,7 @@ const StoryPermissionsModal: React.FC<StoryPermissionsModalProps> = ({
                         className="text-ochre-600 focus:ring-ochre-500"
                       />
                       <div>
-                        <div className="font-medium text-earth-900">
+                        <div className="font-medium text-earth-950">
                           {info.name}
                         </div>
                         <div className="text-sm text-earth-600">

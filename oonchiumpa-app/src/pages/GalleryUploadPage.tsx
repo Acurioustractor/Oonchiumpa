@@ -155,7 +155,7 @@ export const GalleryUploadPage: React.FC = () => {
     <>
       <Section className="bg-gradient-to-br from-sand-50 via-sand-100 to-ochre-50 pt-24">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-earth-900 mb-6">
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-earth-950 mb-6">
             Media <span className="text-gradient">Upload</span>
           </h1>
           <p className="text-lg md:text-xl text-earth-700">
@@ -170,7 +170,7 @@ export const GalleryUploadPage: React.FC = () => {
           {/* Photo Upload */}
           <Card>
             <CardBody>
-              <h2 className="text-2xl font-bold text-earth-900 mb-4">
+              <h2 className="text-2xl font-bold text-earth-950 mb-4">
                 📸 Upload Photos
               </h2>
               <p className="text-earth-600 mb-6">
@@ -226,7 +226,7 @@ export const GalleryUploadPage: React.FC = () => {
           {/* Video Embed */}
           <Card>
             <CardBody>
-              <h2 className="text-2xl font-bold text-earth-900 mb-4">
+              <h2 className="text-2xl font-bold text-earth-950 mb-4">
                 🎥 Add Video Embed
               </h2>
               <p className="text-earth-600 mb-6">

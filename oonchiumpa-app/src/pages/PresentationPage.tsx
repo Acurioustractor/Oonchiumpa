@@ -179,7 +179,7 @@ const PresentationPage: React.FC = () => {
           <div className="space-y-12">
             {/* Executive Summary */}
             <Card className="p-8 bg-gradient-to-r from-ochre-50 to-eucalyptus-50">
-              <h2 className="text-3xl font-bold text-earth-900 mb-6">Executive Summary</h2>
+              <h2 className="text-3xl font-bold text-earth-950 mb-6">Executive Summary</h2>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div>
                   <h3 className="text-xl font-semibold text-earth-800 mb-4">The Opportunity</h3>
@@ -212,7 +212,7 @@ const PresentationPage: React.FC = () => {
               {overviewStats.map((stat, index) => (
                 <Card key={index} className="p-6 text-center border-l-4 border-l-ochre-500">
                   <div className="text-3xl font-bold text-ochre-600 mb-2">{stat.value}</div>
-                  <div className="font-semibold text-earth-900 mb-1">{stat.label}</div>
+                  <div className="font-semibold text-earth-950 mb-1">{stat.label}</div>
                   <div className="text-sm text-earth-600">{stat.description}</div>
                 </Card>
               ))}
@@ -224,7 +224,7 @@ const PresentationPage: React.FC = () => {
                 <Card key={section.id} className="p-6 hover:shadow-lg transition-shadow">
                   <div className="flex items-center mb-4">
                     <span className="text-3xl mr-3">{section.icon}</span>
-                    <h3 className="text-lg font-bold text-earth-900">{section.title}</h3>
+                    <h3 className="text-lg font-bold text-earth-950">{section.title}</h3>
                   </div>
                   <p className="text-earth-700 mb-4">{section.summary}</p>
                   <Button 
@@ -266,14 +266,14 @@ const PresentationPage: React.FC = () => {
             <Card className="p-8 bg-gradient-to-r from-ochre-50 to-eucalyptus-50">
               <div className="flex items-center mb-4">
                 <span className="text-4xl mr-4">{section.icon}</span>
-                <h2 className="text-3xl font-bold text-earth-900">{section.title}</h2>
+                <h2 className="text-3xl font-bold text-earth-950">{section.title}</h2>
               </div>
               <p className="text-xl text-earth-700">{section.summary}</p>
             </Card>
 
             {/* Key Points */}
             <Card className="p-8">
-              <h3 className="text-2xl font-bold text-earth-900 mb-6">Key Points</h3>
+              <h3 className="text-2xl font-bold text-earth-950 mb-6">Key Points</h3>
               <div className="space-y-4">
                 {section.keyPoints.map((point, index) => (
                   <div key={index} className="flex items-start space-x-3">
@@ -288,12 +288,12 @@ const PresentationPage: React.FC = () => {
 
             {/* Impact Metrics */}
             <Card className="p-8">
-              <h3 className="text-2xl font-bold text-earth-900 mb-6">Impact Metrics</h3>
+              <h3 className="text-2xl font-bold text-earth-950 mb-6">Impact Metrics</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {section.impact.map((metric, index) => (
                   <div key={index} className="text-center p-6 bg-earth-50 rounded-lg">
                     <div className="text-2xl font-bold text-earth-800 mb-2">{metric.value}</div>
-                    <div className="font-semibold text-earth-900 mb-1">{metric.metric}</div>
+                    <div className="font-semibold text-earth-950 mb-1">{metric.metric}</div>
                     <div className="text-sm text-earth-600">{metric.context}</div>
                   </div>
                 ))}
@@ -302,7 +302,7 @@ const PresentationPage: React.FC = () => {
 
             {/* Community Voices */}
             <Card className="p-8">
-              <h3 className="text-2xl font-bold text-earth-900 mb-6">Community Voices</h3>
+              <h3 className="text-2xl font-bold text-earth-950 mb-6">Community Voices</h3>
               <div className="space-y-6">
                 {section.stories.map((story, index) => (
                   <div key={index} className="border-l-4 border-l-eucalyptus-500 pl-6 py-2 bg-eucalyptus-50 rounded-r-lg">
