@@ -321,25 +321,25 @@ export const MediaManagerPage: React.FC = () => {
                 🛡️ Cultural Sensitivity Levels
               </h3>
               <div className="grid md:grid-cols-4 gap-4 text-sm">
-                <div className="text-center p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="text-center p-3 bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg">
                   <div className="text-2xl mb-2">🌐</div>
-                  <div className="font-medium text-green-800">Public</div>
-                  <div className="text-green-700">Open for all to see</div>
+                  <div className="font-medium text-eucalyptus-800">Public</div>
+                  <div className="text-eucalyptus-700">Open for all to see</div>
                 </div>
-                <div className="text-center p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="text-center p-3 bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg">
                   <div className="text-2xl mb-2">👥</div>
-                  <div className="font-medium text-blue-800">Community</div>
-                  <div className="text-blue-700">Oonchiumpa community only</div>
+                  <div className="font-medium text-eucalyptus-800">Community</div>
+                  <div className="text-eucalyptus-700">Oonchiumpa community only</div>
                 </div>
-                <div className="text-center p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="text-center p-3 bg-ochre-50 border border-ochre-200 rounded-lg">
                   <div className="text-2xl mb-2">🔒</div>
-                  <div className="font-medium text-yellow-800">Private</div>
-                  <div className="text-yellow-700">Internal team use only</div>
+                  <div className="font-medium text-ochre-800">Private</div>
+                  <div className="text-ochre-700">Internal team use only</div>
                 </div>
-                <div className="text-center p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div className="text-center p-3 bg-sunset-50 border border-sunset-200 rounded-lg">
                   <div className="text-2xl mb-2">🛡️</div>
-                  <div className="font-medium text-red-800">Sacred</div>
-                  <div className="text-red-700">Elder approval required</div>
+                  <div className="font-medium text-sunset-800">Sacred</div>
+                  <div className="text-sunset-700">Elder approval required</div>
                 </div>
               </div>
             </CardBody>

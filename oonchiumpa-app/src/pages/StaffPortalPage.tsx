@@ -243,33 +243,33 @@ const StaffPortalPage: React.FC = () => {
             </Card>
 
             {/* Impact Framework - NEW! */}
-            <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-300">
+            <Card className="p-8 bg-gradient-to-r from-ochre-50 to-ochre-50 border-2 border-ochre-300">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-orange-900 mb-2 flex items-center gap-2">
+                  <h2 className="text-2xl font-bold text-ochre-900 mb-2 flex items-center gap-2">
                     🎯 Impact Framework Analysis
-                    <span className="px-2 py-1 text-xs bg-orange-600 text-white rounded-full">NEW!</span>
+                    <span className="px-2 py-1 text-xs bg-ochre-600 text-white rounded-full">NEW!</span>
                   </h2>
-                  <p className="text-orange-800 mb-4">
+                  <p className="text-ochre-800 mb-4">
                     AI-powered analysis extracted 26 outcomes from 16 documents across all Oonchiumpa services
                   </p>
                   <div className="grid grid-cols-3 gap-4 mb-6">
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-blue-600">16</div>
-                      <div className="text-xs text-gray-600">Documents Analyzed</div>
+                      <div className="text-2xl font-bold text-eucalyptus-600">16</div>
+                      <div className="text-xs text-earth-600">Documents Analyzed</div>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-green-600">26</div>
-                      <div className="text-xs text-gray-600">Outcomes Extracted</div>
+                      <div className="text-2xl font-bold text-eucalyptus-600">26</div>
+                      <div className="text-xs text-earth-600">Outcomes Extracted</div>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-orange-600">5</div>
-                      <div className="text-xs text-gray-600">Service Areas</div>
+                      <div className="text-2xl font-bold text-ochre-600">5</div>
+                      <div className="text-xs text-earth-600">Service Areas</div>
                     </div>
                   </div>
                   <Link
                     to="/staff-portal/impact"
-                    className="inline-block px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition"
+                    className="inline-block px-6 py-3 bg-ochre-600 text-white font-medium rounded-lg hover:bg-ochre-700 transition"
                   >
                     View Impact Dashboard →
                   </Link>
@@ -283,7 +283,7 @@ const StaffPortalPage: React.FC = () => {
                 <h3 className="text-xl font-bold text-earth-950">📄 All Documents</h3>
                 <Link
                   to="/staff-portal/documents"
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className="text-sm text-eucalyptus-600 hover:text-eucalyptus-700 font-medium"
                 >
                   Manage Documents →
                 </Link>
@@ -313,7 +313,7 @@ const StaffPortalPage: React.FC = () => {
                             <div className="text-sm text-earth-500">
                               {new Date(doc.created_at).toLocaleDateString()}
                               {doc.status && (
-                                <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                                <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-eucalyptus-100 text-eucalyptus-800">
                                   {doc.status}
                                 </span>
                               )}
@@ -323,12 +323,12 @@ const StaffPortalPage: React.FC = () => {
                         {analysis ? (
                           <Link
                             to={`/staff-portal/documents/${doc.id}/analysis`}
-                            className="ml-3 px-3 py-1.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-md whitespace-nowrap transition"
+                            className="ml-3 px-3 py-1.5 text-sm font-medium text-white bg-ochre-600 hover:bg-ochre-700 rounded-xl whitespace-nowrap transition"
                           >
                             🔍 Analysis
                           </Link>
                         ) : (
-                          <span className="ml-3 px-3 py-1.5 text-xs text-gray-400 whitespace-nowrap">
+                          <span className="ml-3 px-3 py-1.5 text-xs text-earth-400 whitespace-nowrap">
                             Not analyzed
                           </span>
                         )}
@@ -365,8 +365,8 @@ const StaffPortalPage: React.FC = () => {
                           <span
                             className={`px-2 py-1 rounded text-xs font-medium ${
                               content.is_public
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-blue-100 text-blue-800'
+                                ? 'bg-eucalyptus-100 text-eucalyptus-800'
+                                : 'bg-eucalyptus-100 text-eucalyptus-800'
                             }`}
                           >
                             {content.is_public ? 'Published' : 'In Review'}
@@ -423,7 +423,7 @@ const StaffPortalPage: React.FC = () => {
                 </div>
                 <a
                   href="/staff-portal/documents"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-eucalyptus-600 text-white rounded-xl hover:bg-eucalyptus-700 transition-colors"
                 >
                   View All Documents →
                 </a>
@@ -446,7 +446,7 @@ const StaffPortalPage: React.FC = () => {
                           <div className="text-sm text-earth-500">
                             {new Date(doc.created_at).toLocaleDateString()}
                             {doc.status && (
-                              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-eucalyptus-100 text-eucalyptus-800">
                                 {doc.status}
                               </span>
                             )}
@@ -470,21 +470,21 @@ const StaffPortalPage: React.FC = () => {
               </p>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="p-6 border-l-4 border-l-yellow-500">
+                <Card className="p-6 border-l-4 border-l-ochre-500">
                   <h3 className="font-bold text-earth-950 mb-2">⏳ Pending Review</h3>
-                  <div className="text-2xl font-bold text-yellow-600 mb-2">4</div>
+                  <div className="text-2xl font-bold text-ochre-600 mb-2">4</div>
                   <p className="text-sm text-earth-600">Stories awaiting cultural review</p>
                 </Card>
                 
-                <Card className="p-6 border-l-4 border-l-purple-500">
+                <Card className="p-6 border-l-4 border-l-earth-500">
                   <h3 className="font-bold text-earth-950 mb-2">👥 Elder Consultation</h3>
-                  <div className="text-2xl font-bold text-purple-600 mb-2">2</div>
+                  <div className="text-2xl font-bold text-earth-700 mb-2">2</div>
                   <p className="text-sm text-earth-600">Requiring Elder guidance</p>
                 </Card>
                 
-                <Card className="p-6 border-l-4 border-l-green-500">
+                <Card className="p-6 border-l-4 border-l-eucalyptus-500">
                   <h3 className="font-bold text-earth-950 mb-2">✅ Approved</h3>
-                  <div className="text-2xl font-bold text-green-600 mb-2">38</div>
+                  <div className="text-2xl font-bold text-eucalyptus-600 mb-2">38</div>
                   <p className="text-sm text-earth-600">Ready for publication</p>
                 </Card>
               </div>

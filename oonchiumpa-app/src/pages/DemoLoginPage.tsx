@@ -31,11 +31,11 @@ const DemoLoginPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <div className="bg-ochre-50 border border-ochre-200 rounded-lg p-4 mb-6">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg
-                  className="h-5 w-5 text-yellow-400"
+                  className="h-5 w-5 text-ochre-400"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -47,10 +47,10 @@ const DemoLoginPage: React.FC = () => {
                 </svg>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-yellow-800">
+                <h3 className="text-sm font-medium text-ochre-800">
                   Demo Mode
                 </h3>
-                <p className="mt-1 text-sm text-yellow-700">
+                <p className="mt-1 text-sm text-ochre-700">
                   This bypasses the email rate limit issue. You'll have full
                   admin access to explore all features.
                 </p>

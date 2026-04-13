@@ -277,19 +277,19 @@ const StorytellerDashboardPage: React.FC = () => {
               </p>
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <span className="w-4 h-4 bg-green-500 rounded-full"></span>
+                  <span className="w-4 h-4 bg-eucalyptus-500 rounded-full"></span>
                   <span className="text-sm text-earth-600">
                     Toggle stories on/off instantly
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="w-4 h-4 bg-blue-500 rounded-full"></span>
+                  <span className="w-4 h-4 bg-eucalyptus-500 rounded-full"></span>
                   <span className="text-sm text-earth-600">
                     Set visibility levels (Private, Community, Public)
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <span className="w-4 h-4 bg-purple-500 rounded-full"></span>
+                  <span className="w-4 h-4 bg-earth-500 rounded-full"></span>
                   <span className="text-sm text-earth-600">
                     Manage cultural sensitivity settings
                   </span>
@@ -348,8 +348,8 @@ const StorytellerDashboardPage: React.FC = () => {
                   key={story.id}
                   className={`p-4 border rounded-lg transition-all ${
                     story.is_active
-                      ? "border-green-200 bg-green-50"
-                      : "border-gray-200 bg-gray-50"
+                      ? "border-eucalyptus-200 bg-eucalyptus-50"
+                      : "border-earth-200 bg-earth-50"
                   }`}
                 >
                   <div className="flex items-start justify-between">
@@ -363,15 +363,15 @@ const StorytellerDashboardPage: React.FC = () => {
                           <span
                             className={`px-2 py-1 rounded text-xs font-medium ${
                               story.is_active
-                                ? "bg-green-100 text-green-800"
-                                : "bg-gray-100 text-gray-800"
+                                ? "bg-eucalyptus-100 text-eucalyptus-800"
+                                : "bg-earth-100 text-earth-800"
                             }`}
                           >
                             {story.is_active ? "👁️ Visible" : "🔒 Hidden"}
                           </span>
 
                           {/* Visibility Level */}
-                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="px-2 py-1 rounded text-xs font-medium bg-eucalyptus-100 text-eucalyptus-800">
                             {storyUtils.getVisibilityDisplayName(
                               story.permissions?.visibility_level ||
                                 StoryVisibilityLevel.PRIVATE,
@@ -384,11 +384,11 @@ const StorytellerDashboardPage: React.FC = () => {
                               className={`px-2 py-1 rounded text-xs font-medium ${
                                 story.permissions.cultural_sensitivity_level ===
                                 "high"
-                                  ? "bg-red-100 text-red-800"
+                                  ? "bg-sunset-100 text-sunset-800"
                                   : story.permissions
                                         .cultural_sensitivity_level === "medium"
-                                    ? "bg-yellow-100 text-yellow-800"
-                                    : "bg-green-100 text-green-800"
+                                    ? "bg-ochre-100 text-ochre-800"
+                                    : "bg-eucalyptus-100 text-eucalyptus-800"
                               }`}
                             >
                               {
@@ -423,7 +423,7 @@ const StorytellerDashboardPage: React.FC = () => {
                           handleToggleStoryVisibility(story.id, story.is_active)
                         }
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-ochre-500 focus:ring-offset-2 ${
-                          story.is_active ? "bg-green-600" : "bg-gray-200"
+                          story.is_active ? "bg-eucalyptus-600" : "bg-earth-200"
                         }`}
                       >
                         <span

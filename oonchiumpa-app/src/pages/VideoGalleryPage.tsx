@@ -10,8 +10,8 @@ import {
 type Video = PublicVideo;
 
 const platformMeta: Record<Video["video_type"], { label: string; classes: string }> = {
-  youtube: { label: "YouTube", classes: "bg-red-100 text-red-700 border border-red-200" },
-  vimeo: { label: "Vimeo", classes: "bg-blue-100 text-blue-700 border border-blue-200" },
+  youtube: { label: "YouTube", classes: "bg-sunset-100 text-sunset-700 border border-sunset-200" },
+  vimeo: { label: "Vimeo", classes: "bg-eucalyptus-100 text-eucalyptus-700 border border-eucalyptus-200" },
   descript: { label: "Descript", classes: "bg-eucalyptus-100 text-eucalyptus-700 border border-eucalyptus-200" },
   direct: { label: "Video", classes: "bg-earth-100 text-earth-700 border border-earth-200" },
 };

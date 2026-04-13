@@ -91,8 +91,8 @@ export const AdminSetupPage: React.FC = () => {
             <div
               className={`p-4 rounded-lg mb-4 ${
                 message.includes("Error")
-                  ? "bg-red-100 text-red-800"
-                  : "bg-green-100 text-green-800"
+                  ? "bg-sunset-100 text-sunset-800"
+                  : "bg-eucalyptus-100 text-eucalyptus-800"
               }`}
             >
               {message}

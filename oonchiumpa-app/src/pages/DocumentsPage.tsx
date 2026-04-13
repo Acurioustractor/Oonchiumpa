@@ -84,16 +84,16 @@ export const DocumentsPage: React.FC = () => {
 
   const getStatusBadge = (status: string) => {
     const statusColors: Record<string, string> = {
-      pending: 'bg-yellow-100 text-yellow-800',
-      processing: 'bg-blue-100 text-blue-800',
-      completed: 'bg-green-100 text-green-800',
-      failed: 'bg-red-100 text-red-800'
+      pending: 'bg-ochre-100 text-ochre-800',
+      processing: 'bg-eucalyptus-100 text-eucalyptus-800',
+      completed: 'bg-eucalyptus-100 text-eucalyptus-800',
+      failed: 'bg-sunset-100 text-sunset-800'
     };
 
     return (
       <span
         className={`px-2 py-1 text-xs font-medium rounded-full ${
-          statusColors[status] || 'bg-gray-100 text-gray-800'
+          statusColors[status] || 'bg-earth-100 text-earth-800'
         }`}
       >
         {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -103,16 +103,16 @@ export const DocumentsPage: React.FC = () => {
 
   const getSensitivityBadge = (sensitivity: string) => {
     const colors: Record<string, string> = {
-      public: 'bg-green-100 text-green-800',
-      community: 'bg-blue-100 text-blue-800',
-      private: 'bg-orange-100 text-orange-800',
-      sacred: 'bg-purple-100 text-purple-800'
+      public: 'bg-eucalyptus-100 text-eucalyptus-800',
+      community: 'bg-eucalyptus-100 text-eucalyptus-800',
+      private: 'bg-ochre-100 text-ochre-800',
+      sacred: 'bg-earth-100 text-earth-800'
     };
 
     return (
       <span
         className={`px-2 py-1 text-xs font-medium rounded-full ${
-          colors[sensitivity] || 'bg-gray-100 text-gray-800'
+          colors[sensitivity] || 'bg-earth-100 text-earth-800'
         }`}
       >
         {sensitivity.charAt(0).toUpperCase() + sensitivity.slice(1)}
@@ -139,34 +139,34 @@ export const DocumentsPage: React.FC = () => {
         <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Documents</h1>
-            <p className="text-gray-600 mt-1">
+            <h1 className="text-3xl font-bold text-earth-950">Documents</h1>
+            <p className="text-earth-600 mt-1">
               Upload and manage interview recordings, transcripts, and documents
             </p>
           </div>
           <button
             onClick={() => setShowUpload(!showUpload)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center space-x-2"
+            className="px-4 py-2 bg-eucalyptus-600 text-white rounded-md hover:bg-eucalyptus-700 flex items-center space-x-2"
           >
             <span>{showUpload ? '✕ Cancel' : '+ Upload'}</span>
           </button>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex space-x-2 border-b border-gray-200">
+        <div className="flex space-x-2 border-b border-earth-200">
           {(['all', 'pending', 'completed'] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setFilter(tab)}
               className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
                 filter === tab
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  ? 'border-eucalyptus-600 text-eucalyptus-600'
+                  : 'border-transparent text-earth-500 hover:text-earth-700'
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
               {tab !== 'all' && (
-                <span className="ml-2 px-2 py-0.5 text-xs bg-gray-100 rounded-full">
+                <span className="ml-2 px-2 py-0.5 text-xs bg-earth-100 rounded-full">
                   {documents.filter((d) => d.status === tab).length}
                 </span>
               )}
@@ -187,18 +187,18 @@ export const DocumentsPage: React.FC = () => {
       )}
 
       {/* Documents List */}
-      <div className="bg-white rounded-lg border border-gray-200">
+      <div className="bg-white rounded-lg border border-earth-200">
         {loading ? (
           <div className="p-8 text-center">
-            <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4" />
-            <p className="text-gray-600">Loading documents...</p>
+            <div className="animate-spin h-8 w-8 border-4 border-eucalyptus-600 border-t-transparent rounded-full mx-auto mb-4" />
+            <p className="text-earth-600">Loading documents...</p>
           </div>
         ) : error ? (
           <div className="p-8 text-center">
-            <p className="text-red-600 mb-4">Error: {error}</p>
+            <p className="text-sunset-600 mb-4">Error: {error}</p>
             <button
               onClick={loadDocuments}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-eucalyptus-600 text-white rounded-md hover:bg-eucalyptus-700"
             >
               Retry
             </button>
@@ -206,32 +206,32 @@ export const DocumentsPage: React.FC = () => {
         ) : documents.length === 0 ? (
           <div className="p-8 text-center">
             <div className="text-6xl mb-4">📁</div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <h3 className="text-lg font-semibold text-earth-950 mb-2">
               No documents yet
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-earth-600 mb-4">
               Upload your first document to get started
             </p>
             <button
               onClick={() => setShowUpload(true)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-eucalyptus-600 text-white rounded-md hover:bg-eucalyptus-700"
             >
               Upload Document
             </button>
           </div>
         ) : (
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-earth-200">
             {documents.map((doc) => (
               <div
                 key={doc.id}
-                className="p-4 hover:bg-gray-50 transition-colors"
+                className="p-4 hover:bg-earth-50 transition-colors"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-3 flex-1">
                     <div className="text-3xl">{getMediaIcon(doc)}</div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center space-x-2 mb-1">
-                        <h3 className="text-base font-semibold text-gray-900 truncate">
+                        <h3 className="text-base font-semibold text-earth-950 truncate">
                           {doc.title || 'Untitled Document'}
                         </h3>
                         {getStatusBadge(doc.status || 'pending')}
@@ -239,19 +239,19 @@ export const DocumentsPage: React.FC = () => {
                           doc.cultural_sensitivity || 'community'
                         )}
                         {doc.requires_elder_review && (
-                          <span className="px-2 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-800">
+                          <span className="px-2 py-1 text-xs font-medium rounded-full bg-earth-100 text-earth-800">
                             Elder Review
                           </span>
                         )}
                       </div>
 
                       {doc.media_metadata?.description && (
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="text-sm text-earth-600 mb-2">
                           {doc.media_metadata.description}
                         </p>
                       )}
 
-                      <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-earth-500">
                         <span>📅 {formatDate(doc.created_at)}</span>
                         {doc.media_metadata?.file_size && (
                           <span>
@@ -279,7 +279,7 @@ export const DocumentsPage: React.FC = () => {
                               (tag: string, idx: number) => (
                                 <span
                                   key={idx}
-                                  className="px-2 py-0.5 text-xs bg-gray-100 text-gray-700 rounded-full"
+                                  className="px-2 py-0.5 text-xs bg-earth-100 text-earth-700 rounded-full"
                                 >
                                   {tag}
                                 </span>
@@ -294,7 +294,7 @@ export const DocumentsPage: React.FC = () => {
                     {analysisResults.find((a: any) => a.documentId === doc.id) && (
                       <Link
                         to={`/staff-portal/documents/${doc.id}/analysis`}
-                        className="px-3 py-1.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-md transition-colors"
+                        className="px-3 py-1.5 text-sm font-medium text-white bg-ochre-600 hover:bg-ochre-700 rounded-md transition-colors"
                         title="View AI Analysis"
                       >
                         🔍 Analysis
@@ -302,14 +302,14 @@ export const DocumentsPage: React.FC = () => {
                     )}
                     <button
                       onClick={() => handleDownload(doc.id)}
-                      className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                      className="p-2 text-earth-600 hover:text-eucalyptus-600 hover:bg-eucalyptus-50 rounded-md transition-colors"
                       title="Download"
                     >
                       ⬇️
                     </button>
                     <button
                       onClick={() => handleDelete(doc.id)}
-                      className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors"
+                      className="p-2 text-earth-600 hover:text-sunset-600 hover:bg-sunset-50 rounded-md transition-colors"
                       title="Delete"
                     >
                       🗑️
@@ -324,7 +324,7 @@ export const DocumentsPage: React.FC = () => {
 
       {/* Stats Footer */}
       {!loading && documents.length > 0 && (
-        <div className="mt-4 text-sm text-gray-600 text-center">
+        <div className="mt-4 text-sm text-earth-600 text-center">
           Showing {documents.length} document
           {documents.length !== 1 ? 's' : ''}
           {filter !== 'all' && ` (${filter})`}

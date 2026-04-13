@@ -120,10 +120,10 @@ export const InitialSetupPage: React.FC = () => {
             <div
               className={`p-6 rounded-lg mb-6 whitespace-pre-line ${
                 message.includes("Error") || message.includes("❌")
-                  ? "bg-red-50 border border-red-200 text-red-800"
+                  ? "bg-sunset-50 border border-sunset-200 text-sunset-800"
                   : success
-                    ? "bg-green-50 border border-green-200 text-green-800"
-                    : "bg-yellow-50 border border-yellow-200 text-yellow-800"
+                    ? "bg-eucalyptus-50 border border-eucalyptus-200 text-eucalyptus-800"
+                    : "bg-ochre-50 border border-ochre-200 text-ochre-800"
               }`}
             >
               {message}

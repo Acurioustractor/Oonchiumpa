@@ -10,8 +10,8 @@ const EmpathyLedgerPage: React.FC = () => {
   });
 
   return (
-    <div className="bg-gray-50 pt-20">
-      <div className="bg-gradient-to-r from-amber-600 to-orange-500 text-white">
+    <div className="bg-earth-50 pt-20">
+      <div className="bg-gradient-to-r from-amber-600 to-ochre-500 text-white">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">🎭 Empathy Ledger</h1>
