@@ -134,7 +134,7 @@ export const PartnersManager: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-earth-900">Partner Organizations Manager</h2>
+        <h2 className="text-2xl font-bold text-earth-950">Partner Organizations Manager</h2>
         <Button variant="primary" onClick={handleCreateNew}>
           + Add Partner
         </Button>
@@ -168,11 +168,11 @@ export const PartnersManager: React.FC = () => {
           </div>
           <div className="text-eucalyptus-600 text-sm">Education & Training</div>
         </Card>
-        <Card className="p-4 text-center bg-gradient-to-br from-blue-50 to-blue-100">
-          <div className="text-2xl font-bold text-blue-800">
+        <Card className="p-4 text-center bg-gradient-to-br from-eucalyptus-50 to-eucalyptus-100">
+          <div className="text-2xl font-bold text-eucalyptus-800">
             {partnersByCategory['support']?.length || 0}
           </div>
-          <div className="text-blue-600 text-sm">Support Services</div>
+          <div className="text-eucalyptus-600 text-sm">Support Services</div>
         </Card>
       </div>
 
@@ -211,7 +211,7 @@ export const PartnersManager: React.FC = () => {
                       className="h-12 w-auto mb-3 object-contain"
                     />
                   )}
-                  <h3 className="text-lg font-semibold text-earth-900 mb-1">
+                  <h3 className="text-lg font-semibold text-earth-950 mb-1">
                     {partner.name}
                   </h3>
                   <div className="flex items-center gap-2 mb-2">
@@ -219,7 +219,7 @@ export const PartnersManager: React.FC = () => {
                       {partner.category}
                     </span>
                     {!partner.is_visible && (
-                      <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+                      <span className="px-2 py-1 bg-earth-200 text-earth-700 rounded text-xs">
                         Hidden
                       </span>
                     )}
@@ -283,7 +283,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Organization Name *
         </label>
         <input
@@ -297,7 +297,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Category *
         </label>
         <select
@@ -313,7 +313,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Logo URL
         </label>
         <input
@@ -333,7 +333,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Website URL
         </label>
         <input
@@ -347,7 +347,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Display Order
           </label>
           <input
@@ -365,7 +365,7 @@ const PartnerForm: React.FC<PartnerFormProps> = ({ partner, onSave, onCancel }) 
               onChange={(e) => setFormData({ ...formData, is_visible: e.target.checked })}
               className="rounded"
             />
-            <span className="text-sm font-medium text-earth-900">Visible on website</span>
+            <span className="text-sm font-medium text-earth-950">Visible on website</span>
           </label>
         </div>
       </div>

@@ -236,9 +236,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
       {/* Error Messages */}
       {errors.length > 0 && (
-        <Card className="p-4 bg-red-50 border-red-200">
-          <h4 className="font-semibold text-red-800 mb-2">Upload Errors</h4>
-          <ul className="text-sm text-red-600 space-y-1">
+        <Card className="p-4 bg-sunset-50 border-sunset-200">
+          <h4 className="font-semibold text-sunset-800 mb-2">Upload Errors</h4>
+          <ul className="text-sm text-sunset-600 space-y-1">
             {errors.map((error, index) => (
               <li key={index}>• {error}</li>
             ))}
@@ -273,7 +273,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-all duration-300 rounded-lg flex items-center justify-center">
                   <button
                     onClick={() => removeImage(image.id)}
-                    className="opacity-0 group-hover:opacity-100 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition-all duration-200"
+                    className="opacity-0 group-hover:opacity-100 bg-sunset-500 text-white rounded-full p-2 hover:bg-sunset-600 transition-all duration-200"
                   >
                     ✕
                   </button>

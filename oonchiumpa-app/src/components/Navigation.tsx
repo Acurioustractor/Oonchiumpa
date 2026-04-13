@@ -166,7 +166,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 {showUserMenu && (
                   <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-[0_18px_36px_rgba(47,30,26,0.18)] border border-earth-200 py-2">
                     <div className="px-4 py-2 border-b border-earth-200">
-                      <div className="font-semibold text-earth-900">
+                      <div className="font-semibold text-earth-950">
                         {user?.full_name}
                       </div>
                       <div className="text-sm text-earth-600">
@@ -232,7 +232,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                           setShowUserMenu(false);
                           navigate("/");
                         }}
-                        className="flex items-center w-full px-4 py-2 hover:bg-red-50 text-red-600"
+                        className="flex items-center w-full px-4 py-2 hover:bg-sunset-50 text-sunset-600"
                       >
                         Sign Out
                       </button>
@@ -341,7 +341,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                     setIsMobileMenuOpen(false);
                     navigate("/");
                   }}
-                  className="w-full mt-1 px-4 py-2.5 rounded-lg text-red-600 bg-red-50 hover:bg-red-100 transition-colors duration-200 text-left"
+                  className="w-full mt-1 px-4 py-2.5 rounded-lg text-sunset-600 bg-sunset-50 hover:bg-sunset-100 transition-colors duration-200 text-left"
                 >
                   Sign Out
                 </button>

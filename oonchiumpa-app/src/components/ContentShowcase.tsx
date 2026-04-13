@@ -96,7 +96,7 @@ const ContentShowcase: React.FC = () => {
   return (
     <Section className="bg-gradient-to-br from-white to-earth-50">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-display font-bold text-earth-900 mb-4">
+        <h2 className="text-4xl font-display font-bold text-earth-950 mb-4">
           📖 Community Stories
         </h2>
         <p className="text-lg text-earth-700 max-w-3xl mx-auto mb-6">
@@ -150,7 +150,7 @@ const ContentShowcase: React.FC = () => {
                         {item.type.replace("-", " ")}
                       </span>
                       {item.type === "story" && (
-                        <span className="ml-2 inline-block px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs font-medium">
+                        <span className="ml-2 inline-block px-2 py-1 bg-earth-100 text-earth-800 rounded text-xs font-medium">
                           📖 Community Story
                         </span>
                       )}
@@ -191,7 +191,7 @@ const ContentShowcase: React.FC = () => {
       {/* Community Impact Note */}
       <div className="mt-12 bg-gradient-to-r from-ochre-50 to-eucalyptus-50 rounded-xl p-8 border-2 border-ochre-200">
         <div className="text-center">
-          <h3 className="text-xl font-bold text-earth-900 mb-3">
+          <h3 className="text-xl font-bold text-earth-950 mb-3">
             🛡️ Sharing Stories with Cultural Respect
           </h3>
           <p className="text-earth-700 max-w-2xl mx-auto">

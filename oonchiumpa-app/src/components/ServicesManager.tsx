@@ -129,7 +129,7 @@ export const ServicesManager: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-earth-900">Services Manager</h2>
+        <h2 className="text-2xl font-bold text-earth-950">Services Manager</h2>
         <Button variant="primary" onClick={handleCreateNew}>
           + Add New Service
         </Button>
@@ -164,11 +164,11 @@ export const ServicesManager: React.FC = () => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-earth-900">
+                    <h3 className="text-xl font-semibold text-earth-950">
                       {service.title}
                     </h3>
                     {!service.is_visible && (
-                      <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+                      <span className="px-2 py-1 bg-earth-200 text-earth-700 rounded text-xs">
                         Hidden
                       </span>
                     )}
@@ -248,7 +248,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Title *
         </label>
         <input
@@ -261,7 +261,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Slug * (URL-friendly identifier)
         </label>
         <input
@@ -275,7 +275,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Description *
         </label>
         <textarea
@@ -288,7 +288,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Image URL
         </label>
         <input
@@ -301,7 +301,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Features
         </label>
         <div className="space-y-2">
@@ -341,7 +341,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Display Order
           </label>
           <input
@@ -359,7 +359,7 @@ const ServiceForm: React.FC<ServiceFormProps> = ({ service, onSave, onCancel }) 
               onChange={(e) => setFormData({ ...formData, is_visible: e.target.checked })}
               className="rounded"
             />
-            <span className="text-sm font-medium text-earth-900">Visible on website</span>
+            <span className="text-sm font-medium text-earth-950">Visible on website</span>
           </label>
         </div>
       </div>

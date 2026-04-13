@@ -78,28 +78,28 @@ const [story, setStory] = useState<Story>({
       name: "Public",
       description: "Visible to everyone",
       icon: "🌐",
-      color: "text-green-600",
+      color: "text-eucalyptus-600",
     },
     {
       id: "Community",
       name: "Community",
       description: "Visible to Oonchiumpa community",
       icon: "👥",
-      color: "text-blue-600",
+      color: "text-eucalyptus-600",
     },
     {
       id: "Organization",
       name: "Organization",
       description: "Visible to organization members",
       icon: "🏢",
-      color: "text-purple-600",
+      color: "text-earth-700",
     },
     {
       id: "Private",
       name: "Private",
       description: "Only visible to storyteller and admins",
       icon: "🔒",
-      color: "text-red-600",
+      color: "text-sunset-600",
     },
   ];
 
@@ -269,7 +269,7 @@ const [story, setStory] = useState<Story>({
       {/* Header */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-earth-900">
+          <h1 className="text-2xl font-bold text-earth-950">
             📝 {mode === "edit" ? "Edit Story" : "Create New Story"}
           </h1>
           <div className="flex space-x-3">
@@ -437,7 +437,7 @@ const [story, setStory] = useState<Story>({
 
       {/* Privacy & Sharing Settings */}
       <Card className="p-6">
-        <h3 className="text-lg font-semibold text-earth-900 mb-4">
+        <h3 className="text-lg font-semibold text-earth-950 mb-4">
           🛡️ Privacy & Cultural Protocols
         </h3>
 
@@ -510,7 +510,7 @@ const [story, setStory] = useState<Story>({
       {/* Media Attachments */}
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-earth-900">
+          <h3 className="text-lg font-semibold text-earth-950">
             📸 Story Media
           </h3>
           <Button
@@ -537,7 +537,7 @@ const [story, setStory] = useState<Story>({
                         : "📄"}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-earth-900 truncate">
+                    <div className="font-medium text-earth-950 truncate">
                       {media.title}
                     </div>
                     <div className="text-sm text-earth-600">{media.type}</div>

@@ -148,7 +148,7 @@ export const TestimonialsManager: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-earth-900">Testimonials Manager</h2>
+        <h2 className="text-2xl font-bold text-earth-950">Testimonials Manager</h2>
         <Button variant="primary" onClick={handleCreateNew}>
           + Add Testimonial
         </Button>
@@ -204,7 +204,7 @@ export const TestimonialsManager: React.FC = () => {
                 )}
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-earth-900">
+                    <h3 className="text-lg font-semibold text-earth-950">
                       {testimonial.name}
                     </h3>
                     {testimonial.category && (
@@ -213,7 +213,7 @@ export const TestimonialsManager: React.FC = () => {
                       </span>
                     )}
                     {!testimonial.is_visible && (
-                      <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+                      <span className="px-2 py-1 bg-earth-200 text-earth-700 rounded text-xs">
                         Hidden
                       </span>
                     )}
@@ -291,7 +291,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Name *
           </label>
           <input
@@ -304,7 +304,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Role *
           </label>
           <input
@@ -319,7 +319,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Quote *
         </label>
         <textarea
@@ -332,7 +332,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Context
         </label>
         <textarea
@@ -345,7 +345,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Impact Statement
         </label>
         <textarea
@@ -358,7 +358,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Avatar/Photo URL
         </label>
         <input
@@ -371,7 +371,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Specialties
         </label>
         <div className="space-y-2">
@@ -411,7 +411,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
 
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Category
           </label>
           <select
@@ -428,7 +428,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Source
           </label>
           <input
@@ -441,7 +441,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Display Order
           </label>
           <input
@@ -461,7 +461,7 @@ const TestimonialForm: React.FC<TestimonialFormProps> = ({ testimonial, onSave, 
             onChange={(e) => setFormData({ ...formData, is_visible: e.target.checked })}
             className="rounded"
           />
-          <span className="text-sm font-medium text-earth-900">Visible on website</span>
+          <span className="text-sm font-medium text-earth-950">Visible on website</span>
         </label>
       </div>
 

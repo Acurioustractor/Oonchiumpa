@@ -166,8 +166,8 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       <div
         className={`border-2 border-dashed rounded-lg transition-colors ${
           isDragOver
-            ? 'border-blue-500 bg-blue-50'
-            : 'border-gray-300 bg-white'
+            ? 'border-eucalyptus-500 bg-eucalyptus-50'
+            : 'border-earth-300 bg-white'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -175,10 +175,10 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       >
         <div className="p-8 text-center">
           <div className="text-4xl mb-4">📁</div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <h3 className="text-lg font-semibold text-earth-950 mb-2">
             Upload Documents or Recordings
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-earth-600 mb-4">
             Drag and drop files here, or click to select files
           </p>
           <input
@@ -192,13 +192,13 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
           <label htmlFor="file-upload">
             <button
               type="button"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer inline-block"
+              className="px-4 py-2 bg-eucalyptus-600 text-white rounded-md hover:bg-eucalyptus-700 cursor-pointer inline-block"
               onClick={() => document.getElementById('file-upload')?.click()}
             >
               Choose Files
             </button>
           </label>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-earth-500 mt-2">
             Supports audio, video, PDF, Word docs, text files, and images • Max{' '}
             {maxFiles} files • 50MB per file
           </p>
@@ -208,7 +208,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       {/* Metadata Form */}
       {showMetadataForm && selectedFiles.length > 0 && (
         <div className="border rounded-lg p-6 bg-white">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-earth-950 mb-4">
             Document Details
           </h3>
 
@@ -216,14 +216,14 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
             {selectedFiles.map((file, index) => (
               <div
                 key={index}
-                className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
+                className="flex items-center space-x-3 p-3 bg-earth-50 rounded-lg"
               >
                 <span className="text-2xl">
                   {documentService.getFileIcon(file)}
                 </span>
                 <div className="flex-1">
-                  <div className="font-medium text-gray-900">{file.name}</div>
-                  <div className="text-sm text-gray-600">
+                  <div className="font-medium text-earth-950">{file.name}</div>
+                  <div className="text-sm text-earth-600">
                     {documentService.formatFileSize(file.size)} •{' '}
                     {documentService.getFileTypeLabel(file)}
                   </div>
@@ -234,7 +234,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-earth-700 mb-1">
                 Title
               </label>
               <input
@@ -248,12 +248,12 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                     ? selectedFiles[0].name.split('.')[0]
                     : 'Document title'
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-earth-300 rounded-md focus:ring-eucalyptus-500 focus:border-eucalyptus-500"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-earth-700 mb-1">
                 Cultural Sensitivity
               </label>
               <select
@@ -264,7 +264,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                     cultural_sensitivity: e.target.value as any
                   }))
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-3 py-2 border border-earth-300 rounded-md focus:ring-eucalyptus-500 focus:border-eucalyptus-500"
               >
                 <option value="public">Public - Open sharing</option>
                 <option value="community">Community - Oonchiumpa community</option>
@@ -275,7 +275,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-earth-700 mb-1">
               Description
             </label>
             <textarea
@@ -288,7 +288,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
               }
               placeholder="Describe the content, context, or cultural significance..."
               rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-earth-300 rounded-md focus:ring-eucalyptus-500 focus:border-eucalyptus-500"
             />
           </div>
 
@@ -303,28 +303,28 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                     requires_elder_review: e.target.checked
                   }))
                 }
-                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                className="rounded border-earth-300 text-eucalyptus-600 focus:ring-eucalyptus-500"
               />
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-medium text-earth-700">
                 Requires elder review before processing
               </span>
             </label>
           </div>
 
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-earth-700 mb-1">
               Tags
             </label>
             <div className="flex flex-wrap gap-2 mb-2">
               {metadata.tags?.map((tag, index) => (
                 <span
                   key={index}
-                  className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-800 text-sm rounded-full"
+                  className="inline-flex items-center px-2 py-1 bg-eucalyptus-100 text-eucalyptus-800 text-sm rounded-full"
                 >
                   {tag}
                   <button
                     onClick={() => removeTag(tag)}
-                    className="ml-1 text-blue-600 hover:text-blue-800"
+                    className="ml-1 text-eucalyptus-600 hover:text-eucalyptus-800"
                   >
                     ×
                   </button>
@@ -341,7 +341,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                   e.currentTarget.value = '';
                 }
               }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-earth-300 rounded-md focus:ring-eucalyptus-500 focus:border-eucalyptus-500"
             />
             <div className="mt-2 flex flex-wrap gap-2">
               {[
@@ -354,7 +354,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                 <button
                   key={tag}
                   onClick={() => addTag(tag)}
-                  className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200"
+                  className="px-2 py-1 text-xs bg-earth-100 text-earth-700 rounded-full hover:bg-earth-200"
                 >
                   + {tag}
                 </button>
@@ -369,14 +369,14 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                 setShowMetadataForm(false);
                 setSelectedFiles([]);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+              className="px-4 py-2 border border-earth-300 rounded-md text-earth-700 hover:bg-earth-50"
             >
               Cancel
             </button>
             <button
               type="button"
               onClick={uploadFiles}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-4 py-2 bg-eucalyptus-600 text-white rounded-md hover:bg-eucalyptus-700"
             >
               Upload {selectedFiles.length} file{selectedFiles.length > 1 ? 's' : ''}
             </button>
@@ -387,7 +387,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       {/* Upload Progress */}
       {uploads.length > 0 && (
         <div className="border rounded-lg p-6 bg-white">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <h3 className="text-lg font-semibold text-earth-950 mb-4">
             Upload Progress
           </h3>
           <div className="space-y-3">
@@ -400,35 +400,35 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
                   </div>
                   <div className="flex items-center space-x-2">
                     {upload.status === 'uploading' && (
-                      <div className="animate-spin h-4 w-4 border-2 border-blue-600 border-t-transparent rounded-full" />
+                      <div className="animate-spin h-4 w-4 border-2 border-eucalyptus-600 border-t-transparent rounded-full" />
                     )}
                     {upload.status === 'complete' && (
-                      <span className="text-green-600">✅</span>
+                      <span className="text-eucalyptus-600">✅</span>
                     )}
                     {upload.status === 'error' && (
-                      <span className="text-red-600">❌</span>
+                      <span className="text-sunset-600">❌</span>
                     )}
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-earth-600">
                       {upload.progress}%
                     </span>
                   </div>
                 </div>
 
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-earth-200 rounded-full h-2">
                   <div
                     className={`h-2 rounded-full transition-all duration-300 ${
                       upload.status === 'error'
-                        ? 'bg-red-500'
+                        ? 'bg-sunset-500'
                         : upload.status === 'complete'
-                          ? 'bg-green-500'
-                          : 'bg-blue-500'
+                          ? 'bg-eucalyptus-500'
+                          : 'bg-eucalyptus-500'
                     }`}
                     style={{ width: `${upload.progress}%` }}
                   />
                 </div>
 
                 {upload.error && (
-                  <p className="text-red-600 text-sm mt-1">{upload.error}</p>
+                  <p className="text-sunset-600 text-sm mt-1">{upload.error}</p>
                 )}
               </div>
             ))}

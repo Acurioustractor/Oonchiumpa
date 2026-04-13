@@ -38,7 +38,7 @@ const PartnerShowcase: React.FC = () => {
     <section className="py-16 bg-gradient-to-br from-sand-50 to-eucalyptus-50">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-display font-bold text-earth-900 mb-4">
+          <h2 className="text-4xl font-display font-bold text-earth-950 mb-4">
             Our Partnership Network
           </h2>
           <p className="text-lg text-earth-700 max-w-3xl mx-auto">
@@ -50,7 +50,7 @@ const PartnerShowcase: React.FC = () => {
         <div className="space-y-12 mb-12">
           {categories.map((category) => (
             <div key={category}>
-              <h3 className="text-xl font-bold text-earth-900 mb-6 text-center">
+              <h3 className="text-xl font-bold text-earth-950 mb-6 text-center">
                 {category}
               </h3>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

@@ -120,7 +120,7 @@ const DynamicBlog: React.FC = () => {
     <div className="max-w-7xl mx-auto px-6 py-16">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-earth-900 mb-6">
+        <h1 className="text-4xl md:text-5xl font-bold text-earth-950 mb-6">
           📖 Community Stories & Insights
         </h1>
         <p className="text-xl text-earth-700 max-w-4xl mx-auto mb-8">
@@ -207,14 +207,14 @@ const DynamicBlog: React.FC = () => {
               {/* Cultural Review Badge */}
               {post.culturalReview && (
                 <div className="mb-3">
-                  <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs font-medium">
+                  <span className="px-2 py-1 bg-eucalyptus-100 text-eucalyptus-800 rounded text-xs font-medium">
                     ✓ {post.culturalReview === true || post.culturalReview === 'true' ? 'Elder Approved' : post.culturalReview}
                   </span>
                 </div>
               )}
 
               {/* Title */}
-              <h3 className="text-lg font-bold text-earth-900 mb-3 line-clamp-2 group-hover:text-ochre-700 transition-colors">
+              <h3 className="text-lg font-bold text-earth-950 mb-3 line-clamp-2 group-hover:text-ochre-700 transition-colors">
                 {post.title}
               </h3>
 

@@ -127,10 +127,10 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
     level: MediaFile["cultural_sensitivity"],
   ) => {
     const colors = {
-      public: "bg-green-100 text-green-800",
-      community: "bg-blue-100 text-blue-800",
-      private: "bg-yellow-100 text-yellow-800",
-      sacred: "bg-red-100 text-red-800",
+      public: "bg-eucalyptus-100 text-eucalyptus-800",
+      community: "bg-eucalyptus-100 text-eucalyptus-800",
+      private: "bg-ochre-100 text-ochre-800",
+      sacred: "bg-sunset-100 text-sunset-800",
     };
 
     return (
@@ -230,7 +230,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
           {/* Elder approved badge */}
           {item.elder_approved && (
             <div className="absolute top-2 right-2">
-              <span className="bg-green-500 text-white px-2 py-1 rounded text-xs">
+              <span className="bg-eucalyptus-500 text-white px-2 py-1 rounded text-xs">
                 ✓ Approved
               </span>
             </div>
@@ -240,7 +240,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
         {/* Media Info */}
         {showMetadata && (
           <div className="p-4">
-            <h3 className="font-semibold text-earth-900 mb-1 line-clamp-2">
+            <h3 className="font-semibold text-earth-950 mb-1 line-clamp-2">
               {item.title}
             </h3>
 
@@ -291,8 +291,8 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
   if (error) {
     return (
       <Card className="p-6 text-center">
-        <div className="text-red-600 mb-2">❌</div>
-        <div className="text-earth-900 font-medium mb-2">
+        <div className="text-sunset-600 mb-2">❌</div>
+        <div className="text-earth-950 font-medium mb-2">
           Failed to load media
         </div>
         <div className="text-earth-600 text-sm mb-4">{error}</div>
@@ -308,7 +308,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
       {/* Header with filters */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center space-x-4">
-          <h2 className="text-xl font-semibold text-earth-900">
+          <h2 className="text-xl font-semibold text-earth-950">
             📸 Media Gallery
           </h2>
           <span className="text-earth-600">
@@ -345,7 +345,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
       {filteredMedia.length === 0 && (
         <Card className="p-12 text-center">
           <div className="text-4xl mb-4">📁</div>
-          <h3 className="text-lg font-medium text-earth-900 mb-2">
+          <h3 className="text-lg font-medium text-earth-950 mb-2">
             No media files yet
           </h3>
           <p className="text-earth-600 mb-4">
@@ -438,7 +438,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
 
               {/* Media details */}
               <div className="p-6 border-t">
-                <h3 className="text-xl font-semibold text-earth-900 mb-2">
+                <h3 className="text-xl font-semibold text-earth-950 mb-2">
                   {selectedMedia.title}
                 </h3>
 

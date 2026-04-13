@@ -32,20 +32,20 @@ export const UserManagement: React.FC = () => {
 
   const getRoleBadgeColor = (role: string) => {
     const colors = {
-      admin: "bg-red-100 text-red-800",
-      elder: "bg-purple-100 text-purple-800",
-      editor: "bg-blue-100 text-blue-800",
-      contributor: "bg-green-100 text-green-800",
-      storyteller: "bg-yellow-100 text-yellow-800",
+      admin: "bg-sunset-100 text-sunset-800",
+      elder: "bg-earth-100 text-earth-800",
+      editor: "bg-eucalyptus-100 text-eucalyptus-800",
+      contributor: "bg-eucalyptus-100 text-eucalyptus-800",
+      storyteller: "bg-ochre-100 text-ochre-800",
     };
-    return colors[role as keyof typeof colors] || "bg-gray-100 text-gray-800";
+    return colors[role as keyof typeof colors] || "bg-earth-100 text-earth-800";
   };
 
   if (!isAdmin()) {
     return (
       <Card className="p-8 text-center">
         <div className="text-4xl mb-4">🚫</div>
-        <h3 className="text-lg font-semibold text-earth-900 mb-2">
+        <h3 className="text-lg font-semibold text-earth-950 mb-2">
           Admin Access Required
         </h3>
         <p className="text-earth-600">Only administrators can manage users.</p>
@@ -66,7 +66,7 @@ export const UserManagement: React.FC = () => {
     <Card>
       <CardBody className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-semibold text-earth-900">
+          <h2 className="text-2xl font-semibold text-earth-950">
             👥 User Management
           </h2>
           <Button variant="primary" size="sm">
@@ -75,8 +75,8 @@ export const UserManagement: React.FC = () => {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <div className="text-red-800">{error}</div>
+          <div className="bg-sunset-50 border border-sunset-200 rounded-lg p-4 mb-6">
+            <div className="text-sunset-800">{error}</div>
           </div>
         )}
 
@@ -93,7 +93,7 @@ export const UserManagement: React.FC = () => {
                   </span>
                 </div>
                 <div>
-                  <div className="font-semibold text-earth-900">
+                  <div className="font-semibold text-earth-950">
                     {user.full_name}
                   </div>
                   <div className="text-sm text-earth-600">{user.email}</div>
@@ -104,12 +104,12 @@ export const UserManagement: React.FC = () => {
                       {user.role}
                     </span>
                     {user.cultural_authority && (
-                      <span className="px-2 py-1 bg-purple-100 text-purple-800 rounded text-xs">
+                      <span className="px-2 py-1 bg-earth-100 text-earth-800 rounded text-xs">
                         🛡️ Cultural Authority
                       </span>
                     )}
                     {user.can_approve_content && (
-                      <span className="px-2 py-1 bg-green-100 text-green-800 rounded text-xs">
+                      <span className="px-2 py-1 bg-eucalyptus-100 text-eucalyptus-800 rounded text-xs">
                         ✅ Content Approver
                       </span>
                     )}
@@ -144,7 +144,7 @@ export const UserManagement: React.FC = () => {
         {users.length === 0 && (
           <div className="text-center py-8">
             <div className="text-4xl mb-4">👤</div>
-            <h3 className="text-lg font-semibold text-earth-900 mb-2">
+            <h3 className="text-lg font-semibold text-earth-950 mb-2">
               No Users Found
             </h3>
             <p className="text-earth-600 mb-4">
@@ -157,25 +157,25 @@ export const UserManagement: React.FC = () => {
         {/* User Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-earth-200">
           <div className="text-center">
-            <div className="text-2xl font-bold text-earth-900">
+            <div className="text-2xl font-bold text-earth-950">
               {users.length}
             </div>
             <div className="text-sm text-earth-600">Total Users</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-2xl font-bold text-eucalyptus-600">
               {users.filter((u) => u.is_active).length}
             </div>
             <div className="text-sm text-earth-600">Active Users</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-purple-600">
+            <div className="text-2xl font-bold text-earth-700">
               {users.filter((u) => u.cultural_authority).length}
             </div>
             <div className="text-sm text-earth-600">Cultural Authority</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-eucalyptus-600">
               {users.filter((u) => u.can_approve_content).length}
             </div>
             <div className="text-sm text-earth-600">Content Approvers</div>

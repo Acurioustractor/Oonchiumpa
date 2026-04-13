@@ -69,7 +69,7 @@ export const MediaLibraryManager: React.FC = () => {
         <CardBody className="p-8">
           <div className="text-center mb-6">
             <div className="text-5xl mb-4">📦</div>
-            <h2 className="text-2xl font-semibold text-earth-900 mb-2">
+            <h2 className="text-2xl font-semibold text-earth-950 mb-2">
               Media Library Setup Required
             </h2>
             <p className="text-earth-600">
@@ -78,7 +78,7 @@ export const MediaLibraryManager: React.FC = () => {
           </div>
 
           <div className="bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg p-6 mb-6">
-            <h3 className="font-semibold text-earth-900 mb-4 flex items-center gap-2">
+            <h3 className="font-semibold text-earth-950 mb-4 flex items-center gap-2">
               <span className="text-2xl">📋</span>
               Setup Instructions
             </h3>
@@ -124,7 +124,7 @@ export const MediaLibraryManager: React.FC = () => {
           </div>
 
           <div className="bg-sand-50 border border-sand-200 rounded-lg p-4 mb-6">
-            <h4 className="font-medium text-earth-900 mb-2">What gets created:</h4>
+            <h4 className="font-medium text-earth-950 mb-2">What gets created:</h4>
             <ul className="text-sm text-earth-700 space-y-1">
               <li>✅ media_files table with full schema</li>
               <li>✅ Row Level Security policies</li>
@@ -161,7 +161,7 @@ export const MediaLibraryManager: React.FC = () => {
     <div className="space-y-6">
       {/* View Toggle */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold text-earth-900">
+        <h2 className="text-2xl font-semibold text-earth-950">
           📸 Media Library
         </h2>
         <div className="flex space-x-2">
@@ -195,7 +195,7 @@ export const MediaLibraryManager: React.FC = () => {
           <Card className="border-2 border-eucalyptus-200">
             <CardBody className="p-6 text-center">
               <div className="text-3xl mb-2">📁</div>
-              <div className="text-2xl font-bold text-earth-900">{stats.totalFiles}</div>
+              <div className="text-2xl font-bold text-earth-950">{stats.totalFiles}</div>
               <div className="text-sm text-earth-600">Total Files</div>
             </CardBody>
           </Card>
@@ -203,7 +203,7 @@ export const MediaLibraryManager: React.FC = () => {
           <Card className="border-2 border-ochre-200">
             <CardBody className="p-6 text-center">
               <div className="text-3xl mb-2">💾</div>
-              <div className="text-2xl font-bold text-earth-900">
+              <div className="text-2xl font-bold text-earth-950">
                 {formatFileSize(stats.totalSize)}
               </div>
               <div className="text-sm text-earth-600">Total Storage</div>
@@ -213,7 +213,7 @@ export const MediaLibraryManager: React.FC = () => {
           <Card className="border-2 border-sand-200">
             <CardBody className="p-6 text-center">
               <div className="text-3xl mb-2">🖼️</div>
-              <div className="text-2xl font-bold text-earth-900">
+              <div className="text-2xl font-bold text-earth-950">
                 {stats.byType.image || 0}
               </div>
               <div className="text-sm text-earth-600">Images</div>
@@ -223,7 +223,7 @@ export const MediaLibraryManager: React.FC = () => {
           <Card className="border-2 border-eucalyptus-200">
             <CardBody className="p-6 text-center">
               <div className="text-3xl mb-2">⏳</div>
-              <div className="text-2xl font-bold text-earth-900">
+              <div className="text-2xl font-bold text-earth-950">
                 {stats.pendingApproval}
               </div>
               <div className="text-sm text-earth-600">Pending Approval</div>
@@ -233,12 +233,12 @@ export const MediaLibraryManager: React.FC = () => {
           {/* By Category */}
           <Card className="md:col-span-2">
             <CardBody className="p-6">
-              <h3 className="font-semibold text-earth-900 mb-4">📂 By Category</h3>
+              <h3 className="font-semibold text-earth-950 mb-4">📂 By Category</h3>
               <div className="space-y-2">
                 {Object.entries(stats.byCategory).map(([category, count]) => (
                   <div key={category} className="flex justify-between items-center">
                     <span className="text-earth-700 capitalize">{category.replace('-', ' ')}</span>
-                    <span className="font-semibold text-earth-900">{count}</span>
+                    <span className="font-semibold text-earth-950">{count}</span>
                   </div>
                 ))}
               </div>
@@ -248,7 +248,7 @@ export const MediaLibraryManager: React.FC = () => {
           {/* By Type */}
           <Card className="md:col-span-2">
             <CardBody className="p-6">
-              <h3 className="font-semibold text-earth-900 mb-4">📊 By Type</h3>
+              <h3 className="font-semibold text-earth-950 mb-4">📊 By Type</h3>
               <div className="space-y-2">
                 {Object.entries(stats.byType).map(([type, count]) => (
                   <div key={type} className="flex justify-between items-center">
@@ -258,7 +258,7 @@ export const MediaLibraryManager: React.FC = () => {
                       {type === 'audio' && '🎵 Audio'}
                       {type === 'document' && '📄 Documents'}
                     </span>
-                    <span className="font-semibold text-earth-900">{count}</span>
+                    <span className="font-semibold text-earth-950">{count}</span>
                   </div>
                 ))}
               </div>
@@ -271,7 +271,7 @@ export const MediaLibraryManager: React.FC = () => {
       {activeView === 'upload' && (
         <Card>
           <CardBody className="p-6">
-            <h3 className="text-xl font-semibold text-earth-900 mb-6">
+            <h3 className="text-xl font-semibold text-earth-950 mb-6">
               📤 Upload Media Files
             </h3>
             <MediaUpload
@@ -288,7 +288,7 @@ export const MediaLibraryManager: React.FC = () => {
       {activeView === 'gallery' && (
         <Card>
           <CardBody className="p-6">
-            <h3 className="text-xl font-semibold text-earth-900 mb-6">
+            <h3 className="text-xl font-semibold text-earth-950 mb-6">
               🖼️ Media Gallery
             </h3>
             <MediaGallery
@@ -304,7 +304,7 @@ export const MediaLibraryManager: React.FC = () => {
       {/* Quick Actions */}
       <Card className="bg-gradient-to-r from-ochre-50 to-eucalyptus-50 border-ochre-200">
         <CardBody className="p-6">
-          <h3 className="font-semibold text-earth-900 mb-4 text-center">
+          <h3 className="font-semibold text-earth-950 mb-4 text-center">
             🎯 Quick Actions
           </h3>
           <div className="flex flex-wrap justify-center gap-3">
@@ -335,25 +335,25 @@ export const MediaLibraryManager: React.FC = () => {
             🛡️ Cultural Sensitivity Guidelines
           </h3>
           <div className="grid md:grid-cols-4 gap-4 text-sm">
-            <div className="text-center p-3 bg-green-900/30 border border-green-700/50 rounded-lg">
+            <div className="text-center p-3 bg-eucalyptus-900/30 border border-eucalyptus-700/50 rounded-lg">
               <div className="text-2xl mb-2">🌐</div>
-              <div className="font-medium text-green-200">Public</div>
-              <div className="text-green-300/80">Open for all to see</div>
+              <div className="font-medium text-eucalyptus-200">Public</div>
+              <div className="text-eucalyptus-300/80">Open for all to see</div>
             </div>
-            <div className="text-center p-3 bg-blue-900/30 border border-blue-700/50 rounded-lg">
+            <div className="text-center p-3 bg-eucalyptus-900/30 border border-eucalyptus-700/50 rounded-lg">
               <div className="text-2xl mb-2">👥</div>
-              <div className="font-medium text-blue-200">Community</div>
+              <div className="font-medium text-eucalyptus-200">Community</div>
               <div className="text-blue-300/80">Oonchiumpa community only</div>
             </div>
-            <div className="text-center p-3 bg-yellow-900/30 border border-yellow-700/50 rounded-lg">
+            <div className="text-center p-3 bg-ochre-900/30 border border-ochre-700/50 rounded-lg">
               <div className="text-2xl mb-2">🔒</div>
-              <div className="font-medium text-yellow-200">Private</div>
-              <div className="text-yellow-300/80">Internal team use only</div>
+              <div className="font-medium text-ochre-200">Private</div>
+              <div className="text-ochre-300/80">Internal team use only</div>
             </div>
-            <div className="text-center p-3 bg-red-900/30 border border-red-700/50 rounded-lg">
+            <div className="text-center p-3 bg-sunset-900/30 border border-sunset-700/50 rounded-lg">
               <div className="text-2xl mb-2">🛡️</div>
-              <div className="font-medium text-red-200">Sacred</div>
-              <div className="text-red-300/80">Elder approval required</div>
+              <div className="font-medium text-sunset-200">Sacred</div>
+              <div className="text-sunset-300/80">Elder approval required</div>
             </div>
           </div>
         </CardBody>

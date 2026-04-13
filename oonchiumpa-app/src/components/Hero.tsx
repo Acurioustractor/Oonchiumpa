@@ -92,7 +92,7 @@ export const Hero: React.FC<HeroProps> = ({
 
           <h1
             className={`mb-6 text-5xl md:text-6xl lg:text-7xl font-display font-bold animate-slide-up ${
-              hasBackgroundMedia ? "text-white" : "text-earth-900"
+              hasBackgroundMedia ? "text-white" : "text-earth-950"
             }`}
             style={{ textShadow: hasBackgroundMedia ? "0 12px 40px rgba(0,0,0,0.55)" : undefined }}
           >

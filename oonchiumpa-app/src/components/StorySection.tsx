@@ -104,7 +104,7 @@ export const StorySection: React.FC<StorySectionProps> = ({
               {subtitle}
             </span>
           )}
-          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-900">
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-earth-950">
             {title}
           </h2>
           <p className="text-lg text-earth-700 leading-relaxed">

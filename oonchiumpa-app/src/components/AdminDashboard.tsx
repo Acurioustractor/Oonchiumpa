@@ -71,28 +71,28 @@ const AdminDashboard: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "published":
-        return "bg-green-100 text-green-800";
+        return "bg-eucalyptus-100 text-eucalyptus-800";
       case "pending":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-ochre-100 text-ochre-800";
       case "draft":
-        return "bg-gray-100 text-gray-800";
+        return "bg-earth-100 text-earth-800";
       case "archived":
-        return "bg-red-100 text-red-800";
+        return "bg-sunset-100 text-sunset-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-earth-100 text-earth-800";
     }
   };
 
   const getSensitivityColor = (level: string) => {
     switch (level) {
       case "high":
-        return "bg-red-100 text-red-800";
+        return "bg-sunset-100 text-sunset-800";
       case "medium":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-ochre-100 text-ochre-800";
       case "low":
-        return "bg-green-100 text-green-800";
+        return "bg-eucalyptus-100 text-eucalyptus-800";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-earth-100 text-earth-800";
     }
   };
 
@@ -110,7 +110,7 @@ const AdminDashboard: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-earth-900 mb-2">
+          <h1 className="text-3xl font-bold text-earth-950 mb-2">
             🏛️ Oonchiumpa Admin Dashboard
           </h1>
           <p className="text-earth-600">
@@ -141,8 +141,8 @@ const AdminDashboard: React.FC = () => {
             onClick={() => setSelectedTab(tab.id as any)}
             className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               selectedTab === tab.id
-                ? "bg-white text-earth-900 shadow-sm"
-                : "text-earth-600 hover:text-earth-900"
+                ? "bg-white text-earth-950 shadow-sm"
+                : "text-earth-600 hover:text-earth-950"
             }`}
           >
             <span>{tab.icon}</span>
@@ -168,27 +168,27 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div className="text-eucalyptus-600 text-sm">New This Week</div>
             </Card>
-            <Card className="p-4 text-center bg-gradient-to-br from-yellow-50 to-yellow-100">
-              <div className="text-2xl font-bold text-yellow-800">
+            <Card className="p-4 text-center bg-gradient-to-br from-ochre-50 to-ochre-100">
+              <div className="text-2xl font-bold text-ochre-800">
                 {stats.pendingReview}
               </div>
-              <div className="text-yellow-600 text-sm">Private Stories</div>
+              <div className="text-ochre-600 text-sm">Private Stories</div>
             </Card>
-            <Card className="p-4 text-center bg-gradient-to-br from-green-50 to-green-100">
-              <div className="text-2xl font-bold text-green-800">
+            <Card className="p-4 text-center bg-gradient-to-br from-eucalyptus-50 to-eucalyptus-100">
+              <div className="text-2xl font-bold text-eucalyptus-800">
                 {stats.published}
               </div>
-              <div className="text-green-600 text-sm">Published Stories</div>
+              <div className="text-eucalyptus-600 text-sm">Published Stories</div>
             </Card>
-            <Card className="p-4 text-center bg-gradient-to-br from-blue-50 to-blue-100">
-              <div className="text-2xl font-bold text-blue-800">
+            <Card className="p-4 text-center bg-gradient-to-br from-eucalyptus-50 to-eucalyptus-100">
+              <div className="text-2xl font-bold text-eucalyptus-800">
                 {stats.totalStorytellers}
               </div>
-              <div className="text-blue-600 text-sm">Storytellers</div>
+              <div className="text-eucalyptus-600 text-sm">Storytellers</div>
             </Card>
-            <Card className="p-4 text-center bg-gradient-to-br from-purple-50 to-purple-100">
-              <div className="text-2xl font-bold text-purple-800">🎭</div>
-              <div className="text-purple-600 text-sm">
+            <Card className="p-4 text-center bg-gradient-to-br from-earth-50 to-earth-100">
+              <div className="text-2xl font-bold text-earth-800">🎭</div>
+              <div className="text-earth-700 text-sm">
                 Empathy Ledger Active
               </div>
             </Card>
@@ -196,7 +196,7 @@ const AdminDashboard: React.FC = () => {
 
           {/* Quick Actions */}
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               ⚡ Quick Actions
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -224,7 +224,7 @@ const AdminDashboard: React.FC = () => {
 
           {/* Empathy Ledger Management */}
           <Card className="p-6 border-amber-200 bg-amber-50">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4 flex items-center gap-2">
               🎭 Empathy Ledger Management
               <span className="text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full">
                 Backend Control
@@ -263,7 +263,7 @@ const AdminDashboard: React.FC = () => {
 
           {/* Recent Activity */}
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               📈 Recent Activity
             </h3>
             <div className="space-y-3">
@@ -276,10 +276,10 @@ const AdminDashboard: React.FC = () => {
                     <div
                       className={`w-8 h-8 rounded-full flex items-center justify-center ${
                         activity.type === "published"
-                          ? "bg-green-100"
+                          ? "bg-eucalyptus-100"
                           : activity.type === "review_needed"
-                            ? "bg-yellow-100"
-                            : "bg-blue-100"
+                            ? "bg-ochre-100"
+                            : "bg-eucalyptus-100"
                       }`}
                     >
                       {activity.type === "published"
@@ -289,7 +289,7 @@ const AdminDashboard: React.FC = () => {
                           : "🤖"}
                     </div>
                     <div>
-                      <div className="font-medium text-earth-900">
+                      <div className="font-medium text-earth-950">
                         {activity.title}
                       </div>
                       <div className="text-sm text-earth-600">
@@ -303,7 +303,7 @@ const AdminDashboard: React.FC = () => {
                 </div>
               ))}
               {activities.length === 0 && (
-                <div className="text-center py-4 text-gray-500">
+                <div className="text-center py-4 text-earth-500">
                   No recent activity
                 </div>
               )}
@@ -316,7 +316,7 @@ const AdminDashboard: React.FC = () => {
       {selectedTab === "content" && (
         <div className="space-y-6">
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               📚 Content Library
             </h3>
             <div className="overflow-x-auto">
@@ -354,7 +354,7 @@ const AdminDashboard: React.FC = () => {
                     >
                       <td className="py-3 px-4">
                         <div>
-                          <div className="font-medium text-earth-900">
+                          <div className="font-medium text-earth-950">
                             {item.title}
                           </div>
                           <div className="text-sm text-earth-500">
@@ -388,13 +388,13 @@ const AdminDashboard: React.FC = () => {
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex space-x-2">
-                          <button className="text-blue-600 hover:text-blue-800 text-sm">
+                          <button className="text-eucalyptus-600 hover:text-eucalyptus-800 text-sm">
                             Edit
                           </button>
-                          <button className="text-green-600 hover:text-green-800 text-sm">
+                          <button className="text-eucalyptus-600 hover:text-eucalyptus-800 text-sm">
                             Publish
                           </button>
-                          <button className="text-red-600 hover:text-red-800 text-sm">
+                          <button className="text-sunset-600 hover:text-sunset-800 text-sm">
                             Archive
                           </button>
                         </div>
@@ -413,7 +413,7 @@ const AdminDashboard: React.FC = () => {
         <div className="space-y-6">
           {/* AI Provider Status */}
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               🤖 AI Provider Status
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -423,16 +423,16 @@ const AdminDashboard: React.FC = () => {
                   className="border border-earth-200 rounded-lg p-4"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-earth-900 capitalize">
+                    <h4 className="font-medium text-earth-950 capitalize">
                       {provider}
                     </h4>
                     <span
                       className={`w-3 h-3 rounded-full ${
                         status.status === "active"
-                          ? "bg-green-500"
+                          ? "bg-eucalyptus-500"
                           : status.status === "quota_exceeded"
-                            ? "bg-yellow-500"
-                            : "bg-red-500"
+                            ? "bg-ochre-500"
+                            : "bg-sunset-500"
                       }`}
                     ></span>
                   </div>
@@ -452,24 +452,24 @@ const AdminDashboard: React.FC = () => {
 
           {/* AI Performance Metrics */}
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               📊 AI Performance
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600 mb-2">
+                <div className="text-3xl font-bold text-eucalyptus-600 mb-2">
                   {aiStatus.totalProcessed}
                 </div>
                 <div className="text-earth-600">Documents Processed</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 mb-2">
+                <div className="text-3xl font-bold text-eucalyptus-600 mb-2">
                   {aiStatus.successRate}%
                 </div>
                 <div className="text-earth-600">Success Rate</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2">
+                <div className="text-3xl font-bold text-earth-700 mb-2">
                   {aiStatus.culturalReviews}
                 </div>
                 <div className="text-earth-600">Cultural Reviews</div>
@@ -494,17 +494,17 @@ const AdminDashboard: React.FC = () => {
       {selectedTab === "cultural" && (
         <div className="space-y-6">
           <Card className="p-6">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">
+            <h3 className="text-lg font-semibold text-earth-950 mb-4">
               🛡️ Cultural Protocol Dashboard
             </h3>
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="bg-ochre-50 border border-ochre-200 rounded-lg p-4 mb-6">
               <div className="flex items-center space-x-2 mb-2">
-                <span className="text-yellow-600">⚠️</span>
-                <div className="font-medium text-yellow-800">
+                <span className="text-ochre-600">⚠️</span>
+                <div className="font-medium text-ochre-800">
                   Elder Consultation Required
                 </div>
               </div>
-              <p className="text-yellow-700 text-sm">
+              <p className="text-ochre-700 text-sm">
                 8 pieces of content are flagged for cultural sensitivity review.
                 Please arrange Elder consultation before publishing.
               </p>
@@ -512,36 +512,36 @@ const AdminDashboard: React.FC = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-medium text-earth-900 mb-3">
+                <h4 className="font-medium text-earth-950 mb-3">
                   Cultural Sensitivity Guidelines
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-eucalyptus-500 rounded-full"></span>
                     <span>Community voices amplified authentically</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-eucalyptus-500 rounded-full"></span>
                     <span>Cultural protocols respected</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-eucalyptus-500 rounded-full"></span>
                     <span>Traditional knowledge protected</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span className="w-2 h-2 bg-eucalyptus-500 rounded-full"></span>
                     <span>Elder consultation for sacred content</span>
                   </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="font-medium text-earth-900 mb-3">
+                <h4 className="font-medium text-earth-950 mb-3">
                   Review Process
                 </h4>
                 <div className="space-y-3">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm">
+                    <div className="w-8 h-8 bg-eucalyptus-100 rounded-full flex items-center justify-center text-sm">
                       1
                     </div>
                     <span className="text-sm">
@@ -549,13 +549,13 @@ const AdminDashboard: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm">
+                    <div className="w-8 h-8 bg-eucalyptus-100 rounded-full flex items-center justify-center text-sm">
                       2
                     </div>
                     <span className="text-sm">Community Team Review</span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm">
+                    <div className="w-8 h-8 bg-eucalyptus-100 rounded-full flex items-center justify-center text-sm">
                       3
                     </div>
                     <span className="text-sm">
@@ -563,7 +563,7 @@ const AdminDashboard: React.FC = () => {
                     </span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-sm">
+                    <div className="w-8 h-8 bg-eucalyptus-100 rounded-full flex items-center justify-center text-sm">
                       ✓
                     </div>
                     <span className="text-sm">Approval & Publication</span>
@@ -601,8 +601,8 @@ const CMSTabContent: React.FC = () => {
             onClick={() => setCmsTab(tab.id as any)}
             className={`flex-1 flex items-center justify-center space-x-2 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
               cmsTab === tab.id
-                ? "bg-white text-earth-900 shadow-sm"
-                : "text-earth-600 hover:text-earth-900"
+                ? "bg-white text-earth-950 shadow-sm"
+                : "text-earth-600 hover:text-earth-950"
             }`}
           >
             <span>{tab.icon}</span>

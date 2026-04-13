@@ -53,7 +53,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <Card className="max-w-md text-center">
           <CardBody className="p-8">
             <div className="text-6xl mb-4">🚫</div>
-            <h2 className="text-2xl font-bold text-earth-900 mb-4">
+            <h2 className="text-2xl font-bold text-earth-950 mb-4">
               Access Denied
             </h2>
             <p className="text-earth-700 mb-4">
@@ -86,7 +86,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <Card className="max-w-md text-center">
           <CardBody className="p-8">
             <div className="text-6xl mb-4">👥</div>
-            <h2 className="text-2xl font-bold text-earth-900 mb-4">
+            <h2 className="text-2xl font-bold text-earth-950 mb-4">
               Role Required
             </h2>
             <p className="text-earth-700 mb-4">
@@ -124,7 +124,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <Card className="max-w-md text-center">
           <CardBody className="p-8">
             <div className="text-6xl mb-4">🛡️</div>
-            <h2 className="text-2xl font-bold text-earth-900 mb-4">
+            <h2 className="text-2xl font-bold text-earth-950 mb-4">
               Cultural Authority Required
             </h2>
             <p className="text-earth-700 mb-4">
@@ -158,7 +158,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         <Card className="max-w-md text-center">
           <CardBody className="p-8">
             <div className="text-6xl mb-4">✅</div>
-            <h2 className="text-2xl font-bold text-earth-900 mb-4">
+            <h2 className="text-2xl font-bold text-earth-950 mb-4">
               Content Approval Authority Required
             </h2>
             <p className="text-earth-700 mb-4">

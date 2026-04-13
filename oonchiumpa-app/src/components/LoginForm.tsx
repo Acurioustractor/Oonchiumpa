@@ -70,7 +70,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sand-50 to-eucalyptus-50 px-4">
       <Card className="w-full max-w-md p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-earth-900 mb-2">
+          <h1 className="text-3xl font-bold text-earth-950 mb-2">
             🏛️ Oonchiumpa Staff Portal
           </h1>
           <p className="text-earth-600">
@@ -188,8 +188,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="bg-sunset-50 border border-sunset-200 rounded-lg p-3">
+              <p className="text-sunset-600 text-sm">{error}</p>
             </div>
           )}
 

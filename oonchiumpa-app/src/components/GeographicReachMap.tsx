@@ -119,7 +119,7 @@ export const GeographicReachMap: React.FC = () => {
   return (
     <div className="bg-gradient-to-br from-earth-50 to-sand-50 rounded-2xl p-8 border border-earth-200">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-earth-900 mb-2">Geographic Reach</h3>
+        <h3 className="text-2xl font-bold text-earth-950 mb-2">Geographic Reach</h3>
         <p className="text-earth-600">Serving Aboriginal communities across Central Australia</p>
       </div>
 
@@ -158,7 +158,7 @@ export const GeographicReachMap: React.FC = () => {
             >
               <Popup>
                 <div className="p-2">
-                  <h4 className="font-bold text-earth-900 text-base mb-1">
+                  <h4 className="font-bold text-earth-950 text-base mb-1">
                     {location.name}
                   </h4>
                   {location.language && (
@@ -187,7 +187,7 @@ export const GeographicReachMap: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Legend */}
         <div className="bg-white rounded-lg p-4 border border-earth-200">
-          <h4 className="font-semibold text-earth-900 mb-3">Map Legend</h4>
+          <h4 className="font-semibold text-earth-950 mb-3">Map Legend</h4>
           <div className="space-y-2 text-sm">
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-ochre-500 to-ochre-700 border-2 border-white"></div>
@@ -206,7 +206,7 @@ export const GeographicReachMap: React.FC = () => {
 
         {/* Stats */}
         <div className="bg-gradient-to-br from-ochre-50 to-eucalyptus-50 rounded-lg p-4 border border-ochre-200">
-          <h4 className="font-semibold text-earth-900 mb-3">Coverage Statistics</h4>
+          <h4 className="font-semibold text-earth-950 mb-3">Coverage Statistics</h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
               <div className="text-2xl font-bold text-ochre-600">7</div>
@@ -230,7 +230,7 @@ export const GeographicReachMap: React.FC = () => {
 
       {/* Language Groups List */}
       <div className="mt-6 bg-white rounded-lg p-6 border border-earth-200">
-        <h4 className="font-semibold text-earth-900 mb-4 text-center">Language Groups Represented</h4>
+        <h4 className="font-semibold text-earth-950 mb-4 text-center">Language Groups Represented</h4>
         <div className="flex flex-wrap justify-center gap-3">
           {[
             'Western Arrernte',

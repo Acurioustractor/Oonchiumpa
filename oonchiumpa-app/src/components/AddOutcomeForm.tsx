@@ -87,7 +87,7 @@ export const AddOutcomeForm: React.FC<AddOutcomeFormProps> = ({ onSuccess, onCan
 
   return (
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-bold text-earth-900 mb-6">Add New Outcome</h2>
+      <h2 className="text-2xl font-bold text-earth-950 mb-6">Add New Outcome</h2>
 
       {/* Basic Information */}
       <div className="mb-6">
