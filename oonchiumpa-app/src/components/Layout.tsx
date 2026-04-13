@@ -309,6 +309,7 @@ export const Layout = () => {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
+    { label: "Team", href: "/team" },
     { label: "Services", href: "/services" },
     { label: "Stories", href: "/stories" },
     { label: "Blog", href: "/blog" },
@@ -321,6 +322,7 @@ export const Layout = () => {
       title: "About",
       links: [
         { label: "About Us", href: "/about" },
+        { label: "Our Team", href: "/team" },
         { label: "Our Services", href: "/services" },
       ],
     },
