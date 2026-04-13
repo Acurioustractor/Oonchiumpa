@@ -74,7 +74,23 @@ export const leaders: TeamMember[] = [
 //   order: 1,
 // },
 
-export const staff: TeamMember[] = [];
+// Placeholder entries — 11 team members from the 2024 group photo.
+// Names, roles, and photos will be set once each person is added to
+// Empathy Ledger. At that point this static list retires and the
+// website reads everything from the EL API.
+export const staff: TeamMember[] = [
+  { name: "Staff 1", role: "Team Member", category: "staff", order: 1 },
+  { name: "Staff 2", role: "Team Member", category: "staff", order: 2 },
+  { name: "Staff 3", role: "Team Member", category: "staff", order: 3 },
+  { name: "Staff 4", role: "Team Member", category: "staff", order: 4 },
+  { name: "Staff 5", role: "Team Member", category: "staff", order: 5 },
+  { name: "Staff 6", role: "Team Member", category: "staff", order: 6 },
+  { name: "Staff 7", role: "Team Member", category: "staff", order: 7 },
+  { name: "Staff 8", role: "Team Member", category: "staff", order: 8 },
+  { name: "Staff 9", role: "Team Member", category: "staff", order: 9 },
+  { name: "Staff 10", role: "Team Member", category: "staff", order: 10 },
+  { name: "Staff 11", role: "Team Member", category: "staff", order: 11 },
+];
 
 // ─── Community ───────────────────────────────────────────────────────────────
 
