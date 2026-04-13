@@ -64,14 +64,73 @@ function PersonCard({ member, size = "md" }: { member: TeamMember; size?: "lg" |
 }
 
 export const TeamPage: React.FC = () => {
-  const { storytellers } = useStorytellers(30);
-  const activeStorytellers = storytellers.filter(
+  const { storytellers } = useStorytellers(50);
+
+  // Empathy Ledger is the source of truth when populated.
+  // Role prefix convention: "Leader:", "Staff:", "Community:".
+  // Anything matching a prefix replaces the static fallback list.
+  const elLeaders = storytellers.filter(
+    (s) => s.isActive && s.role?.startsWith("Leader:"),
+  );
+  const elStaff = storytellers.filter(
+    (s) => s.isActive && s.role?.startsWith("Staff:"),
+  );
+  const elCommunity = storytellers.filter(
+    (s) => s.isActive && s.role?.startsWith("Community:"),
+  );
+
+  // Storytellers without a recognized prefix fall into the "voices" section.
+  const voices = storytellers.filter(
     (s) =>
       s.isActive &&
       s.avatarUrl &&
+      !s.role?.startsWith("Leader:") &&
+      !s.role?.startsWith("Staff:") &&
+      !s.role?.startsWith("Community:") &&
       !leaders.some((l) => l.name === s.displayName) &&
       !community.some((c) => c.name === s.displayName),
   );
+
+  // Convert EL storytellers to the TeamMember shape so PersonCard works uniformly.
+  const leadersToShow: TeamMember[] =
+    elLeaders.length > 0
+      ? elLeaders.map((s) => ({
+          name: s.displayName,
+          role: s.role?.replace(/^Leader:\s*/, "") ?? "Leader",
+          category: "leader",
+          photo: s.avatarUrl ?? undefined,
+          bio: s.bio ?? undefined,
+          isElder: s.isElder,
+          location: s.location ?? undefined,
+        }))
+      : leaders;
+
+  const staffToShow: TeamMember[] =
+    elStaff.length > 0
+      ? elStaff.map((s) => ({
+          name: s.displayName,
+          role: s.role?.replace(/^Staff:\s*/, "") ?? "Team Member",
+          category: "staff",
+          photo: s.avatarUrl ?? undefined,
+          bio: s.bio ?? undefined,
+          isElder: s.isElder,
+          location: s.location ?? undefined,
+        }))
+      : staff;
+
+  const communityToShow: TeamMember[] =
+    elCommunity.length > 0
+      ? elCommunity.map((s) => ({
+          name: s.displayName,
+          role: s.role?.replace(/^Community:\s*/, "") ?? "Community",
+          category: "community",
+          photo: s.avatarUrl ?? undefined,
+          bio: s.bio ?? undefined,
+          location: s.location ?? undefined,
+        }))
+      : community;
+
+  const activeStorytellers = voices;
 
   return (
     <>
@@ -100,7 +159,7 @@ export const TeamPage: React.FC = () => {
       </section>
 
       {/* Leaders */}
-      {leaders.length > 0 && (
+      {leadersToShow.length > 0 && (
         <Section className="bg-white">
           <div className="text-center mb-12">
             <p className="eyebrow mb-4">Leadership</p>
@@ -114,9 +173,9 @@ export const TeamPage: React.FC = () => {
             </p>
           </div>
           <div
-            className={`grid ${leaders.length === 1 ? "max-w-sm mx-auto" : leaders.length === 2 ? "md:grid-cols-2 max-w-3xl mx-auto" : "md:grid-cols-3 max-w-5xl mx-auto"} gap-12`}
+            className={`grid ${leadersToShow.length === 1 ? "max-w-sm mx-auto" : leadersToShow.length === 2 ? "md:grid-cols-2 max-w-3xl mx-auto" : "md:grid-cols-3 max-w-5xl mx-auto"} gap-12`}
           >
-            {leaders.map((member) => (
+            {leadersToShow.map((member) => (
               <PersonCard key={member.name} member={member} size="lg" />
             ))}
           </div>
@@ -124,7 +183,7 @@ export const TeamPage: React.FC = () => {
       )}
 
       {/* Staff */}
-      {staff.length > 0 && (
+      {staffToShow.length > 0 && (
         <Section className="bg-sand-50">
           <div className="text-center mb-12">
             <p className="eyebrow mb-4">Our team</p>
@@ -137,7 +196,7 @@ export const TeamPage: React.FC = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
-            {staff.map((member) => (
+            {staffToShow.map((member) => (
               <PersonCard key={member.name} member={member} size="md" />
             ))}
           </div>
@@ -181,7 +240,7 @@ export const TeamPage: React.FC = () => {
       )}
 
       {/* Community partners / voices */}
-      {community.length > 0 && (
+      {communityToShow.length > 0 && (
         <Section
           className={
             activeStorytellers.length > 0
@@ -202,7 +261,7 @@ export const TeamPage: React.FC = () => {
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
-            {community.map((member) => (
+            {communityToShow.map((member) => (
               <PersonCard key={member.name} member={member} size="md" />
             ))}
           </div>
