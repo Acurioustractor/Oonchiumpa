@@ -78,18 +78,22 @@ export const leaders: TeamMember[] = [
 // Names, roles, and photos will be set once each person is added to
 // Empathy Ledger. At that point this static list retires and the
 // website reads everything from the EL API.
+// Placeholder names pending identification. Photos are headshots auto-cropped
+// from the 2024 group photo — stand-ins until real portraits are taken (or
+// until these records are migrated to Empathy Ledger with real names/bios).
+// Order matches the photo: back row L→R (1-8), then front row L→R (9-11).
 export const staff: TeamMember[] = [
-  { name: "Staff 1", role: "Team Member", category: "staff", order: 1 },
-  { name: "Staff 2", role: "Team Member", category: "staff", order: 2 },
-  { name: "Staff 3", role: "Team Member", category: "staff", order: 3 },
-  { name: "Staff 4", role: "Team Member", category: "staff", order: 4 },
-  { name: "Staff 5", role: "Team Member", category: "staff", order: 5 },
-  { name: "Staff 6", role: "Team Member", category: "staff", order: 6 },
-  { name: "Staff 7", role: "Team Member", category: "staff", order: 7 },
-  { name: "Staff 8", role: "Team Member", category: "staff", order: 8 },
-  { name: "Staff 9", role: "Team Member", category: "staff", order: 9 },
-  { name: "Staff 10", role: "Team Member", category: "staff", order: 10 },
-  { name: "Staff 11", role: "Team Member", category: "staff", order: 11 },
+  { name: "Staff 1",  role: "Team Member", category: "staff", photo: "/images/team/staff-01.jpg", order: 1 },
+  { name: "Staff 2",  role: "Team Member", category: "staff", photo: "/images/team/staff-02.jpg", order: 2 },
+  { name: "Staff 3",  role: "Team Member", category: "staff", photo: "/images/team/staff-03.jpg", order: 3 },
+  { name: "Staff 4",  role: "Team Member", category: "staff", photo: "/images/team/staff-04.jpg", order: 4 },
+  { name: "Staff 5",  role: "Team Member", category: "staff", photo: "/images/team/staff-05.jpg", order: 5 },
+  { name: "Staff 6",  role: "Team Member", category: "staff", photo: "/images/team/staff-06.jpg", order: 6 },
+  { name: "Staff 7",  role: "Team Member", category: "staff", photo: "/images/team/staff-07.jpg", order: 7 },
+  { name: "Staff 8",  role: "Team Member", category: "staff", photo: "/images/team/staff-08.jpg", order: 8 },
+  { name: "Staff 9",  role: "Team Member", category: "staff", photo: "/images/team/staff-09.jpg", order: 9 },
+  { name: "Staff 10", role: "Team Member", category: "staff", photo: "/images/team/staff-10.jpg", order: 10 },
+  { name: "Staff 11", role: "Team Member", category: "staff", photo: "/images/team/staff-11.jpg", order: 11 },
 ];
 
 // ─── Community ───────────────────────────────────────────────────────────────
