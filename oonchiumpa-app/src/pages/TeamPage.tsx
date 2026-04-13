@@ -182,7 +182,7 @@ export const TeamPage: React.FC = () => {
         </Section>
       )}
 
-      {/* Staff */}
+      {/* Team photo + Staff */}
       {staffToShow.length > 0 && (
         <Section className="bg-sand-50">
           <div className="text-center mb-12">
@@ -195,6 +195,22 @@ export const TeamPage: React.FC = () => {
               experience and cultural grounding to their work.
             </p>
           </div>
+
+          {/* Team group photo */}
+          <figure className="max-w-5xl mx-auto mb-16">
+            <EditableImage
+              slotId="team-group-photo"
+              defaultSrc="/images/team/group-2024.jpg"
+              defaultAlt="Oonchiumpa team 2024 in front of the True Justice artwork"
+              className="w-full aspect-[3/2] object-cover"
+              wrapperClassName="rounded-3xl overflow-hidden border border-earth-100 shadow-[var(--shadow-elevated)]"
+            />
+            <figcaption className="text-center text-earth-600 text-sm mt-4 italic">
+              The Oonchiumpa team, 2024 — in front of "True Justice: Indigenous
+              Perspective &amp; Deep Listening on Country".
+            </figcaption>
+          </figure>
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
             {staffToShow.map((member) => (
               <PersonCard key={member.name} member={member} size="md" />
