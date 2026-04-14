@@ -306,7 +306,7 @@ export const AboutPage: React.FC = () => {
         )}
 
         <div className="max-w-4xl mx-auto rounded-3xl bg-earth-950 text-white p-8 md:p-10">
-          <h3 className="text-2xl font-display mb-4">Building Aboriginal workforce pathways</h3>
+          <h3 className="text-2xl font-display text-white mb-4">Building Aboriginal workforce pathways</h3>
           <p className="text-white/80 leading-relaxed text-lg">
             Oonchiumpa is not only supporting young people. It is also creating pathways for Aboriginal workers,
             mentors, and leaders whose lived experience and cultural grounding strengthen every outcome.
@@ -353,7 +353,7 @@ export const AboutPage: React.FC = () => {
           </p>
 
           <div className="section-shell bg-earth-950 text-white p-8 md:p-12">
-            <h3 className="text-3xl font-display mb-4">Partner with Oonchiumpa</h3>
+            <h3 className="text-3xl font-display text-white mb-4">Partner with Oonchiumpa</h3>
             <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto">
               If you are a funder, service partner, or researcher, we can work together on practical,
               community-led outcomes for young people and families.

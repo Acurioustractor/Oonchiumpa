@@ -38,6 +38,22 @@
     @apply font-display font-semibold text-earth-950 tracking-tight;
   }
 
+  /* Auto-invert headings inside dark sections so they stay readable. */
+  .bg-earth-900 h1,
+  .bg-earth-900 h2,
+  .bg-earth-900 h3,
+  .bg-earth-900 h4,
+  .bg-earth-900 h5,
+  .bg-earth-900 h6,
+  .bg-earth-950 h1,
+  .bg-earth-950 h2,
+  .bg-earth-950 h3,
+  .bg-earth-950 h4,
+  .bg-earth-950 h5,
+  .bg-earth-950 h6 {
+    @apply text-white;
+  }
+
   ::selection {
     background: rgba(226, 78, 16, 0.2);
     color: #2f1e1a;
