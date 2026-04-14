@@ -3,6 +3,7 @@ import { Section } from "../components/Section";
 import { leaders, staff, community, getInitials, type TeamMember } from "../data/team";
 import { useStorytellers } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
+import { HeroVideo } from "../components/HeroVideo";
 
 function PersonCard({ member, size = "md" }: { member: TeamMember; size?: "lg" | "md" }) {
   const isLarge = size === "lg";
@@ -136,12 +137,10 @@ export const TeamPage: React.FC = () => {
     <>
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="team-hero"
-          defaultSrc="/images/model/community-on-country.jpg"
-          defaultAlt="Oonchiumpa team and community on Arrernte Country"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+        <HeroVideo
+          src="/videos/hero/team.mp4"
+          poster="/videos/hero/team.jpg"
+          alt="Team members walking on Arrernte Country"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pb-16 md:pb-24">

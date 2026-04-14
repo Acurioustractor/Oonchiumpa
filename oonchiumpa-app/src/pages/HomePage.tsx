@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useStorytellers, useStories } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
+import { HeroVideo } from "../components/HeroVideo";
 import { ProgramGallery } from "../components/ProgramGallery";
 import { VideoSpotlight } from "../components/VideoSpotlight";
 
@@ -51,12 +52,10 @@ export const HomePage: React.FC = () => {
     <>
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-end overflow-hidden">
-        <EditableImage
-          slotId="hero-main"
-          defaultSrc="/images/hero/hero-main.jpg"
-          defaultAlt="Sunset through gum trees at Atnarpa Station, Arrernte Country"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+        <HeroVideo
+          src="/videos/hero/home.mp4"
+          poster="/videos/hero/home.jpg"
+          alt="Woman looking out to Arrernte Country"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 

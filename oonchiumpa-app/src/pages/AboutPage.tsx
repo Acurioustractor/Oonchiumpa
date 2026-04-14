@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Section } from "../components/Section";
 import { Card, CardBody } from "../components/Card";
 import { EditableImage } from "../components/EditableImage";
+import { HeroVideo } from "../components/HeroVideo";
 import { ProgramGallery } from "../components/ProgramGallery";
 import { VideoSpotlight } from "../components/VideoSpotlight";
 import { useStorytellers } from "../hooks/useEmpathyLedger";
@@ -137,12 +138,10 @@ export const AboutPage: React.FC = () => {
   return (
     <div className="bg-white">
       <section className="relative min-h-[72vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="about-hero-main"
-          defaultSrc="/images/stories/IMG_9713.jpg"
-          defaultAlt="Oonchiumpa leadership with community"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+        <HeroVideo
+          src="/videos/hero/about.mp4"
+          poster="/videos/hero/about.jpg"
+          alt="Mural of Elders at Atnarpa Station"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/45 to-transparent" />
 
