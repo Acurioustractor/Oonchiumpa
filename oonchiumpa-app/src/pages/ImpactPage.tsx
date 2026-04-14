@@ -10,9 +10,32 @@ import { useProjectAnalysis } from '../hooks/useEmpathyLedger';
 
 const headlineMetrics = [
   { value: '95%', label: 'Diversion success', detail: 'Young people diverted from deeper justice-system contact.' },
-  { value: '$91/day', label: 'Program cost', detail: 'Compared with $3,852/day incarceration.' },
-  { value: '2,464', label: 'Meaningful contacts', detail: 'Recorded one-on-one and family engagements in six months.' },
+  { value: '$91/day', label: 'Program cost', detail: 'Compared with $3,852/day incarceration — 97.6% less.' },
+  { value: '72%', label: 'Returned to education', detail: 'From 2,464 one-on-one and family engagements in six months.' },
   { value: '100%', label: 'Aboriginal employment', detail: 'Service delivery and leadership are Aboriginal-led.' },
+];
+
+const theoryOfChange = [
+  {
+    stage: 'Inputs',
+    title: 'Cultural authority + daily delivery',
+    points: ['Traditional Owner governance', 'Aboriginal staff team', 'On-Country infrastructure at Atnarpa'],
+  },
+  {
+    stage: 'Activities',
+    title: 'Family-inclusive, trauma-aware support',
+    points: ['Daily mentoring and school engagement', 'On-Country cultural learning', 'Coordination across justice, health, housing'],
+  },
+  {
+    stage: 'Outputs',
+    title: 'Consistent, measurable engagement',
+    points: ['2,464 recorded engagements (6 months)', '71 successful service referrals', '7 language groups represented'],
+  },
+  {
+    stage: 'Outcomes',
+    title: 'Diversion, belonging, pathways',
+    points: ['95% diverted from deeper justice contact', '72% re-engaged with education', '80% improved wellbeing indicators'],
+  },
 ];
 
 const domainOutcomes = [
@@ -38,21 +61,27 @@ const domainOutcomes = [
   },
 ];
 
+// TODO: replace author/context with real (consented) names, ages, and places.
+// Generic "Young participant" reads as fabricated to funders — first name + age/role
+// + community makes these testimonials credible. Only publish with consent on record.
 const testimonials = [
   {
     quote:
       'I think other kids should work with you mob. I think everyone should work with Oonchiumpa. You mob are good and help.',
     author: 'Young participant',
+    context: '[TODO: first name, age, community]',
   },
   {
     quote:
       'You mob come see them, they up straight away. They listen, get ready, and start the day.',
     author: 'Family member',
+    context: '[TODO: relation, community]',
   },
   {
     quote:
       'The girls are really comfortable with your team and they work well when you are in the room with them.',
-    author: "School partner",
+    author: 'School partner',
+    context: '[TODO: school name, role]',
   },
 ];
 
@@ -73,22 +102,23 @@ export const ImpactPage: React.FC = () => {
         <div className="relative z-10 container-custom pt-28 pb-14 md:pb-18">
           <p className="eyebrow text-ochre-200 mb-4">Impact</p>
           <h1 className="heading-lg text-white mb-5 max-w-4xl">
-            Evidence of what culturally-led support delivers
+            $91 a day keeps a young person on Country.
+            <span className="block text-white/70 mt-2">Detention costs $3,852.</span>
           </h1>
           <p className="text-white/85 text-lg max-w-3xl leading-relaxed mb-8">
-            Oonchiumpa outcomes are measured across diversion, wellbeing, education, and family stability.
-            Every metric reflects practical delivery led by Traditional Owners on Arrernte Country.
+            Oonchiumpa is Aboriginal-led diversion that works — 95% of young people referred to us stay out of deeper
+            justice-system contact. Below: the evidence, the method, and the numbers funders and partners ask for.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button onClick={() => navigate('/contact')} className="btn-primary">
+            <button onClick={() => navigate('/contact?type=partnership')} className="btn-primary">
               Partner with us
             </button>
-            <button
-              onClick={() => navigate('/stories')}
+            <a
+              href="/impact-report.pdf"
               className="btn-secondary border-white/50 bg-white/10 text-white hover:bg-white/20"
             >
-              Read stories
-            </button>
+              Download impact report (PDF)
+            </a>
           </div>
         </div>
       </section>
@@ -103,7 +133,43 @@ export const ImpactPage: React.FC = () => {
             </div>
           ))}
         </div>
+        {/* TODO: replace placeholders with real evaluation window, cohort size, and evaluator. */}
+        <div className="container-custom mt-8 pt-6 border-t border-white/10 text-xs text-white/55 flex flex-wrap gap-x-6 gap-y-2">
+          <span>Measurement window: [TODO: e.g. Jan–Jun 2025]</span>
+          <span>Cohort: [TODO: N young people]</span>
+          <span>Evaluator: [TODO: internal / external partner]</span>
+          <span>Last updated: [TODO: date]</span>
+        </div>
       </section>
+
+      <Section className="bg-white">
+        <div className="text-center max-w-4xl mx-auto mb-10">
+          <p className="eyebrow mb-4">Theory of change</p>
+          <h2 className="heading-lg mb-5">How cultural authority becomes measurable outcomes</h2>
+          <p className="lead-text">
+            Inputs to outcomes, in plain language. The same logic funders use to assess investment — applied to our delivery model.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {theoryOfChange.map((col, i) => (
+            <div key={col.stage} className="relative section-shell p-6">
+              <p className="text-xs uppercase tracking-[0.22em] text-ochre-600 font-semibold mb-2">
+                {`${i + 1}. ${col.stage}`}
+              </p>
+              <h3 className="text-lg font-display text-earth-950 mb-3 leading-snug">{col.title}</h3>
+              <ul className="space-y-2">
+                {col.points.map((point) => (
+                  <li key={point} className="text-sm text-earth-700 flex items-start gap-2">
+                    <span className="mt-1.5 block h-1.5 w-1.5 rounded-full bg-ochre-500 flex-none" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
 
       <Section>
         <div className="text-center max-w-4xl mx-auto mb-12">
@@ -275,6 +341,7 @@ export const ImpactPage: React.FC = () => {
               <CardBody className="p-7 md:p-8">
                 <p className="text-earth-700 leading-relaxed italic mb-4">"{item.quote}"</p>
                 <p className="text-sm text-ochre-700 font-semibold">{item.author}</p>
+                <p className="text-xs text-earth-500 mt-0.5">{item.context}</p>
               </CardBody>
             </Card>
           ))}
@@ -289,12 +356,12 @@ export const ImpactPage: React.FC = () => {
             Collaboration with funders, service partners, and policymakers helps scale Aboriginal-led solutions that work.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={() => navigate('/contact')} className="btn-primary">
+            <button onClick={() => navigate('/contact?type=partnership')} className="btn-primary">
               Start a partnership
             </button>
-            <button onClick={() => navigate('/about')} className="btn-secondary">
-              Understand the model
-            </button>
+            <a href="/impact-report.pdf" className="btn-secondary">
+              Download impact report (PDF)
+            </a>
           </div>
         </div>
       </Section>
