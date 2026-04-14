@@ -4,6 +4,7 @@ import { Section } from '../components/Section';
 import { EditableImage } from '../components/EditableImage';
 import { Card, CardBody } from '../components/Card';
 import { Breadcrumbs } from '../components/Breadcrumbs';
+import { HowToEngage } from '../components/HowToEngage';
 import { Loading } from '../components/Loading';
 import { useMedia, useSyndicatedService } from '../hooks/useEmpathyLedger';
 import { applyPageMeta } from '../utils/seo';
@@ -16,6 +17,19 @@ interface ServiceData {
   features: string[];
   outcomes: string[];
   galleryPhotos?: string[];
+  /** Numbered steps showing how to engage with this service, start to finish. */
+  howItWorks?: Array<{ step: string; detail: string }>;
+  /** Name of the primary contact person for this service. Matches a team member name where possible. */
+  contactPerson?: {
+    name: string;
+    role: string;
+    email?: string;
+    avatar?: string;
+  };
+  /** Which inquiry type the EOI form should use when submitting (matches contact.ts). */
+  inquiryType?: "referral" | "partnership" | "funding" | "general";
+  /** Short label for the primary CTA button — overrides "Enquire about this service". */
+  ctaLabel?: string;
   testimonial?: {
     quote: string;
     author: string;
@@ -102,7 +116,21 @@ Led by Kristy Bloomfield and our team of Aboriginal mentors, the program has ach
       quote: "The program provides what young people need most - connection to culture, family, and people who understand them. When young people are connected to their culture and community, healing happens naturally.",
       author: "Kristy Bloomfield",
       role: "Program Director, Eastern Arrernte Traditional Owner"
-    }
+    },
+    inquiryType: "referral",
+    ctaLabel: "Make a referral",
+    howItWorks: [
+      { step: "Get in touch", detail: "Send a referral through the form below, call the office, or ask a partner service to connect us. All referrals are confidential." },
+      { step: "Initial conversation", detail: "We meet with the young person and their family to understand what's happening and what support looks like from their perspective." },
+      { step: "Plan together", detail: "A case worker and the young person build a plan around school, family, court, and culture — whatever matters most right now." },
+      { step: "Consistent support", detail: "Daily or weekly contact across school, home, court, and services. Not a one-off referral. We stay with each young person." },
+      { step: "Review and adjust", detail: "Regular check-ins with family and partner services. The plan changes as the young person's situation changes." },
+    ],
+    contactPerson: {
+      name: "Kristy Bloomfield",
+      role: "Traditional Owner & Director",
+      avatar: "/images/team/kristy.jpg",
+    },
   },
   'law-students': {
     id: 'law-students',
@@ -143,7 +171,21 @@ At the heart of the course is a week-long immersion on Country in Central Austra
       quote: "Law school can only teach you what is written, whereas Aboriginal lore and Aboriginal experiences of law are seen, felt and heard by the people it impacts most. The only true way to understand this is to be with the people and listen deeply to their stories.",
       author: "Kristy Bloomfield & Tanya Turner",
       role: "Traditional Owners, True Justice Program Designers"
-    }
+    },
+    inquiryType: "partnership",
+    ctaLabel: "Partner with us",
+    howItWorks: [
+      { step: "Institutional expression of interest", detail: "Law schools or faculty members submit an EOI to co-design a cohort. We only run what Country can hold — cohorts are small by design." },
+      { step: "Co-design with Traditional Owners", detail: "Oonchiumpa's directors work with your faculty to shape the semester structure, pre-reading, and on-Country week." },
+      { step: "Selection of 16 students", detail: "Students apply through your institution. Selection weighs readiness, commitment to Aboriginal justice work, and cultural humility." },
+      { step: "Semester-long course + on-Country week", detail: "Pre-reading, seminars, and the week-long immersion on Arrernte Country. Traditional Owners lead every session." },
+      { step: "Alumni and onward practice", detail: "Graduates join an alumni network. Many go on to policy, legal practice, and justice reform roles carrying deep Aboriginal knowledge." },
+    ],
+    contactPerson: {
+      name: "Tanya Turner",
+      role: "Legal Advocate & Strategist",
+      avatar: "/images/team/tanya.jpg",
+    },
   },
   'atnarpa-homestead': {
     id: 'atnarpa-homestead',
@@ -198,7 +240,21 @@ For Aboriginal young people, Atnarpa is a place of healing and cultural reconnec
       quote: "Atnarpa is where young people reconnect with who they are. On country, learning from elders, cooking traditional food - this is where healing happens. The land teaches in ways we never can in town.",
       author: "Kristy Bloomfield",
       role: "Traditional Owner, Eastern Arrernte Country"
-    }
+    },
+    inquiryType: "partnership",
+    ctaLabel: "Book or enquire",
+    howItWorks: [
+      { step: "Expression of interest", detail: "Schools, services, or partner organisations submit a brief on what the experience needs to achieve — healing, cultural learning, youth diversion, or retreat." },
+      { step: "Yarning session", detail: "A call with the directors to confirm cultural fit, timing, and what Country can hold for your group. Not every request can be accommodated — we're led by cultural authority." },
+      { step: "Design the program", detail: "Co-design the week: accommodation, on-Country experiences, Elder-led sessions, food, and logistics. We handle the cultural side; you handle the administrative side." },
+      { step: "On-Country experience", detail: "Arrive at Atnarpa. Traditional Owners lead every element. Participants disconnect from town, connect to land, and learn directly from the people who hold cultural authority on this Country." },
+      { step: "Follow-up", detail: "Debrief with your team afterwards. Many groups return seasonally or build ongoing relationships with Atnarpa." },
+    ],
+    contactPerson: {
+      name: "Kristy Bloomfield",
+      role: "Traditional Owner, Atnarpa Station",
+      avatar: "/images/team/kristy.jpg",
+    },
   },
   'cultural-brokerage': {
     id: 'cultural-brokerage',
@@ -239,8 +295,125 @@ Our team has deep relationships with service providers built on years of partner
       quote: "When Oonchiumpa makes a referral, we know it's appropriate, culturally grounded, and that the young person is ready. Their brokerage service makes our work more effective and culturally safe.",
       author: "Partner Service Provider",
       role: "Community Health Service, Alice Springs"
-    }
-  }
+    },
+    inquiryType: "referral",
+    ctaLabel: "Request a referral",
+    howItWorks: [
+      { step: "Someone flags a need", detail: "A family member, young person, school, police, court, or partner service reaches out about a specific need — housing, health, legal, education, ID documents." },
+      { step: "We listen", detail: "A case worker takes the time to understand what's happening and what the young person or family actually wants — not what a form says they should have." },
+      { step: "Warm handover", detail: "We connect them with the right partner service (not a cold referral). We know the people. We do the cultural groundwork. We make sure the service is ready to receive them." },
+      { step: "Walk alongside", detail: "We don't drop out after the introduction. We stay involved, translating between systems and family, advocating when needed, and making sure the connection holds." },
+      { step: "Close the loop", detail: "We confirm the service relationship is working and come back in if anything falls through. Brokerage isn't transactional — it's relational." },
+    ],
+    contactPerson: {
+      name: "Tanya Turner",
+      role: "Legal Advocate & Strategist",
+      avatar: "/images/team/tanya.jpg",
+    },
+  },
+  'education-pathways': {
+    id: 'education-pathways',
+    title: 'Education Pathways',
+    description: 'School re-engagement, daily transport, in-class support, and alternative learning when mainstream schooling breaks down.',
+    longDescription: `Oonchiumpa's Education Pathways work starts where the school system has stopped reaching a young person. When attendance has broken down, when suspension has stacked on suspension, when the classroom doesn't feel safe, we build a pathway back to learning.
+
+For some young people that means daily transport to school, advocacy in meetings with principals, and in-class support. For others it means bridging to alternative education — flexi-schools, TAFE pathways, or school-of-the-air arrangements. For a few, it means building a temporary learning environment around them at Atnarpa or in community until they're ready to return.
+
+The work is tailored and relentless. We don't accept "disengaged" as an endpoint. We know that school completion is one of the strongest predictors of long-term outcomes, and we know Aboriginal young people have been failed by mainstream education at scale. Every young person deserves a pathway that works for them.`,
+    features: [
+      'Daily pickup and drop-off for school attendance',
+      'In-class support and advocacy with teachers',
+      'Advocacy in suspension and re-enrolment meetings',
+      'Bridging to alternative education (flexi-schools, TAFE, school-of-the-air)',
+      'Learning environments at Atnarpa for young people not ready for mainstream',
+      'Cultural safety briefings for partner schools',
+      'School uniforms, stationery, and practical supports',
+      'Coordination with families to rebuild the school-home connection',
+    ],
+    outcomes: [
+      '72% of disengaged youth returned to education',
+      'Multiple young people prevented from permanent exclusion',
+      'Schools with Oonchiumpa support report stronger cultural safety',
+      'Family-school relationships repaired after breakdown',
+      'Bridge to TAFE and alternative pathways for older youth',
+    ],
+    stats: [
+      { value: '72%', label: 'Returned to education' },
+      { value: 'Daily', label: 'Attendance support' },
+      { value: '6+', label: 'Partner schools' },
+      { value: '11-17', label: 'Age range' },
+    ],
+    testimonial: {
+      quote: "J hadn't been to school in months when we started. Three weeks in, she was asking to go. It wasn't magic — it was someone turning up every morning to get her, making sure school knew she was coming, and being there when it got hard.",
+      author: "Oonchiumpa Case Worker",
+      role: "Education Pathways",
+    },
+    inquiryType: "referral",
+    ctaLabel: "Make a referral",
+    howItWorks: [
+      { step: "Referral arrives", detail: "From the family, a school, child protection, or partner service. Focus: what's happening for the young person, what's already been tried, and what school / pathway is in the picture." },
+      { step: "Understand the young person", detail: "We meet with them and the family before talking to the school. Their story first, then the system." },
+      { step: "Design the pathway", detail: "Sometimes it's re-entry to their current school with support. Sometimes it's an alternative setting. Sometimes it's a bridging period at Atnarpa. Always built around what the young person can carry right now." },
+      { step: "Show up every day", detail: "Daily transport. In-class support when schools want it. Meetings and advocacy when they don't. Oonchiumpa doesn't disappear after the referral." },
+      { step: "Track and adjust", detail: "Weekly check-ins with family and the school. The plan changes as things change. Stay with it." },
+    ],
+    contactPerson: {
+      name: "Kristy Bloomfield",
+      role: "Program Director",
+      avatar: "/images/team/kristy.jpg",
+    },
+  },
+  'family-kinship': {
+    id: 'family-kinship',
+    title: 'Family & Kinship Support',
+    description: 'Whole-family support, kinship mapping, and protective networks around vulnerable young people.',
+    longDescription: `No young person's story is just about them. It's about their parents, their aunties, their uncles, their siblings, their cousins — the kinship system that surrounds every Aboriginal young person. When that system is strong, young people are held. When it's strained or broken, young people fall.
+
+Oonchiumpa's family and kinship work is about rebuilding the systems around young people. That means supporting parents and carers directly — with housing, Centrelink, advocacy, and practical help. It means mapping kinship networks that the system has often failed to see. It means reconnecting young people with family they didn't know they had.
+
+This is slow work. It doesn't fit a 12-week case management program. It's intergenerational. But it's the work that changes trajectories — because when the family system is strong, the young person doesn't need a case worker forever.`,
+    features: [
+      'Kinship mapping — identifying protective family members the system has missed',
+      'Direct support for parents and carers (housing, Centrelink, health, advocacy)',
+      'Family reunification and reconnection',
+      'Sibling support — preventing the next young person from entering the system',
+      'Cultural safety briefings for child protection and other services working with the family',
+      'Intergenerational healing work, often at Atnarpa',
+      'Facilitation between family members where relationships have broken down',
+    ],
+    outcomes: [
+      '2,464 meaningful contacts with families in 6 months',
+      '87-95% engagement rate with culturally-led family support',
+      'Young people reconnected with previously-unknown family members',
+      'Whole-family housing pathways achieved',
+      'Siblings diverted from justice system through family-level work',
+    ],
+    stats: [
+      { value: '2,464', label: 'Family contacts / 6mo' },
+      { value: '87-95%', label: 'Engagement rate' },
+      { value: 'Whole-family', label: 'Approach' },
+      { value: 'Intergenerational', label: 'Timeframe' },
+    ],
+    testimonial: {
+      quote: "The work doesn't stop with the young person — it starts there. When we support the parents, the siblings, the aunties — when the whole family is stronger, the young person stops needing us to be there every day. That's the goal.",
+      author: "Oonchiumpa Case Worker",
+      role: "Family & Kinship Support",
+    },
+    inquiryType: "referral",
+    ctaLabel: "Reach out about a family",
+    howItWorks: [
+      { step: "Initial contact", detail: "From a family member, a young person already on program, or a partner service. Confidential. No paperwork barrier to first contact." },
+      { step: "Family yarn", detail: "We sit with the family and listen. What's happening. Who's in the kinship system. What's been tried. What they actually want — which is rarely what a referral form says they should want." },
+      { step: "Kinship map", detail: "We work with the family to identify protective kin the system has missed. Often this unlocks supports that existed all along but weren't visible to case workers." },
+      { step: "Practical and cultural support", detail: "Housing, Centrelink, health, court advocacy, cultural protocols, intergenerational healing. The mix depends on the family — not a template." },
+      { step: "Release, not exit", detail: "When the family system is strong enough, we step back. But we stay connected. Intergenerational work doesn't have a discharge date." },
+    ],
+    contactPerson: {
+      name: "Tanya Turner",
+      role: "Legal Advocate & Strategist",
+      avatar: "/images/team/tanya.jpg",
+    },
+  },
 };
 
 
@@ -1010,21 +1183,30 @@ export const ServiceDetailPage: React.FC = () => {
         </div>
       </Section>
 
-      <Section className="bg-sand-50">
+      {service.howItWorks && service.howItWorks.length > 0 && (
+        <HowToEngage
+          serviceId={service.id}
+          serviceTitle={service.title}
+          howItWorks={service.howItWorks}
+          contactPerson={service.contactPerson}
+          inquiryType={service.inquiryType}
+          ctaLabel={service.ctaLabel}
+        />
+      )}
+
+      <Section>
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="heading-lg mb-5">Ready to work together?</h2>
-          <p className="lead-text mb-8">
-            We collaborate with families, schools, justice partners, and community organisations.
-          </p>
+          <p className="eyebrow mb-3">Keep exploring</p>
+          <h2 className="heading-lg mb-5">Related ways to engage</h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <button onClick={openServiceCta} className="btn-primary">
-              {service.cta?.label || 'Enquire now'}
-            </button>
             <button onClick={() => navigate('/services')} className="btn-secondary">
               View all services
             </button>
             <button onClick={() => navigate('/stories')} className="btn-secondary">
               Read stories
+            </button>
+            <button onClick={() => navigate('/team')} className="btn-secondary">
+              Meet the team
             </button>
           </div>
         </div>
