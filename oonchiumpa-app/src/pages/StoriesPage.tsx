@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMedia, useStories, useStorytellers } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
+import { HeroVideo } from "../components/HeroVideo";
 import { ServiceProgramsRail } from "../components/ServiceProgramsRail";
 
 interface StorytellerCircle {
@@ -113,12 +114,10 @@ export const StoriesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       <section className="relative min-h-[46vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="stories-hero-background"
-          defaultSrc="/images/stories/IMG_9698.jpg"
-          defaultAlt="Community stories and on-Country moments"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+        <HeroVideo
+          src="/videos/hero/stories.mp4"
+          poster="/videos/hero/stories.jpg"
+          alt="Community stories and on-Country moments"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/80 via-earth-950/45 to-transparent" />
 

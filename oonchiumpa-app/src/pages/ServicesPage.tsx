@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { EditableImage } from "../components/EditableImage";
+import { HeroVideo } from "../components/HeroVideo";
 import { ProgramGallery } from "../components/ProgramGallery";
 import { VideoSpotlight } from "../components/VideoSpotlight";
 import { useMedia, useSyndicatedServices } from "../hooks/useEmpathyLedger";
@@ -462,12 +463,10 @@ export const ServicesPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="services-hero"
-          defaultSrc="/images/model/atnarpa-facilities.jpg"
-          defaultAlt="Oonchiumpa facilities at Atnarpa Station"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+        <HeroVideo
+          src="/videos/hero/services.mp4"
+          poster="/videos/hero/services.jpg"
+          alt="Oonchiumpa facilities at Atnarpa Station"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pb-16">
