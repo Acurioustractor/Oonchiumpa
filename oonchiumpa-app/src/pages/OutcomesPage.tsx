@@ -3,6 +3,7 @@ import { Section } from '../components/Section';
 import { Card, CardBody, CardHeader } from '../components/Card';
 import { Loading } from '../components/Loading';
 import { EditableImage } from '../components/EditableImage';
+import { HeroVideo } from '../components/HeroVideo';
 import { ServiceProgramsRail } from '../components/ServiceProgramsRail';
 import { useApi } from '../hooks/useApi';
 import { outcomesAPI, type Outcome } from '../services/api';
@@ -61,13 +62,11 @@ export const OutcomesPage: React.FC = () => {
 
   return (
     <div className="bg-white min-h-screen">
-      <section className="relative min-h-[50vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="outcomes-hero-background"
-          defaultSrc="/images/model/atnarpa-land.jpg"
-          defaultAlt="Outcomes and impact on Country"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+        <HeroVideo
+          src="/videos/hero/bed-making.mp4"
+          poster="/videos/hero/bed-making.jpg"
+          alt="Young person doing practical work in community"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 

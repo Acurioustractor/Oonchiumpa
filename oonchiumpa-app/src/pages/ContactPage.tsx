@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { EditableImage } from '../components/EditableImage';
+import { HeroVideo } from '../components/HeroVideo';
 import { ServiceProgramsRail } from '../components/ServiceProgramsRail';
 import { supabase } from '../config/supabase';
 
@@ -112,13 +113,11 @@ export const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative min-h-[48vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="contact-hero-background"
-          defaultSrc="/images/model/community-on-country.jpg"
-          defaultAlt="Oonchiumpa team and community"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+        <HeroVideo
+          src="/videos/hero/river-drone.mp4"
+          poster="/videos/hero/river-drone.jpg"
+          alt="Drone view of the Todd River bed at dawn"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/55 to-transparent" />
 

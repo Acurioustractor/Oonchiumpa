@@ -462,7 +462,7 @@ export const ServicesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative min-h-[50vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         <HeroVideo
           src="/videos/hero/boxing.mp4"
           poster="/videos/hero/boxing.jpg"

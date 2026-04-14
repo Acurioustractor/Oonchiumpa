@@ -172,7 +172,7 @@ export const EnhancedStoryDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative min-h-[52vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         {story.imageUrl ? (
           <img src={story.imageUrl} alt={story.title} className="absolute inset-0 w-full h-full object-cover" />
         ) : (

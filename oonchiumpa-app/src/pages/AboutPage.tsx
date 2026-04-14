@@ -137,7 +137,7 @@ export const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-white">
-      <section className="relative min-h-[72vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-end overflow-hidden">
         <HeroVideo
           src="/videos/hero/first-part.mp4"
           poster="/videos/hero/first-part.jpg"

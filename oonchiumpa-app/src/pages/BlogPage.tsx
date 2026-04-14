@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useArticles } from '../hooks/useEmpathyLedger';
 import { EditableImage } from '../components/EditableImage';
+import { HeroVideo } from '../components/HeroVideo';
 import { applyPageMeta } from '../utils/seo';
 
 const formatDate = (iso?: string | null) => {
@@ -39,13 +40,11 @@ const BlogPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative min-h-[46vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="blog-hero-background"
-          defaultSrc="/images/stories/IMG_9713.jpg"
-          defaultAlt="Community storytelling and article writing"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+        <HeroVideo
+          src="/videos/hero/youth-drone.mp4"
+          poster="/videos/hero/youth-drone.jpg"
+          alt="Young people operating a drone on Country"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 

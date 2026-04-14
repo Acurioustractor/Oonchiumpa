@@ -92,7 +92,7 @@ const BlogPostDetailPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="relative min-h-[44vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         {article.featuredImageUrl ? (
           <img
             src={article.featuredImageUrl}

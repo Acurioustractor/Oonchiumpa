@@ -136,7 +136,7 @@ export const TeamPage: React.FC = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[60vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         <HeroVideo
           src="/videos/hero/first-part.mp4"
           poster="/videos/hero/first-part.jpg"

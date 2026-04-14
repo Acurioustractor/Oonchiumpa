@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Section } from '../components/Section';
 import { Card, CardBody } from '../components/Card';
 import { EditableImage } from '../components/EditableImage';
+import { HeroVideo } from '../components/HeroVideo';
 import { GeographicReachMap } from '../components/GeographicReachMap';
 import { ServiceProgramsRail } from '../components/ServiceProgramsRail';
 import { useProjectAnalysis } from '../hooks/useEmpathyLedger';
@@ -61,13 +62,11 @@ export const ImpactPage: React.FC = () => {
 
   return (
     <div className="bg-white">
-      <section className="relative min-h-[62vh] flex items-end overflow-hidden">
-        <EditableImage
-          slotId="impact-hero-main"
-          defaultSrc="/images/hero/hero-main.jpg"
-          defaultAlt="On-Country youth and family program"
-          className="absolute inset-0 w-full h-full object-cover"
-          wrapperClassName="absolute inset-0"
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+        <HeroVideo
+          src="/videos/hero/alice-drone.mp4"
+          poster="/videos/hero/alice-drone.jpg"
+          alt="Drone view of Alice Springs at golden hour"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 

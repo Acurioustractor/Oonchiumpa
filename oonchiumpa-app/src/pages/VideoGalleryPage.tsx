@@ -79,7 +79,7 @@ export default function VideoGalleryPage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <section className="relative min-h-[52vh] flex items-end overflow-hidden">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         <EditableImage
           slotId="videos-hero-background"
           defaultSrc="/images/model/community-on-country.jpg"
