@@ -464,9 +464,9 @@ export const ServicesPage: React.FC = () => {
       {/* Hero */}
       <section className="relative min-h-[50vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/services.mp4"
-          poster="/videos/hero/services.jpg"
-          alt="Oonchiumpa facilities at Atnarpa Station"
+          src="/videos/hero/boxing.mp4"
+          poster="/videos/hero/boxing.jpg"
+          alt="Young person training at the boxing gym"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pb-16">

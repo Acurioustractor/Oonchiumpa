@@ -139,9 +139,9 @@ export const AboutPage: React.FC = () => {
     <div className="bg-white">
       <section className="relative min-h-[72vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/about.mp4"
-          poster="/videos/hero/about.jpg"
-          alt="Mural of Elders at Atnarpa Station"
+          src="/videos/hero/first-part.mp4"
+          poster="/videos/hero/first-part.jpg"
+          alt="Oonchiumpa team at the Alice Springs war memorial"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/45 to-transparent" />
 

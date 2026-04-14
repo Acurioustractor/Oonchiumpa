@@ -115,9 +115,9 @@ export const StoriesPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <section className="relative min-h-[46vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/stories.mp4"
-          poster="/videos/hero/stories.jpg"
-          alt="Community stories and on-Country moments"
+          src="/videos/hero/boxing.mp4"
+          poster="/videos/hero/boxing.jpg"
+          alt="Young people training in the gym"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/80 via-earth-950/45 to-transparent" />
 

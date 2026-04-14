@@ -138,9 +138,9 @@ export const TeamPage: React.FC = () => {
       {/* Hero */}
       <section className="relative min-h-[60vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/team.mp4"
-          poster="/videos/hero/team.jpg"
-          alt="Team members walking on Arrernte Country"
+          src="/videos/hero/first-part.mp4"
+          poster="/videos/hero/first-part.jpg"
+          alt="Oonchiumpa team at the Alice Springs war memorial"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         <div className="relative z-10 max-w-5xl mx-auto px-6 pb-16 md:pb-24">

@@ -53,9 +53,9 @@ export const HomePage: React.FC = () => {
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/home.mp4"
-          poster="/videos/hero/home.jpg"
-          alt="Woman looking out to Arrernte Country"
+          src="/videos/hero/first-part.mp4"
+          poster="/videos/hero/first-part.jpg"
+          alt="Oonchiumpa team at the Alice Springs war memorial"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
