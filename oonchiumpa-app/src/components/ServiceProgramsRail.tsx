@@ -89,7 +89,7 @@ export const ServiceProgramsRail: React.FC<ServiceProgramsRailProps> = ({
                   {program.stat}
                 </p>
                 <h3 className="text-2xl font-display text-earth-950 mb-3">{program.title}</h3>
-                <p className="text-earth-700 text-sm leading-relaxed mb-5 flex-1">{program.summary}</p>
+                <p className="text-earth-700 text-base leading-relaxed mb-5 flex-1">{program.summary}</p>
                 <Link
                   to={`/services/${program.id}`}
                   className="inline-flex items-center text-ochre-700 font-medium hover:text-ochre-800 transition-colors"

@@ -292,7 +292,7 @@ export default function VideoGalleryPage() {
                       {asset.title || "Field video"}
                     </h3>
                     {asset.description && (
-                      <p className="text-earth-600 text-sm leading-relaxed line-clamp-2 mb-3">
+                      <p className="text-earth-600 text-base leading-relaxed line-clamp-2 mb-3">
                         {asset.description}
                       </p>
                     )}

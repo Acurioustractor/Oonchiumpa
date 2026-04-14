@@ -301,7 +301,7 @@ export const HomePage: React.FC = () => {
                     {story.title}
                   </h3>
                   {story.excerpt && (
-                    <p className="text-earth-600 text-sm leading-relaxed line-clamp-3">
+                    <p className="text-earth-600 text-base leading-relaxed line-clamp-3">
                       {story.excerpt}
                     </p>
                   )}

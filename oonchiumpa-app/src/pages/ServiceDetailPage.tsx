@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Section } from '../components/Section';
 import { EditableImage } from '../components/EditableImage';
 import { Card, CardBody } from '../components/Card';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Loading } from '../components/Loading';
 import { useMedia, useSyndicatedService } from '../hooks/useEmpathyLedger';
 import { applyPageMeta } from '../utils/seo';
@@ -624,15 +625,15 @@ export const ServiceDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/55 to-transparent" />
 
         <div className="relative z-10 container-custom pt-28 pb-14 md:pb-18">
-          <Link
-            to="/services"
-            className="inline-flex items-center text-white/85 hover:text-white text-sm mb-6 transition-colors"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            All services
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Services", href: "/services" },
+              { label: service.title },
+            ]}
+            onDark
+            className="mb-6"
+          />
           <p className="eyebrow text-ochre-200 mb-4">Service detail</p>
           <h1 className="heading-lg text-white max-w-4xl mb-5">{service.title}</h1>
           <p className="text-white/85 text-lg md:text-xl leading-relaxed max-w-3xl mb-8">
@@ -727,7 +728,7 @@ export const ServiceDetailPage: React.FC = () => {
                 <h3 className="text-2xl font-display text-earth-950 mb-5">Impact indicators and service signals</h3>
                 <ul className="space-y-3">
                   {service.outcomes.map((outcome, index) => (
-                    <li key={index} className="flex items-start gap-2 text-earth-700 text-sm leading-relaxed">
+                    <li key={index} className="flex items-start gap-2 text-earth-700 text-base leading-relaxed">
                       <span className="mt-1 block h-2 w-2 rounded-full bg-ochre-500" />
                       <span>{outcome}</span>
                     </li>

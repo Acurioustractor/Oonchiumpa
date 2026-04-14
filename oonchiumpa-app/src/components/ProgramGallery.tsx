@@ -89,7 +89,7 @@ export const ProgramGallery: React.FC<ProgramGalleryProps> = ({
                         <p className="text-earth-500 text-xs uppercase tracking-[0.18em] mb-2">
                           {item.proofLabel || "Evidence"}
                         </p>
-                        <p className="text-earth-800 text-sm leading-relaxed font-medium">
+                        <p className="text-earth-800 text-base leading-relaxed font-medium">
                           {item.proof}
                         </p>
                       </div>
@@ -99,7 +99,7 @@ export const ProgramGallery: React.FC<ProgramGalleryProps> = ({
                         <p className="text-earth-500 text-xs uppercase tracking-[0.18em] mb-2">
                           How we do it
                         </p>
-                        <p className="text-earth-700 text-sm leading-relaxed">
+                        <p className="text-earth-700 text-base leading-relaxed">
                           {item.method}
                         </p>
                       </div>
@@ -164,7 +164,7 @@ export const ProgramGallery: React.FC<ProgramGalleryProps> = ({
                 <h3 className="text-xl font-semibold text-earth-950 mb-3 leading-snug">
                   {item.title}
                 </h3>
-                <p className="text-earth-700 text-sm leading-relaxed">
+                <p className="text-earth-700 text-base leading-relaxed">
                   {item.description}
                 </p>
                 {item.proof && (

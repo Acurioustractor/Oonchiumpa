@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Loading } from '../components/Loading';
 import { applyPageMeta } from '../utils/seo';
 import { useArticleDetail } from '../hooks/useEmpathyLedger';
@@ -105,16 +106,16 @@ const BlogPostDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/55 to-transparent" />
 
         <div className="relative z-10 container-custom pt-28 pb-14">
-          <Link
-            to="/blog"
-            className="inline-flex items-center text-white/90 hover:text-white text-sm mb-6 transition-colors"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to blog
-          </Link>
-          <p className="text-xs uppercase tracking-[0.2em] text-ochre-200 mb-3">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: article.title },
+            ]}
+            onDark
+            className="mb-6"
+          />
+          <p className="text-xs uppercase tracking-[0.24em] text-ochre-200 mb-3 font-semibold">
             {article.articleType || 'Article'}
           </p>
           <h1 className="heading-lg text-white max-w-4xl mb-4">{article.title}</h1>

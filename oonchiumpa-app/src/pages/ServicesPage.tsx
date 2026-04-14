@@ -553,7 +553,7 @@ export const ServicesPage: React.FC = () => {
                     </div>
 
                     <h3 className="text-2xl font-display mb-3 text-white">{card.title}</h3>
-                    <p className="text-white/75 text-sm leading-relaxed mb-4">{card.summary}</p>
+                    <p className="text-white/75 text-base leading-relaxed mb-4">{card.summary}</p>
 
                     {card.quote && (
                       <p className="text-white/65 text-sm italic leading-relaxed mb-4 line-clamp-3">
@@ -723,7 +723,7 @@ export const ServicesPage: React.FC = () => {
                       {service.name}
                     </h3>
                     {(service.detail.overview || service.description) && (
-                      <p className="text-earth-700 text-sm leading-relaxed mb-4">
+                      <p className="text-earth-700 text-base leading-relaxed mb-4">
                         {service.detail.overview || service.description}
                       </p>
                     )}
@@ -861,7 +861,7 @@ export const ServicesPage: React.FC = () => {
                 <p className="text-ochre-600 text-xs uppercase tracking-[0.24em] mb-3 font-semibold">
                   Outcomes
                 </p>
-                <p className="text-earth-700 text-sm leading-relaxed">
+                <p className="text-earth-700 text-base leading-relaxed">
                   {service.outcome}
                 </p>
               </div>

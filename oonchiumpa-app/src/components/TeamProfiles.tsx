@@ -79,7 +79,7 @@ const VoiceCard = ({
         <div className="mt-6 pt-6 border-t border-earth-200 animate-fadeIn">
           <div className="bg-ochre-50 rounded-lg p-4">
             <h4 className="font-semibold text-earth-800 mb-2">Impact in Action:</h4>
-            <p className="text-earth-700 text-sm leading-relaxed">
+            <p className="text-earth-700 text-base leading-relaxed">
               {impactStatement}
             </p>
           </div>

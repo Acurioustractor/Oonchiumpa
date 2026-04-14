@@ -132,7 +132,7 @@ const BlogPage: React.FC = () => {
                         {article.title}
                       </h2>
                       {article.excerpt && (
-                        <p className="text-earth-700 text-sm leading-relaxed mb-5 line-clamp-3">
+                        <p className="text-earth-700 text-base leading-relaxed mb-5 line-clamp-3">
                           {article.excerpt}
                         </p>
                       )}

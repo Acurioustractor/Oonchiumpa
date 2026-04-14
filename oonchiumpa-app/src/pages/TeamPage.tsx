@@ -37,7 +37,7 @@ function PersonCard({ member, size = "md" }: { member: TeamMember; size?: "lg" |
       )}
 
       {isLarge && member.bio && (
-        <p className="text-earth-700 text-sm leading-relaxed mt-4 max-w-xs mx-auto">
+        <p className="text-earth-700 text-base leading-relaxed mt-4 max-w-xs mx-auto">
           {member.bio}
         </p>
       )}

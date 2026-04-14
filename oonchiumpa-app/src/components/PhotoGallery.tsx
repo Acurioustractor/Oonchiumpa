@@ -80,7 +80,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
                   {photo.title}
                 </h3>
                 {photo.description && (
-                  <p className="text-earth-600 text-sm leading-relaxed">
+                  <p className="text-earth-600 text-base leading-relaxed">
                     {photo.description}
                   </p>
                 )}

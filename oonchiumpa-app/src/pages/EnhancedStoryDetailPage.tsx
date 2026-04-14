@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Loading } from '../components/Loading';
 import { useApi } from '../hooks/useApi';
 import { storiesAPI } from '../services/api';
@@ -181,15 +182,15 @@ export const EnhancedStoryDetailPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 
         <div className="relative z-10 container-custom pt-28 pb-14">
-          <Link
-            to="/stories"
-            className="inline-flex items-center text-white/90 hover:text-white text-sm mb-6 transition-colors"
-          >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            All stories
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Stories", href: "/stories" },
+              { label: story.title },
+            ]}
+            onDark
+            className="mb-6"
+          />
 
           <h1 className="heading-lg text-white max-w-4xl mb-5">{story.title}</h1>
 

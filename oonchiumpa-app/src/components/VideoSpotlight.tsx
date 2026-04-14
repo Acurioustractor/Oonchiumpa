@@ -114,7 +114,7 @@ export const VideoSpotlight: React.FC<VideoSpotlightProps> = ({
                     {video.title}
                   </h3>
                   {video.description && (
-                    <p className="text-earth-600 text-sm leading-relaxed line-clamp-3 mb-3">
+                    <p className="text-earth-600 text-base leading-relaxed line-clamp-3 mb-3">
                       {video.description}
                     </p>
                   )}
