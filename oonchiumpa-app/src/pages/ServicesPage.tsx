@@ -5,48 +5,7 @@ import { HeroVideo } from "../components/HeroVideo";
 import { ProgramGallery } from "../components/ProgramGallery";
 import { VideoSpotlight } from "../components/VideoSpotlight";
 import { useMedia, useSyndicatedServices } from "../hooks/useEmpathyLedger";
-
-const services = [
-  {
-    id: "youth-mentorship",
-    title: "Youth Diversion & Case Management",
-    description:
-      "Culturally-led case management for young people in contact with the justice system. One-on-one mentoring, court support, bail assistance, and graduated pathways out of the system.",
-    outcomes: "95% diversion success rate. 20 of 21 young people removed from Operation Luna police taskforce.",
-  },
-  {
-    id: "atnarpa-homestead",
-    title: "Cultural Connection & On Country Programs",
-    description:
-      "Trips to Atnarpa (Loves Creek Station) for on-country healing and learning. Young people connect with Elders, learn language, and build identity through culture — not compliance.",
-    outcomes: "7 language groups engaged. Young people report stronger cultural identity and pride.",
-  },
-  {
-    title: "Education Pathways",
-    description:
-      "School enrollment support, daily pickup and drop-off, in-class assistance, and alternative education options. When schools exclude, we create safe learning spaces and coordinate continued curriculum.",
-    outcomes: "72% of disengaged youth returned to education.",
-  },
-  {
-    id: "cultural-brokerage",
-    title: "Cultural Brokerage",
-    description:
-      "Connecting young people and families with Aboriginal-led programs, businesses, and services across Central Australia. Every referral maintains cultural connection.",
-    outcomes: "71 service referrals made. Zero referrals declined by partners.",
-  },
-  {
-    title: "Basic Needs & Holistic Support",
-    description:
-      "Housing assistance, food security, health appointments, Centrelink navigation, birth certificates. Addressing the root causes — overcrowding, hunger, homelessness — that drive kids onto the streets.",
-    outcomes: "2,464 meaningful contacts in 6 months.",
-  },
-  {
-    title: "Family & Kinship Support",
-    description:
-      "Working with whole kinship systems. Supporting parents and siblings. Building protective networks around vulnerable youth. Reconnecting young people with family they didn't know they had.",
-    outcomes: "87-95% engagement rate with culturally-led family support.",
-  },
-];
+import { services, contactUrlFor } from "../data/services";
 
 const detailedPrograms = [
   {
@@ -476,10 +435,21 @@ export const ServicesPage: React.FC = () => {
           <h1 className="text-4xl md:text-5xl font-display text-white mb-4">
             Our Services
           </h1>
-          <p className="text-white/80 text-lg max-w-2xl">
+          <p className="text-white/80 text-lg max-w-2xl mb-8">
             Culturally-led, community-controlled services for young people
             on Arrernte Country. Run by Aboriginal people, for community.
           </p>
+          <div className="flex flex-wrap gap-3">
+            <Link to="/contact?type=referral" className="btn-primary px-7">
+              Make a referral
+            </Link>
+            <Link
+              to="/contact?type=partnership"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
+            >
+              Partner with us
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -860,34 +830,42 @@ export const ServicesPage: React.FC = () => {
               culture, health, and family wellbeing.
             </p>
           </div>
-          {services.map((service, i) => (
-            <div key={i} className="grid md:grid-cols-3 gap-8 items-start">
+          {services.map((service) => (
+            <article
+              key={service.id}
+              className="grid md:grid-cols-3 gap-8 items-start pb-16 border-b border-earth-100 last:border-b-0 last:pb-0"
+            >
               <div className="md:col-span-2">
-                <h2 className="text-2xl md:text-3xl font-display text-earth-950 mb-4">
+                <h3 className="text-2xl md:text-3xl font-display text-earth-950 mb-4">
                   {service.title}
-                </h2>
-                <p className="text-earth-700 text-lg leading-relaxed">
+                </h3>
+                <p className="text-earth-700 text-lg leading-relaxed mb-6">
                   {service.description}
                 </p>
-                {service.id && (
+                <div className="flex flex-wrap gap-3">
+                  <Link
+                    to={contactUrlFor(service)}
+                    className="btn-primary text-sm"
+                  >
+                    {service.ctaLabel}
+                  </Link>
                   <Link
                     to={`/services/${service.id}`}
-                    className="inline-flex items-center mt-4 text-sm font-medium text-ochre-700 hover:text-ochre-800 transition-colors"
+                    className="btn-secondary text-sm"
                   >
-                    Learn more about this service
-                    <span className="ml-2">→</span>
+                    Learn more
                   </Link>
-                )}
+                </div>
               </div>
-              <div className="bg-earth-50 rounded-lg p-5">
-                <p className="text-ochre-600 text-xs uppercase tracking-[0.2em] mb-2 font-medium">
+              <div className="bg-sand-50 rounded-2xl p-6 border border-earth-100">
+                <p className="text-ochre-600 text-xs uppercase tracking-[0.24em] mb-3 font-semibold">
                   Outcomes
                 </p>
                 <p className="text-earth-700 text-sm leading-relaxed">
-                  {service.outcomes}
+                  {service.outcome}
                 </p>
               </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
@@ -911,13 +889,13 @@ export const ServicesPage: React.FC = () => {
           <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={() => navigate("/contact?type=referral")}
-              className="px-7 py-3.5 bg-ochre-600 text-white rounded-lg hover:bg-ochre-700 transition-colors font-medium"
+              className="btn-primary px-7"
             >
               Make a referral
             </button>
             <a
               href="tel:0474702523"
-              className="px-7 py-3.5 bg-white/10 text-white border border-white/25 rounded-lg hover:bg-white/20 transition-colors font-medium"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
             >
               Call 0474 702 523
             </a>

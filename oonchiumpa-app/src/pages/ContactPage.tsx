@@ -4,17 +4,20 @@ import { EditableImage } from '../components/EditableImage';
 import { HeroVideo } from '../components/HeroVideo';
 import { ServiceProgramsRail } from '../components/ServiceProgramsRail';
 import { supabase } from '../config/supabase';
-
-type InquiryType = 'referral' | 'partnership' | 'funding' | 'media' | 'general';
+import { emailFor, subjectFor, type InquiryType } from '../config/contact';
+import { getServiceById } from '../data/services';
 
 const inputClassName =
   'w-full px-4 py-3.5 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all';
 
-const formatServiceLabel = (serviceId: string) =>
-  serviceId
+const formatServiceLabel = (serviceId: string): string => {
+  const service = getServiceById(serviceId);
+  if (service) return service.title;
+  return serviceId
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+};
 
 export const ContactPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -62,6 +65,11 @@ export const ContactPage: React.FC = () => {
     e.preventDefault();
     setStatus('submitting');
 
+    const messageBody =
+      formData.inquiryType === 'referral'
+        ? `Age: ${formData.youngPersonAge}\nGender: ${formData.youngPersonGender}\n\n${formData.referralContext}`
+        : formData.message;
+
     try {
       const { error } = await supabase.from('contact_submissions').insert({
         name: formData.name,
@@ -69,21 +77,28 @@ export const ContactPage: React.FC = () => {
         phone: formData.phone || null,
         organization: formData.organization || null,
         inquiry_type: formData.inquiryType,
-        message:
-          formData.inquiryType === 'referral'
-            ? `Age: ${formData.youngPersonAge}\nGender: ${formData.youngPersonGender}\n\n${formData.referralContext}`
-            : formData.message,
+        message: messageBody,
       });
 
       if (error) throw error;
       setStatus('success');
     } catch (err) {
       console.error('Submit error:', err);
-      const subject = encodeURIComponent(`[${formData.inquiryType}] Inquiry from ${formData.name}`);
+      // Fall back to mailto, routing to the correct inbox per inquiry type
+      const to = emailFor(formData.inquiryType);
+      const subject = encodeURIComponent(subjectFor(formData.inquiryType, formData.name));
       const body = encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nOrg: ${formData.organization}\nType: ${formData.inquiryType}\n\n${formData.message || formData.referralContext}`,
+        [
+          `Name: ${formData.name}`,
+          `Email: ${formData.email}`,
+          `Phone: ${formData.phone || '—'}`,
+          `Organisation: ${formData.organization || '—'}`,
+          `Type: ${formData.inquiryType}`,
+          '',
+          messageBody,
+        ].join('\n'),
       );
-      window.location.href = `mailto:admin@oonchiumpaconsultancy.com.au?subject=${subject}&body=${body}`;
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
       setStatus('success');
     }
   };
