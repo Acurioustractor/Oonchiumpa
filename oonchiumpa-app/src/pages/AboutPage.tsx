@@ -141,7 +141,7 @@ export const AboutPage: React.FC = () => {
         <HeroVideo
           src="/videos/hero/country-pan.mp4"
           poster="/videos/hero/country-pan.jpg"
-          alt="Arrernte Country — gum trees and grassland after rain"
+          alt="Water flowing through a creek bed on Arrernte Country"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/45 to-transparent" />
 
