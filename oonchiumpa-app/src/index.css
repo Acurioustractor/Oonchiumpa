@@ -58,6 +58,19 @@
     background: rgba(226, 78, 16, 0.2);
     color: #2f1e1a;
   }
+
+  /* Visited links get a deeper ochre so returning users can see progress.
+     Krug hard rule: always preserve visited vs unvisited distinction. */
+  a:visited {
+    color: var(--color-visited, #962e14);
+  }
+  /* Reset visited color on buttons/CTAs where the role is an action, not a link. */
+  a.btn-primary:visited,
+  a.btn-secondary:visited,
+  a.btn-ghost:visited,
+  a[role="button"]:visited {
+    color: inherit;
+  }
 }
 
 @layer components {

@@ -108,6 +108,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 <Link
                   key={index}
                   to={link.href}
+                  aria-current={isActive ? "page" : undefined}
                   className={`font-medium tracking-wide transition-colors duration-200 relative group ${textClasses}`}
                 >
                   {link.label}
@@ -291,20 +292,24 @@ export const Navigation: React.FC<NavigationProps> = ({
           }`}
         >
           <div className="py-4 space-y-3">
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                to={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${
-                  location.pathname === link.href
-                    ? "text-ochre-600 bg-ochre-50"
-                    : "text-earth-700 hover:text-ochre-600 hover:bg-ochre-50"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {links.map((link, index) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={index}
+                  to={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-2 min-h-[44px] flex items-center rounded-lg transition-colors duration-200 ${
+                    isActive
+                      ? "text-ochre-600 bg-ochre-50 font-semibold"
+                      : "text-earth-700 hover:text-ochre-600 hover:bg-ochre-50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
 
             {ctaButton && (
               <button

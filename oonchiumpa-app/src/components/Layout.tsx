@@ -60,6 +60,26 @@ const getRouteMeta = (path: string): PageMeta => {
     };
   }
 
+  if (path === "/team") {
+    return {
+      title: "Team",
+      description:
+        "The people behind Oonchiumpa — leaders, staff, and community working through cultural authority on Arrernte Country.",
+      image: "/images/team/group-2024.jpg",
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        name: "Oonchiumpa Team",
+        url: "https://oonchiumpaconsultancy.com.au/team",
+        about: {
+          "@type": "Organization",
+          "@id": organizationId,
+          name: "Oonchiumpa",
+        },
+      },
+    };
+  }
+
   if (path === "/services") {
     return {
       title: "Services",

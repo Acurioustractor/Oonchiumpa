@@ -64,9 +64,8 @@ export const HomePage: React.FC = () => {
             Arrernte Country · Alice Springs
           </p>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-display text-white leading-[1.1] mb-6">
-            Culture-led futures
-            <br />
-            for young people
+            <span className="block">Culture-led futures</span>
+            <span className="block">for young people</span>
           </h1>
           <p className="text-white/80 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">
             Oonchiumpa is an Aboriginal community-controlled organisation
