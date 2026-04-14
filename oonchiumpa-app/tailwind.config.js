@@ -75,8 +75,8 @@ export default {
         }
       },
       fontFamily: {
-        'display': ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-        'body': ['Inter', 'system-ui', 'sans-serif'],
+        'display': ['"Outfit"', '"Segoe UI"', 'sans-serif'],
+        'body': ['"Plus Jakarta Sans"', '"Segoe UI"', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in',
