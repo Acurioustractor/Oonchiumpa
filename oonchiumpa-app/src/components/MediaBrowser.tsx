@@ -40,8 +40,8 @@ export function MediaBrowser({
   trigger,
   inline = false,
   galleryId,
-  type = 'image',
-  limit = 100,
+  type,
+  limit = 300,
   selectedUrl,
 }: MediaBrowserProps) {
   const [open, setOpen] = useState(inline);
@@ -53,8 +53,20 @@ export function MediaBrowser({
 
   const loadMedia = useCallback(async () => {
     setLoading(true);
-    const result = await el.getMedia({ limit, galleryId: activeGallery, type });
-    setMedia(result.data.filter((m) => m.url));
+    // Fetch across all pages (EL caps at 100/page). No type filter — EL
+    // returns type:'unknown' for most items, so filtering on 'image' drops
+    // 90%+ of the library. Instead filter client-side by URL shape.
+    const all = await el.getAllMedia({
+      galleryId: activeGallery,
+      type,
+      maxItems: limit,
+    });
+    const imageLike = (url: string) =>
+      /\.(jpe?g|png|webp|gif|avif|heic)(\?.*)?$/i.test(url) ||
+      url.includes('/profile-images/') ||
+      url.includes('/media/') ||
+      url.includes('image');
+    setMedia(all.filter((m) => m.url && imageLike(m.url)));
     setLoading(false);
   }, [limit, activeGallery, type]);
 
