@@ -2,11 +2,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 export const StaffPortalHeader = () => {
-  const { user, logout } = useAuth();
+  const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const fullName = user?.full_name || 'Staff User';
+  const initials = fullName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+  const handleLogout = async () => {
+    await signOut();
     navigate('/login');
   };
 
@@ -15,11 +23,15 @@ export const StaffPortalHeader = () => {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link to="/staff-portal" className="text-2xl font-bold hover:text-ochre-200 transition">
-              Oonchiumpa Staff Portal
+            <Link to="/staff-portal" className="hover:opacity-90 transition">
+              <img
+                src="/images/logo/logo-transparent.png"
+                alt="Oonchiumpa logo"
+                className="h-10 w-auto object-contain"
+              />
             </Link>
             <span className="text-ochre-300">|</span>
-            <span className="text-ochre-200">Content Management System</span>
+            <span className="text-ochre-200">Staff Portal</span>
           </div>
           <div className="flex items-center space-x-4">
             <Link
@@ -31,11 +43,11 @@ export const StaffPortalHeader = () => {
             {user && (
               <>
                 <div className="text-right">
-                  <div className="font-semibold">{user.name}</div>
+                  <div className="font-semibold">{fullName}</div>
                   <div className="text-sm text-earth-300">{user.role || 'Staff'}</div>
                 </div>
                 <div className="w-10 h-10 bg-ochre-600 rounded-full flex items-center justify-center font-bold">
-                  {user.name?.split(' ').map(n => n[0]).join('') || 'U'}
+                  {initials || 'U'}
                 </div>
                 <button
                   onClick={handleLogout}

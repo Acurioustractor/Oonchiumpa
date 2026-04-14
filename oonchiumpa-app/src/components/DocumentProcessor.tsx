@@ -211,10 +211,10 @@ const DocumentProcessor: React.FC = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'processing': return 'bg-yellow-100 text-yellow-800';
-      case 'completed': return 'bg-green-100 text-green-800';
-      case 'error': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'processing': return 'bg-ochre-100 text-ochre-800';
+      case 'completed': return 'bg-eucalyptus-100 text-eucalyptus-800';
+      case 'error': return 'bg-sunset-100 text-sunset-800';
+      default: return 'bg-earth-100 text-earth-800';
     }
   };
 
@@ -222,7 +222,7 @@ const DocumentProcessor: React.FC = () => {
     <div className="space-y-8">
       {/* Document Type Selection */}
       <Card className="p-8">
-        <h2 className="text-3xl font-bold text-earth-900 mb-6">📄 Document Processing Center</h2>
+        <h2 className="text-3xl font-bold text-earth-950 mb-6">📄 Document Processing Center</h2>
         <p className="text-earth-700 mb-8">
           Transform authentic community conversations, teachings, and documents into powerful stories and insights.
         </p>
@@ -341,7 +341,7 @@ const DocumentProcessor: React.FC = () => {
               <div key={doc.id} className="border border-earth-200 rounded-lg p-4">
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h4 className="font-semibold text-earth-900">{doc.filename}</h4>
+                    <h4 className="font-semibold text-earth-950">{doc.filename}</h4>
                     <p className="text-sm text-earth-600">
                       {documentTypes.find(dt => dt.id === doc.type)?.name} • 
                       {new Date(doc.createdAt).toLocaleDateString()}

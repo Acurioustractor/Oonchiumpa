@@ -27,6 +27,9 @@ export const Navigation: React.FC<NavigationProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, signOut, isAdmin, hasPermission } = useAuth();
+  const logoSrc = isScrolled
+    ? "/images/logo/logo-transparent-dark.png"
+    : "/images/logo/logo-transparent.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,71 +40,81 @@ export const Navigation: React.FC<NavigationProps> = ({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setShowUserMenu(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return undefined;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMobileMenuOpen(false);
+        setShowUserMenu(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg"
-          : "bg-gradient-to-b from-earth-900/55 via-earth-900/20 to-transparent text-white"
+          ? "bg-white/92 backdrop-blur-md shadow-[0_10px_30px_rgba(47,30,26,0.1)] border-b border-earth-100"
+          : "bg-gradient-to-b from-earth-950/72 via-earth-950/36 to-transparent text-white"
       }`}
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
-            <div className="flex flex-col items-start justify-center">
-              <div className="flex items-end space-x-1">
-                <span className="relative flex items-center justify-center w-11 h-11 rounded-full border-[6px] border-ochre-500"></span>
-                <span className="relative flex items-center justify-center w-11 h-11 rounded-full border-[6px] border-eucalyptus-600 -ml-2"></span>
-              </div>
-              <div className="flex items-center space-x-[7px] mt-1 ml-1">
-                <span className="w-2.5 h-2.5 rounded-full bg-ochre-500"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-eucalyptus-600/90"></span>
-                <span className="w-2.5 h-2.5 rounded-full bg-eucalyptus-500/80"></span>
-              </div>
-            </div>
-            <div className="leading-tight">
-              <span
-                className={`block font-display text-xl tracking-tight transition-colors duration-300 ${
-                  isScrolled ? 'text-earth-900' : 'text-white'
-                }`}
-                style={!isScrolled ? { textShadow: '0 8px 26px rgba(0,0,0,0.5)' } : undefined}
-              >
-                {logo}
-              </span>
-              <span
-                className={`block text-[11px] uppercase tracking-[0.35em] transition-colors duration-300 ${
-                  isScrolled ? 'text-ochre-600' : 'text-ochre-100/90'
-                }`}
-              >
-                Culture-Led Futures
-              </span>
-            </div>
-          </div>
+          <Link to="/" className="flex items-center" aria-label={`${logo} home`}>
+            <img
+              src={logoSrc}
+              alt={`${logo} logo`}
+              className={`w-auto object-contain transition-all duration-300 ${
+                isScrolled
+                  ? "h-14 md:h-16"
+                  : "h-16 md:h-20 drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]"
+              }`}
+            />
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-7">
             {links.map((link, index) => {
               const isActive = location.pathname === link.href;
               const textClasses = isActive
                 ? isScrolled
-                  ? 'text-ochre-600'
-                  : 'text-ochre-200'
+                  ? "text-ochre-700"
+                  : "text-ochre-100"
                 : isScrolled
-                  ? 'text-earth-700 hover:text-ochre-600'
-                  : 'text-white/85 hover:text-white';
-              const underlineColor = isScrolled ? 'bg-ochre-600' : 'bg-white/70';
+                  ? "text-earth-700 hover:text-ochre-700"
+                  : "text-white/85 hover:text-white";
+              const underlineColor = isScrolled ? "bg-ochre-600" : "bg-white/75";
               return (
                 <Link
                   key={index}
                   to={link.href}
-                  className={`font-medium transition-colors duration-200 relative group ${textClasses}`}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`font-medium tracking-wide transition-colors duration-200 relative group ${textClasses}`}
                 >
                   {link.label}
                   <span
                     className={`absolute bottom-0 left-0 h-0.5 ${underlineColor} transition-all duration-300 ${
-                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                      isActive ? "w-full" : "w-0 group-hover:w-full"
                     }`}
                   ></span>
                 </Link>
@@ -110,7 +123,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             {ctaButton && (
               <button
                 onClick={ctaButton.onClick}
-                className="ml-4 px-5 py-2.5 bg-ochre-600 text-white rounded-full hover:bg-ochre-700 transition-all duration-200 transform hover:scale-105"
+                className="ml-3 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-all duration-200 shadow-[0_8px_22px_rgba(226,78,16,0.3)]"
               >
                 {ctaButton.label}
               </button>
@@ -121,18 +134,22 @@ export const Navigation: React.FC<NavigationProps> = ({
               <div className="relative ml-4">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-earth-100 transition-colors"
+                  className={`flex items-center space-x-2 px-3 py-2 rounded-xl transition-colors ${
+                    isScrolled
+                      ? "hover:bg-earth-100"
+                      : "hover:bg-white/15"
+                  }`}
                 >
                   <div className="w-8 h-8 bg-ochre-500 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-semibold">
                       {user?.full_name.charAt(0).toUpperCase()}
                     </span>
                   </div>
-                  <span className="text-earth-700 font-medium">
+                  <span className={`font-medium ${isScrolled ? "text-earth-700" : "text-white/90"}`}>
                     {user?.full_name}
                   </span>
                   <svg
-                    className="w-4 h-4 text-earth-500"
+                    className={`w-4 h-4 ${isScrolled ? "text-earth-500" : "text-white/65"}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -148,9 +165,9 @@ export const Navigation: React.FC<NavigationProps> = ({
 
                 {/* User Menu Dropdown */}
                 {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-earth-200 py-2">
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-[0_18px_36px_rgba(47,30,26,0.18)] border border-earth-200 py-2">
                     <div className="px-4 py-2 border-b border-earth-200">
-                      <div className="font-semibold text-earth-900">
+                      <div className="font-semibold text-earth-950">
                         {user?.full_name}
                       </div>
                       <div className="text-sm text-earth-600">
@@ -167,7 +184,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                         onClick={() => setShowUserMenu(false)}
                         className="flex items-center px-4 py-2 hover:bg-earth-50 text-earth-700"
                       >
-                        <span className="mr-2">⚙️</span>
                         Admin Dashboard
                       </Link>
                     )}
@@ -178,7 +194,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                         onClick={() => setShowUserMenu(false)}
                         className="flex items-center px-4 py-2 hover:bg-earth-50 text-earth-700"
                       >
-                        <span className="mr-2">📸</span>
                         Media Manager
                       </Link>
                     )}
@@ -189,7 +204,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                         onClick={() => setShowUserMenu(false)}
                         className="flex items-center px-4 py-2 hover:bg-earth-50 text-earth-700"
                       >
-                        <span className="mr-2">📋</span>
                         Content Dashboard
                       </Link>
                     )}
@@ -200,7 +214,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                         onClick={() => setShowUserMenu(false)}
                         className="flex items-center px-4 py-2 hover:bg-earth-50 text-earth-700"
                       >
-                        <span className="mr-2">✨</span>
                         Content Generator
                       </Link>
                     )}
@@ -210,7 +223,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                       onClick={() => setShowUserMenu(false)}
                       className="flex items-center px-4 py-2 hover:bg-earth-50 text-earth-700"
                     >
-                      <span className="mr-2">🏛️</span>
                       Staff Portal
                     </Link>
 
@@ -221,9 +233,8 @@ export const Navigation: React.FC<NavigationProps> = ({
                           setShowUserMenu(false);
                           navigate("/");
                         }}
-                        className="flex items-center w-full px-4 py-2 hover:bg-red-50 text-red-600"
+                        className="flex items-center w-full px-4 py-2 hover:bg-sunset-50 text-sunset-600"
                       >
-                        <span className="mr-2">🚪</span>
                         Sign Out
                       </button>
                     </div>
@@ -233,10 +244,10 @@ export const Navigation: React.FC<NavigationProps> = ({
             ) : (
               <Link
                 to="/login"
-                className={`ml-4 px-5 py-2.5 rounded-full transition-all duration-200 font-medium ${
+                className={`ml-3 px-5 py-2.5 rounded-xl transition-all duration-200 font-medium ${
                   isScrolled
-                    ? 'bg-ochre-600 text-white hover:bg-ochre-700'
-                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+                    ? "bg-ochre-600 text-white hover:bg-ochre-700 shadow-[0_8px_22px_rgba(226,78,16,0.3)]"
+                    : "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/25"
                 }`}
               >
                 Staff Login
@@ -248,24 +259,24 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`md:hidden p-2 rounded-lg transition-colors ${
-              isScrolled ? 'hover:bg-earth-100' : 'hover:bg-white/10'
+              isScrolled ? "hover:bg-earth-100" : "hover:bg-white/10"
             }`}
             aria-label="Toggle mobile menu"
           >
             <div className="w-6 h-5 relative flex flex-col justify-between">
               <span
                 className={`block h-0.5 transition-all duration-300 ${
-                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                  isScrolled ? "bg-earth-800" : "bg-white"
                 } ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""}`}
               ></span>
               <span
                 className={`block h-0.5 transition-all duration-300 ${
-                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                  isScrolled ? "bg-earth-800" : "bg-white"
                 } ${isMobileMenuOpen ? "opacity-0" : ""}`}
               ></span>
               <span
                 className={`block h-0.5 transition-all duration-300 ${
-                  isScrolled ? 'bg-earth-800' : 'bg-white'
+                  isScrolled ? "bg-earth-800" : "bg-white"
                 } ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
               ></span>
             </div>
@@ -274,38 +285,77 @@ export const Navigation: React.FC<NavigationProps> = ({
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden transition-all duration-300 overflow-hidden bg-white backdrop-blur-md shadow-xl ${
-            isMobileMenuOpen ? "max-h-96 border-t border-earth-200" : "max-h-0"
+          className={`md:hidden bg-white backdrop-blur-md shadow-xl rounded-b-2xl transition-[max-height] duration-300 ${
+            isMobileMenuOpen
+              ? "max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-earth-200"
+              : "max-h-0 overflow-hidden"
           }`}
         >
           <div className="py-4 space-y-3">
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                to={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-4 py-2 rounded-lg transition-colors duration-200 ${
-                  location.pathname === link.href
-                    ? "text-ochre-600 bg-ochre-50"
-                    : "text-earth-700 hover:text-ochre-600 hover:bg-ochre-50"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {links.map((link, index) => {
+              const isActive = location.pathname === link.href;
+              return (
+                <Link
+                  key={index}
+                  to={link.href}
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`block px-4 py-2 min-h-[44px] flex items-center rounded-lg transition-colors duration-200 ${
+                    isActive
+                      ? "text-ochre-600 bg-ochre-50 font-semibold"
+                      : "text-earth-700 hover:text-ochre-600 hover:bg-ochre-50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+
             {ctaButton && (
               <button
                 onClick={ctaButton.onClick}
-                className="w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white rounded-full hover:bg-ochre-700 transition-all duration-200"
+                className="w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-all duration-200"
               >
                 {ctaButton.label}
               </button>
             )}
-            {!isAuthenticated() && (
+
+            {isAuthenticated() ? (
+              <div className="pt-3 mt-3 border-t border-earth-200 space-y-2">
+                <Link
+                  to="/staff-portal"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-4 py-2 rounded-lg text-earth-700 hover:text-ochre-600 hover:bg-ochre-50 transition-colors duration-200"
+                >
+                  Staff Portal
+                </Link>
+
+                {isAdmin() && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block px-4 py-2 rounded-lg text-earth-700 hover:text-ochre-600 hover:bg-ochre-50 transition-colors duration-200"
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
+
+                <button
+                  onClick={async () => {
+                    await signOut();
+                    setIsMobileMenuOpen(false);
+                    navigate("/");
+                  }}
+                  className="w-full mt-1 px-4 py-2.5 rounded-lg text-sunset-600 bg-sunset-50 hover:bg-sunset-100 transition-colors duration-200 text-left"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
               <Link
                 to="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white text-center rounded-full hover:bg-ochre-700 transition-all duration-200"
+                className="block w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white text-center rounded-xl hover:bg-ochre-700 transition-all duration-200"
               >
                 Staff Login
               </Link>

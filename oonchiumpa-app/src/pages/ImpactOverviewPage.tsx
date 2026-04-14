@@ -33,45 +33,45 @@ const SERVICE_INFO: Record<string, {
     name: 'Youth Mentorship',
     description: 'Cultural healing & support for at-risk youth',
     icon: '🌟',
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-500'
+    color: 'text-eucalyptus-600',
+    bgColor: 'bg-eucalyptus-50',
+    borderColor: 'border-eucalyptus-500'
   },
   true_justice: {
     id: 'true_justice',
     name: 'True Justice',
     description: 'Deep Listening on Country (ANU partnership)',
     icon: '⚖️',
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-500'
+    color: 'text-earth-700',
+    bgColor: 'bg-earth-50',
+    borderColor: 'border-earth-500'
   },
   atnarpa_homestead: {
     id: 'atnarpa_homestead',
     name: 'Atnarpa Homestead',
     description: 'On-country experiences & cultural connection',
     icon: '🏕️',
-    color: 'text-green-600',
-    bgColor: 'bg-green-50',
-    borderColor: 'border-green-500'
+    color: 'text-eucalyptus-600',
+    bgColor: 'bg-eucalyptus-50',
+    borderColor: 'border-eucalyptus-500'
   },
   cultural_brokerage: {
     id: 'cultural_brokerage',
     name: 'Cultural Brokerage',
     description: 'Service navigation & community partnerships',
     icon: '🤝',
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-50',
-    borderColor: 'border-orange-500'
+    color: 'text-ochre-600',
+    bgColor: 'bg-ochre-50',
+    borderColor: 'border-ochre-500'
   },
   good_news_stories: {
     id: 'good_news_stories',
     name: 'Good News Stories',
     description: 'Community celebrations & positive outcomes',
     icon: '📰',
-    color: 'text-yellow-600',
-    bgColor: 'bg-yellow-50',
-    borderColor: 'border-yellow-500'
+    color: 'text-ochre-600',
+    bgColor: 'bg-ochre-50',
+    borderColor: 'border-ochre-500'
   }
 };
 
@@ -117,29 +117,29 @@ export default function ImpactOverviewPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-earth-50 to-white">
       <StaffPortalHeader />
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-5xl font-bold text-earth-950 mb-4">
               Impact Framework Overview
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
+            <p className="text-xl text-earth-600 max-w-3xl mx-auto mb-6">
               AI-powered analysis of {summaryStats.totalDocuments} documents extracting{' '}
               {summaryStats.totalOutcomes} measurable outcomes across all Oonchiumpa services
             </p>
             <div className="flex items-center justify-center gap-4">
               <Link
                 to="/staff-portal/impact/add-outcome"
-                className="inline-block px-6 py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition shadow-lg"
+                className="inline-block px-6 py-3 bg-eucalyptus-600 text-white font-medium rounded-lg hover:bg-eucalyptus-700 transition shadow-lg"
               >
                 ➕ Add New Outcome
               </Link>
               <Link
                 to="/staff-portal/impact/report"
-                className="inline-block px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-lg"
+                className="inline-block px-6 py-3 bg-eucalyptus-600 text-white font-medium rounded-lg hover:bg-eucalyptus-700 transition shadow-lg"
               >
                 📊 Generate Report
               </Link>
@@ -148,19 +148,19 @@ export default function ImpactOverviewPage() {
 
           {/* Overall Stats */}
           <div className="grid md:grid-cols-4 gap-6 mb-12">
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-lg shadow-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-ochre-500 to-ochre-600 text-white rounded-lg shadow-lg p-6 text-center">
               <div className="text-4xl font-bold">{summaryStats.totalDocuments}</div>
               <div className="text-sm mt-2 opacity-90">Documents Analyzed</div>
             </div>
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg shadow-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-eucalyptus-500 to-eucalyptus-600 text-white rounded-lg shadow-lg p-6 text-center">
               <div className="text-4xl font-bold">{summaryStats.totalOutcomes}</div>
               <div className="text-sm mt-2 opacity-90">Outcomes Extracted</div>
             </div>
-            <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg shadow-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-eucalyptus-500 to-eucalyptus-600 text-white rounded-lg shadow-lg p-6 text-center">
               <div className="text-4xl font-bold">{summaryStats.totalActivities}</div>
               <div className="text-sm mt-2 opacity-90">Activities Documented</div>
             </div>
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg shadow-lg p-6 text-center">
+            <div className="bg-gradient-to-br from-earth-500 to-earth-700 text-white rounded-lg shadow-lg p-6 text-center">
               <div className="text-4xl font-bold">5</div>
               <div className="text-sm mt-2 opacity-90">Service Areas</div>
             </div>
@@ -168,7 +168,7 @@ export default function ImpactOverviewPage() {
 
           {/* Service Dashboards */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+            <h2 className="text-3xl font-bold text-earth-950 mb-8 text-center">
               Service Impact Dashboards
             </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -183,7 +183,7 @@ export default function ImpactOverviewPage() {
                       <span className="text-5xl">{service.icon}</span>
                       <div className="flex-1">
                         <h3 className={`text-xl font-bold ${service.color}`}>{service.name}</h3>
-                        <p className="text-sm text-gray-600 mt-1">{service.description}</p>
+                        <p className="text-sm text-earth-600 mt-1">{service.description}</p>
                       </div>
                     </div>
 
@@ -200,33 +200,33 @@ export default function ImpactOverviewPage() {
                   <div className="p-6 bg-white">
                     <div className="grid grid-cols-3 gap-4 text-center">
                       <div>
-                        <div className="text-2xl font-bold text-gray-900">{service.documents}</div>
-                        <div className="text-xs text-gray-600">Documents</div>
+                        <div className="text-2xl font-bold text-earth-950">{service.documents}</div>
+                        <div className="text-xs text-earth-600">Documents</div>
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-blue-600">{service.outcomes}</div>
-                        <div className="text-xs text-gray-600">Outcomes</div>
+                        <div className="text-2xl font-bold text-eucalyptus-600">{service.outcomes}</div>
+                        <div className="text-xs text-earth-600">Outcomes</div>
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-green-600">{service.activities}</div>
-                        <div className="text-xs text-gray-600">Activities</div>
+                        <div className="text-2xl font-bold text-eucalyptus-600">{service.activities}</div>
+                        <div className="text-xs text-earth-600">Activities</div>
                       </div>
                     </div>
 
                     {/* Evidence Quality */}
-                    <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="mt-4 pt-4 border-t border-earth-200">
                       <div className="flex justify-between text-sm mb-2">
-                        <span className="text-gray-600">Evidence:</span>
+                        <span className="text-earth-600">Evidence:</span>
                         <span className="font-medium">
-                          <span className="text-green-600">{service.quantitative} quantitative</span>
+                          <span className="text-eucalyptus-600">{service.quantitative} quantitative</span>
                           {' / '}
-                          <span className="text-blue-600">{service.qualitative} qualitative</span>
+                          <span className="text-eucalyptus-600">{service.qualitative} qualitative</span>
                         </span>
                       </div>
                     </div>
 
                     <div className="mt-4 text-center">
-                      <span className="text-blue-600 font-medium group-hover:text-blue-700">
+                      <span className="text-eucalyptus-600 font-medium group-hover:text-eucalyptus-700">
                         View Full Dashboard →
                       </span>
                     </div>
@@ -238,35 +238,35 @@ export default function ImpactOverviewPage() {
 
           {/* Quick Links */}
           <div className="bg-white rounded-lg shadow-md p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+            <h2 className="text-2xl font-bold text-earth-950 mb-6 text-center">
               Explore Impact Data
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               <Link
                 to="/staff-portal/documents"
-                className="p-6 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition text-center"
+                className="p-6 border-2 border-earth-200 rounded-lg hover:border-ochre-500 hover:shadow-md transition text-center"
               >
                 <div className="text-4xl mb-3">📄</div>
-                <h3 className="font-bold text-gray-900 mb-2">All Documents</h3>
-                <p className="text-sm text-gray-600">View all analyzed documents with AI-extracted outcomes</p>
+                <h3 className="font-bold text-earth-950 mb-2">All Documents</h3>
+                <p className="text-sm text-earth-600">View all analyzed documents with AI-extracted outcomes</p>
               </Link>
 
               <Link
                 to="/staff-portal/outcomes"
-                className="p-6 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition text-center"
+                className="p-6 border-2 border-earth-200 rounded-lg hover:border-ochre-500 hover:shadow-md transition text-center"
               >
                 <div className="text-4xl mb-3">🎯</div>
-                <h3 className="font-bold text-gray-900 mb-2">Outcomes Database</h3>
-                <p className="text-sm text-gray-600">Search and filter all {summaryStats.totalOutcomes} extracted outcomes</p>
+                <h3 className="font-bold text-earth-950 mb-2">Outcomes Database</h3>
+                <p className="text-sm text-earth-600">Search and filter all {summaryStats.totalOutcomes} extracted outcomes</p>
               </Link>
 
               <Link
                 to="/staff-portal/gap-analysis"
-                className="p-6 border-2 border-gray-200 rounded-lg hover:border-orange-500 hover:shadow-md transition text-center"
+                className="p-6 border-2 border-earth-200 rounded-lg hover:border-ochre-500 hover:shadow-md transition text-center"
               >
                 <div className="text-4xl mb-3">📊</div>
-                <h3 className="font-bold text-gray-900 mb-2">Gap Analysis</h3>
-                <p className="text-sm text-gray-600">Identify missing data and improvement opportunities</p>
+                <h3 className="font-bold text-earth-950 mb-2">Gap Analysis</h3>
+                <p className="text-sm text-earth-600">Identify missing data and improvement opportunities</p>
               </Link>
             </div>
           </div>

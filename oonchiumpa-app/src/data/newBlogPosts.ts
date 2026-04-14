@@ -74,7 +74,7 @@ At Atnarpa, that self-determination is taking root in the red earth, growing str
       "On Country",
       "Healing",
     ],
-    heroImage: "/images/stories/atnarpa-homestead.jpg",
+    heroImage: "/images/model/atnarpa-land.jpg",
   },
   {
     title:
@@ -173,7 +173,7 @@ That's the power of learning law from the land.
       "Kinship Systems",
       "Elder Wisdom",
     ],
-    heroImage: "/images/stories/law-students-on-country.jpg",
+    heroImage: "/images/model/community-on-country.jpg",
   },
   {
     title: "Oonchiumpa is Coming to Sydney: An Invitation to Connect",
@@ -308,6 +308,6 @@ We hope to see you October 22-25.
       "Community Connection",
       "October 2024",
     ],
-    heroImage: "/images/stories/kristy-tanya-leadership.jpg",
+    heroImage: "/images/stories/IMG_9713.jpg",
   },
 ];

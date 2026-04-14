@@ -35,6 +35,11 @@ import EmpathyLedgerManagementPage from "../pages/EmpathyLedgerManagementPage";
 import EmpathyLedgerTestPage from "../pages/EmpathyLedgerTestPage";
 import VideoGalleryPage from "../pages/VideoGalleryPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import BrandSandboxPage from "../pages/BrandSandboxPage";
+import TeamPage from "../pages/TeamPage";
+import YouthHubPage from "../pages/YouthHubPage";
+import SystemTerminalPage from "../pages/SystemTerminalPage";
+import ModelPage from "../pages/ModelPage";
 
 export const AppRoutes = () => {
   return (
@@ -46,23 +51,135 @@ export const AppRoutes = () => {
       <Route path="/demo" element={<DemoLoginPage />} />
 
       {/* Staff Portal - No main layout (has its own header) */}
-      <Route path="/staff-portal" element={<StaffPortalPage />} />
-      <Route path="/staff-portal/documents" element={<DocumentsPage />} />
-      <Route path="/staff-portal/documents/:documentId/analysis" element={<DocumentAnalysisPage />} />
-      <Route path="/staff-portal/impact" element={<ImpactOverviewPage />} />
-      <Route path="/staff-portal/impact/add-outcome" element={<AddOutcomePage />} />
-      <Route path="/staff-portal/impact/report" element={<ImpactReportPage />} />
-      <Route path="/staff-portal/impact/:serviceArea" element={<ServiceImpactDashboard />} />
-      <Route path="/staff-portal/media-manager" element={<EnhancedMediaManagerPage />} />
-      <Route path="/staff-portal/empathy-ledger-test" element={<EmpathyLedgerTestPage />} />
-      <Route path="/staff-portal/empathy-ledger" element={<EmpathyLedgerManagementPage />} />
-      <Route path="/staff" element={<StaffPortalPage />} />
-      <Route path="/presentation" element={<PresentationPage />} />
+      <Route
+        path="/staff-portal"
+        element={
+          <ProtectedRoute>
+            <StaffPortalPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/documents"
+        element={
+          <ProtectedRoute>
+            <DocumentsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/documents/:documentId/analysis"
+        element={
+          <ProtectedRoute>
+            <DocumentAnalysisPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/impact"
+        element={
+          <ProtectedRoute>
+            <ImpactOverviewPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/impact/add-outcome"
+        element={
+          <ProtectedRoute>
+            <AddOutcomePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/impact/report"
+        element={
+          <ProtectedRoute>
+            <ImpactReportPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/impact/:serviceArea"
+        element={
+          <ProtectedRoute>
+            <ServiceImpactDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/media-manager"
+        element={
+          <ProtectedRoute requiredPermission="manage_media">
+            <EnhancedMediaManagerPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/empathy-ledger-test"
+        element={
+          <ProtectedRoute requireCulturalAuthority>
+            <EmpathyLedgerTestPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff-portal/empathy-ledger"
+        element={
+          <ProtectedRoute requireCulturalAuthority>
+            <EmpathyLedgerManagementPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/staff"
+        element={
+          <ProtectedRoute>
+            <StaffPortalPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/presentation"
+        element={
+          <ProtectedRoute requiredPermission="view_analytics">
+            <PresentationPage />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Standalone pages - no layout */}
+      <Route path="/youth-hub" element={<YouthHubPage />} />
+      <Route
+        path="/system"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <SystemTerminalPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/model"
+        element={
+          <ProtectedRoute requiredRole="admin">
+            <ModelPage />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Main public site with layout */}
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route
+          path="brand-sandbox"
+          element={
+            <ProtectedRoute requiredPermission="create_content">
+              <BrandSandboxPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="about" element={<AboutPage />} />
+        <Route path="team" element={<TeamPage />} />
         <Route path="services" element={<ServicesPage />} />
         <Route path="services/:serviceId" element={<ServiceDetailPage />} />
         <Route path="stories" element={<StoriesPage />} />
@@ -121,8 +238,22 @@ export const AppRoutes = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="demo-dashboard" element={<ContentDashboardPage />} />
-        <Route path="gallery-upload" element={<GalleryUploadPage />} />
+        <Route
+          path="demo-dashboard"
+          element={
+            <ProtectedRoute requiredPermission="create_content">
+              <ContentDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="gallery-upload"
+          element={
+            <ProtectedRoute requiredPermission="manage_media">
+              <GalleryUploadPage />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

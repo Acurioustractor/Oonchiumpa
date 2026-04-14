@@ -132,35 +132,35 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-earth-950 mb-2">
           🎭 My Story Dashboard
         </h1>
-        <p className="text-gray-600">
+        <p className="text-earth-600">
           Welcome back, {storyteller.name}. You have full control over your
           stories.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+        <div className="bg-eucalyptus-50 border border-eucalyptus-200 p-6 rounded-lg">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-blue-900">
+              <h3 className="text-lg font-semibold text-eucalyptus-900">
                 Total Stories
               </h3>
-              <p className="text-3xl font-bold text-blue-700">{stats.total}</p>
+              <p className="text-3xl font-bold text-eucalyptus-700">{stats.total}</p>
             </div>
             <div className="text-blue-400">📚</div>
           </div>
         </div>
 
-        <div className="bg-green-50 border border-green-200 p-6 rounded-lg">
+        <div className="bg-eucalyptus-50 border border-eucalyptus-200 p-6 rounded-lg">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-lg font-semibold text-green-900">
                 Visible Stories
               </h3>
-              <p className="text-3xl font-bold text-green-700">
+              <p className="text-3xl font-bold text-eucalyptus-700">
                 {stats.visible}
               </p>
             </div>
@@ -168,22 +168,22 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
           </div>
         </div>
 
-        <div className="bg-gray-50 border border-gray-200 p-6 rounded-lg">
+        <div className="bg-earth-50 border border-earth-200 p-6 rounded-lg">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900">
+              <h3 className="text-lg font-semibold text-earth-950">
                 Hidden Stories
               </h3>
-              <p className="text-3xl font-bold text-gray-700">{stats.hidden}</p>
+              <p className="text-3xl font-bold text-earth-700">{stats.hidden}</p>
             </div>
-            <div className="text-gray-400">🔒</div>
+            <div className="text-earth-400">🔒</div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-earth-200 rounded-lg p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Your Stories</h2>
+          <h2 className="text-xl font-semibold text-earth-950">Your Stories</h2>
 
           <div className="flex gap-2">
             <button
@@ -191,7 +191,7 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
               className={`px-4 py-2 text-sm font-medium rounded-md ${
                 activeFilter === "all"
                   ? "bg-amber-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  : "bg-earth-100 text-earth-700 hover:bg-earth-200"
               }`}
             >
               All ({stats.total})
@@ -200,8 +200,8 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
               onClick={() => setActiveFilter("visible")}
               className={`px-4 py-2 text-sm font-medium rounded-md ${
                 activeFilter === "visible"
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-eucalyptus-600 text-white"
+                  : "bg-earth-100 text-earth-700 hover:bg-earth-200"
               }`}
             >
               Visible ({stats.visible})
@@ -210,8 +210,8 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
               onClick={() => setActiveFilter("hidden")}
               className={`px-4 py-2 text-sm font-medium rounded-md ${
                 activeFilter === "hidden"
-                  ? "bg-gray-600 text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-earth-600 text-white"
+                  : "bg-earth-100 text-earth-700 hover:bg-earth-200"
               }`}
             >
               Hidden ({stats.hidden})
@@ -221,13 +221,13 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
 
         {filteredStories.length === 0 ? (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">📖</div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <div className="text-earth-400 text-6xl mb-4">📖</div>
+            <h3 className="text-lg font-medium text-earth-950 mb-2">
               {activeFilter === "all"
                 ? "No stories yet"
                 : `No ${activeFilter} stories`}
             </h3>
-            <p className="text-gray-500">
+            <p className="text-earth-500">
               {activeFilter === "all"
                 ? "Start sharing your story with the community"
                 : `You don't have any ${activeFilter} stories at the moment`}
@@ -238,16 +238,16 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
             {filteredStories.map((story) => (
               <div
                 key={story.id}
-                className="border border-gray-200 rounded-lg p-6"
+                className="border border-earth-200 rounded-lg p-6"
               >
                 <div className="flex gap-6">
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-4">
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                        <h3 className="text-lg font-semibold text-earth-950 mb-2">
                           {story.title}
                         </h3>
-                        <p className="text-gray-600 text-sm mb-4">
+                        <p className="text-earth-600 text-sm mb-4">
                           {story.content.length > 200
                             ? `${story.content.substring(0, 200)}...`
                             : story.content}
@@ -255,7 +255,7 @@ export const StorytellerDashboard: React.FC<StorytellerDashboardProps> = ({
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 text-sm text-earth-500">
                       <span>
                         Created:{" "}
                         {new Date(story.created_at).toLocaleDateString()}

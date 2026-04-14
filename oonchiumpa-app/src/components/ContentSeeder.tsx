@@ -34,7 +34,7 @@ export const ContentSeeder: React.FC = () => {
       <CardBody className="p-8">
         <div className="text-center">
           <div className="text-6xl mb-4">🌱</div>
-          <h2 className="text-2xl font-bold text-earth-900 mb-4">
+          <h2 className="text-2xl font-bold text-earth-950 mb-4">
             Platform Content Seeding
           </h2>
           <p className="text-earth-700 mb-6 max-w-2xl mx-auto">
@@ -100,12 +100,12 @@ export const ContentSeeder: React.FC = () => {
           {result && (
             <div className="mt-6">
               {result.success ? (
-                <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <div className="bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg p-6">
                   <div className="text-4xl mb-3">✅</div>
-                  <h3 className="text-lg font-semibold text-green-800 mb-2">
+                  <h3 className="text-lg font-semibold text-eucalyptus-800 mb-2">
                     Content Successfully Seeded!
                   </h3>
-                  <p className="text-green-700">{result.message}</p>
+                  <p className="text-eucalyptus-700">{result.message}</p>
                   <div className="mt-4 space-x-4">
                     <Button
                       variant="secondary"
@@ -122,12 +122,12 @@ export const ContentSeeder: React.FC = () => {
                   </div>
                 </div>
               ) : (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6">
+                <div className="bg-sunset-50 border border-sunset-200 rounded-lg p-6">
                   <div className="text-4xl mb-3">❌</div>
-                  <h3 className="text-lg font-semibold text-red-800 mb-2">
+                  <h3 className="text-lg font-semibold text-sunset-800 mb-2">
                     Seeding Failed
                   </h3>
-                  <p className="text-red-700">{result.error}</p>
+                  <p className="text-sunset-700">{result.error}</p>
                   <Button
                     variant="secondary"
                     onClick={() => setResult(null)}
@@ -141,7 +141,7 @@ export const ContentSeeder: React.FC = () => {
           )}
 
           <div className="mt-8 pt-6 border-t border-earth-200">
-            <h3 className="font-semibold text-earth-900 mb-3">
+            <h3 className="font-semibold text-earth-950 mb-3">
               📋 Next Steps After Seeding
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-left">

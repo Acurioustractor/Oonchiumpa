@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { StaffPortalHeader } from '../components/StaffPortalHeader';
 import { supabase } from '../config/supabase';
 import { MediaUpload } from '../components/MediaUpload';
+import { MediaBrowser } from '../components/MediaBrowser';
+import { getAllPhotos, setPhoto, clearPhoto, resetAll } from '../services/siteConfig';
+import type { MediaAsset } from '../services/empathyLedgerClient';
 
 const OONCHIUMPA_ORG_ID = 'c53077e1-98de-4216-9149-6268891ff62e';
 
@@ -25,19 +28,130 @@ interface Outcome {
   indicator_name: string;
 }
 
+interface FeaturedSlot {
+  slotId: string;
+  title: string;
+  route: string;
+  defaultSrc: string;
+  defaultAlt: string;
+  context: string;
+}
+
+const FEATURED_IMAGE_SLOTS: FeaturedSlot[] = [
+  {
+    slotId: 'hero-main',
+    title: 'Home Hero',
+    route: '/',
+    defaultSrc: '/images/hero/hero-main.jpg',
+    defaultAlt: 'Sunset through gum trees at Atnarpa Station, Arrernte Country',
+    context: 'Primary opening image on Home page',
+  },
+  {
+    slotId: 'founders-photo',
+    title: 'Founders Section',
+    route: '/',
+    defaultSrc: '/images/stories/IMG_9713.jpg',
+    defaultAlt: 'Kristy Bloomfield and Tanya Turner at Atnarpa',
+    context: 'Leadership story section on Home page',
+  },
+  {
+    slotId: 'home-what-diversion',
+    title: 'Home Showcase: Youth Diversion',
+    route: '/',
+    defaultSrc: '/images/model/atnarpa-facilities.jpg',
+    defaultAlt: 'Young people at Oonchiumpa facilities',
+    context: 'What we do in practice card',
+  },
+  {
+    slotId: 'home-what-country',
+    title: 'Home Showcase: On Country Healing',
+    route: '/',
+    defaultSrc: '/images/model/community-on-country.jpg',
+    defaultAlt: 'Young people and families on Country at Atnarpa',
+    context: 'What we do in practice card',
+  },
+  {
+    slotId: 'home-what-family',
+    title: 'Home Showcase: Family Support',
+    route: '/',
+    defaultSrc: '/images/stories/IMG_9698.jpg',
+    defaultAlt: 'Oonchiumpa team with community members',
+    context: 'What we do in practice card',
+  },
+  {
+    slotId: 'country-ranges',
+    title: 'Country Feature',
+    route: '/',
+    defaultSrc: '/images/model/atnarpa-ranges.jpg',
+    defaultAlt: 'MacDonnell Ranges from Atnarpa Station',
+    context: 'Returning to Country section',
+  },
+  {
+    slotId: 'country-land-claim',
+    title: 'Country Feature: Land Claim',
+    route: '/',
+    defaultSrc: '/images/model/community-on-country.jpg',
+    defaultAlt: 'Bloomfield and Wiltshire families at the Atnarpa land claim ceremony',
+    context: 'Returning to Country section secondary image',
+  },
+  {
+    slotId: 'walker-inquest-bg',
+    title: 'Walker Inquest Background',
+    route: '/',
+    defaultSrc: '/images/model/atnarpa-land.jpg',
+    defaultAlt: 'Atnarpa Station looking toward the ranges',
+    context: 'Evidence and policy quote section',
+  },
+  {
+    slotId: 'services-hero',
+    title: 'Services Hero',
+    route: '/services',
+    defaultSrc: '/images/model/atnarpa-facilities.jpg',
+    defaultAlt: 'Oonchiumpa facilities at Atnarpa Station',
+    context: 'Opening image on Services page',
+  },
+  {
+    slotId: 'services-showcase-diversion',
+    title: 'Services Showcase: Diversion',
+    route: '/services',
+    defaultSrc: '/images/model/atnarpa-facilities.jpg',
+    defaultAlt: 'Youth program activities at Oonchiumpa',
+    context: 'In-practice service showcase row',
+  },
+  {
+    slotId: 'services-showcase-country',
+    title: 'Services Showcase: On Country',
+    route: '/services',
+    defaultSrc: '/images/model/community-on-country.jpg',
+    defaultAlt: 'Young people and families together on Country',
+    context: 'In-practice service showcase row',
+  },
+  {
+    slotId: 'services-showcase-family',
+    title: 'Services Showcase: Family Support',
+    route: '/services',
+    defaultSrc: '/images/stories/IMG_9713.jpg',
+    defaultAlt: 'Oonchiumpa leaders and community members',
+    context: 'In-practice service showcase row',
+  },
+];
+
+type FeaturedPhotoMap = Record<string, { url: string; alt: string; assetId?: string }>;
+
 export default function EnhancedMediaManagerPage() {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [outcomes, setOutcomes] = useState<Outcome[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMedia, setSelectedMedia] = useState<Set<string>>(new Set());
   const [showBulkActions, setShowBulkActions] = useState(false);
+  const [featuredPhotos, setFeaturedPhotos] = useState<FeaturedPhotoMap>({});
 
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState<'all' | 'image' | 'video' | 'audio'>('all');
   const [filterService, setFilterService] = useState<string>('all');
   const [filterTags, setFilterTags] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<'gallery' | 'upload' | 'service-galleries' | 'empathy-ledger'>('gallery');
+  const [activeTab, setActiveTab] = useState<'gallery' | 'upload' | 'service-galleries' | 'empathy-ledger' | 'featured'>('gallery');
 
   // Bulk actions
   const [bulkServiceArea, setBulkServiceArea] = useState('');
@@ -46,6 +160,7 @@ export default function EnhancedMediaManagerPage() {
 
   useEffect(() => {
     loadData();
+    setFeaturedPhotos(getAllPhotos());
   }, []);
 
   const loadData = async () => {
@@ -174,6 +289,30 @@ export default function EnhancedMediaManagerPage() {
     }
   };
 
+  const refreshFeaturedPhotos = () => {
+    setFeaturedPhotos(getAllPhotos());
+  };
+
+  const handleFeaturedSelect = (slot: FeaturedSlot, url: string, asset: MediaAsset) => {
+    const resolvedAlt = asset.altText || asset.title || asset.filename || slot.defaultAlt;
+    setPhoto(slot.slotId, url, resolvedAlt, asset.id);
+    refreshFeaturedPhotos();
+  };
+
+  const handleFeaturedReset = (slotId: string) => {
+    clearPhoto(slotId);
+    refreshFeaturedPhotos();
+  };
+
+  const handleFeaturedResetAll = () => {
+    const confirmed = window.confirm(
+      'Reset all featured image slots to defaults for this browser?',
+    );
+    if (!confirmed) return;
+    resetAll();
+    refreshFeaturedPhotos();
+  };
+
   const serviceNames: Record<string, string> = {
     youth_mentorship: 'Youth Mentorship',
     true_justice: 'True Justice',
@@ -182,10 +321,13 @@ export default function EnhancedMediaManagerPage() {
     good_news_stories: 'Good News Stories',
     untagged: 'Untagged'
   };
+  const featuredOverrideCount = FEATURED_IMAGE_SLOTS.filter(
+    (slot) => Boolean(featuredPhotos[slot.slotId]),
+  ).length;
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="min-h-screen bg-gradient-to-b from-earth-50 to-white">
         <StaffPortalHeader />
         <div className="container mx-auto px-4 py-12 text-center">
           <div className="text-xl">Loading media...</div>
@@ -195,27 +337,27 @@ export default function EnhancedMediaManagerPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-earth-50 to-white">
       <StaffPortalHeader />
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">📸 Enhanced Media Manager</h1>
-            <p className="text-gray-600">
+            <h1 className="text-4xl font-bold text-earth-950 mb-2">📸 Enhanced Media Manager</h1>
+            <p className="text-earth-600">
               Manage photos and videos with advanced filtering, bulk tagging, and Impact Framework integration
             </p>
           </div>
 
           {/* Tabs */}
-          <div className="flex space-x-4 mb-8 border-b border-gray-200">
+          <div className="flex space-x-4 mb-8 border-b border-earth-200">
             <button
               onClick={() => setActiveTab('gallery')}
               className={`px-6 py-3 font-medium transition ${
                 activeTab === 'gallery'
-                  ? 'border-b-2 border-blue-600 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'border-b-2 border-eucalyptus-600 text-eucalyptus-600'
+                  : 'text-earth-600 hover:text-earth-950'
               }`}
             >
               📁 Media Gallery
@@ -224,8 +366,8 @@ export default function EnhancedMediaManagerPage() {
               onClick={() => setActiveTab('upload')}
               className={`px-6 py-3 font-medium transition ${
                 activeTab === 'upload'
-                  ? 'border-b-2 border-blue-600 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'border-b-2 border-eucalyptus-600 text-eucalyptus-600'
+                  : 'text-earth-600 hover:text-earth-950'
               }`}
             >
               📤 Upload Media
@@ -234,8 +376,8 @@ export default function EnhancedMediaManagerPage() {
               onClick={() => setActiveTab('service-galleries')}
               className={`px-6 py-3 font-medium transition ${
                 activeTab === 'service-galleries'
-                  ? 'border-b-2 border-blue-600 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'border-b-2 border-eucalyptus-600 text-eucalyptus-600'
+                  : 'text-earth-600 hover:text-earth-950'
               }`}
             >
               🎯 Service Galleries
@@ -244,11 +386,21 @@ export default function EnhancedMediaManagerPage() {
               onClick={() => setActiveTab('empathy-ledger')}
               className={`px-6 py-3 font-medium transition ${
                 activeTab === 'empathy-ledger'
-                  ? 'border-b-2 border-blue-600 text-blue-600'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'border-b-2 border-eucalyptus-600 text-eucalyptus-600'
+                  : 'text-earth-600 hover:text-earth-950'
               }`}
             >
               💚 Empathy Ledger Photos
+            </button>
+            <button
+              onClick={() => setActiveTab('featured')}
+              className={`px-6 py-3 font-medium transition ${
+                activeTab === 'featured'
+                  ? 'border-b-2 border-eucalyptus-600 text-eucalyptus-600'
+                  : 'text-earth-600 hover:text-earth-950'
+              }`}
+            >
+              ⭐ Featured Slots
             </button>
           </div>
 
@@ -278,7 +430,7 @@ export default function EnhancedMediaManagerPage() {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   {/* Search */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-earth-700 mb-2">
                       Search
                     </label>
                     <input
@@ -286,19 +438,19 @@ export default function EnhancedMediaManagerPage() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search titles..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-earth-300 rounded-xl focus:ring-2 focus:ring-eucalyptus-500 focus:border-transparent"
                     />
                   </div>
 
                   {/* Type Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-earth-700 mb-2">
                       Media Type
                     </label>
                     <select
                       value={filterType}
                       onChange={(e) => setFilterType(e.target.value as any)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-earth-300 rounded-xl focus:ring-2 focus:ring-eucalyptus-500 focus:border-transparent"
                     >
                       <option value="all">All Types</option>
                       <option value="image">Images</option>
@@ -309,13 +461,13 @@ export default function EnhancedMediaManagerPage() {
 
                   {/* Service Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-earth-700 mb-2">
                       Service Area
                     </label>
                     <select
                       value={filterService}
                       onChange={(e) => setFilterService(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-earth-300 rounded-xl focus:ring-2 focus:ring-eucalyptus-500 focus:border-transparent"
                     >
                       <option value="all">All Services</option>
                       <option value="youth_mentorship">Youth Mentorship</option>
@@ -328,19 +480,19 @@ export default function EnhancedMediaManagerPage() {
 
                   {/* Actions */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-earth-700 mb-2">
                       Actions
                     </label>
                     <div className="flex gap-2">
                       <button
                         onClick={selectAll}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition text-sm"
+                        className="px-4 py-2 bg-eucalyptus-600 text-white rounded-xl hover:bg-eucalyptus-700 transition text-sm"
                       >
                         Select All
                       </button>
                       <button
                         onClick={clearSelection}
-                        className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition text-sm"
+                        className="px-4 py-2 bg-earth-200 text-earth-700 rounded-xl hover:bg-earth-300 transition text-sm"
                       >
                         Clear
                       </button>
@@ -349,11 +501,11 @@ export default function EnhancedMediaManagerPage() {
                 </div>
 
                 {/* Stats */}
-                <div className="mt-4 pt-4 border-t border-gray-200">
-                  <div className="flex items-center justify-between text-sm text-gray-600">
+                <div className="mt-4 pt-4 border-t border-earth-200">
+                  <div className="flex items-center justify-between text-sm text-earth-600">
                     <span>Showing {filteredMedia.length} of {media.length} items</span>
                     {selectedMedia.size > 0 && (
-                      <span className="font-medium text-blue-600">
+                      <span className="font-medium text-eucalyptus-600">
                         {selectedMedia.size} selected
                       </span>
                     )}
@@ -363,20 +515,20 @@ export default function EnhancedMediaManagerPage() {
 
               {/* Bulk Actions Panel */}
               {showBulkActions && (
-                <div className="bg-yellow-50 border-2 border-yellow-400 rounded-lg p-6 mb-8">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">
+                <div className="bg-ochre-50 border-2 border-ochre-400 rounded-lg p-6 mb-8">
+                  <h3 className="text-lg font-bold text-earth-950 mb-4">
                     🏷️ Bulk Actions ({selectedMedia.size} items selected)
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-earth-700 mb-2">
                         Tag Service Area
                       </label>
                       <select
                         value={bulkServiceArea}
                         onChange={(e) => setBulkServiceArea(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                        className="w-full px-4 py-2 border border-earth-300 rounded-xl"
                       >
                         <option value="">-- Select Service --</option>
                         <option value="youth_mentorship">Youth Mentorship</option>
@@ -388,13 +540,13 @@ export default function EnhancedMediaManagerPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-earth-700 mb-2">
                         Link to Outcome
                       </label>
                       <select
                         value={bulkOutcomeId}
                         onChange={(e) => setBulkOutcomeId(e.target.value)}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                        className="w-full px-4 py-2 border border-earth-300 rounded-xl"
                       >
                         <option value="">-- Select Outcome --</option>
                         {outcomes.map(outcome => (
@@ -406,7 +558,7 @@ export default function EnhancedMediaManagerPage() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-earth-700 mb-2">
                         Add Tags (comma-separated)
                       </label>
                       <input
@@ -414,7 +566,7 @@ export default function EnhancedMediaManagerPage() {
                         value={bulkTags}
                         onChange={(e) => setBulkTags(e.target.value)}
                         placeholder="e.g., trip, cultural, youth"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md"
+                        className="w-full px-4 py-2 border border-earth-300 rounded-xl"
                       />
                     </div>
                   </div>
@@ -422,13 +574,13 @@ export default function EnhancedMediaManagerPage() {
                   <div className="flex items-center gap-4">
                     <button
                       onClick={applyBulkActions}
-                      className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium transition"
+                      className="px-6 py-2 bg-eucalyptus-600 text-white rounded-xl hover:bg-eucalyptus-700 font-medium transition"
                     >
                       ✅ Apply to {selectedMedia.size} Items
                     </button>
                     <button
                       onClick={clearSelection}
-                      className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition"
+                      className="px-6 py-2 bg-earth-200 text-earth-700 rounded-xl hover:bg-earth-300 transition"
                     >
                       Cancel
                     </button>
@@ -443,8 +595,8 @@ export default function EnhancedMediaManagerPage() {
                     key={item.id}
                     className={`relative group cursor-pointer rounded-lg overflow-hidden border-2 transition ${
                       selectedMedia.has(item.id)
-                        ? 'border-blue-600 ring-2 ring-blue-300'
-                        : 'border-gray-200 hover:border-gray-400'
+                        ? 'border-eucalyptus-600 ring-2 ring-blue-300'
+                        : 'border-earth-200 hover:border-earth-400'
                     }`}
                     onClick={() => toggleSelection(item.id)}
                   >
@@ -459,7 +611,7 @@ export default function EnhancedMediaManagerPage() {
                     </div>
 
                     {/* Image */}
-                    <div className="aspect-square bg-gray-100">
+                    <div className="aspect-square bg-earth-100">
                       <img
                         src={item.thumbnail_url || item.file_url}
                         alt={item.title}
@@ -473,14 +625,14 @@ export default function EnhancedMediaManagerPage() {
                         {item.title}
                       </div>
                       {item.service_area && (
-                        <div className="text-xs text-gray-300 mt-1">
+                        <div className="text-xs text-earth-300 mt-1">
                           {serviceNames[item.service_area]}
                         </div>
                       )}
                       {item.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
                           {item.tags.slice(0, 2).map(tag => (
-                            <span key={tag} className="px-2 py-0.5 bg-blue-500 text-white text-xs rounded">
+                            <span key={tag} className="px-2 py-0.5 bg-eucalyptus-500 text-white text-xs rounded">
                               {tag}
                             </span>
                           ))}
@@ -492,10 +644,10 @@ export default function EnhancedMediaManagerPage() {
               </div>
 
               {filteredMedia.length === 0 && (
-                <div className="text-center py-12 bg-gray-50 rounded-lg">
+                <div className="text-center py-12 bg-earth-50 rounded-lg">
                   <div className="text-4xl mb-4">📭</div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No media found</h3>
-                  <p className="text-gray-600">Try adjusting your filters or upload new media</p>
+                  <h3 className="text-lg font-semibold text-earth-950 mb-2">No media found</h3>
+                  <p className="text-earth-600">Try adjusting your filters or upload new media</p>
                 </div>
               )}
             </>
@@ -507,10 +659,10 @@ export default function EnhancedMediaManagerPage() {
               {Object.entries(mediaByService).map(([service, items]) => (
                 <div key={service} className="bg-white rounded-lg shadow-lg p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-2xl font-bold text-earth-950">
                       {serviceNames[service] || service}
                     </h2>
-                    <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                    <span className="px-3 py-1 bg-eucalyptus-100 text-eucalyptus-700 rounded-full text-sm font-medium">
                       {items.length} photos
                     </span>
                   </div>
@@ -529,7 +681,7 @@ export default function EnhancedMediaManagerPage() {
 
                   {items.length > 12 && (
                     <div className="mt-4 text-center">
-                      <button className="text-blue-600 hover:text-blue-700 font-medium">
+                      <button className="text-eucalyptus-600 hover:text-eucalyptus-700 font-medium">
                         View all {items.length} photos →
                       </button>
                     </div>
@@ -543,8 +695,8 @@ export default function EnhancedMediaManagerPage() {
           {activeTab === 'empathy-ledger' && (
             <div className="bg-white rounded-lg shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">💚 Photos from Empathy Ledger</h2>
-                <p className="text-gray-600">
+                <h2 className="text-2xl font-bold text-earth-950 mb-2">💚 Photos from Empathy Ledger</h2>
+                <p className="text-earth-600">
                   Photos automatically synced from Empathy Ledger storytelling sessions
                 </p>
               </div>
@@ -554,13 +706,13 @@ export default function EnhancedMediaManagerPage() {
 
                 if (empathyPhotos.length === 0) {
                   return (
-                    <div className="text-center py-12 bg-gray-50 rounded-lg">
+                    <div className="text-center py-12 bg-earth-50 rounded-lg">
                       <div className="text-4xl mb-4">💚</div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Empathy Ledger photos yet</h3>
-                      <p className="text-gray-600 mb-4">
+                      <h3 className="text-lg font-semibold text-earth-950 mb-2">No Empathy Ledger photos yet</h3>
+                      <p className="text-earth-600 mb-4">
                         Photos will appear here when empathy entries with media are synced
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-earth-500">
                         Go to the Empathy Ledger page to create entries with photos, then run the sync.
                       </p>
                     </div>
@@ -570,14 +722,14 @@ export default function EnhancedMediaManagerPage() {
                 return (
                   <>
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-earth-600">
                         {empathyPhotos.length} photo{empathyPhotos.length !== 1 ? 's' : ''} synced from Empathy Ledger
                       </span>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                       {empathyPhotos.map(item => (
-                        <div key={item.id} className="group relative aspect-square rounded-lg overflow-hidden border-2 border-green-200">
+                        <div key={item.id} className="group relative aspect-square rounded-lg overflow-hidden border-2 border-eucalyptus-200">
                           <img
                             src={item.thumbnail_url || item.file_url}
                             alt={item.title}
@@ -585,7 +737,7 @@ export default function EnhancedMediaManagerPage() {
                           />
                           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 group-hover:opacity-100 transition">
                             <p className="text-white text-xs font-medium truncate">{item.title}</p>
-                            <p className="text-green-300 text-xs">💚 Empathy Ledger</p>
+                            <p className="text-eucalyptus-300 text-xs">💚 Empathy Ledger</p>
                           </div>
                         </div>
                       ))}
@@ -593,6 +745,97 @@ export default function EnhancedMediaManagerPage() {
                   </>
                 );
               })()}
+            </div>
+          )}
+
+          {/* Featured Image Slots Tab */}
+          {activeTab === 'featured' && (
+            <div className="bg-white rounded-lg shadow-lg p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-earth-950 mb-2">⭐ Featured Image Slots</h2>
+                  <p className="text-earth-600">
+                    Curate key Home and Services showcase images from one place.
+                  </p>
+                  <p className="text-sm text-earth-500 mt-2">
+                    {featuredOverrideCount} of {FEATURED_IMAGE_SLOTS.length} slots currently using custom images.
+                  </p>
+                </div>
+                <button
+                  onClick={handleFeaturedResetAll}
+                  className="px-4 py-2 bg-earth-100 text-earth-700 rounded-xl hover:bg-earth-200 transition text-sm"
+                >
+                  Reset All to Defaults
+                </button>
+              </div>
+
+              <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                <p className="text-sm text-amber-900">
+                  Selections are saved in this browser via local storage. Use the same browser/profile for editing and QA review.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {FEATURED_IMAGE_SLOTS.map((slot) => {
+                  const override = featuredPhotos[slot.slotId];
+                  const previewUrl = override?.url || slot.defaultSrc;
+                  const previewAlt = override?.alt || slot.defaultAlt;
+                  const hasOverride = Boolean(override);
+
+                  return (
+                    <article
+                      key={slot.slotId}
+                      className="border border-earth-200 rounded-lg overflow-hidden bg-white"
+                    >
+                      <div className="relative aspect-video bg-earth-100">
+                        <img
+                          src={previewUrl}
+                          alt={previewAlt}
+                          className="w-full h-full object-cover"
+                        />
+                        <span
+                          className={`absolute top-2 right-2 px-2 py-1 rounded text-xs font-medium ${
+                            hasOverride ? 'bg-eucalyptus-600 text-white' : 'bg-earth-700 text-white'
+                          }`}
+                        >
+                          {hasOverride ? 'Custom' : 'Default'}
+                        </span>
+                      </div>
+
+                      <div className="p-4">
+                        <p className="text-xs uppercase tracking-[0.14em] text-ochre-600 font-medium mb-1">
+                          {slot.route}
+                        </p>
+                        <h3 className="text-base font-semibold text-earth-950 mb-1">{slot.title}</h3>
+                        <p className="text-sm text-earth-600 mb-3">{slot.context}</p>
+                        <p className="text-xs text-earth-500 mb-4 line-clamp-2">
+                          Alt text: {previewAlt}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2">
+                          <MediaBrowser
+                            onSelect={(url, asset) => handleFeaturedSelect(slot, url, asset)}
+                            selectedUrl={override?.url}
+                            trigger={
+                              <button className="px-3 py-2 bg-eucalyptus-600 text-white rounded-xl hover:bg-eucalyptus-700 transition text-sm font-medium">
+                                Choose Photo
+                              </button>
+                            }
+                          />
+                          {hasOverride && (
+                            <button
+                              onClick={() => handleFeaturedReset(slot.slotId)}
+                              className="px-3 py-2 bg-earth-100 text-earth-700 rounded-xl hover:bg-earth-200 transition text-sm"
+                            >
+                              Reset Slot
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>

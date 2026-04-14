@@ -131,7 +131,7 @@ export const StatsManager: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-earth-900">Impact Stats Manager</h2>
+        <h2 className="text-2xl font-bold text-earth-950">Impact Stats Manager</h2>
         <Button variant="primary" onClick={handleCreateNew}>
           + Add New Stat
         </Button>
@@ -161,7 +161,7 @@ export const StatsManager: React.FC = () => {
       {/* Stats List by Section */}
       {Object.entries(statsBySection).map(([section, sectionStats]) => (
         <div key={section}>
-          <h3 className="text-lg font-semibold text-earth-900 mb-3 capitalize">
+          <h3 className="text-lg font-semibold text-earth-950 mb-3 capitalize">
             {section} Stats
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -172,7 +172,7 @@ export const StatsManager: React.FC = () => {
                     <div className="text-4xl font-bold text-gradient mb-2">
                       {stat.number}
                     </div>
-                    <div className="text-lg font-semibold text-earth-900 mb-1">
+                    <div className="text-lg font-semibold text-earth-950 mb-1">
                       {stat.label}
                     </div>
                     {stat.description && (
@@ -184,7 +184,7 @@ export const StatsManager: React.FC = () => {
                       {stat.icon && <span>Icon: {stat.icon}</span>}
                       <span>Order: {stat.display_order}</span>
                       {!stat.is_visible && (
-                        <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded">
+                        <span className="px-2 py-1 bg-earth-200 text-earth-700 rounded">
                           Hidden
                         </span>
                       )}
@@ -235,7 +235,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Number/Value * (e.g., "95%", "30+")
           </label>
           <input
@@ -249,7 +249,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Label *
           </label>
           <input
@@ -264,7 +264,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-earth-900 mb-1">
+        <label className="block text-sm font-medium text-earth-950 mb-1">
           Description
         </label>
         <input
@@ -278,7 +278,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
 
       <div className="grid grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Icon Name
           </label>
           <input
@@ -291,7 +291,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Section
           </label>
           <select
@@ -306,7 +306,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-earth-900 mb-1">
+          <label className="block text-sm font-medium text-earth-950 mb-1">
             Display Order
           </label>
           <input
@@ -326,7 +326,7 @@ const StatForm: React.FC<StatFormProps> = ({ stat, onSave, onCancel }) => {
             onChange={(e) => setFormData({ ...formData, is_visible: e.target.checked })}
             className="rounded"
           />
-          <span className="text-sm font-medium text-earth-900">Visible on website</span>
+          <span className="text-sm font-medium text-earth-950">Visible on website</span>
         </label>
       </div>
 

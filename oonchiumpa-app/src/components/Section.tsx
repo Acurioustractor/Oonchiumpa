@@ -3,23 +3,31 @@ import React from 'react';
 interface SectionProps {
   children: React.ReactNode;
   className?: string;
+  containerClassName?: string;
   pattern?: boolean;
   id?: string;
+  noContainer?: boolean;
 }
 
 export const Section: React.FC<SectionProps> = ({
   children,
   className = '',
+  containerClassName = '',
   pattern = false,
-  id
+  id,
+  noContainer = false,
 }) => {
   const patternClass = pattern ? 'section-pattern' : '';
-  
+
   return (
-    <section id={id} className={`py-16 md:py-24 lg:py-32 ${patternClass} ${className}`}>
-      <div className="container-custom">
-        {children}
-      </div>
+    <section id={id} className={`py-20 md:py-24 lg:py-28 ${patternClass} ${className}`}>
+      {noContainer ? (
+        children
+      ) : (
+        <div className={`container-custom ${containerClassName}`}>
+          {children}
+        </div>
+      )}
     </section>
   );
 };

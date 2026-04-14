@@ -129,12 +129,12 @@ export const EmpathyLedgerControls: React.FC<EmpathyLedgerControlsProps> = ({
 
   if (!isOwner) {
     return (
-      <div className="bg-gray-50 p-3 rounded-lg border">
+      <div className="bg-earth-50 p-3 rounded-lg border">
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-600">Story Status</span>
+          <span className="text-sm text-earth-600">Story Status</span>
           <div className="flex items-center gap-2">
             <div
-              className={`w-3 h-3 rounded-full ${isActive ? "bg-green-500" : "bg-gray-400"}`}
+              className={`w-3 h-3 rounded-full ${isActive ? "bg-eucalyptus-500" : "bg-earth-400"}`}
             />
             <span className="text-sm font-medium">
               {isActive ? "Visible" : "Hidden"}
@@ -143,8 +143,8 @@ export const EmpathyLedgerControls: React.FC<EmpathyLedgerControlsProps> = ({
         </div>
 
         <div className="mt-2 flex items-center gap-2">
-          <span className="text-xs text-gray-500">Visibility:</span>
-          <span className="text-xs font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded">
+          <span className="text-xs text-earth-500">Visibility:</span>
+          <span className="text-xs font-medium bg-eucalyptus-100 text-eucalyptus-800 px-2 py-1 rounded">
             {visibilityLevel}
           </span>
         </div>
@@ -172,7 +172,7 @@ export const EmpathyLedgerControls: React.FC<EmpathyLedgerControlsProps> = ({
             onClick={() => toggleStoryVisibility(!isActive)}
             disabled={isLoading}
             className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-              isActive ? "bg-green-500" : "bg-gray-300"
+              isActive ? "bg-eucalyptus-500" : "bg-earth-300"
             } ${isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           >
             <span
@@ -185,7 +185,7 @@ export const EmpathyLedgerControls: React.FC<EmpathyLedgerControlsProps> = ({
 
         <div className="flex items-center gap-2 text-sm">
           <div
-            className={`w-3 h-3 rounded-full ${isActive ? "bg-green-500" : "bg-red-500"}`}
+            className={`w-3 h-3 rounded-full ${isActive ? "bg-eucalyptus-500" : "bg-sunset-500"}`}
           />
           <span className="font-medium">
             {isActive
@@ -215,8 +215,8 @@ export const EmpathyLedgerControls: React.FC<EmpathyLedgerControlsProps> = ({
 
         {story.cultural_sensitivity === "high" ||
         story.cultural_sensitivity === "sacred" ? (
-          <div className="bg-red-50 border border-red-200 p-3 rounded">
-            <div className="flex items-center gap-2 text-red-800">
+          <div className="bg-sunset-50 border border-sunset-200 p-3 rounded">
+            <div className="flex items-center gap-2 text-sunset-800">
               <span>⚠️</span>
               <span className="text-xs font-medium">
                 Cultural Protocol: {story.cultural_sensitivity} sensitivity

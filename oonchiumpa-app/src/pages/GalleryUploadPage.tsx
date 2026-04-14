@@ -155,7 +155,7 @@ export const GalleryUploadPage: React.FC = () => {
     <>
       <Section className="bg-gradient-to-br from-sand-50 via-sand-100 to-ochre-50 pt-24">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-earth-900 mb-6">
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-earth-950 mb-6">
             Media <span className="text-gradient">Upload</span>
           </h1>
           <p className="text-lg md:text-xl text-earth-700">
@@ -170,7 +170,7 @@ export const GalleryUploadPage: React.FC = () => {
           {/* Photo Upload */}
           <Card>
             <CardBody>
-              <h2 className="text-2xl font-bold text-earth-900 mb-4">
+              <h2 className="text-2xl font-bold text-earth-950 mb-4">
                 📸 Upload Photos
               </h2>
               <p className="text-earth-600 mb-6">
@@ -197,24 +197,24 @@ export const GalleryUploadPage: React.FC = () => {
                 </label>
 
                 {photoStatus.status === 'uploading' && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p className="text-blue-800 font-medium">
+                  <div className="bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg p-4">
+                    <p className="text-eucalyptus-800 font-medium">
                       Uploading... {photoStatus.uploadedCount} of {photoStatus.totalCount}
                     </p>
                   </div>
                 )}
 
                 {photoStatus.status === 'success' && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-green-800 font-medium">
+                  <div className="bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg p-4">
+                    <p className="text-eucalyptus-800 font-medium">
                       ✅ {photoStatus.message}
                     </p>
                   </div>
                 )}
 
                 {photoStatus.status === 'error' && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <p className="text-red-800 font-medium">
+                  <div className="bg-sunset-50 border border-sunset-200 rounded-lg p-4">
+                    <p className="text-sunset-800 font-medium">
                       ❌ {photoStatus.message}
                     </p>
                   </div>
@@ -226,7 +226,7 @@ export const GalleryUploadPage: React.FC = () => {
           {/* Video Embed */}
           <Card>
             <CardBody>
-              <h2 className="text-2xl font-bold text-earth-900 mb-4">
+              <h2 className="text-2xl font-bold text-earth-950 mb-4">
                 🎥 Add Video Embed
               </h2>
               <p className="text-earth-600 mb-6">
@@ -289,25 +289,25 @@ export const GalleryUploadPage: React.FC = () => {
                 </Button>
 
                 {videoStatus.status === 'success' && (
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <p className="text-green-800 font-medium">
+                  <div className="bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg p-4">
+                    <p className="text-eucalyptus-800 font-medium">
                       ✅ {videoStatus.message}
                     </p>
                   </div>
                 )}
 
                 {videoStatus.status === 'error' && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                    <p className="text-red-800 font-medium">
+                  <div className="bg-sunset-50 border border-sunset-200 rounded-lg p-4">
+                    <p className="text-sunset-800 font-medium">
                       ❌ {videoStatus.message}
                     </p>
                   </div>
                 )}
               </form>
 
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h3 className="font-semibold text-blue-900 mb-2">💡 How to get Descript embed URLs:</h3>
-                <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+              <div className="mt-6 p-4 bg-eucalyptus-50 rounded-lg">
+                <h3 className="font-semibold text-eucalyptus-900 mb-2">💡 How to get Descript embed URLs:</h3>
+                <ol className="text-sm text-eucalyptus-800 space-y-1 list-decimal list-inside">
                   <li>Open your video in Descript</li>
                   <li>Click "Publish" or "Share"</li>
                   <li>Copy the share link (it will be converted to embed format automatically)</li>

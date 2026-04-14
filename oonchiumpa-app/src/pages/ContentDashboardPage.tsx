@@ -62,7 +62,7 @@ export const ContentDashboardPage: React.FC = () => {
       {/* Header */}
       <Section className="bg-gradient-to-br from-ochre-50 via-eucalyptus-50 to-earth-50 pt-24">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-950 mb-6">
             📋 Content Management Dashboard
           </h1>
           <p className="text-lg md:text-xl text-earth-700 mb-8">
@@ -109,7 +109,7 @@ export const ContentDashboardPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card className="text-center p-6 bg-gradient-to-br from-ochre-50 to-ochre-100">
                 <div className="text-4xl mb-3">📖</div>
-                <h3 className="font-semibold text-earth-900 mb-2">
+                <h3 className="font-semibold text-earth-950 mb-2">
                   Story Creation
                 </h3>
                 <p className="text-earth-700 text-sm mb-4">
@@ -126,7 +126,7 @@ export const ContentDashboardPage: React.FC = () => {
 
               <Card className="text-center p-6 bg-gradient-to-br from-eucalyptus-50 to-eucalyptus-100">
                 <div className="text-4xl mb-3">📸</div>
-                <h3 className="font-semibold text-earth-900 mb-2">
+                <h3 className="font-semibold text-earth-950 mb-2">
                   Media Management
                 </h3>
                 <p className="text-earth-700 text-sm mb-4">
@@ -143,7 +143,7 @@ export const ContentDashboardPage: React.FC = () => {
 
               <Card className="text-center p-6 bg-gradient-to-br from-earth-50 to-earth-100">
                 <div className="text-4xl mb-3">🌱</div>
-                <h3 className="font-semibold text-earth-900 mb-2">
+                <h3 className="font-semibold text-earth-950 mb-2">
                   Content Seeding
                 </h3>
                 <p className="text-earth-700 text-sm mb-4">
@@ -162,7 +162,7 @@ export const ContentDashboardPage: React.FC = () => {
             {/* Quick Actions */}
             <Card>
               <CardBody className="p-6">
-                <h2 className="text-xl font-semibold text-earth-900 mb-4">
+                <h2 className="text-xl font-semibold text-earth-950 mb-4">
                   ⚡ Quick Actions
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -212,7 +212,7 @@ export const ContentDashboardPage: React.FC = () => {
         {activeSection === "stories" && (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-semibold text-earth-900 mb-2">
+              <h2 className="text-2xl font-semibold text-earth-950 mb-2">
                 📖 Story Creation & Editing
               </h2>
               <p className="text-earth-700">
@@ -234,7 +234,7 @@ export const ContentDashboardPage: React.FC = () => {
         {activeSection === "media" && (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-semibold text-earth-900 mb-2">
+              <h2 className="text-2xl font-semibold text-earth-950 mb-2">
                 📸 Media Management
               </h2>
               <p className="text-earth-700">
@@ -265,7 +265,7 @@ export const ContentDashboardPage: React.FC = () => {
         {activeSection === "seeder" && (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-semibold text-earth-900 mb-2">
+              <h2 className="text-2xl font-semibold text-earth-950 mb-2">
                 🌱 Platform Content Seeding
               </h2>
               <p className="text-earth-700">
@@ -281,7 +281,7 @@ export const ContentDashboardPage: React.FC = () => {
         {activeSection === "users" && displayIsAdmin && (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-semibold text-earth-900 mb-2">
+              <h2 className="text-2xl font-semibold text-earth-950 mb-2">
                 👥 User Management
               </h2>
               <p className="text-earth-700">

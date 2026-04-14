@@ -115,7 +115,7 @@ const LiveContentPreview: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-earth-900 mb-4">
+        <h2 className="text-3xl font-bold text-earth-950 mb-4">
           🔴 Live Content Development
         </h2>
         <p className="text-earth-700 mb-6">
@@ -124,17 +124,17 @@ const LiveContentPreview: React.FC = () => {
         
         {/* System Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-green-50 rounded-lg p-3">
-            <div className="text-2xl font-bold text-green-800">{systemStats.totalGenerated}</div>
-            <div className="text-green-600 text-sm">Generated</div>
+          <div className="bg-eucalyptus-50 rounded-lg p-3">
+            <div className="text-2xl font-bold text-eucalyptus-800">{systemStats.totalGenerated}</div>
+            <div className="text-eucalyptus-600 text-sm">Generated</div>
           </div>
-          <div className="bg-blue-50 rounded-lg p-3">
-            <div className="text-2xl font-bold text-blue-800">{systemStats.successRate}%</div>
-            <div className="text-blue-600 text-sm">Success Rate</div>
+          <div className="bg-eucalyptus-50 rounded-lg p-3">
+            <div className="text-2xl font-bold text-eucalyptus-800">{systemStats.successRate}%</div>
+            <div className="text-eucalyptus-600 text-sm">Success Rate</div>
           </div>
-          <div className="bg-purple-50 rounded-lg p-3">
-            <div className="text-2xl font-bold text-purple-800">{systemStats.avgGenerationTime}s</div>
-            <div className="text-purple-600 text-sm">Avg Time</div>
+          <div className="bg-earth-50 rounded-lg p-3">
+            <div className="text-2xl font-bold text-earth-800">{systemStats.avgGenerationTime}s</div>
+            <div className="text-earth-700 text-sm">Avg Time</div>
           </div>
           <div className="bg-ochre-50 rounded-lg p-3">
             <div className="text-2xl font-bold text-ochre-800">{systemStats.activeProviders}/5</div>
@@ -154,7 +154,7 @@ const LiveContentPreview: React.FC = () => {
 
       {/* Live Content Feed */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-earth-900 mb-4">
+        <h3 className="text-xl font-semibold text-earth-950 mb-4">
           📡 Real-Time Content Development
         </h3>
         
@@ -163,10 +163,10 @@ const LiveContentPreview: React.FC = () => {
             key={content.id} 
             className={`border-l-4 transition-all duration-300 ${
               content.status === 'generating' 
-                ? 'border-l-yellow-500 bg-yellow-50 animate-pulse' 
+                ? 'border-l-ochre-500 bg-ochre-50 animate-pulse' 
                 : content.status === 'complete'
-                ? 'border-l-green-500 bg-green-50'
-                : 'border-l-red-500 bg-red-50'
+                ? 'border-l-eucalyptus-500 bg-eucalyptus-50'
+                : 'border-l-sunset-500 bg-sunset-50'
             }`}
           >
             <div className="p-4">
@@ -192,7 +192,7 @@ const LiveContentPreview: React.FC = () => {
                 </div>
               </div>
 
-              <h4 className="text-lg font-semibold text-earth-900 mb-2">
+              <h4 className="text-lg font-semibold text-earth-950 mb-2">
                 {content.title}
               </h4>
               
@@ -201,7 +201,7 @@ const LiveContentPreview: React.FC = () => {
               </p>
 
               {content.status === 'generating' && (
-                <div className="flex items-center space-x-2 text-sm text-yellow-700">
+                <div className="flex items-center space-x-2 text-sm text-ochre-700">
                   <Loading />
                   <span>Processing with editorial review team...</span>
                 </div>
@@ -209,13 +209,13 @@ const LiveContentPreview: React.FC = () => {
 
               {content.status === 'complete' && (
                 <div className="flex items-center space-x-4">
-                  <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                  <button className="text-eucalyptus-600 hover:text-eucalyptus-800 text-sm font-medium">
                     View Full Content
                   </button>
-                  <button className="text-green-600 hover:text-green-800 text-sm font-medium">
+                  <button className="text-eucalyptus-600 hover:text-eucalyptus-800 text-sm font-medium">
                     Publish
                   </button>
-                  <button className="text-purple-600 hover:text-purple-800 text-sm font-medium">
+                  <button className="text-earth-700 hover:text-earth-800 text-sm font-medium">
                     Cultural Review
                   </button>
                 </div>

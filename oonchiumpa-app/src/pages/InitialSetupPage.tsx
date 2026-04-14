@@ -80,7 +80,7 @@ export const InitialSetupPage: React.FC = () => {
         <CardBody className="p-8">
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">🏛️</div>
-            <h1 className="text-3xl font-bold text-earth-900 mb-4">
+            <h1 className="text-3xl font-bold text-earth-950 mb-4">
               Oonchiumpa Platform Setup
             </h1>
             <p className="text-earth-600 text-lg">
@@ -120,10 +120,10 @@ export const InitialSetupPage: React.FC = () => {
             <div
               className={`p-6 rounded-lg mb-6 whitespace-pre-line ${
                 message.includes("Error") || message.includes("❌")
-                  ? "bg-red-50 border border-red-200 text-red-800"
+                  ? "bg-sunset-50 border border-sunset-200 text-sunset-800"
                   : success
-                    ? "bg-green-50 border border-green-200 text-green-800"
-                    : "bg-yellow-50 border border-yellow-200 text-yellow-800"
+                    ? "bg-eucalyptus-50 border border-eucalyptus-200 text-eucalyptus-800"
+                    : "bg-ochre-50 border border-ochre-200 text-ochre-800"
               }`}
             >
               {message}
@@ -132,7 +132,7 @@ export const InitialSetupPage: React.FC = () => {
 
           <div className="space-y-4">
             <div className="bg-earth-100 p-6 rounded-lg">
-              <h3 className="font-semibold text-earth-900 mb-3">
+              <h3 className="font-semibold text-earth-950 mb-3">
                 Admin Credentials:
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">

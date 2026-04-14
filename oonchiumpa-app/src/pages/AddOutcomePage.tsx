@@ -13,7 +13,7 @@ export default function AddOutcomePage() {
         <div className="mb-8">
           <button
             onClick={() => navigate('/staff-portal/impact')}
-            className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+            className="text-eucalyptus-600 hover:text-eucalyptus-700 font-medium flex items-center"
           >
             ← Back to Impact Overview
           </button>

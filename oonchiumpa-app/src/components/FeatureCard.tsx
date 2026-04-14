@@ -26,7 +26,7 @@ export const FeatureCard: React.FC<FeatureCardProps> = ({
               {icon}
             </div>
           )}
-          <h3 className="text-xl font-semibold text-earth-900 mb-3">
+          <h3 className="text-xl font-semibold text-earth-950 mb-3">
             {title}
           </h3>
           <p className="text-earth-600 leading-relaxed">

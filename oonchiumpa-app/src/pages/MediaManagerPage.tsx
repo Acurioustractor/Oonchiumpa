@@ -37,7 +37,7 @@ export const MediaManagerPage: React.FC = () => {
       {/* Header */}
       <Section className="bg-gradient-to-br from-ochre-50 via-eucalyptus-50 to-earth-50 pt-24">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-900 mb-6">
+          <h1 className="text-4xl md:text-5xl font-display font-bold text-earth-950 mb-6">
             📸 Media Management
           </h1>
           <p className="text-lg md:text-xl text-earth-700 mb-8">
@@ -77,7 +77,7 @@ export const MediaManagerPage: React.FC = () => {
             <Card>
               <CardBody className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-semibold text-earth-900">
+                  <h2 className="text-2xl font-semibold text-earth-950">
                     📤 Upload New Media
                   </h2>
                   <Button
@@ -101,7 +101,7 @@ export const MediaManagerPage: React.FC = () => {
           {activeTab === "all" && !showUpload && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-earth-900">
+                <h2 className="text-2xl font-semibold text-earth-950">
                   📁 All Media Files
                 </h2>
                 <Button variant="primary" onClick={() => setShowUpload(true)}>
@@ -121,7 +121,7 @@ export const MediaManagerPage: React.FC = () => {
           {activeTab === "team-photos" && !showUpload && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-earth-900">
+                <h2 className="text-2xl font-semibold text-earth-950">
                   👥 Team Photos
                 </h2>
                 <Button variant="primary" onClick={() => setShowUpload(true)}>
@@ -142,7 +142,7 @@ export const MediaManagerPage: React.FC = () => {
           {activeTab === "story-media" && !showUpload && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-earth-900">
+                <h2 className="text-2xl font-semibold text-earth-950">
                   📖 Story Media
                 </h2>
                 <Button variant="primary" onClick={() => setShowUpload(true)}>
@@ -163,7 +163,7 @@ export const MediaManagerPage: React.FC = () => {
           {activeTab === "service-photos" && !showUpload && (
             <div className="space-y-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-semibold text-earth-900">
+                <h2 className="text-2xl font-semibold text-earth-950">
                   🎯 Service Photos
                 </h2>
                 <Button variant="primary" onClick={() => setShowUpload(true)}>
@@ -176,7 +176,7 @@ export const MediaManagerPage: React.FC = () => {
                 <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
                   <CardBody className="p-6 text-center">
                     <div className="text-3xl mb-2">💚</div>
-                    <h3 className="font-semibold text-earth-900 mb-1">Youth Mentorship</h3>
+                    <h3 className="font-semibold text-earth-950 mb-1">Youth Mentorship</h3>
                     <p className="text-sm text-earth-600">Cultural healing programs</p>
                     <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
                   </CardBody>
@@ -185,7 +185,7 @@ export const MediaManagerPage: React.FC = () => {
                 <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
                   <CardBody className="p-6 text-center">
                     <div className="text-3xl mb-2">📚</div>
-                    <h3 className="font-semibold text-earth-900 mb-1">True Justice</h3>
+                    <h3 className="font-semibold text-earth-950 mb-1">True Justice</h3>
                     <p className="text-sm text-earth-600">Law student training</p>
                     <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
                   </CardBody>
@@ -194,7 +194,7 @@ export const MediaManagerPage: React.FC = () => {
                 <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
                   <CardBody className="p-6 text-center">
                     <div className="text-3xl mb-2">🏡</div>
-                    <h3 className="font-semibold text-earth-900 mb-1">Atnarpa Homestead</h3>
+                    <h3 className="font-semibold text-earth-950 mb-1">Atnarpa Homestead</h3>
                     <p className="text-sm text-earth-600">On-country experiences</p>
                     <div className="mt-3 text-xs text-ochre-600 font-medium">13 Photos</div>
                   </CardBody>
@@ -203,7 +203,7 @@ export const MediaManagerPage: React.FC = () => {
                 <Card className="border-2 border-ochre-200 hover:border-ochre-400 transition-colors cursor-pointer">
                   <CardBody className="p-6 text-center">
                     <div className="text-3xl mb-2">🤝</div>
-                    <h3 className="font-semibold text-earth-900 mb-1">Cultural Brokerage</h3>
+                    <h3 className="font-semibold text-earth-950 mb-1">Cultural Brokerage</h3>
                     <p className="text-sm text-earth-600">Service navigation</p>
                     <div className="mt-3 text-xs text-ochre-600 font-medium">View Photos →</div>
                   </CardBody>
@@ -213,7 +213,7 @@ export const MediaManagerPage: React.FC = () => {
               {/* Instructions */}
               <Card className="bg-gradient-to-r from-eucalyptus-50 to-sand-50 border-eucalyptus-200">
                 <CardBody className="p-6">
-                  <h3 className="text-lg font-semibold text-earth-900 mb-4 flex items-center gap-2">
+                  <h3 className="text-lg font-semibold text-earth-950 mb-4 flex items-center gap-2">
                     <span className="text-2xl">💡</span>
                     How to Tag Photos for Services
                   </h3>
@@ -241,7 +241,7 @@ export const MediaManagerPage: React.FC = () => {
               {/* Current Atnarpa Photos */}
               <Card>
                 <CardBody className="p-6">
-                  <h3 className="text-xl font-semibold text-earth-900 mb-4">
+                  <h3 className="text-xl font-semibold text-earth-950 mb-4">
                     🏡 Current Atnarpa Homestead Photos (13 photos)
                   </h3>
                   <p className="text-earth-600 mb-4">Photos automatically pulled from "Returning Home to Atnarpa" and "Healing Journey" stories</p>
@@ -317,29 +317,29 @@ export const MediaManagerPage: React.FC = () => {
           {/* Cultural Sensitivity Levels */}
           <Card className="bg-gradient-to-r from-ochre-50 to-eucalyptus-50 border-ochre-200">
             <CardBody className="p-6">
-              <h3 className="text-lg font-semibold text-earth-900 mb-4 text-center">
+              <h3 className="text-lg font-semibold text-earth-950 mb-4 text-center">
                 🛡️ Cultural Sensitivity Levels
               </h3>
               <div className="grid md:grid-cols-4 gap-4 text-sm">
-                <div className="text-center p-3 bg-green-50 border border-green-200 rounded-lg">
+                <div className="text-center p-3 bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg">
                   <div className="text-2xl mb-2">🌐</div>
-                  <div className="font-medium text-green-800">Public</div>
-                  <div className="text-green-700">Open for all to see</div>
+                  <div className="font-medium text-eucalyptus-800">Public</div>
+                  <div className="text-eucalyptus-700">Open for all to see</div>
                 </div>
-                <div className="text-center p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="text-center p-3 bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg">
                   <div className="text-2xl mb-2">👥</div>
-                  <div className="font-medium text-blue-800">Community</div>
-                  <div className="text-blue-700">Oonchiumpa community only</div>
+                  <div className="font-medium text-eucalyptus-800">Community</div>
+                  <div className="text-eucalyptus-700">Oonchiumpa community only</div>
                 </div>
-                <div className="text-center p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="text-center p-3 bg-ochre-50 border border-ochre-200 rounded-lg">
                   <div className="text-2xl mb-2">🔒</div>
-                  <div className="font-medium text-yellow-800">Private</div>
-                  <div className="text-yellow-700">Internal team use only</div>
+                  <div className="font-medium text-ochre-800">Private</div>
+                  <div className="text-ochre-700">Internal team use only</div>
                 </div>
-                <div className="text-center p-3 bg-red-50 border border-red-200 rounded-lg">
+                <div className="text-center p-3 bg-sunset-50 border border-sunset-200 rounded-lg">
                   <div className="text-2xl mb-2">🛡️</div>
-                  <div className="font-medium text-red-800">Sacred</div>
-                  <div className="text-red-700">Elder approval required</div>
+                  <div className="font-medium text-sunset-800">Sacred</div>
+                  <div className="text-sunset-700">Elder approval required</div>
                 </div>
               </div>
             </CardBody>

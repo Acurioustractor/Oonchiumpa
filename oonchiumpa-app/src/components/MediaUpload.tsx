@@ -198,7 +198,7 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
           onDrop={handleDrop}
         >
           <div className="text-4xl mb-4">📁</div>
-          <h3 className="text-lg font-semibold text-earth-900 mb-2">
+          <h3 className="text-lg font-semibold text-earth-950 mb-2">
             Upload Media Files
           </h3>
           <p className="text-earth-600 mb-4">
@@ -227,7 +227,7 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
       {/* Metadata Form */}
       {showMetadataForm && selectedFiles.length > 0 && (
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-earth-900 mb-4">
+          <h3 className="text-lg font-semibold text-earth-950 mb-4">
             📝 File Details
           </h3>
 
@@ -239,7 +239,7 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
               >
                 <span className="text-2xl">{getFileIcon(file)}</span>
                 <div className="flex-1">
-                  <div className="font-medium text-earth-900">{file.name}</div>
+                  <div className="font-medium text-earth-950">{file.name}</div>
                   <div className="text-sm text-earth-600">
                     {formatFileSize(file.size)}
                   </div>
@@ -383,7 +383,7 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
       {/* Upload Progress */}
       {uploads.length > 0 && (
         <Card className="p-6">
-          <h3 className="text-lg font-semibold text-earth-900 mb-4">
+          <h3 className="text-lg font-semibold text-earth-950 mb-4">
             📤 Upload Progress
           </h3>
           <div className="space-y-3">
@@ -397,10 +397,10 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
                   <div className="flex items-center space-x-2">
                     {upload.status === "uploading" && <Loading size="sm" />}
                     {upload.status === "complete" && (
-                      <span className="text-green-600">✅</span>
+                      <span className="text-eucalyptus-600">✅</span>
                     )}
                     {upload.status === "error" && (
-                      <span className="text-red-600">❌</span>
+                      <span className="text-sunset-600">❌</span>
                     )}
                     <span className="text-sm text-earth-600">
                       {upload.progress}%
@@ -412,9 +412,9 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
                   <div
                     className={`h-2 rounded-full transition-all duration-300 ${
                       upload.status === "error"
-                        ? "bg-red-500"
+                        ? "bg-sunset-500"
                         : upload.status === "complete"
-                          ? "bg-green-500"
+                          ? "bg-eucalyptus-500"
                           : "bg-ochre-500"
                     }`}
                     style={{ width: `${upload.progress}%` }}
@@ -422,7 +422,7 @@ export const MediaUpload: React.FC<MediaUploadProps> = ({
                 </div>
 
                 {upload.error && (
-                  <p className="text-red-600 text-sm mt-1">{upload.error}</p>
+                  <p className="text-sunset-600 text-sm mt-1">{upload.error}</p>
                 )}
               </div>
             ))}

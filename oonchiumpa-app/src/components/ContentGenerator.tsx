@@ -182,7 +182,7 @@ const ContentGenerator: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-6 py-16">
       <div className="text-center mb-12">
-        <h1 className="text-4xl md:text-5xl font-bold text-earth-900 mb-6">
+        <h1 className="text-4xl md:text-5xl font-bold text-earth-950 mb-6">
           📝 Staff Content Management System
         </h1>
         <p className="text-xl text-earth-700 max-w-4xl mx-auto mb-8">
@@ -231,11 +231,11 @@ const ContentGenerator: React.FC = () => {
             maxFileSize={10}
           />
           {uploadedImages.length > 0 && (
-            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-              <p className="text-green-800 font-medium">
+            <div className="mt-6 p-4 bg-eucalyptus-50 border border-eucalyptus-200 rounded-lg">
+              <p className="text-eucalyptus-800 font-medium">
                 ✅ {uploadedImages.length} images ready for use in content
               </p>
-              <p className="text-green-600 text-sm mt-1">
+              <p className="text-eucalyptus-600 text-sm mt-1">
                 These images are now available for content creation and can be included in published stories and articles.
               </p>
             </div>

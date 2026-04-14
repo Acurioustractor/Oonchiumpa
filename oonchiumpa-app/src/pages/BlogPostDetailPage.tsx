@@ -1,361 +1,291 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Button } from '../components/Button';
-import { Card } from '../components/Card';
-import { Section } from '../components/Section';
-import { blogService } from '../services/blogAPI';
+import React from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { Breadcrumbs } from '../components/Breadcrumbs';
 import { Loading } from '../components/Loading';
+import { applyPageMeta } from '../utils/seo';
+import { useArticleDetail } from '../hooks/useEmpathyLedger';
 
-interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  author: string;
-  authorRole: string;
-  publishedAt: string;
-  readTime: number;
-  tags: string[];
-  type: 'community-story' | 'cultural-insight' | 'youth-work' | 'historical-truth' | 'transformation';
-  isAIGenerated: boolean;
-  images: {
-    hero: string;
-    gallery: string[];
-  };
-  stats: {
-    views: number;
-    likes: number;
-    shares: number;
-  };
-  culturalSensitivity: 'low' | 'medium' | 'high';
-  elderApproved?: boolean;
-}
+const formatDate = (iso?: string | null) => {
+  if (!iso) return '';
+  return new Date(iso).toLocaleDateString('en-AU', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
 
-interface RelatedPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  type: string;
-  readTime: number;
-  image: string;
-}
+const resolveCtaHref = (value?: string | null) => {
+  if (!value) return null;
+  const trimmed = value.trim();
+  if (!trimmed || trimmed.includes('{')) return null;
+  if (/^https?:\/\//i.test(trimmed)) return trimmed;
+  return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+};
 
 const BlogPostDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [relatedPosts, setRelatedPosts] = useState<RelatedPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
+  const slug = id || null;
+  const { article, loading } = useArticleDetail(slug);
 
-  useEffect(() => {
-    const loadBlogPost = async () => {
-      if (!id) {
-        navigate('/blog');
-        return;
-      }
+  React.useEffect(() => {
+    if (!article) return;
+    const canonicalUrl = window.location.href.split('#')[0];
+    const description =
+      article.metaDescription ||
+      article.excerpt ||
+      'Article syndicated from Empathy Ledger.';
+    applyPageMeta({
+      title: article.metaTitle || article.title,
+      description,
+      image: article.featuredImageUrl || '/images/stories/IMG_9713.jpg',
+      canonicalUrl,
+      ogType: 'article',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: article.title,
+        description,
+        author: {
+          '@type': 'Person',
+          name: article.authorName,
+        },
+        ...(article.publishedAt ? { datePublished: article.publishedAt } : {}),
+      },
+    });
+  }, [article]);
 
-      try {
-        setIsLoading(true);
-        const blogPost = await blogService.getBlogPost(id);
-
-        // Transform to match the component's interface
-        const transformedPost: BlogPost = {
-          id: blogPost.id,
-          title: blogPost.title,
-          excerpt: blogPost.excerpt,
-          content: blogPost.content,
-          author: blogPost.author,
-          authorRole: blogPost.curatedBy || 'Oonchiumpa Editorial Team',
-          publishedAt: blogPost.publishedAt,
-          readTime: blogPost.readTime,
-          tags: blogPost.tags,
-          type: blogPost.type,
-          isAIGenerated: false,
-          images: {
-            hero: blogPost.heroImage || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
-            gallery: blogPost.gallery || []
-          },
-          stats: {
-            views: 0, // TODO: Implement view tracking
-            likes: 0,
-            shares: 0
-          },
-          culturalSensitivity: 'high',
-          elderApproved: blogPost.elder_approved
-        };
-
-        setPost(transformedPost);
-
-        // Load related blog posts based on matching tags and type
-        const { createClient } = await import('@supabase/supabase-js');
-        const supabase = createClient(
-          import.meta.env.VITE_SUPABASE_URL,
-          import.meta.env.VITE_SUPABASE_ANON_KEY
-        );
-
-        const { data: relatedBlogPosts } = await supabase
-          .from('blog_posts')
-          .select('id, title, excerpt, type, hero_image, tags, read_time, published_at')
-          .neq('id', blogPost.id) // Exclude current post
-          .eq('status', 'published')
-          .eq('elder_approved', true)
-          .overlaps('tags', blogPost.tags || []) // Posts with matching tags
-          .order('published_at', { ascending: false })
-          .limit(3);
-
-        if (relatedBlogPosts && relatedBlogPosts.length > 0) {
-          const related = relatedBlogPosts.map(post => ({
-            id: post.id,
-            title: post.title,
-            excerpt: post.excerpt || '',
-            type: post.type,
-            readTime: post.read_time || 5,
-            image: post.hero_image || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-          }));
-          setRelatedPosts(related);
-        } else {
-          // If no posts with matching tags, just get recent posts
-          const { data: recentPosts } = await supabase
-            .from('blog_posts')
-            .select('id, title, excerpt, type, hero_image, tags, read_time, published_at')
-            .neq('id', blogPost.id)
-            .eq('status', 'published')
-            .eq('elder_approved', true)
-            .order('published_at', { ascending: false })
-            .limit(3);
-
-          if (recentPosts && recentPosts.length > 0) {
-            const related = recentPosts.map(post => ({
-              id: post.id,
-              title: post.title,
-              excerpt: post.excerpt || '',
-              type: post.type,
-              readTime: post.read_time || 5,
-              image: post.hero_image || 'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-            }));
-            setRelatedPosts(related);
-          } else {
-            setRelatedPosts([]);
-          }
-        }
-      } catch (error) {
-        console.error('Error loading blog post:', error);
-        navigate('/blog');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadBlogPost();
-  }, [id, navigate]);
-
-  if (isLoading) {
+  if (loading) return <Loading />;
+  if (!article) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ochre-600 mx-auto mb-4"></div>
-          <p className="text-earth-600">Loading story...</p>
+      <div className="min-h-screen bg-white px-6 py-20">
+        <div className="section-shell max-w-3xl mx-auto text-center p-10">
+          <p className="eyebrow mb-3">Blog</p>
+          <h1 className="text-4xl font-display text-earth-950 mb-4">Article not found</h1>
+          <p className="text-earth-600 mb-8">
+            This article may not be published yet or the link is out of date.
+          </p>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Link to="/blog" className="btn-primary">
+              Back to blog
+            </Link>
+            <Link to="/stories" className="btn-secondary">
+              Browse stories
+            </Link>
+          </div>
         </div>
       </div>
     );
   }
 
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-earth-900 mb-4">Story Not Found</h1>
-          <Button onClick={() => navigate('/blog')}>Return to Blog</Button>
-        </div>
-      </div>
-    );
-  }
-
-  const getTypeColor = (type: string) => {
-    const colorMap: { [key: string]: string } = {
-      'community-story': 'eucalyptus',
-      'cultural-insight': 'earth',
-      'youth-work': 'sand',
-      'historical-truth': 'sunset',
-      'transformation': 'ochre'
-    };
-    return colorMap[type] || 'ochre';
-  };
-
-  const typeColor = getTypeColor(post.type);
+  const hasHtml = /<[^>]+>/.test(article.content || '');
+  const paragraphs = (article.content || '')
+    .split('\n\n')
+    .map((block) => block.trim())
+    .filter(Boolean);
+  const photoPreviews = article.media.photoPreviews.filter((item) => Boolean(item.url));
+  const videoPreviews = article.media.videoPreviews.filter((item) => Boolean(item.url));
+  const ctas = article.ctas
+    .map((cta) => ({
+      ...cta,
+      href: resolveCtaHref(cta.urlTemplate),
+    }))
+    .filter((cta) => Boolean(cta.href));
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-sand-50">
-      {/* Hero Section */}
-      <div className="relative h-[500px] overflow-hidden mt-20 md:mt-24">
-        <img
-          src={post.images.hero}
-          alt={post.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-earth-900/70 to-transparent"></div>
+    <div className="min-h-screen bg-white">
+      <section className="relative min-h-[80vh] flex items-end overflow-hidden">
+        {article.featuredImageUrl ? (
+          <img
+            src={article.featuredImageUrl}
+            alt={article.featuredImageAlt || article.title}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-earth-300 via-earth-200 to-sand-100" />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/55 to-transparent" />
 
-        {/* Back Button */}
-        <div className="absolute top-16 md:top-20 left-4 md:left-8 z-10">
-          <Button
-            variant="secondary"
-            onClick={() => navigate('/blog')}
-            className="bg-white/90 backdrop-blur-sm border-white text-earth-900 hover:bg-white shadow-lg"
-          >
-            ← Back to Blog
-          </Button>
-        </div>
-
-        {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-8 pb-12">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className={`px-3 py-1 bg-${typeColor}-500 text-white rounded-full text-sm font-medium capitalize`}>
-                {post.type.replace('-', ' ')}
-              </span>
-            </div>
-
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              {post.title}
-            </h1>
-
-            <p className="text-xl text-white/90 mb-6 max-w-3xl">
-              {post.excerpt}
+        <div className="relative z-10 container-custom pt-28 pb-14">
+          <Breadcrumbs
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Blog", href: "/blog" },
+              { label: article.title },
+            ]}
+            onDark
+            className="mb-6"
+          />
+          <p className="text-xs uppercase tracking-[0.24em] text-ochre-200 mb-3 font-semibold">
+            {article.articleType || 'Article'}
+          </p>
+          <h1 className="heading-lg text-white max-w-4xl mb-4">{article.title}</h1>
+          {article.subtitle && (
+            <p className="text-white/85 text-lg max-w-3xl leading-relaxed mb-4">{article.subtitle}</p>
+          )}
+          <div className="text-white/75 text-sm flex flex-wrap items-center gap-3">
+            {article.storyteller?.avatarUrl ? (
+              <img
+                src={article.storyteller.avatarUrl}
+                alt={article.storyteller.displayName}
+                className="w-8 h-8 rounded-full object-cover border border-white/30"
+              />
+            ) : null}
+            <span>
+              {article.authorName} {article.publishedAt ? `· ${formatDate(article.publishedAt)}` : ''}
+            </span>
+          </div>
+          {(article.storyteller?.bio || article.authorBio) && (
+            <p className="text-white/75 text-sm max-w-3xl mt-3 leading-relaxed">
+              {article.storyteller?.bio || article.authorBio}
             </p>
-
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-white/80">
-              <div className="flex items-center space-x-2">
-                <span>📝</span>
-                <span>{post.author}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span>📅</span>
-                <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span>⏱️</span>
-                <span>{post.readTime} min read</span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
-      </div>
+      </section>
 
-      {/* Article Content */}
-      <Section className="py-16">
-        <div className="max-w-4xl mx-auto">
-          {/* Article Body */}
-          <div className="prose prose-lg max-w-none mb-12">
+      <section className="py-14 px-6">
+        <article className="max-w-4xl mx-auto section-shell p-7 md:p-10">
+          {hasHtml ? (
             <div
-              className="text-earth-800 leading-relaxed"
-              dangerouslySetInnerHTML={{
-                __html: (() => {
-                  let html = post.content;
-
-                  // Convert markdown images
-                  html = html.replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="w-full rounded-lg shadow-lg my-8" />');
-
-                  // Convert headings
-                  html = html.replace(/^# (.*?)$/gm, '<h1 class="text-3xl font-bold text-earth-900 mt-8 mb-4">$1</h1>');
-                  html = html.replace(/^## (.*?)$/gm, '<h2 class="text-2xl font-bold text-earth-900 mt-8 mb-4">$1</h2>');
-                  html = html.replace(/^### (.*?)$/gm, '<h3 class="text-xl font-semibold text-earth-800 mt-6 mb-3">$1</h3>');
-
-                  // Convert bullet lists
-                  html = html.replace(/((?:^- .*$\n?)+)/gm, (match) => {
-                    const items = match.trim().split('\n').map(line =>
-                      line.replace(/^- (.*)$/, '<li class="mb-2">$1</li>')
-                    ).join('');
-                    return `<ul class="list-disc ml-6 my-4">${items}</ul>`;
-                  });
-
-                  // Convert bold text
-                  html = html.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-earth-900">$1</strong>');
-
-                  // Convert paragraphs (only plain text lines, not HTML)
-                  html = html.replace(/^(?!<|$)(.+)$/gm, '<p class="mb-4">$1</p>');
-
-                  return html;
-                })()
-              }}
+              className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-earth-950 prose-p:text-earth-700 prose-p:leading-relaxed"
+              dangerouslySetInnerHTML={{ __html: article.content || '' }}
             />
-          </div>
-
-          {/* Image Gallery */}
-          {post.images.gallery.length > 0 && (
-            <div className="mb-12">
-              <h3 className="text-2xl font-bold text-earth-900 mb-6">Related Images</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {post.images.gallery.map((image, index) => (
-                  <Card key={index} className="overflow-hidden">
-                    <img 
-                      src={image} 
-                      alt={`Gallery image ${index + 1}`}
-                      className="w-full h-48 object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </Card>
-                ))}
-              </div>
+          ) : (
+            <div className="prose prose-lg max-w-none prose-headings:font-display prose-headings:text-earth-950 prose-p:text-earth-700 prose-p:leading-relaxed">
+              {paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
           )}
-
-          {/* Tags */}
-          <div className="mb-12">
-            <h3 className="text-lg font-semibold text-earth-900 mb-4">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag, index) => (
+          {article.tags.length > 0 && (
+            <div className="mt-10 pt-6 border-t border-earth-100 flex flex-wrap gap-2">
+              {article.tags.map((tag) => (
                 <span
-                  key={index}
-                  className={`px-3 py-1 bg-${typeColor}-100 text-${typeColor}-800 rounded-full text-sm`}
+                  key={tag}
+                  className="px-3 py-1 text-xs text-earth-700 bg-earth-100 rounded-lg border border-earth-200"
                 >
                   {tag}
                 </span>
               ))}
             </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* Related Posts */}
-      {relatedPosts.length > 0 && (
-        <Section className="bg-earth-50 py-16">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-3xl font-bold text-earth-900 mb-8 text-center">
-              Related Stories
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {relatedPosts.map((relatedPost) => (
-                <Card
-                  key={relatedPost.id}
-                  className="cursor-pointer hover:shadow-lg transition-shadow duration-300"
-                  onClick={() => navigate(`/blog/${relatedPost.id}`)}
+          )}
+          {article.themes.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-2">
+              {article.themes.map((theme) => (
+                <span
+                  key={theme}
+                  className="px-3 py-1 text-xs text-ochre-800 bg-ochre-50 rounded-lg border border-ochre-200"
                 >
-                  <img
-                    src={relatedPost.image}
-                    alt={relatedPost.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="p-6">
-                    <span className="inline-block px-3 py-1 bg-earth-100 text-earth-800 rounded-full text-xs font-medium capitalize mb-3">
-                      {relatedPost.type.replace('-', ' ')}
-                    </span>
-                    <h3 className="text-lg font-bold text-earth-900 mb-2 line-clamp-2">
-                      {relatedPost.title}
-                    </h3>
-                    <p className="text-earth-700 text-sm mb-4 line-clamp-3">
-                      {relatedPost.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-earth-600">
-                      <span>{relatedPost.readTime} min read</span>
-                      <span className="text-ochre-600 font-medium">Read more →</span>
-                    </div>
-                  </div>
-                </Card>
+                  {theme}
+                </span>
               ))}
             </div>
-          </div>
-        </Section>
-      )}
+          )}
+
+          {(photoPreviews.length > 0 || videoPreviews.length > 0) && (
+            <div className="mt-10 pt-8 border-t border-earth-100 space-y-8">
+              <div>
+                <p className="eyebrow mb-2">Syndicated media evidence</p>
+                <h2 className="text-2xl font-display text-earth-950">
+                  Photos and videos linked from Empathy Ledger
+                </h2>
+              </div>
+
+              {photoPreviews.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-earth-950 mb-4">Photos</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {photoPreviews.map((photo, index) => (
+                      <figure key={`photo-${index}`} className="rounded-2xl overflow-hidden border border-earth-200 bg-earth-50">
+                        <img
+                          src={photo.url || ''}
+                          alt={photo.altText || photo.title || `${article.title} photo ${index + 1}`}
+                          className="w-full h-56 object-cover"
+                          loading="lazy"
+                        />
+                        {(photo.title || photo.altText) && (
+                          <figcaption className="px-4 py-3 text-sm text-earth-700">
+                            {photo.title || photo.altText}
+                          </figcaption>
+                        )}
+                      </figure>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {videoPreviews.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold text-earth-950 mb-4">Videos</h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {videoPreviews.map((video, index) => {
+                      const href = video.url || '';
+                      const external = /^https?:\/\//i.test(href);
+                      return (
+                        <article
+                          key={`video-${index}`}
+                          className="rounded-2xl border border-earth-200 bg-white overflow-hidden"
+                        >
+                          {video.thumbnailUrl ? (
+                            <img
+                              src={video.thumbnailUrl}
+                              alt={video.title || `Video ${index + 1}`}
+                              className="w-full h-44 object-cover"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <div className="w-full h-44 bg-earth-100 flex items-center justify-center text-earth-500 text-sm">
+                              Video preview
+                            </div>
+                          )}
+                          <div className="p-4">
+                            <p className="text-earth-950 font-medium mb-3">
+                              {video.title || `Video reference ${index + 1}`}
+                            </p>
+                            <a
+                              href={href}
+                              target={external ? '_blank' : undefined}
+                              rel={external ? 'noreferrer' : undefined}
+                              className="inline-flex items-center text-ochre-700 font-medium hover:text-ochre-800 transition-colors"
+                            >
+                              Open video
+                              <span className="ml-2">↗</span>
+                            </a>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {ctas.length > 0 && (
+            <div className="mt-10 pt-8 border-t border-earth-100">
+              <h2 className="text-2xl font-display text-earth-950 mb-4">Next step</h2>
+              <div className="flex flex-wrap gap-3">
+                {ctas.map((cta, index) => {
+                  const isExternal = /^https?:\/\//i.test(cta.href || '');
+                  return (
+                    <a
+                      key={`cta-${index}`}
+                      href={cta.href || '#'}
+                      target={isExternal ? '_blank' : undefined}
+                      rel={isExternal ? 'noreferrer' : undefined}
+                      className="btn-primary"
+                    >
+                      {cta.buttonText || 'Learn more'}
+                    </a>
+                  );
+                })}
+              </div>
+              {ctas[0]?.description && (
+                <p className="text-sm text-earth-600 mt-4">{ctas[0].description}</p>
+              )}
+            </div>
+          )}
+        </article>
+      </section>
     </div>
   );
 };

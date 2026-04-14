@@ -17,3 +17,17 @@ Thumbs.db
 *.swp
 *.swo 
 .vercel
+.superdesign
+.gstack/
+.claude/
+.claudeignore
+.obsidian/
+.tldr/
+.tldrignore
+
+# Build artifacts and local scratch
+output/
+test-results/
+nimbalyst-local/
+document-analysis-results.json
+thoughts/

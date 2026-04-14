@@ -1,0 +1,3671 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/atnarpa-snow/" />
+  <title>Atnarpa Proposal - Visual Pitch</title>
+  <style>
+    :root {
+      --brand-500: #2f8f64;
+      --brand-600: #1f734f;
+      --ocean-500: #3b82f6;
+      --clay-50: #f8fafc;
+      --clay-100: #f1f5f9;
+      --clay-900: #0f172a;
+      --earth-500: #d97706;
+      --white: #ffffff;
+      --shadow: 0 18px 44px rgba(15, 23, 42, 0.15);
+      --radius: 18px;
+      --pkg-a: #2c7fb8;
+      --pkg-b: #2f8f64;
+      --pkg-c: #d97706;
+      --pkg-d: #6d5bd0;
+      --pkg-e: #be3c35;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: var(--clay-900);
+      background:
+        radial-gradient(circle at 12% 2%, rgba(47, 143, 100, 0.2), transparent 38%),
+        radial-gradient(circle at 88% 10%, rgba(59, 130, 246, 0.2), transparent 42%),
+        linear-gradient(180deg, #f8fafc 0%, #eef3f7 100%);
+      font-family: "Avenir Next", "Trebuchet MS", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 14px;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      font-family: "Avenir Next Condensed", "Franklin Gothic Medium", "Segoe UI", sans-serif;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #1f2f44;
+      max-width: 74ch;
+    }
+
+    .container {
+      width: min(1200px, 92vw);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 60px 0;
+    }
+
+    body.view-send [data-view-group="appendix"] {
+      display: none !important;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #334155;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 88vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #041d3f;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(3, 10, 30, 0.22), rgba(3, 10, 30, 0.84));
+    }
+
+    .hero-body {
+      position: relative;
+      z-index: 3;
+      padding: 56px 0 72px;
+      color: var(--white);
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 84px);
+      margin-bottom: 16px;
+      max-width: 18ch;
+    }
+
+    .subtitle {
+      font-size: clamp(19px, 2.4vw, 30px);
+      color: #d9ecff;
+      margin-bottom: 14px;
+      max-width: 28ch;
+    }
+
+    .byline {
+      font-size: 16px;
+      color: #d5e4f2;
+      margin-bottom: 26px;
+      max-width: 72ch;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      border-radius: 999px;
+      padding: 10px 18px;
+      border: 0;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .button.primary {
+      color: var(--white);
+      background: linear-gradient(120deg, var(--brand-500), #2aa27b);
+      box-shadow: 0 8px 22px rgba(47, 143, 100, 0.45);
+    }
+
+    .button.secondary {
+      color: #0b2341;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.72);
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .card {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .acknowledge {
+      margin-top: -34px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .section-lead {
+      max-width: 86ch;
+      color: #31495f;
+      margin-bottom: 18px;
+    }
+
+    .main-build-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .main-build-grid .image-card {
+      min-height: 340px;
+    }
+
+    .main-build-meta {
+      display: grid;
+      gap: 12px;
+    }
+
+    .main-build-sketch-block {
+      margin-top: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .main-build-sketch-block .card {
+      background: #ffffff;
+    }
+
+    .sketch-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .overlay-plan-wide {
+      margin-top: 8px;
+      width: 100%;
+      min-height: 620px;
+      background: #e4ebf2;
+    }
+
+    .overlay-plan-wide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: #0c1727;
+    }
+
+    .overlay-plan-wide .image-caption {
+      font-size: 15px;
+    }
+
+    .sketch-side-stack {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .sketch-card {
+      min-height: 300px;
+      background: #f2f7fb;
+    }
+
+    .sketch-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .drone-feature {
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.76);
+    }
+
+    .drone-feature video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #0f172a;
+    }
+
+    .drone-feature .meta {
+      padding: 12px 14px;
+      color: #dce9f7;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      border-top: 1px solid rgba(255, 255, 255, 0.18);
+      background: linear-gradient(135deg, #10243f, #172f4d);
+    }
+
+    .upgrade-map-card {
+      background: #ffffff;
+    }
+
+    .upgrade-map-wrap {
+      position: relative;
+      margin-top: 10px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      box-shadow: var(--shadow);
+      background: #dfe8f0;
+    }
+
+    .upgrade-map-wrap img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .upgrade-pin {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(5, 21, 38, 0.45);
+    }
+
+    .upgrade-pin span {
+      position: absolute;
+      left: 42px;
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      padding: 6px 8px;
+      border-radius: 8px;
+      background: rgba(8, 21, 39, 0.82);
+      color: #e7f4ff;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .upgrade-pin.p1 { left: 48%; top: 43%; background: var(--pkg-a); }
+    .upgrade-pin.p2 { left: 57%; top: 47%; background: var(--pkg-b); }
+    .upgrade-pin.p3 { left: 74%; top: 66%; background: #10907d; }
+    .upgrade-pin.p4 { left: 52%; top: 61%; background: var(--pkg-c); }
+    .upgrade-pin.p5 { left: 25%; top: 36%; background: var(--pkg-e); }
+
+    .homestead-map-wrap img {
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+      background: #0f172a;
+    }
+
+    .homestead-map-wrap .upgrade-pin.h1 {
+      left: 17%;
+      top: 30%;
+      background: var(--pkg-d);
+    }
+
+    .homestead-map-wrap .upgrade-pin.h2 {
+      left: 69%;
+      top: 22%;
+      background: var(--pkg-b);
+    }
+
+    .homestead-map-wrap .upgrade-pin.h3 {
+      left: 46%;
+      top: 48%;
+      background: var(--pkg-a);
+    }
+
+    .upgrade-point-list {
+      margin: 12px 0 0;
+      padding-left: 20px;
+      color: #2a4663;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .upgrade-point-list li strong {
+      color: #123b5d;
+    }
+
+    .full-image-link-row {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .full-image-link-note {
+      margin: 0;
+      font-size: 13px;
+      color: #42607b;
+    }
+
+    .image-fullscreen-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 12000;
+      display: none;
+      flex-direction: column;
+      background: rgba(3, 10, 18, 0.97);
+    }
+
+    .image-fullscreen-modal.open {
+      display: flex;
+    }
+
+    body.image-fullscreen-open {
+      overflow: hidden;
+    }
+
+    .image-fullscreen-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .image-fullscreen-title {
+      color: #f2f7ff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .image-fullscreen-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .image-fullscreen-stage {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .image-fullscreen-stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+    }
+
+    .annotated-plan-figure {
+      margin-top: 14px;
+    }
+
+    .annotated-plan-figure .image-card {
+      min-height: 0;
+      aspect-ratio: 16 / 10;
+      background: #dfe8f0;
+    }
+
+    .annotated-plan-figure .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .descript-embed-frame {
+      width: 100%;
+      border: 0;
+      display: block;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
+    }
+
+    .simple-cost-table-card {
+      margin-top: 6px;
+    }
+
+    .simple-cost-table-wrap {
+      margin-top: 10px;
+      overflow-x: auto;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .simple-cost-table {
+      width: 100%;
+      min-width: 840px;
+      border-collapse: collapse;
+    }
+
+    .simple-cost-table th,
+    .simple-cost-table td {
+      padding: 12px 13px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+      border-right: 1px solid rgba(15, 23, 42, 0.08);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+      color: #27425d;
+    }
+
+    .simple-cost-table th:last-child,
+    .simple-cost-table td:last-child {
+      border-right: 0;
+    }
+
+    .simple-cost-table thead th {
+      background: #edf6ff;
+      color: #143959;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .simple-cost-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .simple-cost-table td:first-child {
+      font-weight: 800;
+      color: #163a5c;
+      white-space: nowrap;
+    }
+
+    .simple-cost-note {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #47627d;
+      line-height: 1.4;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.15);
+      background: #ffffff;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #29415c;
+    }
+
+    .status-chip strong {
+      margin-right: 6px;
+      color: #163756;
+      font-weight: 800;
+    }
+
+    .image-card {
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-height: 300px;
+      position: relative;
+      background: #d9e6ef;
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      color: var(--white);
+      background: linear-gradient(180deg, transparent, rgba(2, 12, 36, 0.84));
+      padding: 16px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .quote {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(120deg, #fff9eb, #ffefd8);
+      border-left: 4px solid var(--earth-500);
+      font-size: 18px;
+      color: #3a2b12;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .timeline .card { border-top: 5px solid var(--brand-500); }
+
+    .phase {
+      font-weight: 800;
+      color: var(--brand-600);
+      margin-bottom: 8px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .pillars .card h3 { font-size: 24px; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      padding: 9px 14px;
+      background: #ffffff;
+      font-size: 14px;
+      color: #29415c;
+    }
+
+    .work-packages {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .work-package {
+      border-radius: 14px;
+      border: 1px solid rgba(15, 23, 42, 0.13);
+      background: #ffffff;
+      padding: 14px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      border-top-width: 5px;
+    }
+
+    .work-package h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+      color: #173a5a;
+    }
+
+    .work-package p {
+      margin: 0 0 7px;
+      font-size: 14px;
+      color: #35516b;
+      max-width: none;
+    }
+
+    .work-package p:last-child {
+      margin-bottom: 0;
+    }
+
+    .work-package.pkg-a { border-top-color: var(--pkg-a); }
+    .work-package.pkg-b { border-top-color: var(--pkg-b); }
+    .work-package.pkg-c { border-top-color: var(--pkg-c); }
+    .work-package.pkg-d { border-top-color: var(--pkg-d); }
+    .work-package.pkg-e { border-top-color: var(--pkg-e); }
+
+    .cost-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .cost-item {
+      padding: 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(15, 23, 42, 0.12);
+      background: #ffffff;
+    }
+
+    .cost-item h3 {
+      font-size: 21px;
+      margin-bottom: 6px;
+      color: #163756;
+    }
+
+    .cost-item p {
+      font-size: 14px;
+      color: #4b6179;
+      margin-bottom: 12px;
+    }
+
+    .cost-fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .cost-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .cost-field.wide {
+      grid-column: span 2;
+    }
+
+    .cost-field label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: #38506a;
+    }
+
+    .cost-field input,
+    .cost-field textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      background: #f9fbff;
+      color: #13263b;
+      font-family: inherit;
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+
+    .cost-field textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    .cost-note {
+      margin: 10px 0 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px dashed rgba(15, 23, 42, 0.2);
+      background: #f5f9ff;
+      color: #334a62;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .cost-summary {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .cost-total {
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: linear-gradient(130deg, #ffffff, #edf6ff);
+    }
+
+    .cost-total strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #3d5670;
+      margin-bottom: 5px;
+    }
+
+    .cost-total span {
+      font-size: 24px;
+      font-weight: 800;
+      color: #12385a;
+    }
+
+    .drone-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .drone-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .button.small {
+      min-height: 36px;
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 9px;
+    }
+
+    .drone-map-wrap {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow);
+      background: #d8e5f1;
+    }
+
+    .drone-map-wrap img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .drone-draw-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .drone-map-wrap.draw-enabled .drone-draw-layer {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+
+    .zone-pin {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      border: 2px solid #ffffff;
+      background: rgba(14, 93, 160, 0.9);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
+    .zone-pin.active {
+      transform: scale(1.06);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.65), 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
+    .zone-a { top: 51%; left: 36%; background: var(--pkg-a); }
+    .zone-b { top: 38%; left: 64%; background: var(--pkg-b); }
+    .zone-c { top: 62%; left: 53%; background: var(--pkg-c); }
+    .zone-d { top: 31%; left: 22%; background: var(--pkg-d); }
+    .zone-e { top: 70%; left: 73%; background: var(--pkg-e); }
+
+    .map-help {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #45617d;
+    }
+
+    .package-legend {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #35516b;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .legend-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      flex-shrink: 0;
+    }
+
+    .legend-dot.pkg-a { background: var(--pkg-a); }
+    .legend-dot.pkg-b { background: var(--pkg-b); }
+    .legend-dot.pkg-c { background: var(--pkg-c); }
+    .legend-dot.pkg-d { background: var(--pkg-d); }
+    .legend-dot.pkg-e { background: var(--pkg-e); }
+
+    .zone-panel video {
+      width: 100%;
+      border-radius: 12px;
+      margin-top: 10px;
+      background: #0f172a;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      aspect-ratio: 16 / 9;
+    }
+
+    .zone-title {
+      margin-top: 4px;
+      font-size: 22px;
+      color: #16395b;
+    }
+
+    .zone-note {
+      margin-top: 8px;
+      color: #45617d;
+      font-size: 14px;
+    }
+
+    .zone-selector {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .zone-selector button {
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: #ffffff;
+      color: #204565;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .zone-selector button.active {
+      background: #eaf5ff;
+      border-color: rgba(21, 93, 157, 0.4);
+    }
+
+    .zone-gallery {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .zone-gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+      background: #f5f8fc;
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .zone-gallery-item.active {
+      border-color: rgba(21, 93, 157, 0.48);
+      box-shadow: 0 0 0 2px rgba(112, 176, 232, 0.24);
+    }
+
+    .zone-gallery-item img {
+      width: 100%;
+      height: 96px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .zone-gallery-item span {
+      display: block;
+      padding: 6px 8px 8px;
+      font-size: 11px;
+      color: #3d5772;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .zone-focus {
+      margin-top: 10px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: #fff;
+    }
+
+    .zone-focus img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+    }
+
+    .zone-focus-caption {
+      padding: 9px 11px;
+      font-size: 12px;
+      color: #3f5a75;
+      font-weight: 700;
+    }
+
+    .sidebar-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .sidebar-close {
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #edf6ff;
+      background: rgba(255, 255, 255, 0.12);
+      cursor: pointer;
+    }
+
+    .planner-shell { position: relative; }
+
+    .planner-shell:fullscreen,
+    .planner-shell:-webkit-full-screen {
+      position: relative;
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      padding: 0;
+      overflow: hidden;
+      background: #081427;
+      color: #dbe9f7;
+    }
+
+    .planner-shell:fullscreen .planner-left,
+    .planner-shell:-webkit-full-screen .planner-left {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+      box-shadow: none;
+      background: #081427;
+      padding: 14px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .planner-shell:fullscreen .planner-right,
+    .planner-shell:-webkit-full-screen .planner-right {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: min(380px, 36vw);
+      min-width: 320px;
+      height: 100%;
+      margin: 0;
+      border-radius: 0;
+      border: 0;
+      border-left: 1px solid rgba(148, 177, 206, 0.2);
+      box-shadow: none;
+      background: #102138;
+      color: #dce9f7;
+      overflow: auto;
+      padding: 18px 16px 24px;
+      z-index: 10;
+    }
+
+    .planner-shell.sidebar-open:fullscreen .planner-right,
+    .planner-shell.sidebar-open:-webkit-full-screen .planner-right {
+      display: block;
+    }
+
+    .planner-shell.sidebar-open:fullscreen .planner-left,
+    .planner-shell.sidebar-open:-webkit-full-screen .planner-left {
+      padding-right: min(400px, 38vw);
+    }
+
+    .planner-shell:fullscreen .zone-panel,
+    .planner-shell:-webkit-full-screen .zone-panel {
+      box-shadow: none;
+      color: inherit;
+    }
+
+    .planner-shell:fullscreen .zone-panel .tag,
+    .planner-shell:-webkit-full-screen .zone-panel .tag {
+      background: rgba(255, 255, 255, 0.12);
+      color: #dce9f7;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .planner-shell:fullscreen .zone-title,
+    .planner-shell:-webkit-full-screen .zone-title {
+      color: #f2f7ff;
+    }
+
+    .planner-shell:fullscreen .zone-note,
+    .planner-shell:-webkit-full-screen .zone-note {
+      color: #c9d9eb;
+    }
+
+    .planner-shell:fullscreen .zone-selector button,
+    .planner-shell:-webkit-full-screen .zone-selector button {
+      background: rgba(255, 255, 255, 0.14);
+      color: #eff6ff;
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+
+    .planner-shell:fullscreen .zone-selector button.active,
+    .planner-shell:-webkit-full-screen .zone-selector button.active {
+      background: rgba(72, 153, 226, 0.35);
+      border-color: rgba(130, 192, 249, 0.5);
+    }
+
+    .planner-shell:fullscreen .zone-gallery-item,
+    .planner-shell:-webkit-full-screen .zone-gallery-item {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(199, 220, 242, 0.24);
+    }
+
+    .planner-shell:fullscreen .zone-gallery-item span,
+    .planner-shell:-webkit-full-screen .zone-gallery-item span,
+    .planner-shell:fullscreen .zone-focus-caption,
+    .planner-shell:-webkit-full-screen .zone-focus-caption {
+      color: #d8e8fa;
+    }
+
+    .planner-shell:fullscreen .zone-focus,
+    .planner-shell:-webkit-full-screen .zone-focus {
+      display: block;
+    }
+
+    .planner-shell:fullscreen .zone-gallery,
+    .planner-shell:-webkit-full-screen .zone-gallery {
+      display: grid;
+    }
+
+    .planner-shell:fullscreen .sidebar-close,
+    .planner-shell:-webkit-full-screen .sidebar-close {
+      display: inline-flex;
+    }
+
+    .planner-shell:fullscreen .drone-map-wrap,
+    .planner-shell:-webkit-full-screen .drone-map-wrap {
+      flex: 1;
+      min-height: 0;
+      border-radius: 12px;
+      border: 1px solid rgba(205, 223, 241, 0.25);
+      background: #0f2034;
+      overflow: hidden;
+    }
+
+    .planner-shell:fullscreen .drone-map-wrap img,
+    .planner-shell:-webkit-full-screen .drone-map-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #0d1b2c;
+    }
+
+    .planner-shell:fullscreen .map-help,
+    .planner-shell:-webkit-full-screen .map-help {
+      margin-top: 8px;
+      color: #b9cfe5;
+    }
+
+    .planner-shell:fullscreen .drone-toolbar,
+    .planner-shell:-webkit-full-screen .drone-toolbar {
+      margin-bottom: 8px;
+    }
+
+    .planner-shell:fullscreen .drone-toolbar .button.secondary,
+    .planner-shell:-webkit-full-screen .drone-toolbar .button.secondary {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.24);
+      color: #f0f6ff;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .metric {
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(160deg, #ffffff, #e8f3ee);
+      border: 1px solid rgba(47, 143, 100, 0.2);
+    }
+
+    .metric h3 {
+      font-size: 15px;
+      margin-bottom: 6px;
+      color: #1f734f;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .journal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      color: #124d7a;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid rgba(18, 77, 122, 0.3);
+      padding-bottom: 4px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .video-card video {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #0f172a;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-card .meta {
+      padding: 14px 16px 16px;
+      font-size: 14px;
+      color: #334a62;
+      font-weight: 600;
+    }
+
+    .family-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .family-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+    }
+
+    .appendix-intro .card {
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: linear-gradient(170deg, #ffffff, #edf5ff);
+    }
+
+    .camp-plan {
+      padding-top: 18px;
+    }
+
+    .camp-plan .camp-hero {
+      min-height: 380px;
+      margin-top: 14px;
+    }
+
+    .camp-plan .grid-2 {
+      margin-top: 18px;
+    }
+
+    .camp-plan .video-grid {
+      margin-top: 18px;
+    }
+
+    .family-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .family-card blockquote {
+      margin: 0;
+      padding: 14px 16px 8px;
+      font-size: 16px;
+      color: #2a3647;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+      min-height: 105px;
+    }
+
+    .family-card cite {
+      display: block;
+      padding: 0 16px 6px;
+      color: #49607a;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .closing {
+      color: var(--white);
+      background:
+        linear-gradient(160deg, rgba(2, 29, 58, 0.9), rgba(11, 54, 78, 0.96)),
+        url("assets/atnarpa/originals/img-032.jpg") center / cover no-repeat;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 34px;
+    }
+
+    .closing p { color: #edf5ff; }
+    .closing h2,
+    .closing h2 * { color: #ffffff !important; }
+
+    .footer {
+      color: #54687f;
+      font-size: 13px;
+      text-align: center;
+      padding: 24px 0 44px;
+    }
+
+    .editor-dock {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: min(420px, calc(100vw - 32px));
+      max-height: calc(100vh - 32px);
+      z-index: 1200;
+      border-radius: 14px;
+      background: rgba(8, 20, 39, 0.95);
+      color: #e9f3ff;
+      border: 1px solid rgba(140, 173, 204, 0.28);
+      box-shadow: 0 24px 48px rgba(5, 14, 29, 0.45);
+      display: none;
+      overflow: hidden;
+    }
+
+    .editor-dock.open {
+      display: block;
+    }
+
+    .editor-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(140, 173, 204, 0.24);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .editor-head strong {
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .editor-head button {
+      border: 1px solid rgba(214, 229, 244, 0.35);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f3f8ff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .editor-body {
+      max-height: calc(100vh - 100px);
+      overflow: auto;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .editor-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .editor-actions button,
+    .editor-block button,
+    .editor-inline-button {
+      min-height: 34px;
+      border: 1px solid rgba(214, 229, 244, 0.35);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f3f8ff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .editor-actions button.active {
+      background: rgba(63, 142, 215, 0.42);
+      border-color: rgba(157, 206, 251, 0.62);
+    }
+
+    .editor-note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.4;
+      color: #c2d8ef;
+    }
+
+    .editor-block {
+      border: 1px solid rgba(140, 173, 204, 0.25);
+      border-radius: 12px;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .editor-block h4 {
+      margin: 0;
+      font-size: 13px;
+      color: #f1f8ff;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .editor-block label {
+      display: grid;
+      gap: 5px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #b6cee6;
+      font-weight: 700;
+    }
+
+    .editor-block input,
+    .editor-block textarea,
+    .editor-block select {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(214, 229, 244, 0.34);
+      background: rgba(9, 25, 44, 0.8);
+      color: #f4f9ff;
+      font-size: 12px;
+      font-family: inherit;
+      padding: 7px 9px;
+    }
+
+    .editor-block textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    .editor-launch {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1199;
+      min-height: 42px;
+      border: 1px solid rgba(18, 35, 57, 0.35);
+      border-radius: 999px;
+      background: #ec7728;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      padding: 9px 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      box-shadow: 0 14px 28px rgba(236, 119, 40, 0.3);
+      display: none;
+    }
+
+    .editor-launch.visible {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .editor-text-mode [data-editor-id] {
+      outline: 1px dashed rgba(236, 119, 40, 0.95);
+      outline-offset: 2px;
+      background: rgba(236, 119, 40, 0.08);
+      cursor: text;
+    }
+
+    .editor-image-mode [data-editor-image-id] {
+      outline: 2px dashed rgba(130, 192, 249, 0.9);
+      outline-offset: 2px;
+      cursor: pointer;
+    }
+
+    .pin-edit-on .zone-pin,
+    .pin-edit-on .upgrade-pin {
+      cursor: grab;
+      box-shadow: 0 0 0 3px rgba(236, 119, 40, 0.24), 0 10px 20px rgba(11, 39, 66, 0.35);
+    }
+
+    .zone-pin.dragging,
+    .upgrade-pin.dragging {
+      cursor: grabbing;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .grid-2,
+      .grid-3,
+      .timeline,
+      .metrics,
+      .pillars,
+      .video-grid,
+      .family-grid,
+      .drone-layout,
+      .cost-summary {
+        grid-template-columns: 1fr;
+      }
+      .cost-fields {
+        grid-template-columns: 1fr;
+      }
+      .cost-field.wide {
+        grid-column: span 1;
+      }
+      .main-build-grid,
+      .sketch-layout,
+      .work-packages,
+      .package-legend {
+        grid-template-columns: 1fr;
+      }
+      .upgrade-pin span {
+        left: 50%;
+        top: calc(100% + 8px);
+        transform: translateX(-50%);
+        white-space: normal;
+        width: 140px;
+        text-align: center;
+      }
+      .overlay-plan-wide {
+        min-height: 340px;
+      }
+      .sketch-side-stack {
+        grid-template-rows: none;
+        grid-template-columns: 1fr;
+      }
+      .hero { min-height: 76vh; }
+      .family-card img { height: 280px; }
+    }
+
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      .section { padding: 20px 0; }
+
+      .hero {
+        min-height: 400px;
+        background:
+          linear-gradient(180deg, rgba(3, 10, 30, 0.22), rgba(3, 10, 30, 0.84)),
+          url("assets/videos/light/posters/header-dji-0323-light.jpg") center / cover no-repeat;
+      }
+
+      .hero-video,
+      .button,
+      .video-card video,
+      .journal-link,
+      .drone-toolbar,
+      .editor-dock,
+      .editor-launch {
+        display: none !important;
+      }
+
+      .card,
+      .image-card,
+      .closing,
+      .video-card,
+      .family-card {
+        box-shadow: none;
+      }
+
+      .reveal {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+  </style>
+  <style id="archipro-refresh-overrides">
+    @import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --brand-500: #111827;
+      --brand-600: #0b1220;
+      --ocean-500: #64a7ff;
+      --clay-50: #f5f5f3;
+      --clay-100: #ebeeef;
+      --clay-900: #171b23;
+      --earth-500: #9b7a3d;
+      --shadow: 0 22px 44px rgba(12, 18, 28, 0.08);
+      --radius: 22px;
+      --pkg-a: #2d7dc6;
+      --pkg-b: #2f8f64;
+      --pkg-c: #c3872a;
+      --pkg-d: #7d68d9;
+      --pkg-e: #be3c35;
+    }
+
+    html,
+    body {
+      background:
+        radial-gradient(circle at 8% 6%, rgba(100, 167, 255, 0.08), transparent 34%),
+        radial-gradient(circle at 92% 0%, rgba(254, 86, 107, 0.06), transparent 28%),
+        linear-gradient(180deg, #f5f5f3 0%, #f0f1ef 100%);
+      font-family: "Inter Tight", "Segoe UI", sans-serif;
+      color: var(--clay-900);
+      line-height: 1.56;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: "Inter Tight", "Segoe UI", sans-serif;
+      letter-spacing: -0.025em;
+      color: #131923;
+    }
+
+    h2 {
+      font-size: clamp(32px, 4.1vw, 54px);
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: clamp(20px, 2.2vw, 30px);
+    }
+
+    p {
+      color: #3f4956;
+      font-size: 16px;
+      max-width: 76ch;
+    }
+
+    .container {
+      width: min(1320px, 92vw);
+    }
+
+    .section {
+      padding: 76px 0;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.84);
+      border: 1px solid #d5dce5;
+      color: #253248;
+      letter-spacing: 0.07em;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 13px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      background: #090f19;
+    }
+
+    .hero-overlay {
+      background:
+        linear-gradient(180deg, rgba(7, 11, 18, 0.16) 0%, rgba(7, 11, 18, 0.68) 58%, rgba(7, 11, 18, 0.84) 100%),
+        linear-gradient(90deg, rgba(7, 11, 18, 0.7) 0%, rgba(7, 11, 18, 0.24) 60%);
+    }
+
+    .hero-body {
+      padding: 96px 0 92px;
+      max-width: 980px;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 7.6vw, 98px);
+      line-height: 0.98;
+      margin-bottom: 18px;
+      max-width: 12.5ch;
+      color: #f7f9fc;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 2vw, 28px);
+      color: #e6ecf4;
+      margin-bottom: 11px;
+    }
+
+    .byline {
+      color: rgba(236, 243, 252, 0.88);
+      max-width: 76ch;
+      margin-bottom: 24px;
+    }
+
+    .action-row {
+      gap: 10px;
+    }
+
+    .button {
+      min-height: 46px;
+      border-radius: 12px;
+      padding: 12px 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .button.primary {
+      color: #f9fcff;
+      background: linear-gradient(140deg, #111827, #1e293b);
+      border: 1px solid rgba(252, 253, 255, 0.18);
+      box-shadow: 0 14px 28px rgba(5, 9, 14, 0.34);
+    }
+
+    .button.secondary {
+      color: #1f2a3d;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(214, 221, 231, 0.92);
+    }
+
+    .button.small {
+      min-height: 38px;
+      border-radius: 10px;
+      letter-spacing: 0.02em;
+      text-transform: none;
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(8, 12, 19, 0.14);
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(216, 223, 233, 0.86);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 30px;
+    }
+
+    .acknowledge {
+      margin-top: -44px;
+    }
+
+    .section-lead {
+      color: #485261;
+      font-size: 17px;
+      margin-bottom: 22px;
+      max-width: 94ch;
+    }
+
+    .image-card,
+    .video-card,
+    .family-card {
+      border-radius: var(--radius);
+      border: 1px solid rgba(217, 223, 232, 0.9);
+      box-shadow: var(--shadow);
+      background: #f1f4f7;
+    }
+
+    .image-caption {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      background: linear-gradient(180deg, rgba(7, 11, 18, 0) 0%, rgba(7, 11, 18, 0.8) 100%);
+      color: #f2f7fc;
+    }
+
+    .main-build-grid {
+      grid-template-columns: minmax(0, 1.34fr) minmax(300px, 0.66fr);
+      gap: 24px;
+    }
+
+    .main-build-meta {
+      align-content: start;
+    }
+
+    .main-build-sketch-block {
+      margin-top: 22px;
+      gap: 18px;
+    }
+
+    .overlay-plan-wide {
+      min-height: 760px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(214, 221, 231, 0.86);
+      background: #e5eaf0;
+      box-shadow: var(--shadow);
+    }
+
+    .overlay-plan-wide img {
+      background: #0f1724;
+      object-fit: contain;
+      image-rendering: auto;
+    }
+
+    .sketch-side-stack {
+      gap: 16px;
+    }
+
+    .sketch-card {
+      background: #ffffff;
+      border: 1px solid rgba(219, 226, 235, 0.92);
+    }
+
+    .sketch-card img {
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .quote {
+      margin-top: 20px;
+      padding: 17px 18px;
+      border-radius: 12px;
+      border: 1px solid #ebddc1;
+      border-left: 4px solid var(--earth-500);
+      background: #faf7ef;
+      color: #4e3a17;
+      font-size: 17px;
+      font-family: "Inter Tight", "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    .timeline .card {
+      border-top: 3px solid #1d2b42;
+    }
+
+    .phase {
+      color: #1d2f46;
+    }
+
+    .work-package {
+      border: 1px solid rgba(208, 216, 228, 0.9);
+      background: #ffffff;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+      padding: 16px;
+    }
+
+    .work-package h3 {
+      color: #1b2e46;
+    }
+
+    .work-package p {
+      color: #4a5564;
+    }
+
+    .simple-cost-table-wrap {
+      border: 1px solid rgba(205, 214, 226, 0.9);
+      border-radius: 14px;
+    }
+
+    .simple-cost-table thead th {
+      background: #f6f8fb;
+      color: #20324b;
+    }
+
+    .simple-cost-table td {
+      color: #3c4d62;
+    }
+
+    .drone-feature {
+      border: 1px solid rgba(206, 214, 226, 0.92);
+      background: #0f1724;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .drone-feature .meta {
+      background: linear-gradient(130deg, #0f1724, #1c2738);
+      color: #d9e2ef;
+      font-weight: 600;
+    }
+
+    .zone-panel .tag {
+      background: #f4f7fb;
+      border-color: #d8dfeb;
+      color: #2a3b52;
+    }
+
+    .zone-title {
+      color: #1d2e45;
+    }
+
+    .zone-note {
+      color: #46556b;
+    }
+
+    .zone-selector button.active {
+      background: #eef4fb;
+      border-color: rgba(45, 125, 198, 0.32);
+    }
+
+    .zone-gallery-item span {
+      color: #4c5e75;
+      font-weight: 600;
+    }
+
+    .appendix-intro .card {
+      background: linear-gradient(170deg, #ffffff, #f5f8fb);
+      border: 1px solid rgba(209, 218, 229, 0.9);
+    }
+
+    .family-card blockquote {
+      font-family: "Inter Tight", "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.52;
+      color: #2a3546;
+      min-height: 112px;
+    }
+
+    .family-card cite {
+      color: #5b6d82;
+      letter-spacing: 0.04em;
+    }
+
+    .closing {
+      border: 1px solid rgba(188, 205, 226, 0.28);
+      box-shadow: 0 24px 48px rgba(7, 13, 22, 0.35);
+    }
+
+    .footer {
+      color: #6f7781;
+    }
+
+    @media (max-width: 980px) {
+      .section {
+        padding: 58px 0;
+      }
+
+      .hero h1 {
+        max-width: none;
+      }
+
+      .overlay-plan-wide {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/videos/light/posters/header-dji-0323-light.jpg">
+      <source src="assets/videos/light/header-dji-0323-light.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="container hero-body reveal">
+      <span class="tag">Atnarpa Proposal 2026-2036</span>
+      <h1>Building Family Wealth and Cultural Continuity on Country</h1>
+      <p class="subtitle">Traditional Owners of Loves Creek Station and Oonchiumpa Consultancy and Services</p>
+      <p class="byline">Supported by A Curious Tractor. A ten-year pathway for intergenerational opportunity, cultural leadership, and community-led enterprise in and around Alice Springs.</p>
+      <div class="action-row">
+        <a class="button primary" href="https://www.snowfoundation.org.au/" target="_blank" rel="noreferrer">Snow Foundation</a>
+        <a class="button secondary" href="https://www.act.place/blog/historys-wounds-and-tomorrows-possibilities" target="_blank" rel="noreferrer">Read Build Story</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section acknowledge" data-view-group="core">
+      <div class="container">
+        <article class="card reveal">
+          <h2>Acknowledgement of Country</h2>
+          <p>We acknowledge the Traditional Owners of Atnarpa and Loves Creek Station, and we pay our respects to Elders past and present. We are Oonchiumpa Consultancy and Services, owned and operated by Arrernte Traditional Owners of Mbantua (Alice Springs) and Loves Creek (Atnarpa), and this proposal is our commitment to strengthen culture, community, and family through our own leadership.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container grid-2">
+        <article class="card reveal">
+          <span class="tag">Legacy</span>
+          <h2>Building on Our Family Legacy</h2>
+          <p>Our family legacy carries responsibility and pride. Atnarpa Homestead and surrounding Country hold both the weight of history and the strength of survival, and we continue sharing cultural knowledge with care.</p>
+          <p class="quote">"We know what we wanna do on our land, and we know how to get there." - Kristy Bloomfield</p>
+          <p>We continue this work through cultural authority, practical delivery, and a shared commitment to future generations.</p>
+        </article>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-001.jpg" alt="Family legacy photograph" />
+          <figcaption class="image-caption">Family history and continuity at Atnarpa</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container">
+        <span class="tag reveal">Continuity</span>
+        <h2 class="reveal">From Pastoralist to Tourism and On-Country Learning</h2>
+        <p class="reveal">Our ancestors shared knowledge through pastoral life at Loves Creek, including station duties, stock work, and family care under difficult conditions. Today we continue that legacy through cultural tourism, on-Country educational training, and intergenerational learning.</p>
+        <div class="grid-3">
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-003.jpg" alt="Pastoral and cultural tourism history" />
+            <figcaption class="image-caption">Knowledge sharing from station life to visitor engagement</figcaption>
+          </figure>
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-008.jpg" alt="On-country educational training" />
+            <figcaption class="image-caption">On-country educational training and youth learning</figcaption>
+          </figure>
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/originals/img-004.jpg" alt="Loves Creek Station heritage" />
+            <figcaption class="image-caption">Family-led cultural education on Country</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container grid-2">
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-012.jpg" alt="Love's Creek Land Claim ceremony" />
+          <figcaption class="image-caption">Land claim recognition and community ceremony</figcaption>
+        </figure>
+        <article class="card reveal">
+          <span class="tag">Land Rights</span>
+          <h2>Land Claim and Present-Day Stewardship</h2>
+          <p>Loves Creek Station was one of the earliest pastoral leases in Central Australia. Land claim recognition enables us to lead our own future at Atnarpa and deliver restoration, activation, and long-term planning under Traditional Owner leadership.</p>
+          <p>Today, we continue sharing culture with care and invite respectful participation guided by our rules and values.</p>
+          <p class="quote">"Our kids 10 years time, that's our focus at the moment." - Kylie Bloomfield</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core" data-editor-static="true">
+      <div class="container">
+        <span class="tag reveal">Main Build Priority</span>
+        <h2 class="reveal">Main Build at Campground</h2>
+        <p class="section-lead reveal">Our immediate infrastructure focus is the campground conference precinct, centered between the dongas, with supporting links to accommodation, amenities, and cultural gathering space. Homestead-side works remain part of the plan as smaller supporting upgrades staged around this core build.</p>
+        <div class="status-row reveal">
+          <span class="status-chip"><strong>Now:</strong> Conference core, deck links, yarning circle, essential amenities.</span>
+          <span class="status-chip"><strong>Later:</strong> Expanded landscape treatment and homestead-side refinement.</span>
+          <span class="status-chip"><strong>Indicative:</strong> Approximately 1-2 weeks, crew of five, subject to approvals/logistics/funding.</span>
+        </div>
+        <div class="main-build-grid">
+          <figure class="image-card reveal">
+            <img src="assets/atnarpa/campsite/IMG_9412.jpg" alt="Main campground area where conference and gathering works are proposed" />
+            <figcaption class="image-caption">Campground heart: primary location for conference structure, connected deck network, and cultural gathering zone.</figcaption>
+          </figure>
+          <article class="card main-build-meta reveal">
+            <h3>Conference Core Concept</h3>
+            <p>Two 40-foot containers with a roof between can form a fully enclosed and air-conditioned function/training room. The proposed internal footprint is approximately 11m by 6m (66 sqm).</p>
+            <p>From this core, open-air decking can connect to accommodation blocks, kitchen access, and a central firepit/yarning area to support workshops, conferences, and community gatherings.</p>
+            <p>Material selection, footings, approvals, and transport to site are treated as key delivery constraints in the staging and quote pathway.</p>
+          </article>
+        </div>
+        <div class="main-build-sketch-block">
+          <article class="card reveal">
+            <h3>Sketches and Layout Drawings</h3>
+            <p>These drawings show how the campground build can be organized on Country: conference core in the center, connected deck circulation, and a central yarning/firepit point with staged links to accommodation and services.</p>
+            <p>They support package planning from concept through approvals, footings, materials delivery, and on-site sequencing.</p>
+          </article>
+          <figure class="image-card overlay-plan-wide reveal">
+            <img src="assets/atnarpa/sketches/campground-overlay-plan.png" alt="Campground overlay drawing showing conference core, deck links, and yarning circle" />
+            <figcaption class="image-caption">Main overlay plan across the full section: conference core, linked deck network, and yarning circle layout.</figcaption>
+          </figure>
+          <div class="sketch-layout">
+            <div class="sketch-side-stack">
+              <figure class="image-card sketch-card reveal">
+                <img src="assets/atnarpa/sketches/campground-hand-sketch-01.png" alt="Hand sketch of covered conference structure and deck connections" />
+                <figcaption class="image-caption">Concept sketch: covered structure and connection logic between spaces.</figcaption>
+              </figure>
+              <figure class="image-card sketch-card reveal">
+                <img src="assets/atnarpa/sketches/campground-hand-sketch-02.png" alt="Hand sketch of conference core with surrounding circulation and firepit" />
+                <figcaption class="image-caption">Concept sketch: central room, circulation paths, and firepit/yarning area.</figcaption>
+              </figure>
+            </div>
+          </div>
+          <article class="card reveal upgrade-map-card">
+            <h3>Proposed Infrastructure Development Points</h3>
+            <p>This list translates the sketches into practical campground upgrade points, so scope is clear before approvals, procurement, and site mobilization.</p>
+            <ol class="upgrade-point-list">
+              <li><strong>Conference Structure:</strong> Two 40-foot containers joined with a roof between, fully enclosed and air-conditioned (approximately 11m x 6m / 66 sqm) for functions, conferences, training, and gatherings.</li>
+              <li><strong>Decking and Circulation:</strong> Open-air decking joins the central structure to accommodation and kitchen access, creating one connected communal movement path.</li>
+              <li><strong>Accommodation Upgrades:</strong> Existing dongas are upgraded into three accommodation blocks linked to the conference structure via decking.</li>
+              <li><strong>Fire Pit and Gathering:</strong> A central fire pit / yarning point anchors cultural gathering and story-sharing in the campground heart.</li>
+              <li><strong>Homestead Supporting Upgrades:</strong> Two toilet and shower blocks at the homestead are installed/upgraded through staged reconfiguration of existing infrastructure.</li>
+            </ol>
+            <div class="annotated-plan-figure">
+              <figure class="image-card reveal">
+                <img src="assets/atnarpa/sketches/campground-annotated-plan-new.png" alt="Annotated proposed infrastructure development plan" />
+                <figcaption class="image-caption">Annotated concept plan showing conference core, deck network, accommodation upgrades, amenities block, and communal fire pit hub.</figcaption>
+              </figure>
+              <div class="full-image-link-row">
+                <a
+                  class="button secondary small js-fullscreen-image"
+                  href="assets/atnarpa/sketches/campground-annotated-plan.jpg"
+                  data-fullscreen-src="assets/atnarpa/sketches/campground-annotated-plan-new.png"
+                  data-fullscreen-alt="Annotated proposed infrastructure development plan"
+                  data-fullscreen-title="Proposed Infrastructure Development Points"
+                  target="_blank"
+                  rel="noreferrer">Open Full Screen Drawing</a>
+                <p class="full-image-link-note">Opens as a true full-screen drawing view.</p>
+              </div>
+            </div>
+          </article>
+          <article class="drone-feature reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/camp-to-house-drone-follow-light.jpg">
+              <source src="assets/videos/light/camp-to-house-drone-follow-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Main drone walkthrough of the campground area and connection back toward the homestead.</div>
+          </article>
+          <article class="card reveal" id="homesteadPointsSection">
+            <h3>Homestead Map Points</h3>
+            <p>These supporting works sit alongside the campground-first build and are staged as practical upgrades around the existing homestead footprint.</p>
+            <div class="upgrade-map-wrap homestead-map-wrap">
+              <img src="assets/atnarpa/campsite/homestead-additional-map.jpg" alt="Aerial homestead map with supporting-upgrade reference points" />
+              <div class="upgrade-pin h1" data-homestead-point-key="h1">1<span>Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)</span></div>
+              <div class="upgrade-pin h2" data-homestead-point-key="h2">2<span>Landscaping upgrades to define the campground edge and safe movement areas</span></div>
+              <div class="upgrade-pin h3" data-homestead-point-key="h3">3<span>Homestead roof fixed and site prepared for safe next stages</span></div>
+            </div>
+            <ul class="upgrade-point-list">
+              <li><strong>Two toilet and shower blocks:</strong> installed and upgraded at the homestead location through reconfiguration of old cattle-block infrastructure.</li>
+              <li><strong>Landscaping upgrades:</strong> targeted ground shaping around the homestead and campground interface to define safe movement, access, and usable outdoor areas.</li>
+              <li><strong>Homestead roof complete:</strong> roof restoration has been completed and the site is now ready for safe next stages of development.</li>
+            </ul>
+            <div class="full-image-link-row">
+              <a
+                class="button secondary small js-fullscreen-image"
+                href="assets/atnarpa/campsite/homestead-additional-map.jpg"
+                data-fullscreen-src="assets/atnarpa/campsite/homestead-additional-map.jpg"
+                data-fullscreen-alt="Aerial homestead map with supporting-upgrade reference points"
+                data-fullscreen-title="Additional Infrastructure at the Homestead"
+                target="_blank"
+                rel="noreferrer">Open Homestead Map Full Screen</a>
+              <p class="full-image-link-note">Opens as a true full-screen map view.</p>
+            </div>
+          </article>
+          <article class="drone-feature reveal">
+            <iframe
+              class="descript-embed-frame"
+              src="https://share.descript.com/embed/Zpf1ZnlY9ja"
+              title="Bloomfield Partnership and Family Story"
+              allowfullscreen
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+              loading="lazy"></iframe>
+            <div class="meta">Family story interview and reflections from the Bloomfield partnership.</div>
+          </article>
+          <article class="card reveal simple-cost-table-card" id="pricing-breakdown">
+            <h3>Detailed Costing Snapshot</h3>
+            <p>Current indicative costs (AUD) for the scoped works, based on latest concept planning and remote-site delivery assumptions.</p>
+            <div class="simple-cost-table-wrap">
+              <table class="simple-cost-table">
+                <thead>
+                  <tr>
+                    <th>Detailed Cost Line Item</th>
+                    <th>Cost (AUD)</th>
+                    <th>Scope Note</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>40ft Shipping Container x 2</td>
+                    <td>$16,000</td>
+                    <td>Two containers for the conference core structure.</td>
+                  </tr>
+                  <tr>
+                    <td>Delivery of containers, equipment and machinery to Atnarpa</td>
+                    <td>$25,000</td>
+                    <td>Remote transport and freight logistics to site.</td>
+                  </tr>
+                  <tr>
+                    <td>Decking</td>
+                    <td>$22,000</td>
+                    <td>Deck links between core, rooms, amenities, and gathering areas.</td>
+                  </tr>
+                  <tr>
+                    <td>Airconditioning</td>
+                    <td>$19,800</td>
+                    <td>Climate control for conference core and upgraded rooms.</td>
+                  </tr>
+                  <tr>
+                    <td>Upgrades to current accommodation dongas and bathroom facility</td>
+                    <td>$11,000</td>
+                    <td>Painting, sheeting, door hardware, fixings, and AC improvements.</td>
+                  </tr>
+                  <tr>
+                    <td>Labour team of 5 for one week plus travel</td>
+                    <td>$50,000</td>
+                    <td>Construction and installation delivery team.</td>
+                  </tr>
+                  <tr>
+                    <td>Project Management</td>
+                    <td>$9,000</td>
+                    <td>Procurement, scheduling, quality control, and stakeholder coordination.</td>
+                  </tr>
+                  <tr>
+                    <td>Toilet + Shower Block at Homestead</td>
+                    <td>$58,000</td>
+                    <td>Install and upgrade two toilet and shower blocks.</td>
+                  </tr>
+                  <tr>
+                    <td>Landscaping around homestead and cattle yards</td>
+                    <td>$11,000</td>
+                    <td>Landscape and site-preparation improvements.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="simple-cost-note"><strong>Known current cost total:</strong> $221,800 AUD. Dream-plan uplift remains to be confirmed through co-design, technical review, and partner confirmation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section appendix-intro" data-view-group="appendix" data-editor-static="true">
+      <div class="container">
+        <article class="card reveal">
+          <span class="tag">Context Appendix</span>
+          <h2>Expanded History, Evidence, and Implementation Context</h2>
+          <p>This appendix holds additional family stories, project evidence, media, and planning detail that sit behind the core send version.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="appendix" data-editor-static="true">
+      <div class="container grid-2">
+        <article class="card reveal">
+          <span class="tag">History Context</span>
+          <h2>Expanded History and Land Claim Context</h2>
+          <p>Our families have carried knowledge through station life, cultural teaching, and community leadership across generations. Land claim recognition at Loves Creek remains central to how we guide present and future use of Country.</p>
+          <p>This context informs current project decisions: we are building practical infrastructure that supports cultural authority, youth pathways, and long-term family opportunity.</p>
+        </article>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-011.jpg" alt="Land claim documentation and recognition context" />
+          <figcaption class="image-caption">Land claim and governance context that grounds infrastructure planning decisions.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="appendix">
+      <div class="container grid-2">
+        <article class="card reveal">
+          <span class="tag">Project Journal</span>
+          <h2>Last Build Story</h2>
+          <p>The previous build week and partnership context is documented in this story from A Curious Tractor. It can sit beside this pitch as supporting evidence of delivery and trust.</p>
+          <a class="journal-link" href="https://www.act.place/blog/historys-wounds-and-tomorrows-possibilities" target="_blank" rel="noreferrer">History's wounds and tomorrow's possibilities</a>
+        </article>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/originals/img-013.jpg" alt="Bloomfield family team portrait" />
+          <figcaption class="image-caption">Current leadership and family stewardship</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="appendix">
+      <div class="container">
+        <span class="tag reveal">Work on the Station</span>
+        <h2 class="reveal">Video Gallery</h2>
+        <p class="reveal">These clips show day-to-day work, land care, and family-led activity on station. Videos are click-to-play.</p>
+        <div class="video-grid">
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-01-light.jpg">
+              <source src="assets/videos/light/work-on-station-01-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 01</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-02-light.jpg">
+              <source src="assets/videos/light/work-on-station-02-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 02</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-03-light.jpg">
+              <source src="assets/videos/light/work-on-station-03-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 03</div>
+          </article>
+          <article class="video-card reveal">
+            <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/work-on-station-04-light.jpg">
+              <source src="assets/videos/light/work-on-station-04-light.mp4" type="video/mp4" />
+            </video>
+            <div class="meta">Station work clip 04</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="appendix">
+      <div class="container">
+        <span class="tag reveal">Family Voices</span>
+        <h2 class="reveal">Interview Quotes and Family Profiles</h2>
+        <div class="family-grid">
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-013.jpg" alt="Family profile on station" />
+            <blockquote>"This week has made a huge impact on our family and creating our own history."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-001.jpg" alt="Family elder portrait" />
+            <blockquote>"Growing up here, mate, it's God's country."</blockquote>
+            <cite>Shane Bloomfield</cite>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-002.jpg" alt="Family ancestor profile" />
+            <blockquote>"We know what we wanna do on our land, and we know how to get there."</blockquote>
+            <cite>Kristy Bloomfield</cite>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-006.jpg" alt="Family tourism leadership image" />
+            <blockquote>"Our kids 10 years time, that's our focus at the moment."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-011.jpg" alt="Family and community recognition" />
+            <blockquote>"It's just good to be coming home, to grow my kids up here."</blockquote>
+            <cite>Henry Bloomfield</cite>
+          </article>
+          <article class="family-card reveal">
+            <img src="assets/atnarpa/originals/img-012.jpg" alt="Family and community gathering" />
+            <blockquote>"What they created here with us this week was unbelievable."</blockquote>
+            <cite>Kylie Bloomfield</cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container">
+        <span class="tag reveal">10-Year Pathway</span>
+        <h2 class="reveal">10-Year Vision: Generational Wealth, Enterprise, and Country (2026-2036)</h2>
+        <p class="section-lead reveal">Our long-term direction is to build intergenerational wealth through family-led enterprise on Country at Atnarpa, while protecting cultural authority and community wellbeing. We are carrying this work forward from the station lease history, including the Hewett family lease period, into a future led by Traditional Owners.</p>
+        <p class="section-lead reveal">This pathway links infrastructure, programs, training, and governance so young people can move into practical employment, business leadership, and long-term stewardship of land and culture.</p>
+        <div class="timeline">
+          <article class="card reveal">
+            <div class="phase">Phase 1 - 2026 to 2028</div>
+            <h3>Foundation and Enterprise Setup</h3>
+            <p>Complete design, approvals, and enabling works while setting up the first family-led enterprise operations. Start early youth pathways, on-Country learning delivery, and governance systems that support staged growth.</p>
+          </article>
+          <article class="card reveal">
+            <div class="phase">Phase 2 - 2029 to 2031</div>
+            <h3>Campground Precinct Activation</h3>
+            <p>Deliver and activate the campground conference precinct, connected circulation, and essential service edge so education, events, cultural tourism, and training can operate as one family-led system.</p>
+          </article>
+          <article class="card reveal">
+            <div class="phase">Phase 3 - 2032 to 2036</div>
+            <h3>Intergenerational Transfer and Scale</h3>
+            <p>Scale revenue streams, strengthen enterprise capability, and transfer leadership to the next generation through mentoring, ownership pathways, and staged homestead upgrades that support long-term stability.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container">
+        <span class="tag reveal">Program Pillars</span>
+        <h2 class="reveal">Community-Centered Activities</h2>
+        <div class="pillars">
+          <article class="card reveal">
+            <h3>On-Country Workshops</h3>
+            <p>Cultural learning, storytelling, and identity-strengthening led by Traditional Owners and mentors.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Youth Training Pathways</h3>
+            <p>Skill development for employment in hospitality, land care, logistics, and cultural program delivery.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Community Events</h3>
+            <p>Shared gatherings, intergenerational exchange, and respectful visitor engagement on Country.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Cultural Enterprise</h3>
+            <p>Story sharing and locally led offerings that build family income and protect cultural authority.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="section" data-view-group="core">
+      <div class="container">
+        <span class="tag reveal">Outcomes</span>
+        <h2 class="reveal">Measurement Framework</h2>
+        <div class="metrics">
+          <article class="metric reveal">
+            <h3>Participation</h3>
+            <p>Track how many families and young people from Alice Springs and surrounding homelands engage in Oonchiumpa-led workshops, cultural programs, tourism activities, and repeat visits on Country.</p>
+          </article>
+          <article class="metric reveal">
+            <h3>Pathways</h3>
+            <p>Track progression from first participation into training, paid work, mentoring, and enterprise roles so the Bloomfield children and regional youth build leadership, confidence, and practical skills on Country.</p>
+          </article>
+          <article class="metric reveal">
+            <h3>Delivery</h3>
+            <p>Track staged delivery of campground and homestead works, operational readiness, and transition planning through the current Hewett lease period so the next 10 years strengthen Indigenous wealth and create a family-led case study for the NT and Australia.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" data-view-group="core">
+      <div class="container">
+        <article class="closing reveal">
+          <span class="tag">Closing Invitation</span>
+          <h2>Partnership That Respects Community Leadership</h2>
+          <p>Atnarpa is a place of memory and possibility. We are seeking partnership that strengthens our capacity to deliver our own vision over the next ten years.</p>
+          <p>We invite Snow Foundation to co-design the next step with us through a review meeting and site conversation, so scope and delivery can be finalised together in the right way.</p>
+          <a class="journal-link" href="#pricing-breakdown">View pricing breakdown and package notes</a>
+          <p>"We know what we want to do on our land, and we know how to get there."</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <section class="section camp-plan" data-view-group="appendix">
+    <div class="container">
+      <span class="tag reveal">Campground Detail Appendix</span>
+      <h2 class="reveal">Additional Photos of the Sites and Supporting Homestead Upgrades</h2>
+      <p class="reveal">This appendix shares additional photos of the sites and identifies supporting homestead-side upgrades to be staged after, or alongside, the core campground build packages.</p>
+
+      <figure class="image-card reveal camp-hero">
+        <img src="assets/atnarpa/campsite/IMG_9412.jpg" alt="Campsite context for deck and cover planning" />
+        <figcaption class="image-caption">Campsite context image for planning deck, cover, and support-area staging.</figcaption>
+      </figure>
+
+      <div class="grid-2">
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4798.jpg" alt="Inside donger rooms at camp" />
+          <figcaption class="image-caption">Inside donger rooms for camp accommodation planning.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4803.jpg" alt="Outside donger layout" />
+          <figcaption class="image-caption">Outside view of donger layout and circulation between structures.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4816.jpg" alt="Campfire and roof option area" />
+          <figcaption class="image-caption">Campfire and central roof option area for gathering and shade.</figcaption>
+        </figure>
+        <figure class="image-card reveal">
+          <img src="assets/atnarpa/campsite/20251103-1E5A4819.jpg" alt="Camp bathroom facilities" />
+          <figcaption class="image-caption">Existing bathroom facilities to inform services upgrades and staging.</figcaption>
+        </figure>
+      </div>
+
+      <div class="video-grid">
+        <article class="video-card reveal">
+          <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/camp-to-house-drone-follow-light.jpg">
+            <source src="assets/videos/light/camp-to-house-drone-follow-light.mp4" type="video/mp4" />
+          </video>
+          <div class="meta">Campsite to homestead drone follow (light version).</div>
+        </article>
+        <article class="video-card reveal">
+          <video autoplay controls muted playsinline loop preload="metadata" data-auto-video poster="assets/videos/light/posters/camp-cut-20s-light.jpg">
+            <source src="assets/videos/light/camp-cut-20s-light.mp4" type="video/mp4" />
+          </video>
+          <div class="meta">Campsite drone overview, first 20 seconds cut for planning context.</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-view-group="appendix" data-editor-static="true">
+    <div class="container grid-2">
+      <article class="card reveal">
+        <span class="tag">Implementation Notes</span>
+        <h2>Delivery and Governance Context</h2>
+        <p>Traditional Owners and Oonchiumpa lead decisions on scope, cultural use, and sequencing. A Curious Tractor supports practical planning, delivery coordination, and technical documentation in service of family-led priorities.</p>
+        <p>Current package timing and crew assumptions are indicative and may change based on approvals, materials logistics, weather, and final funding allocation.</p>
+      </article>
+      <article class="card reveal">
+        <span class="tag">Staging Notes</span>
+        <h3>Practical Dependencies</h3>
+        <p>Key dependencies include container transport, footing design, engineering checks, service trenching, and compliance approvals for enclosed and air-conditioned operations.</p>
+        <p>The build can scale up or down by package, while preserving the campground conference core as the primary infrastructure priority.</p>
+      </article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      Visual draft prepared for Atnarpa proposal development. Designed for web review and PDF export.
+    </div>
+  </footer>
+
+  <div class="image-fullscreen-modal" id="imageFullscreenModal" aria-hidden="true">
+    <div class="image-fullscreen-head">
+      <div class="image-fullscreen-title" id="imageFullscreenTitle">Full Screen Image</div>
+      <div class="image-fullscreen-actions">
+        <button class="button secondary small" type="button" id="imageFullscreenNativeButton">Enter Full Screen</button>
+        <button class="button secondary small" type="button" id="imageFullscreenCloseButton">Close</button>
+      </div>
+    </div>
+    <div class="image-fullscreen-stage" id="imageFullscreenStage">
+      <img id="imageFullscreenImg" src="" alt="" />
+    </div>
+  </div>
+
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const requestedViewMode = String(queryParams.get("view") || "full").toLowerCase();
+    const forceRepoDraft = queryParams.get("draft") === "repo" || queryParams.get("resetDraft") === "1";
+    const pageViewMode = requestedViewMode === "send" ? "send" : "full";
+    document.body.classList.add("view-" + pageViewMode);
+    document.body.setAttribute("data-view-mode", pageViewMode);
+    document.querySelectorAll("[data-view-group]").forEach((section) => {
+      const group = section.getAttribute("data-view-group");
+      section.hidden = pageViewMode === "send" && group === "appendix";
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    const autoVideos = Array.from(document.querySelectorAll("[data-auto-video]"));
+    const autoVideoObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.55 });
+
+    autoVideos.forEach((video) => {
+      video.muted = true;
+      video.playsInline = true;
+      autoVideoObserver.observe(video);
+    });
+
+    const isVisibleEnough = (video) => {
+      const rect = video.getBoundingClientRect();
+      const viewport = window.innerHeight || document.documentElement.clientHeight;
+      const visiblePx = Math.min(rect.bottom, viewport) - Math.max(rect.top, 0);
+      const basis = Math.min(rect.height, viewport);
+      return basis > 0 && visiblePx / basis > 0.2;
+    };
+
+    const syncAutoVideos = () => {
+      autoVideos.forEach((video) => {
+        if (isVisibleEnough(video)) {
+          const p = video.play();
+          if (p && typeof p.catch === "function") p.catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    };
+
+    window.addEventListener("scroll", syncAutoVideos, { passive: true });
+    window.addEventListener("resize", syncAutoVideos);
+    window.addEventListener("load", syncAutoVideos);
+    setTimeout(syncAutoVideos, 300);
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        autoVideos.forEach((video) => video.pause());
+      }
+    });
+
+    const imageFullscreenModal = document.getElementById("imageFullscreenModal");
+    const imageFullscreenTitle = document.getElementById("imageFullscreenTitle");
+    const imageFullscreenImg = document.getElementById("imageFullscreenImg");
+    const imageFullscreenCloseButton = document.getElementById("imageFullscreenCloseButton");
+    const imageFullscreenNativeButton = document.getElementById("imageFullscreenNativeButton");
+    const imageFullscreenTriggers = Array.from(document.querySelectorAll(".js-fullscreen-image"));
+
+    const isImageModalFullscreen = () => {
+      if (!imageFullscreenModal) return false;
+      return document.fullscreenElement === imageFullscreenModal || document.webkitFullscreenElement === imageFullscreenModal;
+    };
+
+    const openImageFullscreen = (src, alt, title) => {
+      if (!imageFullscreenModal || !imageFullscreenImg) return;
+      imageFullscreenImg.setAttribute("src", src || "");
+      imageFullscreenImg.setAttribute("alt", alt || "Full screen image");
+      if (imageFullscreenTitle) {
+        imageFullscreenTitle.textContent = title || "Full Screen Image";
+      }
+      imageFullscreenModal.classList.add("open");
+      imageFullscreenModal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("image-fullscreen-open");
+    };
+
+    const closeImageFullscreen = async () => {
+      if (!imageFullscreenModal || !imageFullscreenImg) return;
+      if (isImageModalFullscreen()) {
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+      imageFullscreenModal.classList.remove("open");
+      imageFullscreenModal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("image-fullscreen-open");
+      imageFullscreenImg.setAttribute("src", "");
+    };
+
+    const enterImageNativeFullscreen = async () => {
+      if (!imageFullscreenModal) return;
+      if (imageFullscreenModal.requestFullscreen) {
+        await imageFullscreenModal.requestFullscreen();
+      } else if (imageFullscreenModal.webkitRequestFullscreen) {
+        imageFullscreenModal.webkitRequestFullscreen();
+      }
+    };
+
+    if (imageFullscreenNativeButton) {
+      imageFullscreenNativeButton.addEventListener("click", () => {
+        enterImageNativeFullscreen().catch(() => {});
+      });
+    }
+
+    if (imageFullscreenCloseButton) {
+      imageFullscreenCloseButton.addEventListener("click", () => {
+        closeImageFullscreen().catch(() => {});
+      });
+    }
+
+    if (imageFullscreenModal) {
+      imageFullscreenModal.addEventListener("click", (event) => {
+        if (event.target === imageFullscreenModal) {
+          closeImageFullscreen().catch(() => {});
+        }
+      });
+    }
+
+    imageFullscreenTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", (event) => {
+        event.preventDefault();
+        const src = trigger.getAttribute("data-fullscreen-src") || trigger.getAttribute("href") || "";
+        const alt = trigger.getAttribute("data-fullscreen-alt") || trigger.textContent || "Full screen image";
+        const title = trigger.getAttribute("data-fullscreen-title") || "Full Screen Image";
+        openImageFullscreen(src, alt, title);
+        enterImageNativeFullscreen().catch(() => {});
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && imageFullscreenModal && imageFullscreenModal.classList.contains("open")) {
+        closeImageFullscreen().catch(() => {});
+      }
+    });
+
+    const zoneData = {
+      zoneA: {
+        title: "Package A: Conference Core",
+        description: "Primary location for two 40-foot containers and enclosed roof structure, fully air-conditioned for conference, training, and gatherings.",
+        video: "assets/videos/light/header-dji-0323-light.mp4",
+        poster: "assets/videos/light/posters/header-dji-0323-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/campsite/IMG_9412.jpg", caption: "Campground center proposed for the conference core." },
+          { src: "assets/atnarpa/originals/img-018.jpg", caption: "Reference scale and orientation for enclosed function space." },
+          { src: "assets/atnarpa/originals/20251103-DJI_0271.jpg", caption: "Drone context used to align core footprint and access paths." }
+        ]
+      },
+      zoneB: {
+        title: "Package B: Deck Link Network",
+        description: "Decking ring and circulation links connecting conference core, accommodation dongas, and kitchen/service access points.",
+        video: "assets/videos/light/camp-to-house-drone-follow-light.mp4",
+        poster: "assets/videos/light/posters/camp-to-house-drone-follow-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/campsite/20251103-1E5A4803.jpg", caption: "Donga layout and circulation that informs deck link planning." },
+          { src: "assets/atnarpa/campsite/20251103-1E5A4798.jpg", caption: "Accommodation adjacency to central shared deck network." },
+          { src: "assets/atnarpa/originals/img-025.jpg", caption: "Open-air deck precedent for movement and event flow." }
+        ]
+      },
+      zoneC: {
+        title: "Package C: Firepit and Yarning Circle",
+        description: "Central firepit/yarning gathering zone linked to deck circulation and designed for cultural learning and shared storytelling.",
+        video: "assets/videos/light/work-on-station-03-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-03-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/campsite/20251103-1E5A4816.jpg", caption: "Central firepit and roof-option area for yarning circle planning." },
+          { src: "assets/atnarpa/originals/img-021.jpg", caption: "Gathering and seating orientation reference." },
+          { src: "assets/atnarpa/originals/img-030.jpg", caption: "Ground condition for circular gathering activation." }
+        ]
+      },
+      zoneD: {
+        title: "Package D: Amenities and Service Edge",
+        description: "Upgrade and reconfiguration of amenities and service edges for toilets, showers, and reliable support for programs and visitors.",
+        video: "assets/videos/light/camp-cut-20s-light.mp4",
+        poster: "assets/videos/light/posters/camp-cut-20s-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/campsite/20251103-1E5A4819.jpg", caption: "Amenities area baseline for services upgrades." },
+          { src: "assets/atnarpa/campsite/20251103-1E5A4803.jpg", caption: "Service-side circulation and donga interface." },
+          { src: "assets/atnarpa/originals/img-017.jpg", caption: "Utility and support edge reference condition." }
+        ]
+      },
+      zoneE: {
+        title: "Package E: Homestead Minor Upgrades and Landscape",
+        description: "Smaller staged homestead-side upgrades including landscape shaping, ground definition, and supporting facility refinement around the core campground build.",
+        video: "assets/videos/light/work-on-station-04-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-04-light.jpg",
+        photos: [
+          { src: "assets/atnarpa/originals/img-022.jpg", caption: "Homestead-side landscape edge for staged upgrades." },
+          { src: "assets/atnarpa/originals/img-020.jpg", caption: "Event edge precedent informing long-term refinement." },
+          { src: "assets/atnarpa/originals/img-013.jpg", caption: "Family-led stewardship context for staged homestead works." }
+        ]
+      }
+    };
+
+    const zoneVideoPresets = [
+      {
+        label: "Header drone (DJI_0323)",
+        video: "assets/videos/light/header-dji-0323-light.mp4",
+        poster: "assets/videos/light/posters/header-dji-0323-light.jpg"
+      },
+      {
+        label: "Work on station 01",
+        video: "assets/videos/light/work-on-station-01-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-01-light.jpg"
+      },
+      {
+        label: "Work on station 02",
+        video: "assets/videos/light/work-on-station-02-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-02-light.jpg"
+      },
+      {
+        label: "Work on station 03",
+        video: "assets/videos/light/work-on-station-03-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-03-light.jpg"
+      },
+      {
+        label: "Work on station 04",
+        video: "assets/videos/light/work-on-station-04-light.mp4",
+        poster: "assets/videos/light/posters/work-on-station-04-light.jpg"
+      },
+      {
+        label: "Campsite to homestead drone follow",
+        video: "assets/videos/light/camp-to-house-drone-follow-light.mp4",
+        poster: "assets/videos/light/posters/camp-to-house-drone-follow-light.jpg"
+      },
+      {
+        label: "Campsite cut (first 20s)",
+        video: "assets/videos/light/camp-cut-20s-light.mp4",
+        poster: "assets/videos/light/posters/camp-cut-20s-light.jpg"
+      }
+    ];
+
+    const zoneVideo = document.getElementById("zoneVideo");
+    const zoneVideoSource = document.getElementById("zoneVideoSource");
+    const zoneTitle = document.getElementById("zoneTitle");
+    const zoneDescription = document.getElementById("zoneDescription");
+    const zoneGallery = document.getElementById("zoneGallery");
+    const zoneFocusImage = document.getElementById("zoneFocusImage");
+    const zoneFocusCaption = document.getElementById("zoneFocusCaption");
+    const zonePins = Array.from(document.querySelectorAll(".zone-pin"));
+    const zoneButtons = Array.from(document.querySelectorAll(".zone-selector button"));
+    const plannerShell = document.getElementById("plannerShell");
+    const plannerSidebar = document.getElementById("plannerSidebar");
+    const closeSidebarButton = document.getElementById("closeSidebarButton");
+    let onZoneChange = null;
+    let activeZoneKey = "zoneA";
+    let activeZonePhotoIndex = 0;
+
+    const defaultZonePositions = {
+      zoneA: { top: 51, left: 36 },
+      zoneB: { top: 38, left: 64 },
+      zoneC: { top: 62, left: 53 },
+      zoneD: { top: 31, left: 22 },
+      zoneE: { top: 70, left: 73 }
+    };
+
+    const zonePositions = JSON.parse(JSON.stringify(defaultZonePositions));
+    const homesteadPins = Array.from(document.querySelectorAll(".homestead-map-wrap .upgrade-pin[data-homestead-point-key]"));
+    const homesteadPointLabels = {
+      h1: "Point 1 - Toilets and showers",
+      h2: "Point 2 - Landscaping edge",
+      h3: "Point 3 - Roof and readiness"
+    };
+    const defaultHomesteadPointData = {
+      h1: {
+        top: 30,
+        left: 17,
+        label: "Two toilet + shower blocks (reconfigured from old cattle-block infrastructure)"
+      },
+      h2: {
+        top: 22,
+        left: 69,
+        label: "Landscaping upgrades to define the campground edge and safe movement areas"
+      },
+      h3: {
+        top: 48,
+        left: 46,
+        label: "Homestead roof fixed and site prepared for safe next stages"
+      }
+    };
+    const homesteadPointData = JSON.parse(JSON.stringify(defaultHomesteadPointData));
+
+    const clampPercent = (value) => Math.max(2, Math.min(98, value));
+
+    const applyHomesteadPointData = () => {
+      homesteadPins.forEach((pin) => {
+        const key = pin.dataset.homesteadPointKey;
+        const point = homesteadPointData[key];
+        if (!point) return;
+        pin.style.top = clampPercent(point.top) + "%";
+        pin.style.left = clampPercent(point.left) + "%";
+        const note = pin.querySelector("span");
+        if (note && typeof point.label === "string" && point.label.trim()) {
+          note.textContent = point.label.trim();
+        }
+      });
+    };
+
+    const updateHomesteadPointData = (pointKey, incoming = {}) => {
+      const point = homesteadPointData[pointKey];
+      if (!point) return;
+      if (incoming.top !== undefined) {
+        point.top = clampPercent(Number(incoming.top) || point.top);
+      }
+      if (incoming.left !== undefined) {
+        point.left = clampPercent(Number(incoming.left) || point.left);
+      }
+      if (typeof incoming.label === "string" && incoming.label.trim()) {
+        point.label = incoming.label.trim();
+      }
+      applyHomesteadPointData();
+    };
+
+    const applyPinPositions = () => {
+      zonePins.forEach((pin) => {
+        const key = pin.dataset.zoneKey;
+        const pos = zonePositions[key];
+        if (!pos) return;
+        pin.style.top = clampPercent(pos.top) + "%";
+        pin.style.left = clampPercent(pos.left) + "%";
+      });
+    };
+
+    const updatePinPosition = (zoneKey, top, left) => {
+      if (!zonePositions[zoneKey]) return;
+      zonePositions[zoneKey].top = clampPercent(Number(top) || zonePositions[zoneKey].top);
+      zonePositions[zoneKey].left = clampPercent(Number(left) || zonePositions[zoneKey].left);
+      applyPinPositions();
+    };
+
+    applyPinPositions();
+    applyHomesteadPointData();
+
+    const isFullscreenActive = () => {
+      return document.fullscreenElement === plannerShell || document.webkitFullscreenElement === plannerShell;
+    };
+
+    const setSidebarOpen = (open) => {
+      if (!plannerShell || !plannerSidebar) return;
+      const fullscreen = isFullscreenActive();
+      plannerShell.classList.toggle("sidebar-open", fullscreen && open);
+      plannerSidebar.setAttribute("aria-hidden", fullscreen ? (open ? "false" : "true") : "false");
+      if (typeof resizeDrawLayer === "function") {
+        requestAnimationFrame(() => resizeDrawLayer());
+      }
+    };
+
+    const setActiveZone = (zoneKey, options = {}) => {
+      const zone = zoneData[zoneKey];
+      if (!zone || !zoneVideo || !zoneVideoSource || !zoneTitle || !zoneDescription) return;
+      activeZoneKey = zoneKey;
+      zoneTitle.textContent = zone.title;
+      zoneDescription.textContent = zone.description;
+      if (!options.skipVideo) {
+        zoneVideo.setAttribute("poster", zone.poster);
+        zoneVideoSource.setAttribute("src", zone.video);
+        zoneVideo.load();
+        const p = zoneVideo.play();
+        if (p && typeof p.catch === "function") p.catch(() => {});
+      }
+
+      if (zoneGallery && zoneFocusImage && zoneFocusCaption) {
+        zoneGallery.innerHTML = "";
+        const photos = Array.isArray(zone.photos) ? zone.photos : [];
+        const requestedPhotoIndex = Number(options.photoIndex);
+        const safePhotoIndex = Number.isFinite(requestedPhotoIndex)
+          ? Math.max(0, Math.min(photos.length - 1, requestedPhotoIndex))
+          : 0;
+        activeZonePhotoIndex = safePhotoIndex;
+        if (photos.length > 0 && photos[safePhotoIndex]) {
+          const focusPhoto = photos[safePhotoIndex];
+          zoneFocusImage.setAttribute("src", focusPhoto.src);
+          zoneFocusImage.setAttribute("alt", focusPhoto.alt || focusPhoto.caption || ("Zone reference " + (safePhotoIndex + 1)));
+          zoneFocusImage.dataset.zoneKey = zoneKey;
+          zoneFocusImage.dataset.photoIndex = String(safePhotoIndex);
+          zoneFocusCaption.textContent = focusPhoto.caption || "Zone reference image";
+          zoneFocusCaption.dataset.zoneKey = zoneKey;
+          zoneFocusCaption.dataset.photoIndex = String(safePhotoIndex);
+        }
+        photos.forEach((photo, idx) => {
+          const item = document.createElement("button");
+          item.type = "button";
+          item.className = "zone-gallery-item" + (idx === safePhotoIndex ? " active" : "");
+          item.setAttribute("aria-label", "Open zone image " + (idx + 1));
+          item.dataset.zoneKey = zoneKey;
+          item.dataset.photoIndex = String(idx);
+          item.innerHTML = `<img src="${photo.src}" alt="${photo.alt || photo.caption || ("Zone reference " + (idx + 1))}" data-zone-key="${zoneKey}" data-photo-index="${idx}" /><span>${photo.caption || "Zone image"}</span>`;
+          item.addEventListener("click", () => {
+            setActiveZone(zoneKey, { photoIndex: idx, skipVideo: true });
+          });
+          zoneGallery.appendChild(item);
+        });
+      }
+
+      zonePins.forEach((pin) => pin.classList.toggle("active", pin.dataset.zoneKey === zoneKey));
+      zoneButtons.forEach((button) => button.classList.toggle("active", button.dataset.zoneKey === zoneKey));
+      if (typeof onZoneChange === "function") onZoneChange(zoneKey);
+
+      if (options.openSidebar && isFullscreenActive()) {
+        setSidebarOpen(true);
+      }
+    };
+
+    let suppressPinClickUntil = 0;
+
+    zonePins.forEach((pin) => {
+      pin.addEventListener("click", () => {
+        if (Date.now() < suppressPinClickUntil) return;
+        setActiveZone(pin.dataset.zoneKey, { openSidebar: true });
+      });
+    });
+    zoneButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        setActiveZone(button.dataset.zoneKey, { openSidebar: true });
+      });
+    });
+
+    zonePins.forEach((pin) => {
+      pin.addEventListener("pointerdown", (event) => {
+        if (!pinEditEnabled) return;
+        draggingPin = pin;
+        pinDragMoved = false;
+        pin.classList.add("dragging");
+        if (typeof pin.setPointerCapture === "function") {
+          pin.setPointerCapture(event.pointerId);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      pin.addEventListener("pointermove", (event) => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        const point = getPinPointInMap(event);
+        if (!point) return;
+        pinDragMoved = true;
+        updatePinPosition(pin.dataset.zoneKey, point.top, point.left);
+        if (typeof onPinMoved === "function") {
+          onPinMoved(pin.dataset.zoneKey);
+        }
+      });
+
+      pin.addEventListener("pointerup", (event) => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        if (pinDragMoved) suppressPinClickUntil = Date.now() + 300;
+        pin.classList.remove("dragging");
+        if (typeof pin.releasePointerCapture === "function" && pin.hasPointerCapture(event.pointerId)) {
+          pin.releasePointerCapture(event.pointerId);
+        }
+        draggingPin = null;
+        pinDragMoved = false;
+      });
+
+      pin.addEventListener("pointercancel", () => {
+        if (!pinEditEnabled || draggingPin !== pin) return;
+        pin.classList.remove("dragging");
+        draggingPin = null;
+        pinDragMoved = false;
+      });
+    });
+
+    homesteadPins.forEach((pin) => {
+      pin.addEventListener("pointerdown", (event) => {
+        if (!pinEditEnabled) return;
+        draggingHomesteadPin = pin;
+        homesteadPinDragMoved = false;
+        pin.classList.add("dragging");
+        if (typeof pin.setPointerCapture === "function") {
+          pin.setPointerCapture(event.pointerId);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      });
+
+      pin.addEventListener("pointermove", (event) => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        const mapWrap = pin.closest(".upgrade-map-wrap");
+        const point = getPointInElement(event, mapWrap);
+        if (!point) return;
+        homesteadPinDragMoved = true;
+        updateHomesteadPointData(pin.dataset.homesteadPointKey, { top: point.top, left: point.left });
+        if (typeof onHomesteadPointMoved === "function") {
+          onHomesteadPointMoved(pin.dataset.homesteadPointKey);
+        }
+      });
+
+      pin.addEventListener("pointerup", (event) => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        pin.classList.remove("dragging");
+        if (typeof pin.releasePointerCapture === "function" && pin.hasPointerCapture(event.pointerId)) {
+          pin.releasePointerCapture(event.pointerId);
+        }
+        draggingHomesteadPin = null;
+        homesteadPinDragMoved = false;
+      });
+
+      pin.addEventListener("pointercancel", () => {
+        if (!pinEditEnabled || draggingHomesteadPin !== pin) return;
+        pin.classList.remove("dragging");
+        draggingHomesteadPin = null;
+        homesteadPinDragMoved = false;
+      });
+    });
+
+    const droneMapWrap = document.getElementById("droneMapWrap");
+    const droneMapImage = document.getElementById("droneMapImage");
+    const droneDrawLayer = document.getElementById("droneDrawLayer");
+    const toggleDrawButton = document.getElementById("toggleDrawButton");
+    const toggleFullscreenButton = document.getElementById("toggleFullscreenButton");
+    const clearDrawButton = document.getElementById("clearDrawButton");
+
+    let drawEnabled = false;
+    let drawing = false;
+    let pinEditEnabled = false;
+    let draggingPin = null;
+    let pinDragMoved = false;
+    let draggingHomesteadPin = null;
+    let homesteadPinDragMoved = false;
+    let onPinMoved = null;
+    let onHomesteadPointMoved = null;
+
+    const getPinPointInMap = (event) => {
+      if (!droneMapImage) return null;
+      const rect = droneMapImage.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const left = clampPercent(((event.clientX - rect.left) / rect.width) * 100);
+      const top = clampPercent(((event.clientY - rect.top) / rect.height) * 100);
+      return { top, left };
+    };
+
+    const getPointInElement = (event, element) => {
+      if (!element) return null;
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const left = clampPercent(((event.clientX - rect.left) / rect.width) * 100);
+      const top = clampPercent(((event.clientY - rect.top) / rect.height) * 100);
+      return { top, left };
+    };
+
+    const setPinEditMode = (enabled) => {
+      pinEditEnabled = enabled;
+      if (droneMapWrap) {
+        droneMapWrap.classList.toggle("pin-edit-on", enabled);
+      }
+    };
+
+    const resizeDrawLayer = () => {
+      if (!droneMapImage || !droneDrawLayer) return;
+      const rect = droneMapImage.getBoundingClientRect();
+      const pixelRatio = window.devicePixelRatio || 1;
+      droneDrawLayer.width = Math.floor(rect.width * pixelRatio);
+      droneDrawLayer.height = Math.floor(rect.height * pixelRatio);
+      droneDrawLayer.style.width = rect.width + "px";
+      droneDrawLayer.style.height = rect.height + "px";
+      const ctx = droneDrawLayer.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(pixelRatio, pixelRatio);
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = "rgba(236, 119, 40, 0.95)";
+    };
+
+    const getDrawContextAndPoint = (event) => {
+      if (!droneDrawLayer) return null;
+      const rect = droneDrawLayer.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const ctx = droneDrawLayer.getContext("2d");
+      if (!ctx) return null;
+      return { ctx, x, y };
+    };
+
+      if (toggleDrawButton && droneMapWrap) {
+      toggleDrawButton.addEventListener("click", () => {
+        drawEnabled = !drawEnabled;
+        droneMapWrap.classList.toggle("draw-enabled", drawEnabled);
+        toggleDrawButton.textContent = drawEnabled ? "Draw Overlay: On" : "Draw Overlay: Off";
+      });
+    }
+
+    const syncFullscreenLabel = () => {
+      if (!toggleFullscreenButton) return;
+      toggleFullscreenButton.textContent = isFullscreenActive() ? "Exit Full Screen" : "Open Full Screen";
+      if (!isFullscreenActive()) setSidebarOpen(false);
+      resizeDrawLayer();
+    };
+
+    const openFullscreen = async () => {
+      if (!plannerShell) return;
+      setSidebarOpen(false);
+      if (plannerShell.requestFullscreen) {
+        await plannerShell.requestFullscreen();
+        return;
+      }
+      if (plannerShell.webkitRequestFullscreen) {
+        plannerShell.webkitRequestFullscreen();
+      }
+    };
+
+    const closeFullscreen = async () => {
+      if (document.fullscreenElement && document.exitFullscreen) {
+        await document.exitFullscreen();
+        return;
+      }
+      if (document.webkitFullscreenElement && document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    };
+
+    if (toggleFullscreenButton) {
+      toggleFullscreenButton.addEventListener("click", async () => {
+        if (isFullscreenActive()) {
+          await closeFullscreen();
+        } else {
+          await openFullscreen();
+        }
+      });
+    }
+
+    if (closeSidebarButton) {
+      closeSidebarButton.addEventListener("click", () => {
+        setSidebarOpen(false);
+        resizeDrawLayer();
+      });
+    }
+
+    if (clearDrawButton && droneDrawLayer) {
+      clearDrawButton.addEventListener("click", () => {
+        const ctx = droneDrawLayer.getContext("2d");
+        if (!ctx) return;
+        ctx.clearRect(0, 0, droneDrawLayer.width, droneDrawLayer.height);
+      });
+    }
+
+    if (droneDrawLayer) {
+      droneDrawLayer.addEventListener("pointerdown", (event) => {
+        if (!drawEnabled) return;
+        const point = getDrawContextAndPoint(event);
+        if (!point) return;
+        drawing = true;
+        point.ctx.beginPath();
+        point.ctx.moveTo(point.x, point.y);
+      });
+      droneDrawLayer.addEventListener("pointermove", (event) => {
+        if (!drawEnabled || !drawing) return;
+        const point = getDrawContextAndPoint(event);
+        if (!point) return;
+        point.ctx.lineTo(point.x, point.y);
+        point.ctx.stroke();
+      });
+      droneDrawLayer.addEventListener("pointerup", () => {
+        drawing = false;
+      });
+      droneDrawLayer.addEventListener("pointerleave", () => {
+        drawing = false;
+      });
+    }
+
+    const draftStorageKey = "atnarpa-local-draft-v1";
+    const draftLayoutVersion = 3;
+    const repoDraftFileName = "editor-draft.json";
+    const repoRootPath = "/Users/benknight/Code/Oochiumpa";
+    const repoDraftRelativePath = "oonchiumpa-app/public/atnarpa-snow/editor-draft.json";
+
+    const copyTextToClipboard = async (value) => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(value);
+          return true;
+        }
+      } catch (_) {}
+      return false;
+    };
+
+    const openNestedDirectory = async (rootHandle, pathParts) => {
+      let current = rootHandle;
+      for (const part of pathParts) {
+        current = await current.getDirectoryHandle(part);
+      }
+      return current;
+    };
+
+    const resolveProjectDraftDirectory = async (pickedHandle) => {
+      if (!pickedHandle) return null;
+      if (pickedHandle.name === "atnarpa-snow") return pickedHandle;
+      const candidatePaths = [
+        ["oonchiumpa-app", "public", "atnarpa-snow"],
+        ["public", "atnarpa-snow"],
+        ["atnarpa-snow"]
+      ];
+      for (const pathParts of candidatePaths) {
+        try {
+          const candidate = await openNestedDirectory(pickedHandle, pathParts);
+          if (candidate) return candidate;
+        } catch (_) {}
+      }
+      return pickedHandle;
+    };
+
+    const saveDraftToProjectFile = async (draft) => {
+      if (!window.showDirectoryPicker) {
+        window.alert("This browser does not support direct file save. Use Export Draft instead.");
+        return false;
+      }
+      try {
+        const pickedHandle = await window.showDirectoryPicker({ mode: "readwrite" });
+        const targetDirectory = await resolveProjectDraftDirectory(pickedHandle);
+        if (!targetDirectory) return false;
+        const fileHandle = await targetDirectory.getFileHandle(repoDraftFileName, { create: true });
+        const writable = await fileHandle.createWritable();
+        await writable.write(JSON.stringify(draft, null, 2));
+        await writable.close();
+        return true;
+      } catch (error) {
+        if (error && error.name === "AbortError") return false;
+        window.alert("Could not save editor-draft.json to the selected folder.");
+        return false;
+      }
+    };
+
+    const collectEditorTargets = () => {
+      const textTargets = Array.from(document.querySelectorAll(
+        ".hero .tag, .hero h1, .hero .subtitle, .hero .byline, main .tag, main h2, main h3, main p, main li, main blockquote, main cite, main figcaption, .camp-plan .tag, .camp-plan h2, .camp-plan h3, .camp-plan p, .camp-plan li, .camp-plan figcaption"
+      )).filter((el) => {
+        return !el.closest(".zone-panel")
+          && !el.closest(".cost-field")
+          && !el.closest(".cost-summary")
+          && !el.closest(".drone-toolbar")
+          && !el.closest("#editorDock");
+      });
+
+      textTargets.forEach((el, index) => {
+        if (!el.dataset.editorId) {
+          el.dataset.editorId = "text-" + String(index + 1);
+        }
+      });
+
+      const imageTargets = Array.from(document.querySelectorAll("img")).filter((img) => {
+        if (img.id === "zoneFocusImage") return false;
+        if (img.closest("#imageFullscreenModal")) return false;
+        if (img.closest(".zone-gallery-item")) return false;
+        if (img.closest("#editorDock")) return false;
+        return true;
+      });
+
+      imageTargets.forEach((img, index) => {
+        if (!img.dataset.editorImageId) {
+          img.dataset.editorImageId = "image-" + String(index + 1);
+        }
+      });
+
+      return { textTargets, imageTargets };
+    };
+
+    const buildDraftPayload = (textTargets, imageTargets) => {
+      const text = {};
+      const images = {};
+      textTargets.forEach((el) => {
+        if (!el.dataset.editorId) return;
+        text[el.dataset.editorId] = el.innerHTML;
+      });
+      imageTargets.forEach((img) => {
+        if (!img.dataset.editorImageId) return;
+        images[img.dataset.editorImageId] = {
+          src: img.getAttribute("src") || "",
+          alt: img.getAttribute("alt") || ""
+        };
+      });
+      return {
+        version: 1,
+        layoutVersion: draftLayoutVersion,
+        updatedAt: new Date().toISOString(),
+        text,
+        images,
+        zoneData: JSON.parse(JSON.stringify(zoneData)),
+        zonePositions: JSON.parse(JSON.stringify(zonePositions)),
+        homesteadPointData: JSON.parse(JSON.stringify(homesteadPointData)),
+        homesteadPointLabels: JSON.parse(JSON.stringify(homesteadPointLabels))
+      };
+    };
+
+    const applyDraftPayload = (draft, textTargets, imageTargets) => {
+      if (!draft || typeof draft !== "object") return;
+      const hasCompatibleLayout = Number(draft.layoutVersion || 0) === draftLayoutVersion;
+      if (hasCompatibleLayout && draft.text && typeof draft.text === "object") {
+        textTargets.forEach((el) => {
+          const id = el.dataset.editorId;
+          if (!id || typeof draft.text[id] !== "string") return;
+          el.innerHTML = draft.text[id];
+        });
+      }
+      if (hasCompatibleLayout && draft.images && typeof draft.images === "object") {
+        imageTargets.forEach((img) => {
+          const id = img.dataset.editorImageId;
+          const item = id ? draft.images[id] : null;
+          if (!item || typeof item !== "object") return;
+          if (typeof item.src === "string" && item.src.trim()) img.setAttribute("src", item.src.trim());
+          if (typeof item.alt === "string") img.setAttribute("alt", item.alt);
+        });
+      }
+      if (draft.zoneData && typeof draft.zoneData === "object") {
+        Object.keys(zoneData).forEach((key) => {
+          const incoming = draft.zoneData[key];
+          if (!incoming || typeof incoming !== "object") return;
+          if (typeof incoming.title === "string" && incoming.title.trim()) zoneData[key].title = incoming.title.trim();
+          if (typeof incoming.description === "string" && incoming.description.trim()) zoneData[key].description = incoming.description.trim();
+          if (typeof incoming.video === "string" && incoming.video.trim()) zoneData[key].video = incoming.video.trim();
+          if (typeof incoming.poster === "string" && incoming.poster.trim()) zoneData[key].poster = incoming.poster.trim();
+          if (Array.isArray(incoming.photos)) {
+            const photos = incoming.photos
+              .map((photo) => ({
+                src: String(photo && photo.src ? photo.src : "").trim(),
+                caption: String(photo && photo.caption ? photo.caption : "").trim(),
+                alt: String(photo && photo.alt ? photo.alt : "").trim()
+              }))
+              .filter((photo) => photo.src);
+            if (photos.length > 0) zoneData[key].photos = photos;
+          }
+        });
+      }
+      if (draft.zonePositions && typeof draft.zonePositions === "object") {
+        Object.keys(zonePositions).forEach((key) => {
+          const incoming = draft.zonePositions[key];
+          if (!incoming || typeof incoming !== "object") return;
+          updatePinPosition(key, incoming.top, incoming.left);
+        });
+      }
+      if (draft.homesteadPointData && typeof draft.homesteadPointData === "object") {
+        // Clear existing data first
+        Object.keys(homesteadPointData).forEach((key) => delete homesteadPointData[key]);
+        Object.keys(draft.homesteadPointData).forEach((key) => {
+          const incoming = draft.homesteadPointData[key];
+          if (!incoming || typeof incoming !== "object") return;
+          homesteadPointData[key] = {
+            top: incoming.top,
+            left: incoming.left,
+            label: incoming.label
+          };
+        });
+        applyHomesteadPointData();
+      }
+      if (draft.homesteadPointLabels && typeof draft.homesteadPointLabels === "object") {
+        Object.keys(homesteadPointLabels).forEach((key) => delete homesteadPointLabels[key]);
+        Object.keys(draft.homesteadPointLabels).forEach((key) => {
+          homesteadPointLabels[key] = draft.homesteadPointLabels[key];
+        });
+      }
+      const activeZone = zoneButtons.find((button) => button.classList.contains("active"))?.dataset.zoneKey || "zoneA";
+      setActiveZone(activeZone);
+    };
+
+    const loadRepoDraftIntoPage = async (textTargets, imageTargets) => {
+      try {
+        const response = await fetch(repoDraftFileName + "?ts=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) return false;
+        const repoDraft = await response.json();
+        applyDraftPayload(repoDraft, textTargets, imageTargets);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    };
+
+    const setupLocalEditor = async () => {
+      const { textTargets, imageTargets } = collectEditorTargets();
+
+      // Simple floating toolbar
+      const toolbar = document.createElement("div");
+      toolbar.id = "editorToolbar";
+      toolbar.innerHTML = `
+        <style>
+          #editorToolbar { position: fixed; top: 10px; right: 10px; z-index: 9999; display: flex; gap: 8px; }
+          #editorToolbar button { padding: 8px 16px; border: none; border-radius: 6px; background: #2f8f64; color: white; font-size: 14px; cursor: pointer; }
+          #editorToolbar button:hover { background: #1f734f; }
+          #editorToolbar button.active { background: #d97706; }
+        </style>
+        <button type="button" id="btnEditText">Edit Text</button>
+        <button type="button" id="btnDragPins">Drag Pins</button>
+        <button type="button" id="btnAddPhoto">Add Photo</button>
+        <button type="button" id="btnSave">Save</button>
+        <input type="file" id="imgInput" accept="image/*" hidden />
+      `;
+      document.body.appendChild(toolbar);
+
+      const btnEditText = toolbar.querySelector("#btnEditText");
+      const btnDragPins = toolbar.querySelector("#btnDragPins");
+      const btnAddPhoto = toolbar.querySelector("#btnAddPhoto");
+      const btnSave = toolbar.querySelector("#btnSave");
+      const imgInput = toolbar.querySelector("#imgInput");
+
+      let textEditEnabled = false;
+      let nextImageId = imageTargets.length;
+
+      const ensureImageId = (img) => {
+        if (!img) return;
+        if (!img.dataset.editorImageId) {
+          nextImageId += 1;
+          img.dataset.editorImageId = "image-" + String(nextImageId);
+        }
+      };
+      imageTargets.forEach((img) => ensureImageId(img));
+
+      // Add photo to section
+      btnAddPhoto.addEventListener("click", async () => {
+        // Show section picker
+        const sections = Array.from(document.querySelectorAll("section .grid-2, section .image-grid, .camp-plan .grid-2"));
+        if (sections.length === 0) {
+          alert("No photo grid found on page");
+          return;
+        }
+        
+        // Highlight sections
+        sections.forEach((sec, i) => {
+          sec.style.outline = "3px dashed #2f8f64";
+          sec.dataset.sectionIndex = i;
+          const label = document.createElement("div");
+          label.textContent = `Click to add photo here (${i + 1})`;
+          label.style.cssText = "position:absolute;top:0;left:0;background:#2f8f64;color:white;padding:4px 8px;font-size:12px;z-index:100;";
+          sec.style.position = "relative";
+          sec.appendChild(label);
+        });
+        
+        // Wait for click
+        const targetSection = await new Promise((resolve) => {
+          const handler = (e) => {
+            const section = e.target.closest(".grid-2, .image-grid");
+            if (section) {
+              document.removeEventListener("click", handler);
+              resolve(section);
+            }
+          };
+          document.addEventListener("click", handler);
+        });
+        
+        // Remove highlights
+        sections.forEach((sec) => {
+          sec.style.outline = "";
+          const label = sec.querySelector("div[style*='position:absolute']");
+          if (label) label.remove();
+        });
+        
+        if (!targetSection) return;
+        
+        // Pick image
+        imgInput.value = "";
+        imgInput.onchange = async () => {
+          const file = imgInput.files?.[0];
+          if (!file) return;
+          
+          const reader = new FileReader();
+          reader.onload = () => {
+            const dataUrl = reader.result;
+            const alt = prompt("Photo caption:", file.name.replace(/\.[^/.]+$/, "")) || "";
+            
+            // Create new figure
+            const figure = document.createElement("figure");
+            figure.className = "image-card reveal";
+            figure.innerHTML = `
+              <img src="${dataUrl}" alt="${alt}" />
+              <figcaption class="image-caption">${alt}</figcaption>
+            `;
+            
+            targetSection.appendChild(figure);
+            
+            // Track new image
+            const img = figure.querySelector("img");
+            ensureImageId(img);
+            imageTargets.push(img);
+            
+            alert("Photo added! Click Save when done.");
+          };
+          reader.readAsDataURL(file);
+        };
+        imgInput.click();
+      });
+
+      // Toggle text editing
+      btnEditText.addEventListener("click", () => {
+        textEditEnabled = !textEditEnabled;
+        textTargets.forEach((el) => {
+          el.contentEditable = textEditEnabled ? "true" : "false";
+          if (!textEditEnabled) el.blur();
+        });
+        // Highlight all images when in edit mode
+        document.querySelectorAll("img").forEach((img) => {
+          if (!img.closest("#editorToolbar")) {
+            img.style.outline = textEditEnabled ? "3px dashed #2f8f64" : "";
+            img.style.cursor = textEditEnabled ? "pointer" : "";
+          }
+        });
+        btnEditText.textContent = textEditEnabled ? "Editing (click photos!)" : "Edit Text";
+        btnEditText.classList.toggle("active", textEditEnabled);
+      });
+
+      // Toggle pin dragging
+      btnDragPins.addEventListener("click", () => {
+        pinEditEnabled = !pinEditEnabled;
+        setPinEditMode(pinEditEnabled);
+        btnDragPins.textContent = pinEditEnabled ? "Dragging Pins" : "Drag Pins";
+        btnDragPins.classList.toggle("active", pinEditEnabled);
+      });
+
+      // Save button - with fallback download
+      btnSave.addEventListener("click", async () => {
+        btnSave.textContent = "Saving...";
+        btnSave.disabled = true;
+        
+        try {
+          Array.from(document.querySelectorAll("img")).forEach((img) => ensureImageId(img));
+          const draft = buildDraftPayload(textTargets, imageTargets);
+          
+          // Always save to localStorage first
+          localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+          
+          // Try to save to file system (Chrome/Edge only)
+          let savedToFile = false;
+          if (window.showDirectoryPicker) {
+            try {
+              const ok = await saveDraftToProjectFile(draft);
+              if (ok) savedToFile = true;
+            } catch (e) {
+              console.log("File system save failed, using download fallback");
+            }
+          }
+          
+          // Fallback: download the file
+          if (!savedToFile) {
+            const blob = new Blob([JSON.stringify(draft, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "editor-draft.json";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(url);
+            
+            btnSave.textContent = "Downloaded!";
+            alert("Changes saved! The editor-draft.json file was downloaded.\n\nMove it to your atnarpa-snow folder to keep the changes.");
+          } else {
+            btnSave.textContent = "Saved!";
+            alert("Changes saved to editor-draft.json!");
+          }
+          
+        } catch (err) {
+          console.error("Save failed:", err);
+          btnSave.textContent = "Error!";
+          alert("Save failed. Try again.");
+        }
+        
+        setTimeout(() => {
+          btnSave.textContent = "Save";
+          btnSave.disabled = false;
+        }, 2000);
+      });
+
+      // Image replacement on click
+      const pickLocalImage = () => {
+        return new Promise((resolve) => {
+          imgInput.value = "";
+          imgInput.onchange = () => {
+            const file = imgInput.files?.[0];
+            if (!file) { resolve(null); return; }
+            const reader = new FileReader();
+            reader.onload = () => resolve({ dataUrl: reader.result, file });
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(file);
+          };
+          imgInput.click();
+        });
+      };
+
+      document.addEventListener("click", async (e) => {
+        if (!textEditEnabled) return;
+        const img = e.target.closest("img");
+        if (!img || img.closest("#editorToolbar")) return;
+        e.preventDefault();
+        e.stopPropagation();
+        const result = await pickLocalImage();
+        if (!result?.dataUrl) return;
+        ensureImageId(img);
+        img.src = result.dataUrl;
+        const alt = prompt("Alt text:", result.file.name.replace(/\.[^/.]+$/, ""));
+        if (alt !== null) img.alt = alt;
+      }, true);
+
+      // Load saved draft
+      try {
+        const saved = localStorage.getItem(draftStorageKey);
+        if (saved) applyDraftPayload(JSON.parse(saved), textTargets, imageTargets);
+        else await loadRepoDraftIntoPage(textTargets, imageTargets);
+      } catch (_) { await loadRepoDraftIntoPage(textTargets, imageTargets); }
+    };
+
+    const localEditorEnabled = queryParams.get("edit") === "1"
+      || window.location.hostname === "127.0.0.1"
+      || window.location.hostname === "localhost";
+
+    const startPage = async () => {
+      if (localEditorEnabled) {
+        await setupLocalEditor().catch(() => {});
+      } else {
+        const { textTargets, imageTargets } = collectEditorTargets();
+        await loadRepoDraftIntoPage(textTargets, imageTargets);
+      }
+      resizeDrawLayer();
+      syncFullscreenLabel();
+      setActiveZone("zoneA");
+    };
+
+    window.addEventListener("resize", resizeDrawLayer);
+    document.addEventListener("fullscreenchange", syncFullscreenLabel);
+    document.addEventListener("webkitfullscreenchange", syncFullscreenLabel);
+    if (droneMapImage) {
+      droneMapImage.addEventListener("load", resizeDrawLayer);
+    }
+    startPage().catch(() => {});
+  </script>
+</body>
+</html>

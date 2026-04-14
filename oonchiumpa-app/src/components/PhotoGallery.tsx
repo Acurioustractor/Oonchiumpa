@@ -76,11 +76,11 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             </div>
             {showTitles && photo.title && (
               <div className="mt-3">
-                <h3 className="text-earth-900 font-medium text-lg mb-1">
+                <h3 className="text-earth-950 font-medium text-lg mb-1">
                   {photo.title}
                 </h3>
                 {photo.description && (
-                  <p className="text-earth-600 text-sm leading-relaxed">
+                  <p className="text-earth-600 text-base leading-relaxed">
                     {photo.description}
                   </p>
                 )}

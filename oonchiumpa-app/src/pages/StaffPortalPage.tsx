@@ -4,43 +4,64 @@ import { useAuth } from '../contexts/AuthContext';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import ContentGenerator from '../components/ContentGenerator';
-import ImageUpload from '../components/ImageUpload';
 import LiveContentPreview from '../components/LiveContentPreview';
 import { DocumentUpload } from '../components/DocumentUpload';
 import { Loading } from '../components/Loading';
 import { supabase } from '../config/supabase';
-import { documentService } from '../services/documentService';
 import analysisResults from '../document-analysis-results.json';
 
 // Oonchiumpa Organization Constants
 const OONCHIUMPA_ORG_ID = 'c53077e1-98de-4216-9149-6268891ff62e';
 const OONCHIUMPA_TENANT_ID = '8891e1a9-92ae-423f-928b-cec602660011';
 
-interface StaffMember {
+type StaffTab = 'dashboard' | 'content' | 'documents' | 'review';
+
+interface DashboardDocument {
   id: string;
-  name: string;
-  role: string;
-  permissions: string[];
+  title: string | null;
+  created_at: string;
+  status: string | null;
+}
+
+interface DashboardStory {
+  id: string;
+  title: string | null;
+  story_category: string | null;
+  is_public: boolean;
+  created_at: string;
+}
+
+interface AnalysisResult {
+  documentId: string;
 }
 
 const StaffPortalPage: React.FC = () => {
-  const { user, isAuthenticated, isLoading, logout, token } = useAuth();
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'content' | 'documents' | 'review'>('dashboard');
+  const { user, isAuthenticated, loading, signOut } = useAuth();
+  const [activeTab, setActiveTab] = useState<StaffTab>('dashboard');
+  const displayName = user?.full_name || 'Staff User';
+  const firstName = displayName.split(' ')[0];
+  const initials = displayName
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
 
-  const tabs = [
+  const tabs: Array<{ id: StaffTab; name: string; icon: string }> = [
     { id: 'dashboard', name: 'Dashboard', icon: '📊' },
     { id: 'content', name: 'Content Creation', icon: '📝' },
     { id: 'documents', name: 'Document Processing', icon: '📄' },
     { id: 'review', name: 'Cultural Review', icon: '🛡️' }
   ];
 
-  const [recentDocuments, setRecentDocuments] = useState<any[]>([]);
-  const [contentQueue, setContentQueue] = useState<any[]>([]);
+  const [recentDocuments, setRecentDocuments] = useState<DashboardDocument[]>([]);
+  const [contentQueue, setContentQueue] = useState<DashboardStory[]>([]);
   const [stats, setStats] = useState({
     documentsPending: 0,
     storiesInReview: 0,
     publishedThisMonth: 0
   });
+  const typedAnalysisResults: AnalysisResult[] = analysisResults as AnalysisResult[];
 
   // Load real data from backend
   useEffect(() => {
@@ -117,7 +138,7 @@ const StaffPortalPage: React.FC = () => {
   };
 
   // Show loading while checking authentication
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sand-50 to-eucalyptus-50">
         <div className="text-center">
@@ -129,7 +150,7 @@ const StaffPortalPage: React.FC = () => {
   }
 
   // Redirect to login if not authenticated
-  if (!isAuthenticated) {
+  if (!isAuthenticated()) {
     return <Navigate to="/login" replace />;
   }
 
@@ -153,15 +174,15 @@ const StaffPortalPage: React.FC = () => {
                 ← Back to Public Site
               </Button>
               <div className="text-right">
-                <div className="font-semibold">{user?.name}</div>
+                <div className="font-semibold">{displayName}</div>
                 <div className="text-sm text-earth-300">{user?.role}</div>
               </div>
               <div className="w-10 h-10 bg-ochre-600 rounded-full flex items-center justify-center font-bold">
-                {user?.name?.split(' ').map(n => n[0]).join('') || 'U'}
+                {initials || 'U'}
               </div>
               <Button 
                 variant="ghost" 
-                onClick={logout}
+                onClick={() => void signOut()}
                 className="text-ochre-200 hover:text-white"
               >
                 Logout
@@ -178,7 +199,7 @@ const StaffPortalPage: React.FC = () => {
             {tabs.map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
                   activeTab === tab.id
                     ? 'border-ochre-500 text-ochre-600'
@@ -199,8 +220,8 @@ const StaffPortalPage: React.FC = () => {
           <div className="space-y-8">
             {/* Welcome Section */}
             <Card className="p-8 bg-gradient-to-r from-ochre-50 to-eucalyptus-50">
-              <h2 className="text-3xl font-bold text-earth-900 mb-4">
-                Welcome back, {user?.name?.split(' ')[0]} 👋
+              <h2 className="text-3xl font-bold text-earth-950 mb-4">
+                Welcome back, {firstName} 👋
               </h2>
               <p className="text-earth-700 text-lg mb-6">
                 Ready to craft authentic community stories and share our journey with the world.
@@ -222,33 +243,33 @@ const StaffPortalPage: React.FC = () => {
             </Card>
 
             {/* Impact Framework - NEW! */}
-            <Card className="p-8 bg-gradient-to-r from-orange-50 to-yellow-50 border-2 border-orange-300">
+            <Card className="p-8 bg-gradient-to-r from-ochre-50 to-ochre-50 border-2 border-ochre-300">
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-orange-900 mb-2 flex items-center gap-2">
+                  <h2 className="text-2xl font-bold text-ochre-900 mb-2 flex items-center gap-2">
                     🎯 Impact Framework Analysis
-                    <span className="px-2 py-1 text-xs bg-orange-600 text-white rounded-full">NEW!</span>
+                    <span className="px-2 py-1 text-xs bg-ochre-600 text-white rounded-full">NEW!</span>
                   </h2>
-                  <p className="text-orange-800 mb-4">
+                  <p className="text-ochre-800 mb-4">
                     AI-powered analysis extracted 26 outcomes from 16 documents across all Oonchiumpa services
                   </p>
                   <div className="grid grid-cols-3 gap-4 mb-6">
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-blue-600">16</div>
-                      <div className="text-xs text-gray-600">Documents Analyzed</div>
+                      <div className="text-2xl font-bold text-eucalyptus-600">16</div>
+                      <div className="text-xs text-earth-600">Documents Analyzed</div>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-green-600">26</div>
-                      <div className="text-xs text-gray-600">Outcomes Extracted</div>
+                      <div className="text-2xl font-bold text-eucalyptus-600">26</div>
+                      <div className="text-xs text-earth-600">Outcomes Extracted</div>
                     </div>
                     <div className="text-center p-3 bg-white rounded-lg shadow-sm">
-                      <div className="text-2xl font-bold text-orange-600">5</div>
-                      <div className="text-xs text-gray-600">Service Areas</div>
+                      <div className="text-2xl font-bold text-ochre-600">5</div>
+                      <div className="text-xs text-earth-600">Service Areas</div>
                     </div>
                   </div>
                   <Link
                     to="/staff-portal/impact"
-                    className="inline-block px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition"
+                    className="inline-block px-6 py-3 bg-ochre-600 text-white font-medium rounded-lg hover:bg-ochre-700 transition"
                   >
                     View Impact Dashboard →
                   </Link>
@@ -259,10 +280,10 @@ const StaffPortalPage: React.FC = () => {
             {/* All Documents with Analysis */}
             <Card className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-earth-900">📄 All Documents</h3>
+                <h3 className="text-xl font-bold text-earth-950">📄 All Documents</h3>
                 <Link
                   to="/staff-portal/documents"
-                  className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                  className="text-sm text-eucalyptus-600 hover:text-eucalyptus-700 font-medium"
                 >
                   Manage Documents →
                 </Link>
@@ -280,19 +301,19 @@ const StaffPortalPage: React.FC = () => {
                   </Button>
                 </div>
               ) : (
-                <div className="max-h-[500px] overflow-y-auto space-y-3 pr-2">
+                  <div className="max-h-[500px] overflow-y-auto space-y-3 pr-2">
                   {recentDocuments.map((doc) => {
-                    const analysis = analysisResults.find((a: any) => a.documentId === doc.id);
+                    const analysis = typedAnalysisResults.find((a) => a.documentId === doc.id);
                     return (
                       <div key={doc.id} className="flex items-center justify-between p-3 bg-earth-50 rounded-lg border border-earth-200 hover:border-ochre-300 transition">
                         <div className="flex items-center space-x-3 flex-1">
                           <div className="text-2xl">📄</div>
                           <div className="flex-1 min-w-0">
-                            <div className="font-medium text-earth-900 truncate">{doc.title || 'Untitled'}</div>
+                            <div className="font-medium text-earth-950 truncate">{doc.title || 'Untitled'}</div>
                             <div className="text-sm text-earth-500">
                               {new Date(doc.created_at).toLocaleDateString()}
                               {doc.status && (
-                                <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                                <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-eucalyptus-100 text-eucalyptus-800">
                                   {doc.status}
                                 </span>
                               )}
@@ -302,12 +323,12 @@ const StaffPortalPage: React.FC = () => {
                         {analysis ? (
                           <Link
                             to={`/staff-portal/documents/${doc.id}/analysis`}
-                            className="ml-3 px-3 py-1.5 text-sm font-medium text-white bg-orange-600 hover:bg-orange-700 rounded-md whitespace-nowrap transition"
+                            className="ml-3 px-3 py-1.5 text-sm font-medium text-white bg-ochre-600 hover:bg-ochre-700 rounded-xl whitespace-nowrap transition"
                           >
                             🔍 Analysis
                           </Link>
                         ) : (
-                          <span className="ml-3 px-3 py-1.5 text-xs text-gray-400 whitespace-nowrap">
+                          <span className="ml-3 px-3 py-1.5 text-xs text-earth-400 whitespace-nowrap">
                             Not analyzed
                           </span>
                         )}
@@ -320,7 +341,7 @@ const StaffPortalPage: React.FC = () => {
 
               {/* Content Queue */}
               <Card className="p-6 mt-8">
-                <h3 className="text-xl font-bold text-earth-900 mb-4">📝 Content Queue</h3>
+                <h3 className="text-xl font-bold text-earth-950 mb-4">📝 Content Queue</h3>
                 {contentQueue.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="text-4xl mb-4">✍️</div>
@@ -335,19 +356,29 @@ const StaffPortalPage: React.FC = () => {
                   </div>
                 ) : (
                   <div className="space-y-3">
-                    {contentQueue.map((content, index) => (
-                      <div key={index} className="p-3 bg-earth-50 rounded-lg">
+                    {contentQueue.map((content) => (
+                      <div key={content.id} className="p-3 bg-earth-50 rounded-lg">
                         <div className="flex items-start justify-between mb-2">
-                          <div className="font-medium text-earth-900 text-sm leading-tight">
-                            {content.title}
+                          <div className="font-medium text-earth-950 text-sm leading-tight">
+                            {content.title || 'Untitled story'}
                           </div>
-                          <span className="px-2 py-1 rounded text-xs font-medium bg-blue-100 text-blue-800">
-                            {content.status}
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-medium ${
+                              content.is_public
+                                ? 'bg-eucalyptus-100 text-eucalyptus-800'
+                                : 'bg-eucalyptus-100 text-eucalyptus-800'
+                            }`}
+                          >
+                            {content.is_public ? 'Published' : 'In Review'}
                           </span>
                         </div>
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-earth-600">{content.author}</span>
-                          <span className="text-earth-500">{new Date(content.createdAt).toLocaleDateString()}</span>
+                          <span className="text-earth-600">
+                            {content.story_category?.replace(/_/g, ' ') || 'General story'}
+                          </span>
+                          <span className="text-earth-500">
+                            {new Date(content.created_at).toLocaleDateString()}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -366,7 +397,7 @@ const StaffPortalPage: React.FC = () => {
         {activeTab === 'documents' && (
           <div className="space-y-8">
             <Card className="p-8">
-              <h2 className="text-3xl font-bold text-earth-900 mb-6">📄 Document Upload & Management</h2>
+              <h2 className="text-3xl font-bold text-earth-950 mb-6">📄 Document Upload & Management</h2>
               <p className="text-earth-700 mb-8">
                 Upload interview recordings, transcripts, and documents. All uploads are automatically linked to Oonchiumpa organization.
               </p>
@@ -387,12 +418,12 @@ const StaffPortalPage: React.FC = () => {
             <Card className="p-8">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-earth-900">Recent Documents</h3>
+                  <h3 className="text-2xl font-bold text-earth-950">Recent Documents</h3>
                   <p className="text-earth-600 mt-1">View and manage your uploaded documents</p>
                 </div>
                 <a
                   href="/staff-portal/documents"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                  className="px-4 py-2 bg-eucalyptus-600 text-white rounded-xl hover:bg-eucalyptus-700 transition-colors"
                 >
                   View All Documents →
                 </a>
@@ -409,15 +440,13 @@ const StaffPortalPage: React.FC = () => {
                   {recentDocuments.map((doc) => (
                     <div key={doc.id} className="flex items-center justify-between p-4 bg-earth-50 rounded-lg border border-earth-200">
                       <div className="flex items-center space-x-3">
-                        <div className="text-2xl">
-                          {doc.video_url ? '🎥' : doc.audio_url ? '🎵' : '📄'}
-                        </div>
+                        <div className="text-2xl">📄</div>
                         <div>
-                          <div className="font-medium text-earth-900">{doc.title || 'Untitled'}</div>
+                          <div className="font-medium text-earth-950">{doc.title || 'Untitled'}</div>
                           <div className="text-sm text-earth-500">
                             {new Date(doc.created_at).toLocaleDateString()}
                             {doc.status && (
-                              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800">
+                              <span className="ml-2 px-2 py-0.5 text-xs rounded-full bg-eucalyptus-100 text-eucalyptus-800">
                                 {doc.status}
                               </span>
                             )}
@@ -435,27 +464,27 @@ const StaffPortalPage: React.FC = () => {
         {activeTab === 'review' && (
           <div className="space-y-8">
             <Card className="p-8">
-              <h2 className="text-3xl font-bold text-earth-900 mb-6">🛡️ Cultural Review Center</h2>
+              <h2 className="text-3xl font-bold text-earth-950 mb-6">🛡️ Cultural Review Center</h2>
               <p className="text-earth-700 mb-8">
                 Ensure all content respects cultural protocols and represents our community appropriately.
               </p>
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <Card className="p-6 border-l-4 border-l-yellow-500">
-                  <h3 className="font-bold text-earth-900 mb-2">⏳ Pending Review</h3>
-                  <div className="text-2xl font-bold text-yellow-600 mb-2">4</div>
+                <Card className="p-6 border-l-4 border-l-ochre-500">
+                  <h3 className="font-bold text-earth-950 mb-2">⏳ Pending Review</h3>
+                  <div className="text-2xl font-bold text-ochre-600 mb-2">4</div>
                   <p className="text-sm text-earth-600">Stories awaiting cultural review</p>
                 </Card>
                 
-                <Card className="p-6 border-l-4 border-l-purple-500">
-                  <h3 className="font-bold text-earth-900 mb-2">👥 Elder Consultation</h3>
-                  <div className="text-2xl font-bold text-purple-600 mb-2">2</div>
+                <Card className="p-6 border-l-4 border-l-earth-500">
+                  <h3 className="font-bold text-earth-950 mb-2">👥 Elder Consultation</h3>
+                  <div className="text-2xl font-bold text-earth-700 mb-2">2</div>
                   <p className="text-sm text-earth-600">Requiring Elder guidance</p>
                 </Card>
                 
-                <Card className="p-6 border-l-4 border-l-green-500">
-                  <h3 className="font-bold text-earth-900 mb-2">✅ Approved</h3>
-                  <div className="text-2xl font-bold text-green-600 mb-2">38</div>
+                <Card className="p-6 border-l-4 border-l-eucalyptus-500">
+                  <h3 className="font-bold text-earth-950 mb-2">✅ Approved</h3>
+                  <div className="text-2xl font-bold text-eucalyptus-600 mb-2">38</div>
                   <p className="text-sm text-earth-600">Ready for publication</p>
                 </Card>
               </div>
