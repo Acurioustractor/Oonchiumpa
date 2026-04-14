@@ -15,6 +15,15 @@ const headlineMetrics = [
   { value: '100%', label: 'Aboriginal employment', detail: 'Service delivery and leadership are Aboriginal-led.' },
 ];
 
+// Flip `show` to true once real values are in. Until then, the strip hides.
+const methodology = {
+  show: false,
+  window: '',
+  cohort: '',
+  evaluator: '',
+  lastUpdated: '',
+};
+
 const theoryOfChange = [
   {
     stage: 'Inputs',
@@ -61,27 +70,28 @@ const domainOutcomes = [
   },
 ];
 
-// TODO: replace author/context with real (consented) names, ages, and places.
+// Replace author/context with real (consented) names, ages, and places when ready.
 // Generic "Young participant" reads as fabricated to funders — first name + age/role
 // + community makes these testimonials credible. Only publish with consent on record.
+// An empty context is hidden on render.
 const testimonials = [
   {
     quote:
       'I think other kids should work with you mob. I think everyone should work with Oonchiumpa. You mob are good and help.',
     author: 'Young participant',
-    context: '[TODO: first name, age, community]',
+    context: '',
   },
   {
     quote:
       'You mob come see them, they up straight away. They listen, get ready, and start the day.',
     author: 'Family member',
-    context: '[TODO: relation, community]',
+    context: '',
   },
   {
     quote:
       'The girls are really comfortable with your team and they work well when you are in the room with them.',
     author: 'School partner',
-    context: '[TODO: school name, role]',
+    context: '',
   },
 ];
 
@@ -113,12 +123,12 @@ export const ImpactPage: React.FC = () => {
             <button onClick={() => navigate('/contact?type=partnership')} className="btn-primary">
               Partner with us
             </button>
-            <a
-              href="/impact-report.pdf"
+            <button
+              onClick={() => navigate('/contact?type=partnership')}
               className="btn-secondary border-white/50 bg-white/10 text-white hover:bg-white/20"
             >
-              Download impact report (PDF)
-            </a>
+              Request impact report
+            </button>
           </div>
         </div>
       </section>
@@ -133,13 +143,14 @@ export const ImpactPage: React.FC = () => {
             </div>
           ))}
         </div>
-        {/* TODO: replace placeholders with real evaluation window, cohort size, and evaluator. */}
-        <div className="container-custom mt-8 pt-6 border-t border-white/10 text-xs text-white/55 flex flex-wrap gap-x-6 gap-y-2">
-          <span>Measurement window: [TODO: e.g. Jan–Jun 2025]</span>
-          <span>Cohort: [TODO: N young people]</span>
-          <span>Evaluator: [TODO: internal / external partner]</span>
-          <span>Last updated: [TODO: date]</span>
-        </div>
+        {methodology.show && (
+          <div className="container-custom mt-8 pt-6 border-t border-white/10 text-xs text-white/55 flex flex-wrap gap-x-6 gap-y-2">
+            <span>Measurement window: {methodology.window}</span>
+            <span>Cohort: {methodology.cohort}</span>
+            <span>Evaluator: {methodology.evaluator}</span>
+            <span>Last updated: {methodology.lastUpdated}</span>
+          </div>
+        )}
       </section>
 
       <Section className="bg-white">
@@ -341,7 +352,9 @@ export const ImpactPage: React.FC = () => {
               <CardBody className="p-7 md:p-8">
                 <p className="text-earth-700 leading-relaxed italic mb-4">"{item.quote}"</p>
                 <p className="text-sm text-ochre-700 font-semibold">{item.author}</p>
-                <p className="text-xs text-earth-500 mt-0.5">{item.context}</p>
+                {item.context && (
+                  <p className="text-xs text-earth-500 mt-0.5">{item.context}</p>
+                )}
               </CardBody>
             </Card>
           ))}
@@ -359,9 +372,12 @@ export const ImpactPage: React.FC = () => {
             <button onClick={() => navigate('/contact?type=partnership')} className="btn-primary">
               Start a partnership
             </button>
-            <a href="/impact-report.pdf" className="btn-secondary">
-              Download impact report (PDF)
-            </a>
+            <button
+              onClick={() => navigate('/contact?type=partnership')}
+              className="btn-secondary"
+            >
+              Request impact report
+            </button>
           </div>
         </div>
       </Section>

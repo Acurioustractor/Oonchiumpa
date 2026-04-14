@@ -82,19 +82,13 @@ export const leaders: TeamMember[] = [
 // from the 2024 group photo — stand-ins until real portraits are taken (or
 // until these records are migrated to Empathy Ledger with real names/bios).
 // Order matches the photo: back row L→R (1-8), then front row L→R (9-11).
-export const staff: TeamMember[] = [
-  { name: "Staff 1",  role: "Team Member", category: "staff", photo: "/images/team/staff-01.jpg", order: 1 },
-  { name: "Staff 2",  role: "Team Member", category: "staff", photo: "/images/team/staff-02.jpg", order: 2 },
-  { name: "Staff 3",  role: "Team Member", category: "staff", photo: "/images/team/staff-03.jpg", order: 3 },
-  { name: "Staff 4",  role: "Team Member", category: "staff", photo: "/images/team/staff-04.jpg", order: 4 },
-  { name: "Staff 5",  role: "Team Member", category: "staff", photo: "/images/team/staff-05.jpg", order: 5 },
-  { name: "Staff 6",  role: "Team Member", category: "staff", photo: "/images/team/staff-06.jpg", order: 6 },
-  { name: "Staff 7",  role: "Team Member", category: "staff", photo: "/images/team/staff-07.jpg", order: 7 },
-  { name: "Staff 8",  role: "Team Member", category: "staff", photo: "/images/team/staff-08.jpg", order: 8 },
-  { name: "Staff 9",  role: "Team Member", category: "staff", photo: "/images/team/staff-09.jpg", order: 9 },
-  { name: "Staff 10", role: "Team Member", category: "staff", photo: "/images/team/staff-10.jpg", order: 10 },
-  { name: "Staff 11", role: "Team Member", category: "staff", photo: "/images/team/staff-11.jpg", order: 11 },
-];
+// Intentionally empty until real names + roles are confirmed and consented.
+// When ready, add entries like:
+//   { name: "Jane Smith", role: "Youth Mentor", category: "staff",
+//     photo: "/images/team/staff-01.jpg", order: 1 }
+// Photos are already in place at /images/team/staff-01.jpg..staff-11.jpg.
+// Team group photo still renders on /team regardless of this array.
+export const staff: TeamMember[] = [];
 
 // ─── Community ───────────────────────────────────────────────────────────────
 
