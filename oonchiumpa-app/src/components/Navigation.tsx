@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { SearchModal } from "./SearchModal";
 
 interface NavLink {
   label: string;
@@ -24,6 +25,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { user, isAuthenticated, signOut, isAdmin, hasPermission } = useAuth();
@@ -61,6 +63,10 @@ export const Navigation: React.FC<NavigationProps> = ({
       if (event.key === "Escape") {
         setIsMobileMenuOpen(false);
         setShowUserMenu(false);
+      }
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setIsSearchOpen((v) => !v);
       }
     };
 
@@ -120,6 +126,19 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </Link>
               );
             })}
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Search (Cmd/Ctrl+K)"
+              className={`ml-2 p-2 rounded-lg transition-colors ${
+                isScrolled
+                  ? "text-earth-700 hover:bg-earth-100"
+                  : "text-white hover:bg-white/10"
+              }`}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+              </svg>
+            </button>
             {ctaButton && (
               <button
                 onClick={ctaButton.onClick}
@@ -255,7 +274,18 @@ export const Navigation: React.FC<NavigationProps> = ({
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Search + Menu */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            aria-label="Search"
+            className={`md:hidden p-2 rounded-lg transition-colors ${
+              isScrolled ? "text-earth-700 hover:bg-earth-100" : "text-white hover:bg-white/10"
+            }`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
+            </svg>
+          </button>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={`md:hidden p-2 rounded-lg transition-colors ${
@@ -363,6 +393,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
         </div>
       </div>
+      <SearchModal open={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </nav>
   );
 };
