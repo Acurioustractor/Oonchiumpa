@@ -98,7 +98,7 @@ const DynamicBlog: React.FC = () => {
         excerpt:
           "From UWA law student to Supreme Court associate to community advocate - Tanya's path shows how professional excellence can serve community healing.",
         content:
-          "A comprehensive look at Tanya's incredible legal journey and commitment to justice...",
+          "Tanya's path through law and into community advocacy, in her own words...",
         author: "Tanya Turner",
         publishedAt: new Date().toISOString().split("T")[0],
         tags: ["Legal Advocacy", "Professional Journey", "Community Service"],

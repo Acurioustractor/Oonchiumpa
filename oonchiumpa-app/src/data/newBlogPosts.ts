@@ -80,7 +80,7 @@ At Atnarpa, that self-determination is taking root in the red earth, growing str
     title:
       "Learning Law from the Land: When Legal Education Meets Cultural Authority",
     excerpt:
-      "How ANU law students are discovering that the best lessons about justice happen on country, not in lecture halls, through Oonchiumpa's transformative annual program.",
+      "ANU law students are learning that the best lessons about justice happen on country, not in lecture halls. Oonchiumpa's annual program is where it happens.",
     content: `There's a moment that Chelsea Kenneally, a law student from ANU, keeps coming back to. She's sitting on country in Central Australia, not in a formal lecture theater, and Traditional Owners are sharing knowledge with her cohort.
 
 "They're not lecturing at us in this formal sense," Chelsea reflects. "They're sitting on the same level, conversing with us. That's so beautiful because it comes from their passion for knowledge being passed down to them and now passing it on to us."
@@ -119,7 +119,7 @@ The program doesn't just teach students about Aboriginal perspectives - it invit
 
 This year marks the fourth iteration of the program, and Kristy notes a significant shift from the early days: "Going into the fourth year compared to the first year starting off was very challenging because we had to go through barriers in terms of management. But the last two courses, we've been pretty successful in terms of not having that management to deal with, which has been easier for us."
 
-The success is evident. Students consistently describe the experience as transformative. More importantly, relationships are being built between future policymakers and the communities their decisions will affect.
+You can see it working. Students come back changed. More importantly, relationships get built between future policymakers and the communities whose lives their decisions will land on.
 
 "We definitely wanna be able to continue this partnership with ANU," Kristy says. "Being in Canberra where parliament is, these young students are passionate and many of them are going into roles making decisions for Central Australia."
 
@@ -218,7 +218,7 @@ When you meet Kristy and Tanya, you won't get a sanitized presentation or a fund
 - The challenges of leading culturally-grounded programs in a system that often doesn't understand or value Aboriginal ways of working
 - The successes - young people transformed, families engaged, community connections strengthened
 
-You'll also learn about their needs. Oonchiumpa is doing transformative work, but like many Aboriginal-led initiatives, they need partners who understand that supporting self-determination means trusting Aboriginal leadership and working on Aboriginal terms.
+You'll also hear what they need. Oonchiumpa is doing the work, but like most Aboriginal-led organisations, they need partners who get that self-determination means trusting Aboriginal leadership and working on Aboriginal terms.
 
 ## The Bigger Picture
 
@@ -226,7 +226,7 @@ This visit is part of something larger - a growing movement of Aboriginal-led or
 
 Kristy speaks clearly about the vision: "We definitely think there's an opportunity for us to share our self-determination, what we want to be able to create on our communities and our stations and our land. We wanna be able to invite people to see our vision just as much as what they can see out on our land."
 
-Sydney has resources, networks, and organizations that could support what's happening in Central Australia. But too often, those resources come with conditions, assumptions, and frameworks that don't fit Aboriginal ways of working. Oonchiumpa is inviting a different kind of partnership - one based on relationship, trust, and genuine commitment to Aboriginal-led change.
+Sydney has money, networks, and organisations that could back what's happening in Central Australia. Too often those resources come with conditions and assumptions that don't fit how Aboriginal communities actually work. Oonchiumpa is asking for a different kind of partnership: relationship first, trust earned, Aboriginal-led throughout.
 
 ## How Different Models Create Different Outcomes
 

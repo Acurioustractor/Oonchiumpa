@@ -86,7 +86,7 @@ const servicesData: Record<string, ServiceData> = {
 
 The program is built on the foundation that cultural connection is healing. Our mentors work one-on-one with young people to rebuild their connection to family, country, culture, and identity while supporting them through education, life skills development, and navigating complex service systems.
 
-Led by Kristy Bloomfield and our team of Aboriginal mentors, the program has achieved remarkable outcomes, with 20 out of 21 participants removed from Operation Luna case management and a 95% success rate in school re-engagement.`,
+Kristy Bloomfield and the team of Aboriginal mentors run it. 20 of 21 participants came off Operation Luna case management. 95% re-engaged with school.`,
     features: [
       'One-on-one mentorship by Aboriginal staff with cultural authority',
       'School re-engagement support with 95% success rate',
@@ -135,7 +135,7 @@ Led by Kristy Bloomfield and our team of Aboriginal mentors, the program has ach
   'law-students': {
     id: 'law-students',
     title: 'True Justice: Deep Listening on Country',
-    description: 'Transformative legal education program where law students learn from Traditional Owners on country, understanding Aboriginal law, justice, and lived experiences beyond what textbooks can teach.',
+    description: 'A legal education program where law students learn from Traditional Owners on country. Aboriginal law, justice, and lived experience, taught by the people living it.',
     longDescription: `Legal Education for True Justice: Indigenous Perspectives and Deep Listening on Country is a semester-long immersive course that redefines what it means to study law in Australia. Originally co-designed by Oonchiumpa Consultancy Services and ANU Law School, this program has been transforming law students since 2022.
 
 The philosophy behind True Justice is simple yet profound: "Law school can only teach you what is written, whereas Aboriginal lore and Aboriginal experiences of law are seen, felt and heard by the people it impacts most. The only true way to understand this is to be with the people and listen deeply to their stories."
@@ -153,7 +153,7 @@ At the heart of the course is a week-long immersion on Country in Central Austra
       'Integration with Royal Commission insights and UN advocacy work'
     ],
     outcomes: [
-      'Transformative shift in understanding Aboriginal legal systems',
+      'Students leave with a different understanding of Aboriginal legal systems',
       'Students progress to policy, government, and legal roles with First Nations knowledge',
       'Deep cultural competency in working with Aboriginal communities',
       'Alumni network carrying knowledge into professional practice',
@@ -227,7 +227,7 @@ For Aboriginal young people, Atnarpa is a place of healing and cultural reconnec
       'Regular cultural healing programs for at-risk youth',
       'Successful cultural tourism experiences',
       'Safe space for intergenerational knowledge transfer',
-      'Documented transformative healing experiences for young people',
+      'Documented healing outcomes for young people on country',
       'Ongoing cultural education for diverse visitor groups'
     ],
     stats: [

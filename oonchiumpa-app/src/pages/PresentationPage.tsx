@@ -184,9 +184,9 @@ const PresentationPage: React.FC = () => {
                 <div>
                   <h3 className="text-xl font-semibold text-earth-800 mb-4">The Opportunity</h3>
                   <p className="text-earth-700 leading-relaxed mb-4">
-                    Oonchiumpa represents a paradigm shift in youth justice - from punitive, expensive 
-                    approaches to culturally-grounded, cost-effective community healing. Our platform 
-                    demonstrates this success at scale.
+                    Oonchiumpa flips the youth justice model. Out: punitive, expensive,
+                    out-of-context. In: culturally-grounded, cost-effective, community-led.
+                    The results are on the record.
                   </p>
                   <p className="text-earth-700 leading-relaxed">
                     This digital platform transforms authentic community conversations into powerful 

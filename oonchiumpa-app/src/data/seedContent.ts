@@ -127,7 +127,7 @@ The key isn't in the programs themselves - it's in who designs them, who deliver
 
 **Community Leadership**: Programs led by Traditional Owners and community members create trust, understanding, and authentic connection that external providers simply cannot match.
 
-**Holistic Approach**: Instead of focusing only on 'behavior change,' these programs address trauma, build identity, strengthen culture, and heal families.
+**Whole-of-person work**: It's not just behaviour change. These programs deal with the trauma underneath, the identity on top, the culture that holds it together, and the family that carries it forward.
 
 ### Real Stories, Real Change
 
@@ -159,14 +159,14 @@ Every young person deserves access to programs that see their potential, honor t
     heroImage: "/images/stories/IMG_9698.jpg",
   },
   {
-    title: "Traditional Knowledge in Contemporary Youth Work: A New Paradigm",
+    title: "Traditional Knowledge in Contemporary Youth Work",
     excerpt:
-      "How ancient wisdom systems are revolutionizing modern approaches to youth support and community healing in Central Australia.",
+      "How 65,000-year-old knowledge systems are changing the way youth support and community healing get done in Central Australia.",
     content: `## Bridging Ancient Wisdom and Contemporary Practice
 
 For over 65,000 years, Aboriginal communities have had sophisticated systems for raising young people, dealing with conflict, and maintaining community harmony. These knowledge systems didn't disappear with colonization - they've been waiting for the right conditions to flourish again.
 
-Today, we're witnessing a remarkable renaissance as traditional knowledge systems are being recognised, respected, and integrated into contemporary youth work practice.
+Those knowledge systems are coming back into the room. Youth work is starting to listen.
 
 ### The Wisdom of the Ancestors
 

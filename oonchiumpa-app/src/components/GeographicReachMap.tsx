@@ -257,7 +257,7 @@ export const GeographicReachMap: React.FC = () => {
           <div className="text-3xl mb-2">🏛️</div>
           <h4 className="font-bold text-lg mb-2">Alice Springs Hub</h4>
           <p className="text-ochre-50 text-sm mb-3">
-            Oonchiumpa's primary office and service delivery base in the heart of Mparntwe
+            Oonchiumpa's main office and service base in Mparntwe
           </p>
           <div className="text-2xl font-bold">19 active clients</div>
         </div>

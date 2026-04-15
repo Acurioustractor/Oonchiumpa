@@ -272,7 +272,7 @@ export const AboutPage: React.FC = () => {
           <p className="eyebrow mb-4">Leadership</p>
           <h2 className="heading-lg mb-5">Led by community, accountable to community</h2>
           <p className="lead-text">
-            Oonchiumpa leadership combines cultural authority, professional practice, and long-term commitment to families.
+            Oonchiumpa is led by Traditional Owners who know the families, hold cultural authority, and aren't going anywhere.
           </p>
         </div>
 
