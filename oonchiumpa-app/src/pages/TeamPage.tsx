@@ -204,7 +204,7 @@ export const TeamPage: React.FC = () => {
             wrapperClassName="rounded-3xl overflow-hidden border border-earth-100 shadow-[var(--shadow-elevated)]"
           />
           <figcaption className="text-center text-earth-600 text-sm mt-4 italic">
-            The Oonchiumpa team, 2024 — in front of "True Justice: Indigenous
+            The Oonchiumpa team, 2024, in front of "True Justice: Indigenous
             Perspective &amp; Deep Listening on Country".
           </figcaption>
         </figure>

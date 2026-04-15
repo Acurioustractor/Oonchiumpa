@@ -47,7 +47,7 @@ export function HeroVideo({
     const onCanPlay = () => {
       setVideoReady(true);
       video.play().catch(() => {
-        // Autoplay blocked — poster stays visible, which is fine
+        // Autoplay blocked, poster stays visible, which is fine
       });
     };
     video.addEventListener("canplay", onCanPlay);

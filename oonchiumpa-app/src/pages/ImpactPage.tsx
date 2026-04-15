@@ -10,7 +10,7 @@ import { useProjectAnalysis } from '../hooks/useEmpathyLedger';
 
 const headlineMetrics = [
   { value: '95%', label: 'Diversion success', detail: 'Young people diverted from deeper justice-system contact.' },
-  { value: '$91/day', label: 'Program cost', detail: 'Compared with $3,852/day incarceration — 97.6% less.' },
+  { value: '$91/day', label: 'Program cost', detail: 'Compared with $3,852/day incarceration, 97.6% less.' },
   { value: '72%', label: 'Returned to education', detail: 'From 2,464 one-on-one and family engagements in six months.' },
   { value: '100%', label: 'Aboriginal employment', detail: 'Service delivery and leadership are Aboriginal-led.' },
 ];
@@ -71,7 +71,7 @@ const domainOutcomes = [
 ];
 
 // Replace author/context with real (consented) names, ages, and places when ready.
-// Generic "Young participant" reads as fabricated to funders — first name + age/role
+// Generic "Young participant" reads as fabricated to funders, first name + age/role
 // + community makes these testimonials credible. Only publish with consent on record.
 // An empty context is hidden on render.
 const testimonials = [
@@ -116,7 +116,7 @@ export const ImpactPage: React.FC = () => {
             <span className="block text-white/70 mt-2">Detention costs $3,852.</span>
           </h1>
           <p className="text-white/85 text-lg max-w-3xl leading-relaxed mb-8">
-            Oonchiumpa is Aboriginal-led diversion that works — 95% of young people referred to us stay out of deeper
+            Oonchiumpa is Aboriginal-led diversion that works. 95% of young people referred to us stay out of deeper
             justice-system contact. Below: the evidence, the method, and the numbers funders and partners ask for.
           </p>
           <div className="flex flex-wrap gap-4">
@@ -158,7 +158,7 @@ export const ImpactPage: React.FC = () => {
           <p className="eyebrow mb-4">Theory of change</p>
           <h2 className="heading-lg mb-5">How cultural authority becomes measurable outcomes</h2>
           <p className="lead-text">
-            Inputs to outcomes, in plain language. The same logic funders use to assess investment — applied to our delivery model.
+            Inputs to outcomes, in plain language. The same logic funders use to assess investment, applied to our delivery model.
           </p>
         </div>
 

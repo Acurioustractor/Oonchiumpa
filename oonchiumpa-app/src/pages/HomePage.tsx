@@ -110,11 +110,11 @@ export const HomePage: React.FC = () => {
                 </h2>
                 <p className="text-earth-700 text-lg leading-relaxed mb-6">
                   Kristy Bloomfield brings Traditional Owner authority on
-                  Arrernte Country — stewarding Elder councils, knowledge
+                  Arrernte Country: stewarding Elder councils, knowledge
                   protocols, and community healing.
                 </p>
                 <p className="text-earth-700 text-lg leading-relaxed mb-8">
-                  Tanya Turner navigates the legal and policy systems —
+                  Tanya Turner navigates the legal and policy systems .
                   translating community priorities into agreements, funding, and
                   reform.
                 </p>
@@ -124,7 +124,7 @@ export const HomePage: React.FC = () => {
                   Country, not in someone else's program."
                 </p>
                 <p className="text-earth-500 text-sm mt-3 pl-5">
-                  — Kristy Bloomfield, Director
+                  Kristy Bloomfield, Director
                 </p>
               </div>
             </div>
@@ -218,13 +218,13 @@ export const HomePage: React.FC = () => {
             </h2>
             <p className="text-earth-700 text-lg leading-relaxed mb-6">
               The Bloomfield and Wiltshire families reclaimed their ancestral
-              land at Atnarpa — Loves Creek Station — after generations of
+              land at Atnarpa. Loves Creek Station, after generations of
               displacement. This country is where healing happens.
             </p>
             <p className="text-earth-700 text-lg leading-relaxed mb-8">
               Young people travel to Atnarpa for on-country programs: learning
               from Elders, connecting to language, and building identity through
-              culture — not compliance.
+              culture, not compliance.
             </p>
             <EditableImage
               slotId="country-land-claim"
@@ -253,18 +253,18 @@ export const HomePage: React.FC = () => {
                 should work with Oonchiumpa. You mob are good and help."
               </p>
               <cite className="text-earth-500 text-base not-italic">
-                — Young person, Oonchiumpa program
+                Young person, Oonchiumpa program
               </cite>
             </blockquote>
             <div className="w-16 h-px bg-ochre-300 mx-auto" />
             <blockquote className="text-center">
               <p className="text-xl md:text-2xl text-earth-700 leading-relaxed mb-4">
                 "J's other caseworker came out but J didn't want to work with him
-                — she didn't feel comfortable. But J enjoys working with you two.
-                She works really well — they like working with Oonchiumpa."
+                she didn't feel comfortable. But J enjoys working with you two.
+                She works really well, they like working with Oonchiumpa."
               </p>
               <cite className="text-earth-500 text-base not-italic">
-                — Family member of participant
+                Family member of participant
               </cite>
             </blockquote>
           </div>
@@ -346,7 +346,7 @@ export const HomePage: React.FC = () => {
           <div className="space-y-10">
             <div className="border-l-2 border-ochre-400 pl-6 md:pl-8">
               <h3 className="text-xl font-semibold text-earth-950 mb-3">
-                Three girls suspended — education didn't stop
+                Three girls suspended, education didn't stop
               </h3>
               <p className="text-earth-700 leading-relaxed mb-2">
                 After a physical altercation, three young women were excluded
@@ -461,7 +461,7 @@ export const HomePage: React.FC = () => {
           </h2>
           <p className="text-earth-600 text-lg mb-10 max-w-xl mx-auto">
             Whether you're a funder, a partner organisation, or someone who
-            wants to support Aboriginal-led youth work — we'd like to hear from
+            wants to support Aboriginal-led youth work, we'd like to hear from
             you.
           </p>
           <div className="flex flex-wrap justify-center gap-4">

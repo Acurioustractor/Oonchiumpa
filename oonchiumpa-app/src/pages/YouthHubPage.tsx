@@ -137,7 +137,7 @@ const grainSvg = `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='ht
 // ── Data ────────────────────────────────────────────────────────────────
 
 const STATS = [
-  { value: '~$3M', label: "Oonchiumpa's annual funding", sub: 'NIAA — to be confirmed' },
+  { value: '~$3M', label: "Oonchiumpa's annual funding", sub: 'NIAA, to be confirmed' },
   { value: '$4,000', label: 'Cost per day to detain one child', sub: '98% Aboriginal' },
   { value: '$50M', label: 'NDIS budgets unspent per year', sub: 'Central Australia' },
   { value: '90%', label: 'Oonchiumpa retention rate', sub: '95% school re-engagement' },
@@ -162,9 +162,9 @@ const SECTORS = [
 
 const JOURNEYS = [
   {
-    name: 'Tyson — The Current System', age: 14, place: 'Alice Springs town camp', variant: 'destructive' as const,
+    name: 'Tyson: The Current System', age: 14, place: 'Alice Springs town camp', variant: 'destructive' as const,
     steps: [
-      "Mum has disability. NDIS plan managed from Darwin. Tyson is informal carer — nobody's noticed.",
+      "Mum has disability. NDIS plan managed from Darwin. Tyson is informal carer, nobody's noticed.",
       'Stops attending school. Reported to TFHC. Third caseworker in 18 months.',
       'Night Patrol picks him up at 2am. Doesn\'t know the workers. Goes back out.',
       'Five separate systems, five case files, five intake forms. None speak Arrernte.',
@@ -174,7 +174,7 @@ const JOURNEYS = [
     outcome: 'Worse than where he started. Cultural connection: near zero.',
   },
   {
-    name: 'Tyson — The Oonchiumpa Way', age: 14, place: 'Alice Springs town camp', variant: 'positive' as const,
+    name: 'Tyson: The Oonchiumpa Way', age: 14, place: 'Alice Springs town camp', variant: 'positive' as const,
     steps: [
       'Elder already knows Tyson\'s family. Knows his grandmother is a senior lawwoman.',
       'Takes him to Atnarpa for a few days on country. Works with him on what he wants.',
@@ -186,20 +186,20 @@ const JOURNEYS = [
     outcome: 'A young man who knows who he is and where he belongs.',
   },
   {
-    name: 'Marlene — Homelands', age: 16, place: 'MacDonnell Shire', variant: 'destructive' as const,
+    name: 'Marlene: Homelands', age: 16, place: 'MacDonnell Shire', variant: 'destructive' as const,
     steps: [
       'Lives 200km out. NDIS plan $177K committed. Provider hasn\'t visited in 6 months.',
       'Needs Alice Springs for appointments. No transport. Falls through the cracks.',
-      'Health crisis. Swept into child protection — living conditions, not parenting.',
+      'Health crisis. Swept into child protection: living conditions, not parenting.',
       'Removed from country. Non-family placement. Runs away. Youth justice begins.',
     ],
     outcome: 'With the hub: Oonchiumpa already operates on homelands. Marlene stays connected.',
   },
   {
-    name: 'Danny — Disability Spiral', age: 11, place: 'Central Desert', variant: 'destructive' as const,
+    name: 'Danny: Disability Spiral', age: 11, place: 'Central Desert', variant: 'destructive' as const,
     steps: [
       'FASD diagnosed at 9 (should have been 5). Provider in Adelaide. 22% utilisation.',
-      'Boarding school manages behaviour as discipline — not disability. Suspended three times.',
+      'Boarding school manages behaviour as discipline, not disability. Suspended three times.',
       'Three bureaucracies that don\'t talk. Child protection AND education AND disability.',
       'By 14: ABI from placement breakdown. Plan jumps to $467K. Also in youth justice. $1.5M+/year.',
     ],
@@ -209,7 +209,7 @@ const JOURNEYS = [
 
 const PILLARS = [
   { title: 'One Door, One Relationship', desc: 'An elder who knows the young person, their family, their country, their language.' },
-  { title: 'Cultural Foundation', desc: 'Identity, language, law, ceremony as the base — not a module bolted on.' },
+  { title: 'Cultural Foundation', desc: 'Identity, language, law, ceremony as the base, not a module bolted on.' },
   { title: 'NDIS Navigation', desc: 'Coordinating plans across families. Pushing utilisation from 57% to 90%.' },
   { title: 'On-Country Healing', desc: 'Atnarpa Homestead. Bush tucker. Deep listening with judges and elders.' },
   { title: 'Family & Community', desc: 'Three NDIS plans in one family? One navigation point.' },
@@ -318,7 +318,7 @@ const JourneyCard: React.FC<{ j: typeof JOURNEYS[0] }> = ({ j }) => {
           <div className="w-2 h-2 rounded-full" style={{ background: accent }} />
           <div>
             <span className="text-sm font-medium text-white">{j.name}</span>
-            <span className="text-xs text-zinc-500 ml-3">{j.age} — {j.place}</span>
+            <span className="text-xs text-zinc-500 ml-3">{j.age}, {j.place}</span>
           </div>
         </div>
         <span className={`text-zinc-500 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}>{Icon.chevron}</span>
@@ -376,7 +376,7 @@ const YouthHubPage: React.FC = () => {
           </Reveal>
           <Reveal delay={0.2}>
             <p className="text-lg md:text-xl text-zinc-400 font-light leading-relaxed max-w-2xl mx-auto mb-10">
-              One hub on country, run by traditional owners, wrapping around the whole young person — across disability, justice, education, and child protection.
+              One hub on country, run by traditional owners, wrapping around the whole young person: across disability, justice, education, and child protection.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
@@ -498,7 +498,7 @@ const YouthHubPage: React.FC = () => {
             <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-eucalyptus-400 mb-3">Real Voices</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-[-0.03em] mb-4">From the Community</h2>
             <p className="text-base text-zinc-500 font-light mb-12 max-w-xl">
-              Voices from Oonchiumpa's community — elders, young people, and the team — drawn from the Empathy Ledger.
+              Voices from Oonchiumpa's community: elders, young people, and the team, drawn from the Empathy Ledger.
             </p>
           </Reveal>
 
@@ -603,7 +603,7 @@ const YouthHubPage: React.FC = () => {
             <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-eucalyptus-400 mb-3">The Alternative</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-[-0.03em] mb-4">The Hub Model</h2>
             <p className="text-base text-zinc-500 font-light mb-12 max-w-xl">
-              Instead of six siloed services, one hub on country — run by traditional owners with
+              Instead of six siloed services, one hub on country, run by traditional owners with
               the cultural authority, the relationships, and the land.
             </p>
           </Reveal>
@@ -646,7 +646,7 @@ const YouthHubPage: React.FC = () => {
                     <li key={k} className="flex justify-between"><span className="text-zinc-500">{k}</span><span className="text-zinc-300 tabular-nums font-medium">{v}</span></li>
                   ))}
                 </ul>
-                <p className="text-[10px] text-zinc-700 mt-5 pt-4 border-t border-white/[0.06]">Capital Year 1: $3M — Atnarpa, housing, vehicles, comms</p>
+                <p className="text-[10px] text-zinc-700 mt-5 pt-4 border-t border-white/[0.06]">Capital Year 1: $3M: Atnarpa, housing, vehicles, comms</p>
               </Glass>
             </Reveal>
 
@@ -741,7 +741,7 @@ const YouthHubPage: React.FC = () => {
           </Reveal>
           <Reveal delay={0.4}>
             <p className="mt-12 text-[10px] tracking-[0.25em] uppercase text-zinc-700">
-              Data sourced from CivicGraph — NDIS Dec 2025, ROGS, AusTender, NIAA, ALMA
+              Data sourced from CivicGraph: NDIS Dec 2025, ROGS, AusTender, NIAA, ALMA
             </p>
           </Reveal>
         </div>

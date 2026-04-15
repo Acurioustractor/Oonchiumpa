@@ -1,5 +1,5 @@
 /**
- * EditModeContext — toggle edit mode to show photo swap buttons, content editors, etc.
+ * EditModeContext: toggle edit mode to show photo swap buttons, content editors, etc.
  *
  * Edit mode is activated via:
  *   - The floating edit button (bottom-right)

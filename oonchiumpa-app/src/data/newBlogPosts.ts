@@ -1,4 +1,4 @@
-import { BlogPostDraft } from "../services/blogAPI";
+import type { BlogPostDraft } from "../services/blogAPI";
 
 // New blog posts for October 2024
 export const newBlogPosts: BlogPostDraft[] = [
@@ -6,7 +6,7 @@ export const newBlogPosts: BlogPostDraft[] = [
     title: "Atnarpa: Coming Home to Country at Loves Creek Station",
     excerpt:
       "The journey of the Bloomfield/Wiltshire family to reclaim their ancestral lands and build generational wealth through cultural tourism and cattle operations at Loves Creek Station.",
-    content: `There's a place east of Alice Springs where the red earth meets the sky, where a homestead built in 1933 stands testament to over a century of Aboriginal connection to country. This is Atnarpa - also known as Loves Creek Station - and it represents something profound: the journey of the Bloomfield/Wiltshire family to reclaim their ancestral lands and their vision for the future.
+    content: `There's a place east of Alice Springs where the red earth meets the sky. A homestead built in 1933 has stood on that ground for nearly a century, and Aboriginal people have been connected to it for much longer than that. This is Atnarpa, also known as Loves Creek Station. It's where the Bloomfield/Wiltshire family have come home to their country, and where they're building the future they want for it.
 
 ## The History Lives in the Land
 
@@ -38,7 +38,7 @@ For the young people Oonchiumpa works with, Atnarpa has become a place of transf
 
 One young man, Malachi, was particularly moved. Encouraged by his peers around the fire pit while cooking kangaroo tails, he began to explore his own cultural connections. The conversation reminded him that his family had established their own school to teach a language on the brink of extinction.
 
-Following that experience, Malachi returned to his own country with extended family members and became involved in hosting visitors and teaching about his homeland. The change in his behavior and sense of empowerment was profound - a testament to what happens when young people connect with country and see Aboriginal people leading with cultural authority.
+After that trip, Malachi went back to his own country with family. He started hosting visitors, teaching about his homeland. You could see the shift in him. It's what happens when a young person gets back to country and watches Aboriginal people leading the way.
 
 ## A Complex Pride
 
@@ -99,7 +99,7 @@ Kristy Bloomfield, who leads the program with Oonchiumpa, explains the vision: "
 
 ## Beyond the Categories
 
-Suzie Ma, in her fifth year studying law and accounting at ANU, puts her finger on something crucial: "The law reduces people to categories and makes things really simplistic when in reality they're not. Being on this country with these stunning views and learning our true history changes everything."
+Suzie Ma, in her fifth year studying law and accounting at ANU, named something that matters: "The law reduces people to categories and makes things really simplistic when in reality they're not. Being on this country with these stunning views and learning our true history changes everything."
 
 This is the shift that Oonchiumpa facilitates - from abstract legal categories to complex relational understanding. From simplified interventions to nuanced, culturally-grounded approaches.
 

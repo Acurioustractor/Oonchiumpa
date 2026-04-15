@@ -1,5 +1,5 @@
 /**
- * Services & Projects — single source of truth.
+ * Services & Projects, single source of truth.
  *
  * Every page that lists or links to services pulls from here:
  *   - /services                            (ServicesPage)
@@ -18,10 +18,10 @@ export interface Service {
   /** Display title */
   title: string;
 
-  /** Short summary (1-2 sentences) — used on cards/rails */
+  /** Short summary (1-2 sentences), used on cards/rails */
   summary: string;
 
-  /** Longer description (3-5 sentences) — used on listing and detail pages */
+  /** Longer description (3-5 sentences), used on listing and detail pages */
   description: string;
 
   /** Measurable outcome line */
@@ -42,7 +42,7 @@ export interface Service {
   /** Whether this service accepts direct community referrals */
   acceptsReferrals: boolean;
 
-  /** Short label for the "how to engage" CTA — e.g. "Make a referral" */
+  /** Short label for the "how to engage" CTA, e.g. "Make a referral" */
   ctaLabel: string;
 }
 
@@ -71,7 +71,7 @@ export const services: Service[] = [
       "Young people travel to Atnarpa for cultural connection, language learning, and Elder-led healing. Programs build belonging and identity through culture, not compliance. Accommodation and on-Country experiences also available for partner organisations.",
     outcome: "7 language groups engaged with sustained participation in culturally-led support.",
     image: "/images/model/atnarpa-land.jpg",
-    alt: "Atnarpa Station — Eastern Arrernte country",
+    alt: "Atnarpa Station. Eastern Arrernte country",
     tags: ["country", "healing", "culture", "elders", "language"],
     inquiryType: "partnership",
     acceptsReferrals: true,
@@ -83,7 +83,7 @@ export const services: Service[] = [
     summary:
       "Immersive legal education on Country, led by Traditional Owners. Law students learn Aboriginal conceptions of justice from the source.",
     description:
-      "Cohorts of 16 law and policy students spend time at Atnarpa with Elders, Oonchiumpa leaders, and Traditional Owners. A complete rethink of how Australian legal education can work — relational, land-based, and led by cultural authority.",
+      "Cohorts of 16 law and policy students spend time at Atnarpa with Elders, Oonchiumpa leaders, and Traditional Owners. A complete rethink of how Australian legal education can work: relational, land-based, and led by cultural authority.",
     outcome: "16 students per cohort. Partnerships with ANU and Supreme Court of Victoria.",
     image: "/images/stories/IMG_9713.jpg",
     alt: "Law students learning on Country with Traditional Owners",
@@ -98,7 +98,7 @@ export const services: Service[] = [
     summary:
       "Trusted coordination and advocacy across health, education, housing, legal, and family service systems.",
     description:
-      "Oonchiumpa connects young people and families with Aboriginal-led programs, businesses, and services across Central Australia. Every referral maintains cultural safety and every handover is actively held — not simply dispatched.",
+      "Oonchiumpa connects young people and families with Aboriginal-led programs, businesses, and services across Central Australia. Every referral maintains cultural safety and every handover is actively held, not simply dispatched.",
     outcome: "71 successful service referrals in six months. 32+ active partner organisations.",
     image: "/images/stories/IMG_9698.jpg",
     alt: "Oonchiumpa team coordinating family support",
@@ -128,7 +128,7 @@ export const services: Service[] = [
     summary:
       "Whole-family support, kinship mapping, and protective networks around vulnerable young people.",
     description:
-      "Working with entire kinship systems — parents, siblings, aunties, uncles — to build stable support around each young person. Reconnecting young people with family they didn't know they had, strengthening the people who love them most.",
+      "Working with entire kinship systems: parents, siblings, aunties, uncles, to build stable support around each young person. Reconnecting young people with family they didn't know they had, strengthening the people who love them most.",
     outcome: "87-95% engagement rate with culturally-led family support. 2,464 meaningful contacts in 6 months.",
     image: "/images/stories/IMG_9713.jpg",
     alt: "Oonchiumpa leaders with families and young people",

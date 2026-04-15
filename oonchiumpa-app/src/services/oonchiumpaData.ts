@@ -567,7 +567,7 @@ export const contentHelpers = {
     return {
       text: quote.quote,
       attribution,
-      formatted: `"${quote.quote}"\n— ${attribution}`
+      formatted: `"${quote.quote}"\n. ${attribution}`
     };
   },
 

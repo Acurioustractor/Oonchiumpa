@@ -91,8 +91,8 @@ export const ContactPage: React.FC = () => {
         [
           `Name: ${formData.name}`,
           `Email: ${formData.email}`,
-          `Phone: ${formData.phone || '—'}`,
-          `Organisation: ${formData.organization || '—'}`,
+          `Phone: ${formData.phone || ', '}`,
+          `Organisation: ${formData.organization || ', '}`,
           `Type: ${formData.inquiryType}`,
           '',
           messageBody,

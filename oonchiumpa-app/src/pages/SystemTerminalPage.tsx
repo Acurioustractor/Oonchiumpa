@@ -40,7 +40,7 @@ const DETENTION_COST_PER_DAY = 4_000;
 const PCT_ABORIGINAL = 98;
 
 const TOP_SUPPLIERS = [
-  { name: 'Life Without Barriers', total: 106_400_000, contracts: 13, note: 'Residential care — Sydney-based NGO' },
+  { name: 'Life Without Barriers', total: 106_400_000, contracts: 13, note: 'Residential care. Sydney-based NGO' },
   { name: 'Northern Rise Village Services', total: 24_000_000, contracts: 1, note: 'Quarantine accommodation' },
   { name: 'Saltbush Social Enterprises', total: 25_290_000, contracts: 2, note: 'Youth justice facilities, bail services' },
   { name: 'First Step Development', total: 10_100_000, contracts: 1, note: 'Supported accommodation' },
@@ -238,7 +238,7 @@ const SystemTerminalInner: React.FC = () => {
                     {$$(TFHC_TOTAL)} to Territory Families
                   </h1>
                   <p className="text-lg text-zinc-500 font-light max-w-2xl">
-                    Every dollar the Northern Territory government spends on youth justice, child protection, and housing — and who gets it.
+                    Every dollar the Northern Territory government spends on youth justice, child protection, and housing, and who gets it.
                   </p>
                 </Fade>
               </div>
@@ -297,7 +297,7 @@ const SystemTerminalInner: React.FC = () => {
               <div className="max-w-6xl mx-auto">
                 <Fade>
                   <h3 className="text-sm font-semibold text-zinc-300 mb-1">Who Gets the Money</h3>
-                  <p className="text-xs text-zinc-600 mb-4">Territory Families contracts — top suppliers</p>
+                  <p className="text-xs text-zinc-600 mb-4">Territory Families contracts, top suppliers</p>
                 </Fade>
                 <G className="divide-y divide-white/[0.05]">
                   {TOP_SUPPLIERS.map((s, i) => (
@@ -361,7 +361,7 @@ const SystemTerminalInner: React.FC = () => {
               <div className="max-w-6xl mx-auto">
                 <Fade>
                   <h3 className="text-sm font-semibold text-zinc-300 mb-1">NDIS in Central Australia</h3>
-                  <p className="text-xs text-zinc-600 mb-4">December 2025 — committed budgets vs actual utilisation</p>
+                  <p className="text-xs text-zinc-600 mb-4">December 2025, committed budgets vs actual utilisation</p>
                 </Fade>
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
@@ -471,7 +471,7 @@ const SystemTerminalInner: React.FC = () => {
                 <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-eucalyptus-400 mb-4">Layer 3: The Voices</p>
                 <h2 className="text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.05] mb-4">From the Community</h2>
                 <p className="text-lg text-zinc-500 font-light max-w-2xl mb-12">
-                  Real voices from Oonchiumpa's community — elders, young people, and partners. Sourced from the Empathy Ledger.
+                  Real voices from Oonchiumpa's community: elders, young people, and partners. Sourced from the Empathy Ledger.
                 </p>
               </Fade>
 
@@ -552,7 +552,7 @@ const SystemTerminalInner: React.FC = () => {
            ══════════════════════════════════════════════════════ */}
         {layer === 'alternative' && (
           <>
-            {/* Hero comparison — visceral */}
+            {/* Hero comparison, visceral */}
             <section className="px-6 pt-24 pb-16">
               <div className="max-w-6xl mx-auto">
                 <Fade>
@@ -596,7 +596,7 @@ const SystemTerminalInner: React.FC = () => {
                           'On-country healing at Atnarpa Homestead',
                           'NDIS plan navigation that gets $50M of unspent budgets flowing',
                           'One relationship that predates the crisis and outlasts it',
-                          'True Justice — judges and elders in deep listening circles',
+                          'True Justice, judges and elders in deep listening circles',
                           '90% retention. 95% school re-engagement. Proven.',
                         ].map((item, i) => (
                           <li key={i} className="flex items-start gap-3">
@@ -607,7 +607,7 @@ const SystemTerminalInner: React.FC = () => {
                       </ul>
                       <div className="mt-8 pt-6 border-t border-eucalyptus-400/10">
                         <div className="text-3xl font-medium text-eucalyptus-400">~$3M</div>
-                        <p className="text-[10px] text-zinc-600 mt-1">per year for the whole hub — 7 language groups, 150km radius</p>
+                        <p className="text-[10px] text-zinc-600 mt-1">per year for the whole hub: 7 language groups, 150km radius</p>
                       </div>
                     </div>
                   </div>
@@ -655,8 +655,8 @@ const SystemTerminalInner: React.FC = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <ul className="space-y-4">
                         {[
-                          { stat: '65%', text: 'of detained youth have a cognitive disability or mental health condition — undiagnosed, unmanaged, made worse by incarceration' },
-                          { stat: '8.2%', text: 'youth homelessness rate in the NT — 14x the national average. Detention doesn\'t give them a home. It gives them a record.' },
+                          { stat: '65%', text: 'of detained youth have a cognitive disability or mental health condition: undiagnosed, unmanaged, made worse by incarceration' },
+                          { stat: '8.2%', text: 'youth homelessness rate in the NT, 14x the national average. Detention doesn\'t give them a home. It gives them a record.' },
                           { stat: '80%', text: 'of young people in detention have experienced abuse, neglect, or family violence. The system punishes the symptoms of its own failures.' },
                         ].map((item, i) => (
                           <li key={i} className="flex gap-4">
@@ -667,9 +667,9 @@ const SystemTerminalInner: React.FC = () => {
                       </ul>
                       <ul className="space-y-4">
                         {[
-                          { stat: '26x', text: 'more likely to end up in adult prison. Detention doesn\'t divert — it\'s a pipeline. It teaches kids that they belong in cages.' },
+                          { stat: '26x', text: 'more likely to end up in adult prison. Detention doesn\'t divert, it\'s a pipeline. It teaches kids that they belong in cages.' },
                           { stat: '17 yrs', text: 'less life expectancy for Indigenous Australians. Every year in the system accelerates this. Connection to culture is a protective factor against early death.' },
-                          { stat: '0', text: 'services that speak their language. Five systems, five case files, five intake forms — none in Arrernte, Luritja, Warlpiri, Pitjantjatjara, Alyawarre, Anmatyerre, or Kaytetye.' },
+                          { stat: '0', text: 'services that speak their language. Five systems, five case files, five intake forms: none in Arrernte, Luritja, Warlpiri, Pitjantjatjara, Alyawarre, Anmatyerre, or Kaytetye.' },
                         ].map((item, i) => (
                           <li key={i} className="flex gap-4">
                             <span className="text-xl font-medium text-sunset-400 shrink-0 w-12 text-right">{item.stat}</span>
@@ -687,9 +687,9 @@ const SystemTerminalInner: React.FC = () => {
                     <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-amber-400/50 mb-5">What It Does to Families</p>
                     <div className="space-y-4">
                       {[
-                        'When a child is removed — to detention, to out-of-home care, to a placement 1,500km from their homeland — the whole family system fractures. Grandmothers carry the grief. Siblings lose their protector. Parents lose purpose.',
-                        'In Central Australia, 172 NDIS participants live in MacDonnell Shire — 200km from Alice Springs. When their kids are removed to town, the family\'s NDIS supports collapse. The plan was built around a family unit that no longer exists. Utilisation drops to 30%.',
-                        'The Stolen Generations didn\'t end. The NT has the highest child removal rate in Australia. The same families who had children taken in the 1960s are having grandchildren taken now — by the same system, under different legislation, with the same outcomes.',
+                        'When a child is removed: to detention, to out-of-home care, to a placement 1,500km from their homeland, the whole family system fractures. Grandmothers carry the grief. Siblings lose their protector. Parents lose purpose.',
+                        'In Central Australia, 172 NDIS participants live in MacDonnell Shire, 200km from Alice Springs. When their kids are removed to town, the family\'s NDIS supports collapse. The plan was built around a family unit that no longer exists. Utilisation drops to 30%.',
+                        'The Stolen Generations didn\'t end. The NT has the highest child removal rate in Australia. The same families who had children taken in the 1960s are having grandchildren taken now: by the same system, under different legislation, with the same outcomes.',
                         'Every child removed from country is a language speaker lost. Of Oonchiumpa\'s 7 language groups, several are critically endangered. When young people are disconnected from elders, the transmission chain breaks. You can\'t fund language revitalisation programs for a language that has no young speakers left.',
                       ].map((text, i) => (
                         <p key={i} className="text-sm text-zinc-400 leading-relaxed pl-4 border-l-2 border-amber-400/20">{text}</p>
@@ -707,13 +707,13 @@ const SystemTerminalInner: React.FC = () => {
                         <h4 className="text-sm font-semibold text-zinc-300 mb-2">Mental Health</h4>
                         <p className="text-sm text-zinc-500 leading-relaxed">
                           Youth suicide rates in remote NT are among the highest in the world. Disconnection from culture, country, and family is the primary risk factor.
-                          Every evidence review names cultural connection as the strongest protective factor — yet the system systematically severs it.
+                          Every evidence review names cultural connection as the strongest protective factor, yet the system systematically severs it.
                         </p>
                       </div>
                       <div>
                         <h4 className="text-sm font-semibold text-zinc-300 mb-2">Physical Health</h4>
                         <p className="text-sm text-zinc-500 leading-relaxed">
-                          86 people in Central Australia have acquired brain injury (ABI) — average NDIS plan $467K. Many of those injuries were acquired through
+                          86 people in Central Australia have acquired brain injury (ABI), average NDIS plan $467K. Many of those injuries were acquired through
                           violence, incarceration, and neglect. The system creates the disability, then underfunds the support.
                         </p>
                       </div>
@@ -721,7 +721,7 @@ const SystemTerminalInner: React.FC = () => {
                         <h4 className="text-sm font-semibold text-zinc-300 mb-2">Community Safety</h4>
                         <p className="text-sm text-zinc-500 leading-relaxed">
                           When young people are disconnected and cycling through detention, community safety deteriorates for everyone.
-                          The Night Patrol picks up kids at 2am because there's nowhere else. The hub model doesn't just help the young person — it makes the whole community safer.
+                          The Night Patrol picks up kids at 2am because there's nowhere else. The hub model doesn't just help the young person, it makes the whole community safer.
                         </p>
                       </div>
                     </div>
@@ -735,15 +735,15 @@ const SystemTerminalInner: React.FC = () => {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <p className="text-sm text-zinc-300 leading-relaxed">
-                          When a young person sits with an elder on country at Atnarpa Homestead, hearing stories in their own language, learning about their responsibility to land and family — that's not a "cultural program". That's identity formation. That's the foundation everything else is built on.
+                          When a young person sits with an elder on country at Atnarpa Homestead, hearing stories in their own language, learning about their responsibility to land and family, that's not a "cultural program". That's identity formation. That's the foundation everything else is built on.
                         </p>
                         <p className="text-sm text-zinc-300 leading-relaxed">
-                          True Justice brings judges to country. They sit in circle with elders and young people. They listen. The judge sees the child as a whole person — connected to a 60,000-year culture — not a case number. This changes sentencing. It changes outcomes. It changes lives.
+                          True Justice brings judges to country. They sit in circle with elders and young people. They listen. The judge sees the child as a whole person, connected to a 60,000-year culture, not a case number. This changes sentencing. It changes outcomes. It changes lives.
                         </p>
                       </div>
                       <div className="space-y-4">
                         <p className="text-sm text-zinc-300 leading-relaxed">
-                          When Oonchiumpa navigates a family's NDIS plans — mum's disability, the baby's developmental delay, grandmother's support needs — they're not just improving utilisation statistics.
+                          When Oonchiumpa navigates a family's NDIS plans: mum's disability, the baby's developmental delay, grandmother's support needs, they're not just improving utilisation statistics.
                           They're keeping a family together. They're making sure a 17-year-old mother has the support to raise her child on country, connected to the women who will teach her.
                         </p>
                         <p className="text-sm text-zinc-300 leading-relaxed">
@@ -771,7 +771,7 @@ const SystemTerminalInner: React.FC = () => {
                         ))}
                       </ul>
                       <div className="mt-4 pt-4 border-t border-white/[0.06]">
-                        <p className="text-[10px] text-zinc-600">Capital Year 1: $3M — less than 1 month of Don Dale operations</p>
+                        <p className="text-[10px] text-zinc-600">Capital Year 1: $3M, less than 1 month of Don Dale operations</p>
                       </div>
                     </G>
                   </Fade>
@@ -849,7 +849,7 @@ const SystemTerminalInner: React.FC = () => {
                   <G className="p-8 mb-16">
                     <h3 className="text-sm font-semibold text-zinc-300 mb-4">The Land Advantage</h3>
                     <p className="text-sm text-zinc-500 leading-relaxed mb-4">
-                      Oonchiumpa are traditional owners. They have land — Atnarpa Homestead and connections across Arrernte country.
+                      Oonchiumpa are traditional owners. They have land. Atnarpa Homestead and connections across Arrernte country.
                       This is not a service that needs to rent office space. This is a model that operates <span className="text-white font-medium">on country, from country, with the authority of traditional ownership</span>.
                     </p>
                     <p className="text-sm text-zinc-500 leading-relaxed">

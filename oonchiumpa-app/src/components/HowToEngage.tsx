@@ -16,7 +16,7 @@ interface HowToEngageProps {
   };
   /** Which inbox to route the EOI to. */
   inquiryType?: InquiryType;
-  /** Short label for the form submit — e.g. "Make a referral". */
+  /** Short label for the form submit, e.g. "Make a referral". */
   ctaLabel?: string;
   /** Optional override of the section heading. */
   heading?: string;
@@ -26,9 +26,9 @@ interface HowToEngageProps {
 
 /**
  * Drops into every service detail page. Three parts:
- * 1. How it works — numbered steps the user can trust
- * 2. Who to contact — a specific human, not a generic email
- * 3. Inline EOI form — submit directly, routes to the right inbox
+ * 1. How it works, numbered steps the user can trust
+ * 2. Who to contact: a specific human, not a generic email
+ * 3. Inline EOI form: submit directly, routes to the right inbox
  */
 export const HowToEngage: React.FC<HowToEngageProps> = ({
   serviceId,
@@ -74,7 +74,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
         [
           `Name: ${form.name}`,
           `Email: ${form.email}`,
-          `Organisation: ${form.organization || "—"}`,
+          `Organisation: ${form.organization || ", "}`,
           `Service: ${serviceTitle}`,
           `Type: ${inquiryType}`,
           "",
@@ -90,7 +90,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
     intro ||
     `If ${serviceTitle} might be the right fit, here's how the process works. ${
       contactPerson
-        ? `${contactPerson.name.split(" ")[0]} and the team will read every enquiry — no auto-responders.`
+        ? `${contactPerson.name.split(" ")[0]} and the team will read every enquiry, no auto-responders.`
         : "The team reads every enquiry."
     }`;
 
@@ -104,7 +104,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8">
-          {/* How it works — steps */}
+          {/* How it works, steps */}
           <div className="lg:col-span-7">
             <h3 className="text-2xl font-display text-earth-950 mb-6">The process</h3>
             <ol className="space-y-5">
@@ -215,7 +215,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     placeholder={
                       inquiryType === "referral"
-                        ? "Brief details help — age, situation, what kind of support would help."
+                        ? "Brief details help: age, situation, what kind of support would help."
                         : "A few sentences on what you're looking to explore."
                     }
                     className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all resize-none"

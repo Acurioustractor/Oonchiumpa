@@ -29,7 +29,7 @@ The workshop began with smoking ceremony led by Uncle Jim, clearing the space an
 
 Sarah, a young mother who participated, shared: "When I put my hand in that ochre and made my mark on the canvas, I felt connected to thousands of years of my ancestors doing the same thing. It wasn't just painting - it was healing."
 
-The completed artwork now hangs in our community center, serving as a daily reminder of our shared strength and cultural continuity. It demonstrates how traditional practices can address contemporary challenges while keeping our culture alive and vibrant.`,
+The finished piece hangs in our community centre. People walk past it every day. Traditional practice still answers today's problems, and culture keeps moving.`,
     author: 'David Nguyen',
     date: '2024-02-20',
     category: 'Community Programs',
@@ -79,7 +79,7 @@ export const mockOutcomes: Outcome[] = [
     id: '2',
     title: 'Community Art Installation',
     description: 'Created a large-scale community art installation representing the local Aboriginal history and connection to Country.',
-    impact: 'The installation serves as a permanent reminder of Aboriginal presence and culture, fostering respect and understanding in the broader community.',
+    impact: 'A permanent public reminder of Aboriginal presence and culture. Thousands of people walk past it every week.',
     metrics: [
       { label: 'Community Members Involved', value: 85 },
       { label: 'Hours of Community Engagement', value: 240 },

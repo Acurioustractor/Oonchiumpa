@@ -64,7 +64,7 @@ const getRouteMeta = (path: string): PageMeta => {
     return {
       title: "Team",
       description:
-        "The people behind Oonchiumpa — leaders, staff, and community working through cultural authority on Arrernte Country.",
+        "The people behind Oonchiumpa: leaders, staff, and community working through cultural authority on Arrernte Country.",
       image: "/images/team/group-2024.jpg",
       jsonLd: {
         "@context": "https://schema.org",

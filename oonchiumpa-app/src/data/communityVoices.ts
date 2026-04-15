@@ -43,7 +43,7 @@ export const communityVoices: CommunityVoice[] = [
     avatar: "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1759628229515_Screenshot_2025-10-05_at_11.36.59_am.png",
     specialties: ["System Navigation", "Knowledge Transmission", "Policy Reform"],
     source: "Aidan Harris Law Student Reflections (2024)",
-    impactStatement: "Aidan's insight underscores why Oonchiumpa partners with future policymakers - understanding Aboriginal conceptions of law and kinship prevents the harmful interventions that have plagued Indigenous policy for generations. Cultural education creates better governance.",
+    impactStatement: "Aidan's point is why we work with future policymakers. When people in policy roles understand Aboriginal law and kinship on Aboriginal terms, fewer of them write the kind of policy that has harmed Indigenous communities for decades.",
   },
   {
     name: "Suzie Ma",
@@ -63,7 +63,7 @@ export const communityVoices: CommunityVoice[] = [
     quote:
       "I think other kids should work with you mob; I think everyone should work with Oonchiumpa. I like working with you because you mob are good and help, it's good working with you mob.",
     context:
-      "Young people describing their experience with Oonchiumpa's culturally-led approach, highlighting the trust and connection built through Aboriginal leadership and cultural authority.",
+      "Young people in their own words. What Aboriginal-led support actually feels like, and why trust gets built faster when it's community on community.",
     specialties: ["Cultural Connection", "Youth Voice", "Trust Building"],
     source: "Oonchiumpa Project Evaluation Report (2024), Cultural Connection section",
     impactStatement: "This young person's endorsement reflects Oonchiumpa's core success - cultural authority and Aboriginal leadership create trust where mainstream services have failed. Youth recommend Oonchiumpa to their peers because they feel genuinely helped, not just managed or monitored.",

@@ -16,7 +16,7 @@ interface BreadcrumbsProps {
 }
 
 /**
- * Breadcrumb trail for detail pages. Wayfinding — the user should always be able
+ * Breadcrumb trail for detail pages. Wayfinding, the user should always be able
  * to see where they are in the hierarchy and click back up a level.
  * Emits JSON-LD BreadcrumbList for SEO.
  */

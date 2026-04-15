@@ -47,7 +47,7 @@ export function QuoteShowcase({ impactArea, title, limit = 5 }: QuoteShowcasePro
 
             <footer className="quote-card__footer">
               <cite className="quote-card__author">
-                — {item.storyteller?.display_name || item.storyteller?.full_name || 'Community Member'}
+                {item.storyteller?.display_name || item.storyteller?.full_name || 'Community Member'}
               </cite>
 
               {item.themes && item.themes.length > 0 && (

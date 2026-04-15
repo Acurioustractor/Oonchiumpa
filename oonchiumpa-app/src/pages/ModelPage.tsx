@@ -39,15 +39,15 @@ const LAYERS: ModelLayer[] = [
     arrernte: 'Apmere-kenhe',
     color: '#fbbf24',
     radius: 60,
-    description: 'At the centre is the whole young person — not a case number, not a diagnosis, not a risk score. A person with identity, dreams, language, and belonging. Everything radiates from here.',
+    description: 'At the centre is the whole young person: not a case number, not a diagnosis, not a risk score. A person with identity, dreams, language, and belonging. Everything radiates from here.',
     elements: [
-      { name: 'Identity', detail: 'Who they are — their skin name, their country, their dreaming. This comes before any service plan.' },
+      { name: 'Identity', detail: 'Who they are: their skin name, their country, their dreaming. This comes before any service plan.' },
       { name: 'Voice', detail: 'What they want, not what the system thinks they need. The hub asks first, always.' },
-      { name: 'Strength', detail: 'What they bring — knowledge, resilience, humour, connection. Not just deficits.' },
+      { name: 'Strength', detail: 'What they bring: knowledge, resilience, humour, connection. Not just deficits.' },
       { name: 'Safety', detail: 'Physical, emotional, and cultural safety. Feeling safe enough to be themselves.' },
     ],
-    systemComparison: 'The current system starts here only as a case file — name, DOB, risk level, referral source. Five systems create five separate versions of the same child, none of them complete.',
-    voice: { quote: 'J and A were always grumpy, not wanting to do anything. But now they are just happy, they are laughing in the car with us, dancing, giggling. Before they were heavy and had a lot of worries — now they are free to be themselves.', who: 'Oonchiumpa staff member', role: 'On young people in the program' },
+    systemComparison: 'The current system starts here only as a case file: name, DOB, risk level, referral source. Five systems create five separate versions of the same child, none of them complete.',
+    voice: { quote: 'J and A were always grumpy, not wanting to do anything. But now they are just happy, they are laughing in the car with us, dancing, giggling. Before they were heavy and had a lot of worries, now they are free to be themselves.', who: 'Oonchiumpa staff member', role: 'On young people in the program' },
   },
   {
     id: 'culture',
@@ -55,16 +55,16 @@ const LAYERS: ModelLayer[] = [
     arrernte: 'Apmere Altyerre-kenhe',
     color: '#f59e0b',
     radius: 120,
-    description: 'The first ring is culture — language, law, ceremony, and connection to country. In the SEWB framework, this is the foundation of all wellbeing. It\'s not an add-on or a program. It\'s the ground everything stands on.',
+    description: 'The first ring is culture: language, law, ceremony, and connection to country. In the SEWB framework, this is the foundation of all wellbeing. It\'s not an add-on or a program. It\'s the ground everything stands on.',
     elements: [
       { name: 'Language', detail: '7 language groups served: Arrernte, Luritja, Warlpiri, Pitjantjatjara, Alyawarre, Anmatyerre, Kaytetye. Language is identity.' },
       { name: 'Law & Ceremony', detail: 'Connection to traditional law, men\'s and women\'s business, seasonal ceremony. Elders guide what\'s appropriate.' },
       { name: 'Country', detail: 'Atnarpa Homestead. Homeland access. On-country camps. Bush tucker. The land heals.' },
-      { name: 'Elders', detail: 'Senior lawwomen and lawmen as the authority. Not a cultural advisory committee — the actual holders of knowledge.' },
+      { name: 'Elders', detail: 'Senior lawwomen and lawmen as the authority. Not a cultural advisory committee, the actual holders of knowledge.' },
       { name: 'Story & Dreaming', detail: 'Connection to ancestral stories and creation narratives that give meaning, responsibility, and place.' },
-      { name: 'Atnarpa Homestead', detail: 'Built 1933 from local rocks, clay from Loves Creek swamps, spinifex grass as binder — walls one metre thick. Bred horses for the British Army during WWII. Land claimed 1994, title returned 2012. This is Oonchiumpa\'s country.' },
+      { name: 'Atnarpa Homestead', detail: 'Built 1933 from local rocks, clay from Loves Creek swamps, spinifex grass as binder, walls one metre thick. Bred horses for the British Army during WWII. Land claimed 1994, title returned 2012. This is Oonchiumpa\'s country.' },
     ],
-    systemComparison: 'The system treats culture as a compliance checkbox — "cultural competency training" for rotating staff. 4 hours of online training vs 60,000 years of continuous culture.',
+    systemComparison: 'The system treats culture as a compliance checkbox, "cultural competency training" for rotating staff. 4 hours of online training vs 60,000 years of continuous culture.',
     voice: { quote: 'The heartache of our granny being a slave out on our own country... but also knowing that this is our great grandmother\'s country. We camped and we sang and we danced during that land claim in 1994.', who: 'Kristy Bloomfield', role: 'Oonchiumpa Co-founder, Traditional Owner', avatar: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/profile-images/storytellers/kristy_bloomfield.jpg' },
   },
   {
@@ -73,15 +73,15 @@ const LAYERS: ModelLayer[] = [
     arrernte: 'Apmere Aknganentye',
     color: '#34d399',
     radius: 190,
-    description: 'Family in Arrernte kinship is not nuclear — it\'s an intricate web of responsibility, obligation, and care that extends across clans, country, and generations. The hub works with the whole family system, not just the individual.',
+    description: 'Family in Arrernte kinship is not nuclear. It\'s a wide web of responsibility and care that runs across clans, country, and generations. The hub works with the whole family, not just the individual.',
     elements: [
-      { name: 'Grandmothers & Grandfathers', detail: 'The primary holders of knowledge and law. Often the primary carers. Their NDIS plans, their health, their connection to grandchildren — all part of the same picture.' },
+      { name: 'Grandmothers & Grandfathers', detail: 'The primary holders of knowledge and law. Often the primary carers. Their NDIS plans, their health, their connection to grandchildren, all part of the same picture.' },
       { name: 'Parents', detail: 'Supporting parents who are often dealing with their own trauma, disability, housing instability. The hub supports them to support their children.' },
       { name: 'Siblings', detail: 'When one child is removed, siblings carry the loss. The hub keeps families together by preventing the removal.' },
-      { name: 'Kinship Network', detail: 'Aunties, uncles, cousins — skin group relationships that define responsibility. The hub navigates this. The system doesn\'t know it exists.' },
-      { name: 'NDIS Family Navigation', detail: 'Three NDIS plans in one family? The hub coordinates them as one. Mother, child, grandmother — one navigator, one relationship, not three separate providers.' },
+      { name: 'Kinship Network', detail: 'Aunties, uncles, cousins, skin group relationships that define responsibility. The hub navigates this. The system doesn\'t know it exists.' },
+      { name: 'NDIS Family Navigation', detail: 'Three NDIS plans in one family? The hub coordinates them as one. Mother, child, grandmother: one navigator, one relationship, not three separate providers.' },
     ],
-    systemComparison: 'TFHC assesses whether the family is "safe" using frameworks designed for suburban nuclear families. When housing is inadequate on a homeland — because government hasn\'t funded infrastructure — the system calls it neglect.',
+    systemComparison: 'TFHC assesses whether the family is "safe" using frameworks designed for suburban nuclear families. When housing is inadequate on a homeland, because government hasn\'t funded infrastructure, the system calls it neglect.',
     voice: { quote: 'He didn\'t understand the importance of his cultural role before. He is now able to reflect on his actions and feeling remorse. He knows he can be a leader.', who: 'Oonchiumpa evaluation report', role: 'About CB, a young person in the program' },
   },
   {
@@ -89,15 +89,15 @@ const LAYERS: ModelLayer[] = [
     name: 'Community & Place',
     color: '#6ee7b7',
     radius: 260,
-    description: 'The young person belongs to a place — a town camp, a homeland, a community. The hub is rooted in place. It doesn\'t operate from an office in town — it goes to where people are.',
+    description: 'The young person belongs to a place: a town camp, a homeland, a community. The hub is rooted in place. It doesn\'t operate from an office in town, it goes to where people are.',
     elements: [
       { name: 'Town Camps', detail: 'Alice Springs has 18 town camps, home to ~2,000 people. These are communities with governance, identity, and need. Tangentyere Council provides hubs. Oonchiumpa provides cultural connection.' },
-      { name: 'Homelands', detail: '150km radius. Families living on country — MacDonnell, Central Desert, remote outstations. Services don\'t go there. Oonchiumpa does.' },
-      { name: 'Schools', detail: 'The hub works with schools — not as a referral source, but as a partner. When Danny gets suspended, the elder is already there. 95% school re-engagement.' },
-      { name: 'Safe Spaces', detail: 'Gap Youth Centre, Tangentyere hubs, Atnarpa Homestead — physical places where young people feel they belong. Not institutions. Homes.' },
-      { name: 'Peer Connection', detail: 'Young people connected to other young people through culture, sport, on-country programs. Not isolation — belonging.' },
+      { name: 'Homelands', detail: '150km radius. Families living on country: MacDonnell, Central Desert, remote outstations. Services don\'t go there. Oonchiumpa does.' },
+      { name: 'Schools', detail: 'The hub works with schools: not as a referral source, but as a partner. When Danny gets suspended, the elder is already there. 95% school re-engagement.' },
+      { name: 'Safe Spaces', detail: 'Gap Youth Centre, Tangentyere hubs, Atnarpa Homestead, physical places where young people feel they belong. Not institutions. Homes.' },
+      { name: 'Peer Connection', detail: 'Young people connected to other young people through culture, sport, on-country programs. Not isolation, belonging.' },
     ],
-    systemComparison: 'Services are clustered in the Alice Springs CBD, open 9-5 weekdays. The Night Patrol picks up kids at 2am because that\'s when they\'re on the streets — but daytime services are closed.',
+    systemComparison: 'Services are clustered in the Alice Springs CBD, open 9-5 weekdays. The Night Patrol picks up kids at 2am because that\'s when they\'re on the streets, but daytime services are closed.',
     voice: { quote: 'When a kid goes to school for a whole week, that\'s a little win for us. May not seem like a lot, but when you\'re talking about kids with these barriers, it is a good win for us.', who: 'Kristy Bloomfield', role: 'Oonchiumpa Co-founder', avatar: 'https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/profile-images/storytellers/kristy_bloomfield.jpg' },
   },
   {
@@ -105,29 +105,29 @@ const LAYERS: ModelLayer[] = [
     name: 'Services & Support',
     color: '#a78bfa',
     radius: 330,
-    description: 'Services sit in the outer ring — not the centre. They support the young person, but they don\'t define them. The hub brokers access to services without letting them take over.',
+    description: 'Services sit in the outer ring, not the centre. They support the young person, but they don\'t define them. The hub brokers access to services without letting them take over.',
     elements: [
       { name: 'NDIS Navigation', detail: 'Cultural brokerage between participants and providers. Pushing utilisation from 57% to 90%. $50M/year in committed budgets that aren\'t reaching people.' },
-      { name: 'Health & Wellbeing', detail: 'CAAC, Bushmob bush adventure therapy, trauma-informed care — accessed through the hub, not cold referrals.' },
+      { name: 'Health & Wellbeing', detail: 'CAAC, Bushmob bush adventure therapy, trauma-informed care: accessed through the hub, not cold referrals.' },
       { name: 'Legal & Justice', detail: 'NAAJA for legal advocacy. True Justice for on-country diversion. The judge already knows the elder. The elder already knows the child.' },
-      { name: 'Housing', detail: 'ASYASS for crisis accommodation. But the real housing solution is on homeland — with infrastructure funding that doesn\'t exist yet.' },
-      { name: 'Education', detail: 'School liaison, boarding support, transition. Not "attendance officers" — elders who walk with young people between two worlds.' },
-      { name: 'Therapeutic', detail: 'Bushmob adventure therapy, trauma counselling, SEWB services — accessed when the young person is ready, through someone they trust.' },
+      { name: 'Housing', detail: 'ASYASS for crisis accommodation. But the real housing solution is on homeland, with infrastructure funding that doesn\'t exist yet.' },
+      { name: 'Education', detail: 'School liaison, boarding support, transition. Not "attendance officers", elders who walk with young people between two worlds.' },
+      { name: 'Therapeutic', detail: 'Bushmob adventure therapy, trauma counselling, SEWB services, accessed when the young person is ready, through someone they trust.' },
     ],
-    systemComparison: 'In the current model, services are the starting point. Referral → intake → assessment → case plan. The young person is processed. In the hub model, services are available when needed — but the relationship comes first.',
-    voice: { quote: 'As a cultural broker — to link them and empower them in their identity as an Aboriginal person, make them feel strong in that. And then to bridge the gap between that and the western world. Helping them access what other kids in town take for granted.', who: 'Tanya Turner', role: 'Oonchiumpa Co-founder', avatar: '/images/team/tanya.jpg' },
+    systemComparison: 'In the current model, services are the starting point. Referral → intake → assessment → case plan. The young person is processed. In the hub model, services are available when needed, but the relationship comes first.',
+    voice: { quote: 'As a cultural broker: to link them and empower them in their identity as an Aboriginal person, make them feel strong in that. And then to bridge the gap between that and the western world. Helping them access what other kids in town take for granted.', who: 'Tanya Turner', role: 'Oonchiumpa Co-founder', avatar: '/images/team/tanya.jpg' },
   },
   {
     id: 'systems',
     name: 'Government Systems',
     color: '#71717a',
     radius: 400,
-    description: 'The outermost ring. Government systems — youth justice, child protection, NDIS, education — exist, and the hub interfaces with them. But they don\'t drive the model. The young person does.',
+    description: 'The outermost ring. Government systems: youth justice, child protection, NDIS, education: exist, and the hub interfaces with them. But they don\'t drive the model. The young person does.',
     elements: [
-      { name: 'Youth Justice', detail: '$97M/year. The hub offers an alternative pathway — cultural diversion through elder authority, not institutional correction.' },
+      { name: 'Youth Justice', detail: '$97M/year. The hub offers an alternative pathway: cultural diversion through elder authority, not institutional correction.' },
       { name: 'Child Protection', detail: '$3.16B to TFHC. The hub prevents the conditions that trigger removal by supporting families on country.' },
       { name: 'NDIS', detail: '$238M committed in Central Australia. The hub navigates the system so the money reaches people.' },
-      { name: 'Education', detail: 'Attendance crisis. The hub bridges two worlds — school and country — so young people can walk in both.' },
+      { name: 'Education', detail: 'Attendance crisis. The hub bridges two worlds, school and country, so young people can walk in both.' },
     ],
     systemComparison: 'This is where the current system starts. Policy → department → program → contract → provider → intake → the child. Six layers of bureaucracy before anyone asks the young person what they need.',
     voice: { quote: 'There is extensive funding to coordinate the justice system, but little or no coordination of the more than 150 services provided government funding to support our young people.', who: 'Oonchiumpa Alliance Statement', role: 'August 2024' },
@@ -137,10 +137,10 @@ const LAYERS: ModelLayer[] = [
 // ── Layer Photos (real Oonchiumpa images) ───────────────────────────────
 
 const LAYER_PHOTOS: Record<string, { src: string; caption: string }> = {
-  culture: { src: '/images/model/atnarpa-ranges.jpg', caption: 'Atnarpa — Oonchiumpa\'s country in the MacDonnell Ranges' },
+  culture: { src: '/images/model/atnarpa-ranges.jpg', caption: 'Atnarpa. Oonchiumpa\'s country in the MacDonnell Ranges' },
   family: { src: '/images/model/community-on-country.jpg', caption: 'Oonchiumpa family and community on country at Atnarpa' },
-  community: { src: '/images/model/atnarpa-facilities.jpg', caption: 'Current Atnarpa facilities — what $3M in capital would upgrade' },
-  services: { src: '/images/stories/IMG_9698.jpg', caption: 'Oonchiumpa staff — cultural brokers navigating 32+ partner organisations' },
+  community: { src: '/images/model/atnarpa-facilities.jpg', caption: 'Current Atnarpa facilities, what $3M in capital would upgrade' },
+  services: { src: '/images/stories/IMG_9698.jpg', caption: 'Oonchiumpa staff, cultural brokers navigating 32+ partner organisations' },
 };
 
 // ── Key Frameworks ──────────────────────────────────────────────────────
@@ -149,7 +149,7 @@ const FRAMEWORKS = [
   {
     name: 'Social & Emotional Wellbeing (SEWB)',
     origin: 'National Aboriginal Health Strategy (1989)',
-    desc: 'Holistic model of health — connection to body, mind, emotions, family, community, culture, country, and spirit. All interconnected. If one is severed, all suffer.',
+    desc: 'Holistic model of health: connection to body, mind, emotions, family, community, culture, country, and spirit. All interconnected. If one is severed, all suffer.',
     alignment: 'The hub model IS the SEWB framework in practice. Every element maps directly.',
   },
   {
@@ -162,13 +162,13 @@ const FRAMEWORKS = [
     name: 'Heckman Curve',
     origin: 'Nobel Prize economist James Heckman',
     desc: 'Evidence that investment in earliest years yields highest lifetime returns. Every dollar spent at 0-5 returns $7-13. Every dollar spent at 15 (detention) returns cents.',
-    alignment: 'Children\'s Ground operates on this evidence. The hub extends it — early connection, not just early intervention.',
+    alignment: 'Children\'s Ground operates on this evidence. The hub extends it: early connection, not just early intervention.',
   },
   {
     name: 'Justice Reinvestment',
     origin: 'Paul Ramsay Foundation / Maranguka',
     desc: 'Redirect money from incarceration to community-led programs in the places where incarceration rates are highest. Proven in Bourke (Maranguka): 18% drop in charges.',
-    alignment: 'The hub IS justice reinvestment — redirecting $4,000/day detention spend to community-controlled alternatives.',
+    alignment: 'The hub IS justice reinvestment, redirecting $4,000/day detention spend to community-controlled alternatives.',
   },
   {
     name: 'Both Ways / Two Worlds',
@@ -188,14 +188,14 @@ const ModelPage: React.FC = () => {
     <div className="bg-black text-white font-['Inter',sans-serif] min-h-screen relative">
       <div className="fixed inset-0 pointer-events-none z-50" style={{ backgroundImage: grain, opacity: 0.04 }} />
 
-      {/* Hero — two paths image at top */}
+      {/* Hero, two paths image at top */}
       <section className="px-6 pt-24 pb-8">
         <div className="max-w-5xl mx-auto text-center">
           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-eucalyptus-400 mb-4">The Model</p>
           <h1 className="text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.05] mb-4">Inside Out, Not Outside In</h1>
           <p className="text-lg text-zinc-500 font-light max-w-2xl mx-auto mb-10">
             The current system works outside-in: departments, programs, contracts, then the child.
-            The Oonchiumpa model works inside-out: identity, culture, family, community — then services when needed.
+            The Oonchiumpa model works inside-out: identity, culture, family, community, then services when needed.
           </p>
           <div className="max-w-2xl mx-auto rounded-2xl overflow-hidden">
             <img src="/images/model/two-paths.png" alt="Two paths: institution vs country" className="w-full" />
@@ -212,7 +212,7 @@ const ModelPage: React.FC = () => {
             {/* SVG Concentric Circles */}
             <div className="flex justify-center sticky top-20">
               <svg viewBox="0 0 860 860" className="w-full max-w-[500px]">
-                {/* Rings — outermost first */}
+                {/* Rings, outermost first */}
                 {[...LAYERS].reverse().map(layer => {
                   const isActive = layer.id === activeLayer;
                   return (
@@ -315,7 +315,7 @@ const ModelPage: React.FC = () => {
                   </div>
                 )}
 
-                {/* Voice — real quote */}
+                {/* Voice, real quote */}
                 {active.voice && (
                   <div className="mb-6 p-5 rounded-xl" style={{ background: `${active.color}08`, border: `1px solid ${active.color}15` }}>
                     <p className="text-sm text-zinc-300 leading-relaxed italic mb-3">"{active.voice.quote}"</p>
@@ -365,11 +365,11 @@ const ModelPage: React.FC = () => {
         <div className="max-w-5xl mx-auto">
           {/* The visual story */}
           <div className="grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden border border-white/[0.07] mb-10">
-            {/* Left: the system — oppressive */}
+            {/* Left: the system, oppressive */}
             <div className="relative p-8 md:p-10" style={{ background: 'linear-gradient(180deg, rgba(30,30,30,1) 0%, rgba(10,10,10,1) 100%)' }}>
               <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-sunset-400/50 mb-8">The Current System</p>
 
-              {/* Narrowing funnel — each layer is more indented and smaller, crushing down */}
+              {/* Narrowing funnel, each layer is more indented and smaller, crushing down */}
               <div className="space-y-1">
                 {[
                   { text: 'Policy', size: 'text-2xl', opacity: 'text-zinc-300', indent: 'pl-0' },
@@ -386,7 +386,7 @@ const ModelPage: React.FC = () => {
 
               <p className="text-xs text-zinc-700 mt-8 leading-relaxed">
                 Six layers of bureaucracy before anyone asks the young person what they need.
-                The child is at the bottom — smallest, last, defined by everyone else's process.
+                The child is at the bottom: smallest, last, defined by everyone else's process.
               </p>
 
               {/* Subtle oppressive lines */}
@@ -395,11 +395,11 @@ const ModelPage: React.FC = () => {
               }} />
             </div>
 
-            {/* Right: the Oonchiumpa way — radiating warmth */}
+            {/* Right: the Oonchiumpa way, radiating warmth */}
             <div className="relative p-8 md:p-10" style={{ background: 'radial-gradient(circle at 50% 20%, rgba(52,211,153,0.06) 0%, rgba(10,10,10,1) 70%)' }}>
               <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-eucalyptus-400/50 mb-8">The Oonchiumpa Way</p>
 
-              {/* Radiating outward — largest first, getting quieter */}
+              {/* Radiating outward: largest first, getting quieter */}
               <div className="space-y-3">
                 <p className="text-2xl md:text-3xl text-eucalyptus-400 font-medium">The Young Person</p>
                 <p className="text-lg text-zinc-200 font-medium pl-2">Culture & Country</p>
@@ -411,7 +411,7 @@ const ModelPage: React.FC = () => {
 
               <p className="text-sm text-eucalyptus-400/40 mt-8 leading-relaxed">
                 The relationship already exists. The identity is already formed.
-                Services support — they don't define.
+                Services support, they don't define.
               </p>
             </div>
           </div>
@@ -425,7 +425,7 @@ const ModelPage: React.FC = () => {
           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-eucalyptus-400 mb-3">Proven Outcomes</p>
           <h2 className="text-2xl md:text-4xl font-medium tracking-[-0.03em] mb-4">What Has Already Changed</h2>
           <p className="text-base text-zinc-500 font-light max-w-2xl mb-10">
-            These are not projections. This is what Oonchiumpa has already achieved with current resources — independently evaluated.
+            These are not projections. This is what Oonchiumpa has already achieved with current resources, independently evaluated.
           </p>
 
           {/* Key stats */}
@@ -449,13 +449,13 @@ const ModelPage: React.FC = () => {
             {[
               {
                 initial: 'MS',
-                before: 'Disconnected from all services. On a police search list — whereabouts couldn\'t be found by any agency.',
+                before: 'Disconnected from all services. On a police search list, whereabouts couldn\'t be found by any agency.',
                 after: 'After an on-country trip seeing Aboriginal people running cultural tourism, MS stated he wanted to do that with his mob. He is now working on a similar tourism venture on his own country.',
                 theme: 'Identity → Purpose',
               },
               {
                 initial: 'M',
-                before: 'Father deceased. No room of her own — belongings stolen by transient adults at her aunty\'s camp. Mother on a 10-year housing waitlist.',
+                before: 'Father deceased. No room of her own, belongings stolen by transient adults at her aunty\'s camp. Mother on a 10-year housing waitlist.',
                 after: 'Now living independently with her own income. Stable, safe, and self-determining.',
                 theme: 'Crisis → Independence',
               },
@@ -494,7 +494,7 @@ const ModelPage: React.FC = () => {
           {/* Young people's voice */}
           <div className="mt-10 rounded-2xl border border-white/[0.07] p-8 text-center" style={{ background: 'rgba(255,255,255,0.03)' }}>
             <p className="text-xl md:text-2xl text-eucalyptus-400 font-medium italic mb-4">"We all green, we Oonchiumpa."</p>
-            <p className="text-xs text-zinc-600">— Young person in the program</p>
+            <p className="text-xs text-zinc-600">. Young person in the program</p>
           </div>
         </div>
       </section>
@@ -507,18 +507,18 @@ const ModelPage: React.FC = () => {
               <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-amber-400/60 mb-3">True Justice</p>
               <h3 className="text-xl md:text-2xl font-medium tracking-[-0.02em] mb-4">Deep Listening on Country</h3>
               <p className="text-sm text-zinc-500 leading-relaxed mb-4">
-                Since 2022, Oonchiumpa and ANU have brought judges, law students, and community together at Atnarpa Homestead for deep listening circles. The university positions itself as a listening institution — it is not responsible for course content. The community leads.
+                Since 2022, Oonchiumpa and ANU have brought judges, law students, and community together at Atnarpa Homestead for deep listening circles. The university positions itself as a listening institution, it is not responsible for course content. The community leads.
               </p>
               <p className="text-sm text-zinc-500 leading-relaxed mb-4">
-                This is radical — a law school that says "we don't teach here, we listen." Judges sit on the same level as elders. Law students sit on the same level as young people. The hierarchy dissolves. Understanding forms.
+                This is radical: a law school that says "we don't teach here, we listen." Judges sit on the same level as elders. Law students sit on the same level as young people. The hierarchy dissolves. Understanding forms.
               </p>
               <div className="rounded-xl p-5 border border-white/[0.07]" style={{ background: 'rgba(255,255,255,0.03)' }}>
                 <p className="text-sm text-zinc-300 leading-relaxed italic mb-3">"The law reduces people to categories. Being on this country with these stunning views and learning our true history changes everything."</p>
-                <p className="text-xs text-zinc-600">— Suzie Ma, ANU law student</p>
+                <p className="text-xs text-zinc-600">. Suzie Ma, ANU law student</p>
               </div>
               <div className="rounded-xl p-5 border border-white/[0.07] mt-3" style={{ background: 'rgba(255,255,255,0.03)' }}>
                 <p className="text-sm text-zinc-300 leading-relaxed italic mb-3">"They're sitting on the same level, conversing with us. That comes from their passion for knowledge being passed down to them and now passing it on to us."</p>
-                <p className="text-xs text-zinc-600">— Chelsea Kenneally, ANU law student</p>
+                <p className="text-xs text-zinc-600">. Chelsea Kenneally, ANU law student</p>
               </div>
             </div>
             <div className="flex flex-col gap-4">
@@ -551,14 +551,14 @@ const ModelPage: React.FC = () => {
               </div>
               <div className="space-y-4">
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  Kristy's great-grandmother worked as a servant on her own country at Atnarpa. Her grandfather was Stolen Generation — had to marry her grandmother in Tennant Creek in a week because police threatened to take their children.
+                  Kristy's great-grandmother worked as a servant on her own country at Atnarpa. Her grandfather was Stolen Generation, had to marry her grandmother in Tennant Creek in a week because police threatened to take their children.
                 </p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  In 1994, the family camped at Atnarpa for the land claim — sang and danced on country. The title came through in 2012. Now Kristy runs Oonchiumpa from that same country, ensuring the next generation of young people know who they are.
+                  In 1994, the family camped at Atnarpa for the land claim, sang and danced on country. The title came through in 2012. Now Kristy runs Oonchiumpa from that same country, ensuring the next generation of young people know who they are.
                 </p>
                 <div className="p-4 rounded-xl" style={{ background: 'rgba(251,191,36,0.05)', border: '1px solid rgba(251,191,36,0.1)' }}>
                   <p className="text-sm text-zinc-300 italic leading-relaxed">"You mob come see them, they up straight away."</p>
-                  <p className="text-[10px] text-zinc-600 mt-2">— On the difference when Oonchiumpa shows up</p>
+                  <p className="text-[10px] text-zinc-600 mt-2">. On the difference when Oonchiumpa shows up</p>
                 </div>
               </div>
             </div>
@@ -577,11 +577,11 @@ const ModelPage: React.FC = () => {
                   Tanya left Alice Springs for Melbourne. Got on a tram one day and had a moment: "I need to go home." Resigned two weeks later. Driving from the airport, she saw the ranges and went: "Wow, it's really beautiful here." First time she'd seen it with fresh eyes.
                 </p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
-                  She brought with her experience in legal advocacy — including involvement in the landmark Andrew Bolt racial vilification case. Now she bridges two worlds at Oonchiumpa: the legal and institutional world she navigated in Melbourne, and the cultural world she came home to.
+                  She brought with her experience in legal advocacy, including involvement in the landmark Andrew Bolt racial vilification case. Now she bridges two worlds at Oonchiumpa: the legal and institutional world she navigated in Melbourne, and the cultural world she came home to.
                 </p>
                 <div className="p-4 rounded-xl" style={{ background: 'rgba(52,211,153,0.05)', border: '1px solid rgba(52,211,153,0.1)' }}>
                   <p className="text-sm text-zinc-300 italic leading-relaxed">"Helping them access what other kids in town take for granted."</p>
-                  <p className="text-[10px] text-zinc-600 mt-2">— On Oonchiumpa's mission</p>
+                  <p className="text-[10px] text-zinc-600 mt-2">. On Oonchiumpa's mission</p>
                 </div>
               </div>
             </div>
@@ -595,7 +595,7 @@ const ModelPage: React.FC = () => {
           <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-eucalyptus-400 mb-3">Grounded In Evidence</p>
           <h2 className="text-2xl md:text-4xl font-medium tracking-[-0.03em] mb-4">Supporting Frameworks</h2>
           <p className="text-base text-zinc-500 font-light max-w-2xl mb-10">
-            The Oonchiumpa model isn't invented — it's the convergence of Indigenous knowledge systems and the strongest evidence in developmental science, justice reinvestment, and public health.
+            The Oonchiumpa model isn't invented, it's the convergence of Indigenous knowledge systems and the strongest evidence in developmental science, justice reinvestment, and public health.
           </p>
 
           <div className="space-y-3">

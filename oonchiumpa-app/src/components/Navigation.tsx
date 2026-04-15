@@ -84,38 +84,43 @@ export const Navigation: React.FC<NavigationProps> = ({
       }`}
     >
       <div className="container-custom">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <Link to="/" className="flex items-center" aria-label={`${logo} home`}>
-            <img
-              src={logoSrc}
-              alt={`${logo} logo`}
-              className={`w-auto object-contain transition-all duration-300 ${
-                isScrolled
-                  ? "h-14 md:h-16"
-                  : "h-16 md:h-20 drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]"
-              }`}
-            />
-          </Link>
+        <div className={`flex items-center transition-all duration-300 ${isScrolled ? "h-20" : "h-24 md:h-28"}`}>
+          {/* Logo (left, takes left-third) */}
+          <div className="flex-1 flex justify-start">
+            <Link to="/" className="flex items-center" aria-label={`${logo} home`}>
+              <img
+                src={logoSrc}
+                alt={`${logo} logo`}
+                className={`w-auto object-contain transition-all duration-300 ${
+                  isScrolled
+                    ? "h-14 md:h-16"
+                    : "h-16 md:h-20 drop-shadow-[0_10px_24px_rgba(0,0,0,0.5)]"
+                }`}
+              />
+            </Link>
+          </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation (center) */}
           <div className="hidden md:flex items-center space-x-7">
             {links.map((link, index) => {
               const isActive = location.pathname === link.href;
               const textClasses = isActive
                 ? isScrolled
                   ? "text-ochre-700"
-                  : "text-ochre-100"
+                  : "text-ochre-200"
                 : isScrolled
-                  ? "text-earth-700 hover:text-ochre-700"
-                  : "text-white/85 hover:text-white";
-              const underlineColor = isScrolled ? "bg-ochre-600" : "bg-white/75";
+                  ? "text-earth-900 hover:text-ochre-700"
+                  : "text-white hover:text-ochre-100";
+              const underlineColor = isScrolled ? "bg-ochre-600" : "bg-ochre-200";
+              const shadowClass = isScrolled
+                ? ""
+                : "[text-shadow:0_1px_2px_rgba(0,0,0,0.45)]";
               return (
                 <Link
                   key={index}
                   to={link.href}
                   aria-current={isActive ? "page" : undefined}
-                  className={`font-medium tracking-wide transition-colors duration-200 relative group ${textClasses}`}
+                  className={`font-semibold tracking-wide transition-colors duration-200 relative group ${textClasses} ${shadowClass}`}
                 >
                   {link.label}
                   <span
@@ -126,6 +131,10 @@ export const Navigation: React.FC<NavigationProps> = ({
                 </Link>
               );
             })}
+          </div>
+
+          {/* Desktop actions (right, takes right-third) */}
+          <div className="hidden md:flex flex-1 justify-end items-center">
             <button
               onClick={() => setIsSearchOpen(true)}
               aria-label="Search (Cmd/Ctrl+K)"
@@ -260,18 +269,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   </div>
                 )}
               </div>
-            ) : (
-              <Link
-                to="/login"
-                className={`ml-3 px-5 py-2.5 rounded-xl transition-all duration-200 font-medium ${
-                  isScrolled
-                    ? "bg-ochre-600 text-white hover:bg-ochre-700 shadow-[0_8px_22px_rgba(226,78,16,0.3)]"
-                    : "bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm border border-white/25"
-                }`}
-              >
-                Staff Login
-              </Link>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile Search + Menu */}
@@ -381,15 +379,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   Sign Out
                 </button>
               </div>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white text-center rounded-xl hover:bg-ochre-700 transition-all duration-200"
-              >
-                Staff Login
-              </Link>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

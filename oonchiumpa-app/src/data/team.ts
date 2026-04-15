@@ -5,9 +5,9 @@
  * To add a person: add an entry to the appropriate array below.
  *
  * Categories:
- *   leaders    — Directors, Traditional Owners, Elders
- *   staff      — Case workers, coordinators, program staff
- *   community  — Partners, volunteers, law students, supporters
+ *   leaders   : Directors, Traditional Owners, Elders
+ *   staff     : Case workers, coordinators, program staff
+ *   community : Partners, volunteers, law students, supporters
  *
  * Photo tips:
  *   - Upload to Supabase Storage under profile-images/
@@ -74,12 +74,12 @@ export const leaders: TeamMember[] = [
 //   order: 1,
 // },
 
-// Placeholder entries — 11 team members from the 2024 group photo.
+// Placeholder entries, 11 team members from the 2024 group photo.
 // Names, roles, and photos will be set once each person is added to
 // Empathy Ledger. At that point this static list retires and the
 // website reads everything from the EL API.
 // Placeholder names pending identification. Photos are headshots auto-cropped
-// from the 2024 group photo — stand-ins until real portraits are taken (or
+// from the 2024 group photo, stand-ins until real portraits are taken (or
 // until these records are migrated to Empathy Ledger with real names/bios).
 // Order matches the photo: back row L→R (1-8), then front row L→R (9-11).
 // Intentionally empty until real names + roles are confirmed and consented.
@@ -109,7 +109,7 @@ export const community: TeamMember[] = [
     role: "Law Student, ANU",
     category: "community",
     quote:
-      "They're not lecturing at us in this formal sense — they're sitting on the same level, conversing with us.",
+      "They're not lecturing at us in this formal sense: they're sitting on the same level, conversing with us.",
     specialties: ["Knowledge Transmission", "Cultural Protocol"],
     order: 2,
   },

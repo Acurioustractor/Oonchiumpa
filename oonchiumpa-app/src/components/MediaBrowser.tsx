@@ -1,5 +1,5 @@
 /**
- * MediaBrowser — Empathy Ledger photo/media picker widget
+ * MediaBrowser. Empathy Ledger photo/media picker widget
  *
  * A reusable widget that lets site editors browse and select photos
  * from their Empathy Ledger organisation. Works with any org via
@@ -53,7 +53,7 @@ export function MediaBrowser({
 
   const loadMedia = useCallback(async () => {
     setLoading(true);
-    // Fetch across all pages (EL caps at 100/page). No type filter — EL
+    // Fetch across all pages (EL caps at 100/page). No type filter. EL
     // returns type:'unknown' for most items, so filtering on 'image' drops
     // 90%+ of the library. Instead filter client-side by URL shape.
     const all = await el.getAllMedia({
@@ -238,7 +238,7 @@ export function MediaBrowser({
 }
 
 /**
- * StorytellerPicker — browse and select storytellers from Empathy Ledger
+ * StorytellerPicker, browse and select storytellers from Empathy Ledger
  */
 interface StorytellerPickerProps {
   onSelect: (storyteller: el.Storyteller) => void;

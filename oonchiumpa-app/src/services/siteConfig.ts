@@ -1,5 +1,5 @@
 /**
- * Site Config — persists editorial choices (photo swaps, content overrides)
+ * Site Config: persists editorial choices (photo swaps, content overrides)
  *
  * Stores in localStorage immediately for responsive editing.
  * Also mirrors to Supabase (when configured) for team-wide shared overrides.

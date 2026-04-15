@@ -1,5 +1,5 @@
 /**
- * EditableImage — an image that can be swapped via Empathy Ledger MediaBrowser
+ * EditableImage, an image that can be swapped via Empathy Ledger MediaBrowser
  *
  * When edit mode is on, shows a small "swap" button overlay.
  * Clicking it opens the MediaBrowser. Selected photo persists via siteConfig.

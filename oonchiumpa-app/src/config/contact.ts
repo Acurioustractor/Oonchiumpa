@@ -6,11 +6,11 @@
  * if unset.
  *
  * Env vars:
- *   VITE_EMAIL_REFERRAL      — youth referrals
- *   VITE_EMAIL_PARTNERSHIP   — service partners, other organisations
- *   VITE_EMAIL_FUNDING       — funders, grants
- *   VITE_EMAIL_MEDIA         — press, media enquiries
- *   VITE_EMAIL_GENERAL       — everything else (also the fallback)
+ *   VITE_EMAIL_REFERRAL     , youth referrals
+ *   VITE_EMAIL_PARTNERSHIP  : service partners, other organisations
+ *   VITE_EMAIL_FUNDING      : funders, grants
+ *   VITE_EMAIL_MEDIA        : press, media enquiries
+ *   VITE_EMAIL_GENERAL      , everything else (also the fallback)
  */
 
 export type InquiryType = "referral" | "partnership" | "funding" | "media" | "general";
