@@ -31,8 +31,15 @@ let warnedEventsTableMissing = false;
 function isTableMissingError(error: unknown) {
   if (!error || typeof error !== 'object') return false;
   const code = (error as { code?: string }).code;
-  const message = String((error as { message?: string }).message || '');
-  return code === '42P01' || message.toLowerCase().includes('does not exist');
+  const message = String((error as { message?: string }).message || '').toLowerCase();
+  // 42P01 = Postgres "undefined_table"
+  // PGRST205 = PostgREST "could not find the table in the schema cache"
+  return (
+    code === '42P01' ||
+    code === 'PGRST205' ||
+    message.includes('does not exist') ||
+    message.includes('could not find the table')
+  );
 }
 
 function handleRemoteError(error: unknown) {
