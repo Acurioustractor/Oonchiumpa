@@ -8,6 +8,31 @@
 import { useState, useEffect } from 'react';
 import * as el from '../services/empathyLedgerClient';
 
+export function useOrgPeople(types: el.MembershipType[]) {
+  const [people, setPeople] = useState<el.OrgPerson[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  const typesKey = types.join(',');
+
+  useEffect(() => {
+    const parsed = typesKey ? (typesKey.split(',') as el.MembershipType[]) : [];
+    if (parsed.length === 0) {
+      setPeople([]);
+      setLoading(false);
+      return;
+    }
+    el.getOrgPeople(parsed)
+      .then(setPeople)
+      .catch((err) => {
+        setError(err as Error);
+        console.error(err);
+      })
+      .finally(() => setLoading(false));
+  }, [typesKey]);
+
+  return { people, loading, error };
+}
+
 export function useStorytellers(limit = 20) {
   const [storytellers, setStorytellers] = useState<el.Storyteller[]>([]);
   const [loading, setLoading] = useState(true);

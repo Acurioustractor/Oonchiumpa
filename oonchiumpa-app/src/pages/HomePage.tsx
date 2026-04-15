@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useStorytellers, useStories } from "../hooks/useEmpathyLedger";
+import { useOrgPeople, useStories } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
 import { HeroVideo } from "../components/HeroVideo";
 import { ProgramGallery } from "../components/ProgramGallery";
@@ -8,10 +8,12 @@ import { VideoSpotlight } from "../components/VideoSpotlight";
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
-  const { storytellers } = useStorytellers(20);
+  const { people: staffPeople } = useOrgPeople(["staff"]);
   const { stories } = useStories(10);
 
-  const withAvatars = storytellers.filter((s) => s.avatarUrl && s.isActive);
+  // Homepage "Our team" shows Empathy Ledger staff (membership_type='staff',
+  // is_public=true). Leaders and community partners live on /team.
+  const withAvatars = staffPeople.filter((p) => p.avatarUrl);
   const whatWeDoCards = [
     {
       slotId: "home-what-diversion",
@@ -175,7 +177,7 @@ export const HomePage: React.FC = () => {
         <section className="bg-white py-20 md:py-28">
           <div className="max-w-6xl mx-auto px-6">
             <p className="text-ochre-600 text-sm uppercase tracking-[0.24em] mb-4">
-              Our community
+              Our team
             </p>
             <h2 className="text-3xl md:text-4xl font-display text-earth-950 mb-12">
               The people behind the work
@@ -189,9 +191,7 @@ export const HomePage: React.FC = () => {
                     className="w-24 h-24 rounded-full object-cover mx-auto mb-3"
                   />
                   <p className="text-earth-950 font-medium text-sm">{s.displayName}</p>
-                  {s.isElder && <p className="text-ochre-600 text-xs mt-0.5">Elder</p>}
-                  {s.role && <p className="text-earth-500 text-xs mt-0.5">{s.role}</p>}
-                  {s.location && <p className="text-earth-400 text-xs mt-0.5">{s.location}</p>}
+                  {s.roleTitle && <p className="text-earth-500 text-xs mt-0.5">{s.roleTitle}</p>}
                 </div>
               ))}
             </div>

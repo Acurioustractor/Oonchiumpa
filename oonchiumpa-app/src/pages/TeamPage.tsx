@@ -1,7 +1,7 @@
 import React from "react";
 import { Section } from "../components/Section";
 import { leaders, staff, community, getInitials, type TeamMember } from "../data/team";
-import { useStorytellers } from "../hooks/useEmpathyLedger";
+import { useOrgPeople, useStorytellers } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
 import { HeroVideo } from "../components/HeroVideo";
 
@@ -66,68 +66,62 @@ function PersonCard({ member, size = "md" }: { member: TeamMember; size?: "lg" |
 
 export const TeamPage: React.FC = () => {
   const { storytellers } = useStorytellers(50);
+  // Empathy Ledger "unified org people" model is the source of truth when
+  // populated. Legacy role prefixes (Leader:/Staff:/Community:) have been
+  // migrated into membership_type on the EL side — this page just asks for
+  // each type and gets back is_public=true rows.
+  const { people: orgPeople } = useOrgPeople(["leadership", "staff", "partner"]);
 
-  // Empathy Ledger is the source of truth when populated.
-  // Role prefix convention: "Leader:", "Staff:", "Community:".
-  // Anything matching a prefix replaces the static fallback list.
-  const elLeaders = storytellers.filter(
-    (s) => s.isActive && s.role?.startsWith("Leader:"),
-  );
-  const elStaff = storytellers.filter(
-    (s) => s.isActive && s.role?.startsWith("Staff:"),
-  );
-  const elCommunity = storytellers.filter(
-    (s) => s.isActive && s.role?.startsWith("Community:"),
-  );
+  const elLeaders = orgPeople.filter((p) => p.membershipType === "leadership");
+  const elStaff = orgPeople.filter((p) => p.membershipType === "staff");
+  const elCommunity = orgPeople.filter((p) => p.membershipType === "partner");
 
-  // Storytellers without a recognized prefix fall into the "voices" section.
+  // IDs already represented in the typed lists, so we don't double-show them
+  // in the "voices" tail.
+  const namedIds = new Set(orgPeople.map((p) => p.id));
+
+  // Storytellers without a typed membership fall into the "voices" section.
   const voices = storytellers.filter(
     (s) =>
       s.isActive &&
       s.avatarUrl &&
-      !s.role?.startsWith("Leader:") &&
-      !s.role?.startsWith("Staff:") &&
-      !s.role?.startsWith("Community:") &&
+      !namedIds.has(s.id) &&
       !leaders.some((l) => l.name === s.displayName) &&
       !community.some((c) => c.name === s.displayName),
   );
 
-  // Convert EL storytellers to the TeamMember shape so PersonCard works uniformly.
   const leadersToShow: TeamMember[] =
     elLeaders.length > 0
-      ? elLeaders.map((s) => ({
-          name: s.displayName,
-          role: s.role?.replace(/^Leader:\s*/, "") ?? "Leader",
+      ? elLeaders.map((p) => ({
+          name: p.displayName,
+          role: p.roleTitle ?? "Leader",
           category: "leader",
-          photo: s.avatarUrl ?? undefined,
-          bio: s.bio ?? undefined,
-          isElder: s.isElder,
-          location: s.location ?? undefined,
+          photo: p.avatarUrl ?? undefined,
+          bio: p.bio ?? undefined,
+          isElder: false,
         }))
       : leaders;
 
   const staffToShow: TeamMember[] =
     elStaff.length > 0
-      ? elStaff.map((s) => ({
-          name: s.displayName,
-          role: s.role?.replace(/^Staff:\s*/, "") ?? "Team Member",
+      ? elStaff.map((p) => ({
+          name: p.displayName,
+          role: p.roleTitle ?? "Team Member",
           category: "staff",
-          photo: s.avatarUrl ?? undefined,
-          bio: s.bio ?? undefined,
-          isElder: s.isElder,
-          location: s.location ?? undefined,
+          photo: p.avatarUrl ?? undefined,
+          bio: p.bio ?? undefined,
+          isElder: false,
         }))
       : staff;
 
   const communityToShow: TeamMember[] =
     elCommunity.length > 0
-      ? elCommunity.map((s) => ({
-          name: s.displayName,
-          role: s.role?.replace(/^Community:\s*/, "") ?? "Community",
+      ? elCommunity.map((p) => ({
+          name: p.displayName,
+          role: p.roleTitle ?? "Community",
           category: "community",
-          photo: s.avatarUrl ?? undefined,
-          bio: s.bio ?? undefined,
-          location: s.location ?? undefined,
+          photo: p.avatarUrl ?? undefined,
+          bio: p.bio ?? undefined,
         }))
       : community;
 

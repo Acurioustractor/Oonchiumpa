@@ -775,6 +775,67 @@ export async function getStorytellers(params?: {
   return apiFetch<Storyteller>('storytellers', params);
 }
 
+// ─── Org People (Unified Org People Model) ────────────────────────────────────
+
+export type MembershipType =
+  | 'storyteller'
+  | 'staff'
+  | 'leadership'
+  | 'board'
+  | 'volunteer'
+  | 'partner';
+
+export interface OrgPerson {
+  id: string;
+  displayName: string;
+  avatarUrl: string | null;
+  bio: string | null;
+  membershipType: MembershipType;
+  roleTitle: string | null;
+  displayOrder: number;
+}
+
+/**
+ * Fetch people for the configured org, filtered by membership type(s).
+ * Calls the CORS-open Empathy Ledger public endpoint
+ * /api/public/organizations/[slug]/people.
+ * No API key required — only is_public=true rows are returned.
+ */
+export async function getOrgPeople(
+  types: MembershipType[],
+  orgSlug: string = ORGANIZATION_SLUG,
+): Promise<OrgPerson[]> {
+  if (!BASE_URL || !orgSlug) return [];
+  const url = new URL(`/api/public/organizations/${orgSlug}/people`, BASE_URL);
+  for (const t of types) url.searchParams.append('type', t);
+
+  const res = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+  if (!res.ok) {
+    console.error(`Empathy Ledger people API error ${res.status}:`, await res.text());
+    return [];
+  }
+  const json = (await res.json()) as {
+    storytellers?: Array<{
+      id: string;
+      display_name: string;
+      public_avatar_url: string | null;
+      bio: string | null;
+      membership_type: MembershipType;
+      role_title: string | null;
+      display_order: number;
+    }>;
+  };
+  return (json.storytellers || []).map((s) => ({
+    id: s.id,
+    displayName: s.display_name,
+    avatarUrl: s.public_avatar_url,
+    bio: s.bio,
+    membershipType: s.membership_type,
+    roleTitle: s.role_title,
+    displayOrder: s.display_order,
+  }));
+}
+
 export async function getStories(params?: {
   limit?: number;
   page?: number;
