@@ -31,3 +31,7 @@ test-results/
 nimbalyst-local/
 document-analysis-results.json
 thoughts/
+
+# Supabase CLI local state (migration history fetched from remote).
+# Schema source-of-truth lives in db/migrations/ instead.
+supabase/
