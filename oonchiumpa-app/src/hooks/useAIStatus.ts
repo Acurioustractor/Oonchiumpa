@@ -35,7 +35,7 @@ export const useAIStatus = () => {
       try {
         // Check if backend API is available
         const response = await fetch(
-          "http://localhost:3001/api/admin/ai-status",
+          `${import.meta.env.VITE_API_URL || ""}/api/admin/ai-status`,
         );
 
         if (response.ok) {
@@ -44,7 +44,7 @@ export const useAIStatus = () => {
         } else {
           // Fallback to checking environment availability
           const envCheck = await fetch(
-            "http://localhost:3001/api/admin/env-status",
+            `${import.meta.env.VITE_API_URL || ""}/api/admin/env-status`,
           );
           if (envCheck.ok) {
             const envData = await envCheck.json();

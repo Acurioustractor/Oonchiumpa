@@ -63,7 +63,7 @@ const ContentGenerator: React.FC = () => {
   const handleGenerateDemo = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch('http://localhost:3001/api/content-generator/demo');
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/content-generator/demo`);
       const data = await response.json();
       
       if (data.success) {
@@ -125,7 +125,7 @@ const ContentGenerator: React.FC = () => {
           break;
       }
 
-      const response = await fetch(`http://localhost:3001/api/content-generator/${endpoint}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/content-generator/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -155,7 +155,7 @@ const ContentGenerator: React.FC = () => {
   const handleBuildLibrary = async () => {
     setIsGenerating(true);
     try {
-      const response = await fetch('http://localhost:3001/api/content-generator/build-library', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/content-generator/build-library`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });

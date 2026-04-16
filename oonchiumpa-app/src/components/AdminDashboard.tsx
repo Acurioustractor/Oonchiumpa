@@ -48,8 +48,9 @@ const AdminDashboard: React.FC = () => {
   const handleBulkGeneration = async () => {
     setIsProcessing(true);
     try {
+      const apiBase = import.meta.env.VITE_API_URL || "";
       const response = await fetch(
-        "http://localhost:3001/api/content-generator/build-library",
+        `${apiBase}/api/content-generator/build-library`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

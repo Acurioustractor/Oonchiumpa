@@ -158,9 +158,6 @@ const LoginForm: React.FC<LoginFormProps> = ({
                 )}
               </button>
             </div>
-            <p className="mt-2 text-xs text-earth-600">
-              Test credentials: test@oonchiumpa.org / OonchiumpaTest2024!
-            </p>
           </div>
 
           {!isLogin && (

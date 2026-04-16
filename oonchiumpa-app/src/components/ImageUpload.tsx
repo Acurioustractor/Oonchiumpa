@@ -51,7 +51,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     
     try {
       // Real API call to backend
-      const response = await fetch('http://localhost:3001/api/upload/image', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/upload/image`, {
         method: 'POST',
         body: formData,
         // Add auth headers if available

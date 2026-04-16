@@ -128,12 +128,6 @@ export const Footer: React.FC<FooterProps> = ({
                 >
                   Staff Login
                 </Link>
-                <Link
-                  to="/demo"
-                  className="hover:text-ochre-300 transition-colors duration-200"
-                >
-                  Demo Access
-                </Link>
               </div>
             </div>
             <div className="flex items-center gap-3 mt-4 md:mt-0">

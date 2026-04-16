@@ -36,9 +36,6 @@ const StaffPortalPage = lazy(() => import("../pages/StaffPortalPage"));
 const PresentationPage = lazy(() => import("../pages/PresentationPage"));
 const LoginPage = lazy(() => import("../pages/LoginPage"));
 const DashboardPage = lazy(() => import("../pages/DashboardPage"));
-const AdminSetupPage = lazy(() => import("../pages/AdminSetupPage"));
-const InitialSetupPage = lazy(() => import("../pages/InitialSetupPage"));
-const DemoLoginPage = lazy(() => import("../pages/DemoLoginPage"));
 const EmpathyLedgerPage = lazy(() => import("../pages/EmpathyLedgerPage"));
 const MediaManagerPage = lazy(() => import("../pages/MediaManagerPage"));
 const ContentDashboardPage = lazy(() => import("../pages/ContentDashboardPage"));
@@ -64,9 +61,7 @@ export const AppRoutes = () => {
       <Routes>
         {/* Authentication routes - No layout */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin-setup" element={<AdminSetupPage />} />
-        <Route path="/setup" element={<InitialSetupPage />} />
-        <Route path="/demo" element={<DemoLoginPage />} />
+        {/* /admin-setup, /setup, /demo — dev-only, removed for production */}
 
         {/* Staff Portal - No main layout (has its own header) */}
         <Route

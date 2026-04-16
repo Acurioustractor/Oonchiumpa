@@ -9,6 +9,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { isConfigured } from '../services/empathyLedgerClient';
+import { useAuth } from './AuthContext';
 
 interface EditModeContextValue {
   isEditMode: boolean;
@@ -25,6 +26,7 @@ export function useEditMode() {
 }
 
 export function EditModeProvider({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated } = useAuth();
   const [isEditMode, setIsEditMode] = useState(() => {
     // Check URL param
     const params = new URLSearchParams(window.location.search);
@@ -45,8 +47,8 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
 
   const toggleEditMode = () => setIsEditMode((prev) => !prev);
 
-  // Don't render the edit button if EL not configured
-  if (!isConfigured) {
+  // Don't render the edit button if EL not configured or user not authenticated
+  if (!isConfigured || !isAuthenticated) {
     return (
       <EditModeContext.Provider value={{ isEditMode: false, toggleEditMode }}>
         {children}

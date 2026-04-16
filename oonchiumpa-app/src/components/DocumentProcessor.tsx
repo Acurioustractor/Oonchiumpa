@@ -106,7 +106,7 @@ const DocumentProcessor: React.FC = () => {
         
         setUploadProgress(prev => ({ ...prev, [docId]: 20 }));
         
-        const uploadResponse = await fetch('http://localhost:3001/api/upload/image', {
+        const uploadResponse = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/upload/image`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -120,7 +120,7 @@ const DocumentProcessor: React.FC = () => {
           const uploadData = await uploadResponse.json();
           
           // Process document with content generator
-          const processResponse = await fetch('http://localhost:3001/api/content-generator/custom', {
+          const processResponse = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/content-generator/custom`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
