@@ -663,6 +663,7 @@ export const ServicesPage: React.FC = () => {
         </div>
       </section>
 
+      {!syndicatedServicesLoading && syndicatedServices.length > 0 && (
       <section className="py-16 px-6 border-t border-earth-100 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mb-8">
@@ -678,14 +679,7 @@ export const ServicesPage: React.FC = () => {
             </p>
           </div>
 
-          {syndicatedServicesLoading ? (
-            <div className="text-earth-500">Loading syndicated services...</div>
-          ) : syndicatedServices.length === 0 ? (
-            <div className="section-shell p-8 text-earth-600">
-              No syndicated services are published yet for this organisation.
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
               {syndicatedServices.map((service) => (
                 <article
                   key={service.id}
@@ -763,9 +757,9 @@ export const ServicesPage: React.FC = () => {
                 </article>
               ))}
             </div>
-          )}
         </div>
       </section>
+      )}
 
       <section className="py-20 px-6 bg-sand-50">
         <div className="max-w-6xl mx-auto">
