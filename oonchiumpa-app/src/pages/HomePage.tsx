@@ -343,51 +343,51 @@ export const HomePage: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-display text-earth-950 mb-12">
             Stories of transformation
           </h2>
-          <div className="space-y-10">
-            <div className="border-l-2 border-ochre-400 pl-6 md:pl-8">
+          <div className="space-y-8">
+            <article className="bg-white border border-earth-100 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl font-semibold text-earth-950 mb-3">
                 Three girls suspended, education didn't stop
               </h3>
-              <p className="text-earth-700 leading-relaxed mb-2">
+              <p className="text-earth-700 text-base leading-relaxed mb-3">
                 After a physical altercation, three young women were excluded
                 from school. Oonchiumpa created a safe learning space in their
                 office, mediated with the school, and coordinated with St
                 Joseph's for continued curriculum. Daily mentoring and cultural
                 support kept them on track.
               </p>
-              <p className="text-earth-600 text-sm">
+              <p className="text-earth-600 text-base">
                 All three remained committed to their studies and career aspirations.
               </p>
-            </div>
-            <div className="border-l-2 border-eucalyptus-500 pl-6 md:pl-8">
+            </article>
+            <article className="bg-white border border-earth-100 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl font-semibold text-earth-950 mb-3">
                 A 15-year-old with rheumatic heart disease hadn't seen a doctor since 2022
               </h3>
-              <p className="text-earth-700 leading-relaxed mb-2">
+              <p className="text-earth-700 text-base leading-relaxed mb-3">
                 Trauma and institutional mistrust kept her away from hospital for
                 years. Three weeks of patient outreach, trauma-informed advocacy,
                 and cultural safety practices got her through essential medical
                 tests and treatment for the first time in years.
               </p>
-              <p className="text-earth-600 text-sm">
+              <p className="text-earth-600 text-base">
                 Hospital staff acknowledged Oonchiumpa achieved what other services could not.
               </p>
-            </div>
-            <div className="border-l-2 border-earth-400 pl-6 md:pl-8">
+            </article>
+            <article className="bg-white border border-earth-100 rounded-2xl p-6 md:p-8">
               <h3 className="text-xl font-semibold text-earth-950 mb-3">
                 A 16-year-old struggling with peer pressure and cultural obligations
               </h3>
-              <p className="text-earth-700 leading-relaxed mb-2">
+              <p className="text-earth-700 text-base leading-relaxed mb-3">
                 Regular mentoring with a male youth worker and his father focused
                 on cultural identity, leadership, and decision-making. He
                 developed tools to manage peer pressure while staying connected
                 to cultural values.
               </p>
-              <p className="text-earth-600 text-sm">
+              <p className="text-earth-600 text-base">
                 He became a role model for younger family members and re-engaged
                 with cultural activities.
               </p>
-            </div>
+            </article>
           </div>
         </div>
       </section>
