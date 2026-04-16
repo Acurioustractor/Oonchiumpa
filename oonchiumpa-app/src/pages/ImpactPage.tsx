@@ -276,25 +276,21 @@ export const ImpactPage: React.FC = () => {
       {analysis?.analyzed && (
         <Section className="bg-white">
           <div className="text-center max-w-4xl mx-auto mb-10">
-            <p className="eyebrow mb-4">Story analysis</p>
-            <h2 className="heading-lg mb-5">Themes and signals from the community</h2>
+            <p className="eyebrow mb-4">What we're hearing</p>
+            <h2 className="heading-lg mb-5">Themes from community conversations</h2>
             <p className="lead-text">
-              Current themes and signal quality drawn from analysis of community storytelling.
+              Themes drawn from conversations with young people, families, and team members as they share their experience.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-6 mb-8 max-w-3xl mx-auto">
             <div className="section-shell p-6 text-center">
               <p className="text-3xl font-display text-ochre-700">{analysis.storytellerCount}</p>
-              <p className="text-earth-600 text-sm mt-2">Storytellers analysed</p>
+              <p className="text-earth-600 text-sm mt-2">Community storytellers</p>
             </div>
             <div className="section-shell p-6 text-center">
               <p className="text-3xl font-display text-ochre-700">{analysis.transcriptCount}</p>
-              <p className="text-earth-600 text-sm mt-2">Transcripts analysed</p>
-            </div>
-            <div className="section-shell p-6 text-center">
-              <p className="text-3xl font-display text-ochre-700">{analysis.qualityScore.toFixed(1)}</p>
-              <p className="text-earth-600 text-sm mt-2">Analysis quality score</p>
+              <p className="text-earth-600 text-sm mt-2">Stories shared</p>
             </div>
           </div>
 

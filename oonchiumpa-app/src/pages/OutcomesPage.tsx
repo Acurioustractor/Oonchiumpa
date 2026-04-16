@@ -71,10 +71,10 @@ export const OutcomesPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 
         <div className="relative z-10 container-custom pt-28 pb-14">
-          <p className="eyebrow text-ochre-200 mb-4">Outcomes dashboard</p>
+          <p className="eyebrow text-ochre-200 mb-4">Outcomes</p>
           <h1 className="heading-lg text-white mb-5 max-w-4xl">Measured community outcomes</h1>
           <p className="text-white/85 text-lg max-w-3xl leading-relaxed mb-8">
-            Track real-world outcomes by category, location, and beneficiary impact from Oonchiumpa programs.
+            Real-world outcomes from Oonchiumpa programs, grouped by focus area and location.
           </p>
 
           {categories.length > 0 && (
