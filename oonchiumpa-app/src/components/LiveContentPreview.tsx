@@ -161,7 +161,7 @@ const LiveContentPreview: React.FC = () => {
         {recentContent.map((content) => (
           <Card 
             key={content.id} 
-            className={`border-l-4 transition-all duration-300 ${
+            className={`border-l-4 transition-colors duration-300 ${
               content.status === 'generating' 
                 ? 'border-l-ochre-500 bg-ochre-50 animate-pulse' 
                 : content.status === 'complete'

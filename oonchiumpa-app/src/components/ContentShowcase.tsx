@@ -125,7 +125,7 @@ const ContentShowcase: React.FC = () => {
           return (
             <Card
               key={item.id}
-              className={`cursor-pointer transition-all duration-300 transform ${colors.bg} border-2 border-transparent ${colors.hover} ${
+              className={`cursor-pointer transition-[transform,box-shadow,border-color] duration-300 ${colors.bg} border-2 border-transparent ${colors.hover} ${
                 hoveredItem === item.id
                   ? "scale-105 shadow-xl"
                   : "hover:scale-102 hover:shadow-lg"

@@ -231,7 +231,7 @@ const DocumentProcessor: React.FC = () => {
           {documentTypes.map((docType) => (
             <Card 
               key={docType.id}
-              className={`cursor-pointer transition-all duration-300 hover:scale-105 border-2 ${
+              className={`cursor-pointer transition-[transform,border-color,background-color] duration-300 hover:scale-105 border-2 ${
                 selectedDocType === docType.id 
                   ? 'border-ochre-500 bg-ochre-50' 
                   : 'border-earth-200 hover:border-ochre-300'

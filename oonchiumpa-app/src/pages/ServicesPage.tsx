@@ -445,7 +445,7 @@ export const ServicesPage: React.FC = () => {
             </Link>
             <Link
               to="/contact?type=partnership"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
             >
               Partner with us
             </Link>
@@ -835,7 +835,7 @@ export const ServicesPage: React.FC = () => {
               <Link
                 key={service.id}
                 to={`/services/${service.id}`}
-                className="group flex flex-col rounded-3xl border border-earth-100 bg-white overflow-hidden hover:border-ochre-200 hover:shadow-[0_16px_40px_rgba(47,30,26,0.12)] transition-all duration-300"
+                className="group flex flex-col rounded-3xl border border-earth-100 bg-white overflow-hidden hover:border-ochre-200 hover:shadow-[0_16px_40px_rgba(47,30,26,0.12)] transition-[border-color,box-shadow] duration-300"
               >
                 <div className="aspect-[16/10] overflow-hidden bg-earth-100">
                   <img
@@ -859,7 +859,7 @@ export const ServicesPage: React.FC = () => {
                     <p className="text-earth-700 text-sm leading-relaxed">{service.outcome}</p>
                   </div>
                   <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-earth-100">
-                    <span className="inline-flex items-center gap-2 text-ochre-700 font-semibold text-base group-hover:gap-3 transition-all">
+                    <span className="inline-flex items-center gap-2 text-ochre-700 font-semibold text-base group-hover:gap-3 transition-[gap]">
                       Learn more
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -908,7 +908,7 @@ export const ServicesPage: React.FC = () => {
             </button>
             <a
               href="tel:0474702523"
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
             >
               Call 0474 702 523
             </a>

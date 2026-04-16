@@ -59,7 +59,7 @@ const PartnerShowcase: React.FC = () => {
                   .map((partner, idx) => (
                     <div
                       key={idx}
-                      className="bg-white rounded-lg p-4 border-2 border-earth-200 hover:border-ochre-400 transition-all duration-300 hover:shadow-lg text-center"
+                      className="bg-white rounded-lg p-4 border-2 border-earth-200 hover:border-ochre-400 transition-[border-color,box-shadow] duration-300 hover:shadow-lg text-center"
                     >
                       {/* Partner Logo Placeholder */}
                       <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-ochre-100 to-eucalyptus-100 rounded-full flex items-center justify-center">

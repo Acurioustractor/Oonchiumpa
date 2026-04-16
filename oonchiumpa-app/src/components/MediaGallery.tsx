@@ -155,7 +155,7 @@ export const MediaGallery: React.FC<MediaGalleryProps> = ({
     return (
       <Card
         key={item.id}
-        className={`overflow-hidden hover:shadow-lg transition-all duration-300 cursor-pointer group ${
+        className={`overflow-hidden hover:shadow-lg transition-[transform,box-shadow] duration-300 cursor-pointer group ${
           layout === "masonry" ? "break-inside-avoid mb-4" : ""
         }`}
         onClick={() => openLightbox(item, index)}

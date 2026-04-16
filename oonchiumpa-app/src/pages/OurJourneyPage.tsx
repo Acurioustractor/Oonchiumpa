@@ -262,7 +262,7 @@ export const OurJourneyPage: React.FC = () => {
                       fill={isActive ? circle.color + "30" : circle.color + "15"}
                       stroke={circle.color}
                       strokeWidth={isActive ? 3 : 1.5}
-                      className="cursor-pointer transition-all duration-300"
+                      className="cursor-pointer transition-[fill,stroke,stroke-width] duration-300"
                       onClick={() => setActiveCircle(circle.id)}
                     />
                     <text

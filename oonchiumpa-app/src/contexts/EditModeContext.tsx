@@ -63,7 +63,7 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
       {/* Floating edit toggle */}
       <button
         onClick={toggleEditMode}
-        className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 rounded-lg shadow-xl transition-all ${
+        className={`fixed bottom-6 right-6 z-40 flex items-center gap-2 px-4 py-3 rounded-lg shadow-xl transition-colors ${
           isEditMode
             ? 'bg-ochre-600 text-white'
             : 'bg-earth-900 text-white/80 hover:text-white'

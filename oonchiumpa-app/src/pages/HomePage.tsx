@@ -83,7 +83,7 @@ export const HomePage: React.FC = () => {
             </button>
             <button
               onClick={() => navigate("/about")}
-              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
+              className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl text-white font-semibold bg-white/10 backdrop-blur border border-white/25 hover:bg-white/20 transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-offset-2"
             >
               About Oonchiumpa
             </button>

@@ -451,7 +451,7 @@ const [story, setStory] = useState<Story>({
               {privacyLevels.map((level) => (
                 <label
                   key={level.id}
-                  className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                  className={`flex items-center p-3 border-2 rounded-lg cursor-pointer transition-[border-color,background-color] ${
                     story.privacy_level === level.id
                       ? "border-ochre-500 bg-ochre-50"
                       : "border-earth-200 hover:border-earth-300"

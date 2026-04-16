@@ -244,7 +244,7 @@ export const GalleryUploadPage: React.FC = () => {
                     onChange={(e) => setVideoUrl(e.target.value)}
                     placeholder="https://share.descript.com/view/..."
                     disabled={videoStatus.status === 'uploading'}
-                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-colors disabled:opacity-50"
                     required
                   />
                   <p className="text-xs text-earth-500 mt-1">
@@ -262,7 +262,7 @@ export const GalleryUploadPage: React.FC = () => {
                     onChange={(e) => setVideoTitle(e.target.value)}
                     placeholder="Enter video title"
                     disabled={videoStatus.status === 'uploading'}
-                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-colors disabled:opacity-50"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ export const GalleryUploadPage: React.FC = () => {
                     placeholder="Enter video description"
                     disabled={videoStatus.status === 'uploading'}
                     rows={3}
-                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-all disabled:opacity-50"
+                    className="w-full px-4 py-3 rounded-lg border border-earth-200 focus:border-ochre-500 focus:ring-2 focus:ring-ochre-200 outline-none transition-colors disabled:opacity-50"
                   />
                 </div>
 

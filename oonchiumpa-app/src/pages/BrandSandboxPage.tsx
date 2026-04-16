@@ -153,7 +153,7 @@ const BrandSandboxPage = () => {
              <p className="text-sand-100 font-body max-w-xl mx-auto text-lg">
                Using gradients, soft blurs, and deep contrasts allows the storytelling elements to shine brighter.
              </p>
-             <button className="mt-8 px-8 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-medium hover:bg-white/20 transition-all shadow-[0_0_20px_rgba(244,135,64,0.3)]">
+             <button className="mt-8 px-8 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-white font-medium hover:bg-white/20 transition-colors shadow-[0_0_20px_rgba(244,135,64,0.3)]">
                Glassmorphism Example
              </button>
           </div>

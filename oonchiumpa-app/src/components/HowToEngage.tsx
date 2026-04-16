@@ -173,7 +173,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
                     required
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all"
+                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-colors"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
                     required
                     value={form.email}
                     onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all"
+                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-colors"
                   />
                 </div>
 
@@ -199,7 +199,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
                     id="engage-org"
                     value={form.organization}
                     onChange={(e) => setForm({ ...form, organization: e.target.value })}
-                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all"
+                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-colors"
                   />
                 </div>
 
@@ -218,7 +218,7 @@ export const HowToEngage: React.FC<HowToEngageProps> = ({
                         ? "Brief details help: age, situation, what kind of support would help."
                         : "A few sentences on what you're looking to explore."
                     }
-                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all resize-none"
+                    className="w-full px-4 py-3 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-colors resize-none"
                   />
                 </div>
 

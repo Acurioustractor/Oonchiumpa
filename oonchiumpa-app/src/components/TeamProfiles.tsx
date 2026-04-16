@@ -15,7 +15,7 @@ const VoiceCard = ({
 
   return (
     <div 
-      className="bg-white/90 backdrop-blur rounded-lg p-6 border border-earth-200 hover:border-ochre-300 transition-all duration-300 hover:shadow-lg cursor-pointer"
+      className="bg-white/90 backdrop-blur rounded-lg p-6 border border-earth-200 hover:border-ochre-300 transition-[border-color,box-shadow] duration-300 hover:shadow-lg cursor-pointer"
       onClick={() => setIsExpanded(!isExpanded)}
     >
       <div className="flex items-start space-x-4">

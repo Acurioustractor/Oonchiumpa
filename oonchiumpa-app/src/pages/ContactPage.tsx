@@ -8,7 +8,7 @@ import { emailFor, subjectFor, type InquiryType } from '../config/contact';
 import { getServiceById } from '../data/services';
 
 const inputClassName =
-  'w-full px-4 py-3.5 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-all';
+  'w-full px-4 py-3.5 border border-earth-300 rounded-xl bg-white text-earth-950 focus:outline-none focus:border-ochre-500 focus:ring-4 focus:ring-ochre-100 transition-colors';
 
 const formatServiceLabel = (serviceId: string): string => {
   const service = getServiceById(serviceId);

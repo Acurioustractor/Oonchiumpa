@@ -151,7 +151,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             {ctaButton && (
               <button
                 onClick={ctaButton.onClick}
-                className="ml-3 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-all duration-200 shadow-[0_8px_22px_rgba(226,78,16,0.3)]"
+                className="ml-3 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-colors duration-200 shadow-[0_8px_22px_rgba(226,78,16,0.3)]"
               >
                 {ctaButton.label}
               </button>
@@ -342,7 +342,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             {ctaButton && (
               <button
                 onClick={ctaButton.onClick}
-                className="w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-all duration-200"
+                className="w-full mt-4 px-5 py-2.5 bg-ochre-600 text-white rounded-xl hover:bg-ochre-700 transition-colors duration-200"
               >
                 {ctaButton.label}
               </button>

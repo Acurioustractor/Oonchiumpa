@@ -20,7 +20,7 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={`bg-white rounded-2xl shadow-[0_8px_24px_rgba(47,30,26,0.08)] overflow-hidden transition-all duration-300 ${hoverClass} ${borderClass} ${className}`}
+      className={`bg-white rounded-2xl shadow-[0_8px_24px_rgba(47,30,26,0.08)] overflow-hidden duration-300 transition-[transform,box-shadow] ${hoverClass} ${borderClass} ${className}`}
       onClick={onClick}
     >
       {children}

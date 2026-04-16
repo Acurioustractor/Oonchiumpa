@@ -18,7 +18,7 @@ const AnimatedMetric = ({ value, label, description, highlight = false }: Metric
   return (
     <div 
       className={`
-        p-6 rounded-lg transition-all duration-700 transform
+        p-6 rounded-lg transition-[transform,opacity] duration-700
         ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
         ${highlight 
           ? 'bg-gradient-to-br from-ochre-400 to-ochre-600 text-white' 

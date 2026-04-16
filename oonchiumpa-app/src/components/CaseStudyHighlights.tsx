@@ -44,7 +44,7 @@ const CaseStudyCard = ({ title, category, challenge, intervention, outcome, impa
     <div 
       className={`
         ${classes.bg} rounded-xl p-6 border-2 ${classes.border} ${classes.hover}
-        transition-all duration-300 cursor-pointer hover:shadow-lg
+        transition-[border-color,box-shadow] duration-300 cursor-pointer hover:shadow-lg
       `}
       onClick={() => setIsExpanded(!isExpanded)}
     >

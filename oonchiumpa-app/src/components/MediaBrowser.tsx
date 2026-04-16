@@ -187,7 +187,7 @@ export function MediaBrowser({
                 <button
                   key={asset.id}
                   onClick={() => handleSelect(asset)}
-                  className={`relative aspect-square overflow-hidden rounded-lg border-2 transition-all ${
+                  className={`relative aspect-square overflow-hidden rounded-lg border-2 transition-[border-color,box-shadow] ${
                     isSelected
                       ? 'border-ochre-500 ring-2 ring-ochre-500/30'
                       : 'border-transparent hover:border-white/30'
@@ -309,7 +309,7 @@ export function StorytellerPicker({ onSelect, selectedId }: StorytellerPickerPro
                         onSelect(s);
                         setOpen(false);
                       }}
-                      className={`text-left p-4 rounded-lg border-2 transition-all ${
+                      className={`text-left p-4 rounded-lg border-2 transition-[border-color,box-shadow] ${
                         isSelected
                           ? 'border-ochre-500 bg-ochre-500/10'
                           : 'border-white/10 hover:border-white/30 bg-white/5'

@@ -346,7 +346,7 @@ const StorytellerDashboardPage: React.FC = () => {
               {stories.map((story) => (
                 <div
                   key={story.id}
-                  className={`p-4 border rounded-lg transition-all ${
+                  className={`p-4 border rounded-lg transition-colors ${
                     story.is_active
                       ? "border-eucalyptus-200 bg-eucalyptus-50"
                       : "border-earth-200 bg-earth-50"

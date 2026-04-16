@@ -176,7 +176,7 @@ export default function ImpactOverviewPage() {
                 <Link
                   key={service.id}
                   to={`/staff-portal/impact/${service.id}`}
-                  className={`block bg-white rounded-lg shadow-md hover:shadow-xl transition-all border-2 ${service.borderColor} overflow-hidden group`}
+                  className={`block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow border-2 ${service.borderColor} overflow-hidden group`}
                 >
                   <div className={`${service.bgColor} p-6`}>
                     <div className="flex items-center gap-4 mb-4">

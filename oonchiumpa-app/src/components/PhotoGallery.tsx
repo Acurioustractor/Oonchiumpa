@@ -51,7 +51,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
             className="group cursor-pointer"
             onClick={() => openLightbox(index)}
           >
-            <div className="relative aspect-square overflow-hidden rounded-xl shadow-lg transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
+            <div className="relative aspect-square overflow-hidden rounded-xl shadow-lg transition-[transform,box-shadow] duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
               <img
                 src={photo.src}
                 alt={photo.alt || photo.title || ''}
@@ -132,7 +132,7 @@ export const MasonryGallery: React.FC<MasonryGalleryProps> = ({ photos }) => {
             className="break-inside-avoid mb-6 group cursor-pointer"
             onClick={() => openLightbox(index)}
           >
-            <div className="relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 group-hover:shadow-xl">
+            <div className="relative overflow-hidden rounded-xl shadow-lg transition-[transform,box-shadow] duration-300 group-hover:shadow-xl">
               <img
                 src={photo.src}
                 alt={photo.alt || photo.title || ''}

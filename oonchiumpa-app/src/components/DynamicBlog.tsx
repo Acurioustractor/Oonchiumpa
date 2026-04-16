@@ -137,7 +137,7 @@ const DynamicBlog: React.FC = () => {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
                 selectedCategory === category.id
                   ? `bg-${category.color}-500 text-white`
                   : `bg-${category.color}-100 text-${category.color}-800 hover:bg-${category.color}-200`
@@ -162,7 +162,7 @@ const DynamicBlog: React.FC = () => {
         {filteredPosts.map((post) => (
           <Card
             key={post.id}
-            className="border border-earth-200 hover:shadow-xl transition-all duration-300 cursor-pointer group overflow-hidden"
+            className="border border-earth-200 hover:shadow-xl transition-[transform,box-shadow] duration-300 cursor-pointer group overflow-hidden"
             onClick={() => navigate(`/blog/${post.id}`)}
           >
             {/* Hero Image */}
