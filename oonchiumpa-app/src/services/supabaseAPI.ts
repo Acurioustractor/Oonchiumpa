@@ -171,23 +171,79 @@ export const supabaseStoriesAPI = {
   },
 };
 
-// Outcomes API - for now return empty arrays as we don't have outcome data in Supabase yet
+const OONCHIUMPA_ORG_ID = 'c53077e1-98de-4216-9149-6268891ff62e';
+
+const OUTCOME_SELECT =
+  'id, title, description, outcome_type, outcome_level, service_area, indicator_name, current_value, target_value, unit, qualitative_evidence';
+
+const mapOutcome = (row: Record<string, unknown>): Outcome => {
+  const metrics: { label: string; value: string | number }[] = [];
+  if (row.current_value != null) {
+    const unit = String(row.unit || '');
+    let value: string | number = row.current_value as number;
+    if (unit === 'percentage') value = `${value}%`;
+    else if (unit === 'dollars_per_day') value = `$${value}/day`;
+    metrics.push({ label: String(row.indicator_name || 'Result'), value });
+  }
+  if (row.target_value != null && row.unit === 'percentage') {
+    metrics.push({ label: 'Target', value: `${row.target_value}%` });
+  }
+
+  const serviceLabels: Record<string, string> = {
+    youth_mentorship: 'Youth Mentorship & Cultural Healing',
+    cultural_brokerage: 'Cultural Brokerage & Navigation',
+    true_justice: 'True Justice: Deep Listening on Country',
+    atnarpa_homestead: 'Atnarpa Homestead Experiences',
+  };
+
+  return {
+    id: String(row.id),
+    title: String(row.title || ''),
+    description: String(row.description || ''),
+    impact: Array.isArray(row.qualitative_evidence) && row.qualitative_evidence.length > 0
+      ? row.qualitative_evidence.join('. ')
+      : String(row.description || ''),
+    metrics,
+    location: 'Alice Springs, Arrernte Country',
+    category: serviceLabels[String(row.service_area)] || String(row.service_area || ''),
+    beneficiaries: row.unit === 'count' ? (row.current_value as number) : undefined,
+  };
+};
+
 export const supabaseOutcomesAPI = {
   getAll: async (): Promise<Outcome[]> => {
-    // TODO: Implement when outcome data structure is defined in Supabase
-    return [];
+    const { data, error } = await supabase
+      .from('outcomes')
+      .select(OUTCOME_SELECT)
+      .eq('organization_id', OONCHIUMPA_ORG_ID)
+      .not('current_value', 'is', null)
+      .order('service_area');
+
+    if (error) throw error;
+    return (data || []).map((row) => mapOutcome(row as Record<string, unknown>));
   },
 
   getById: async (id: string): Promise<Outcome> => {
-    // TODO: Implement when outcome data structure is defined in Supabase
-    throw new Error(
-      "Outcome not found - outcomes not yet implemented in Supabase",
-    );
+    const { data, error } = await supabase
+      .from('outcomes')
+      .select(OUTCOME_SELECT)
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return mapOutcome(data as Record<string, unknown>);
   },
 
   getByCategory: async (category: string): Promise<Outcome[]> => {
-    // TODO: Implement when outcome data structure is defined in Supabase
-    return [];
+    const { data, error } = await supabase
+      .from('outcomes')
+      .select(OUTCOME_SELECT)
+      .eq('organization_id', OONCHIUMPA_ORG_ID)
+      .eq('service_area', category)
+      .not('current_value', 'is', null);
+
+    if (error) throw error;
+    return (data || []).map((row) => mapOutcome(row as Record<string, unknown>));
   },
 };
 
