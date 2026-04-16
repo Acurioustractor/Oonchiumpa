@@ -14,11 +14,13 @@ interface HeroVideoProps {
 }
 
 /**
- * Hero video with poster-first rendering and crossfade looping.
+ * Hero video with poster-first rendering.
  *
- * Two <video> elements alternate — as one plays out, the other starts
- * from 0 and fades in, hiding the loop-point cut. Respects
- * prefers-reduced-motion (poster only) and lazy-loads after first paint.
+ * Desktop: two <video> elements alternate with a crossfade so the loop
+ * point isn't a hard cut. Mobile / touch devices use a single looping
+ * video — iOS Safari rejects autoplay on a second concurrent video and
+ * dual preload wastes cellular bandwidth. Respects prefers-reduced-motion
+ * (poster only) and lazy-loads videos after first paint.
  */
 export function HeroVideo({
   src,
@@ -33,10 +35,15 @@ export function HeroVideo({
   const [mountVideos, setMountVideos] = useState(false);
   const [firstReady, setFirstReady] = useState(false);
   const [activeVideo, setActiveVideo] = useState<"a" | "b">("a");
+  const [useCrossfade, setUseCrossfade] = useState(false);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
+    // Crossfade only on pointer-capable, wide viewports — touch devices
+    // (especially iOS) choke on two concurrent autoplaying videos.
+    const isDesktop = window.matchMedia("(min-width: 768px) and (hover: hover)").matches;
+    setUseCrossfade(isDesktop);
     const t = setTimeout(() => setMountVideos(true), 400);
     return () => clearTimeout(t);
   }, []);
@@ -45,16 +52,22 @@ export function HeroVideo({
     if (!mountVideos) return;
     const a = videoARef.current;
     if (!a) return;
-    const onCanPlay = () => {
+    const onReady = () => {
       setFirstReady(true);
       a.play().catch(() => {});
     };
-    a.addEventListener("canplay", onCanPlay, { once: true });
-    return () => a.removeEventListener("canplay", onCanPlay);
+    // iOS sometimes fires loadeddata before canplay, sometimes neither
+    // until after a user interaction — listen for both so we don't stall.
+    a.addEventListener("canplay", onReady, { once: true });
+    a.addEventListener("loadeddata", onReady, { once: true });
+    return () => {
+      a.removeEventListener("canplay", onReady);
+      a.removeEventListener("loadeddata", onReady);
+    };
   }, [mountVideos]);
 
   useEffect(() => {
-    if (!mountVideos || !firstReady) return;
+    if (!mountVideos || !firstReady || !useCrossfade) return;
     const a = videoARef.current;
     const b = videoBRef.current;
     if (!a || !b) return;
@@ -82,7 +95,7 @@ export function HeroVideo({
 
     active.addEventListener("timeupdate", onTimeUpdate);
     return () => active.removeEventListener("timeupdate", onTimeUpdate);
-  }, [mountVideos, firstReady, activeVideo, crossfadeMs]);
+  }, [mountVideos, firstReady, activeVideo, crossfadeMs, useCrossfade]);
 
   const isA = activeVideo === "a";
   const transitionStyle = { transitionDuration: `${crossfadeMs}ms` };
@@ -102,23 +115,26 @@ export function HeroVideo({
             src={src}
             muted
             playsInline
+            loop={!useCrossfade}
             preload="auto"
             className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-linear ${
-              firstReady && isA ? "opacity-100" : "opacity-0"
+              firstReady && (useCrossfade ? isA : true) ? "opacity-100" : "opacity-0"
             } ${className}`}
             style={transitionStyle}
           />
-          <video
-            ref={videoBRef}
-            src={src}
-            muted
-            playsInline
-            preload="auto"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-linear ${
-              firstReady && !isA ? "opacity-100" : "opacity-0"
-            } ${className}`}
-            style={transitionStyle}
-          />
+          {useCrossfade && (
+            <video
+              ref={videoBRef}
+              src={src}
+              muted
+              playsInline
+              preload="auto"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-linear ${
+                firstReady && !isA ? "opacity-100" : "opacity-0"
+              } ${className}`}
+              style={transitionStyle}
+            />
+          )}
         </>
       )}
     </div>
