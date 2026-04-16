@@ -103,7 +103,7 @@ const BlogPostDetailPage: React.FC = () => {
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-earth-300 via-earth-200 to-sand-100" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/55 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-earth-950/90 via-earth-950/60 to-earth-950/25" />
 
         <div className="relative z-10 container-custom pt-28 pb-14">
           <Breadcrumbs
