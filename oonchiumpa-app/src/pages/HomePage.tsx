@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useOrgPeople, useStories } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
 import { HeroVideo } from "../components/HeroVideo";
@@ -283,10 +283,10 @@ export const HomePage: React.FC = () => {
             </h2>
             <div className="grid md:grid-cols-2 gap-8">
               {stories.map((story) => (
-                <article
+                <Link
                   key={story.id}
-                  className="group cursor-pointer"
-                  onClick={() => navigate(`/stories/${story.id}`)}
+                  to={`/stories/${story.id}`}
+                  className="group block"
                 >
                   {story.imageUrl && (
                     <div className="rounded-lg overflow-hidden mb-4">
@@ -319,7 +319,7 @@ export const HomePage: React.FC = () => {
                       </span>
                     </div>
                   )}
-                </article>
+                </Link>
               ))}
             </div>
             <div className="mt-12 text-center">

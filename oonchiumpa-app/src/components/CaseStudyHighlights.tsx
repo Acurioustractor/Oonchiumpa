@@ -46,7 +46,10 @@ const CaseStudyCard = ({ title, category, challenge, intervention, outcome, impa
         ${classes.bg} rounded-xl p-6 border-2 ${classes.border} ${classes.hover}
         transition-[border-color,box-shadow] duration-300 cursor-pointer hover:shadow-lg
       `}
+      role="button"
+      tabIndex={0}
       onClick={() => setIsExpanded(!isExpanded)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsExpanded(!isExpanded); } }}
     >
       {/* Header */}
       <div className="flex items-start space-x-4 mb-6">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface VideoPlayerProps {
   url: string;
@@ -16,6 +16,15 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className = ''
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsModalOpen(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isModalOpen]);
 
   const getEmbedUrl = (url: string) => {
     // Handle YouTube URLs
@@ -43,9 +52,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <>
-      <div
-        className={`relative overflow-hidden rounded-2xl shadow-lg cursor-pointer ${className}`}
+      <button
+        type="button"
+        className={`relative overflow-hidden rounded-2xl shadow-lg cursor-pointer text-left w-full ${className}`}
         onClick={() => setIsModalOpen(true)}
+        aria-label={`Play ${title || 'video'}`}
       >
         <iframe
           src={embedUrl}
@@ -67,7 +78,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
           </svg>
         </div>
-      </div>
+      </button>
 
       {/* Modal */}
       {isModalOpen && (

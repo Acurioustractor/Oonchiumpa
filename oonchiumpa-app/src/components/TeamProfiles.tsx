@@ -15,8 +15,11 @@ const VoiceCard = ({
 
   return (
     <div 
+      role="button"
+      tabIndex={0}
       className="bg-white/90 backdrop-blur rounded-lg p-6 border border-earth-200 hover:border-ochre-300 transition-[border-color,box-shadow] duration-300 hover:shadow-lg cursor-pointer"
       onClick={() => setIsExpanded(!isExpanded)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsExpanded(!isExpanded); } }}
     >
       <div className="flex items-start space-x-4">
         {/* Avatar */}

@@ -46,10 +46,12 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
     <>
       <div className={`grid grid-cols-1 ${columnClasses[columns]} gap-6`}>
         {photos.map((photo, index) => (
-          <div
+          <button
             key={photo.id}
-            className="group cursor-pointer"
+            type="button"
+            className="group cursor-pointer text-left w-full"
             onClick={() => openLightbox(index)}
+            aria-label={`View ${photo.title || photo.alt || 'photo'}`}
           >
             <div className="relative aspect-square overflow-hidden rounded-xl shadow-lg transition-[transform,box-shadow] duration-300 group-hover:shadow-xl group-hover:-translate-y-1">
               <img
@@ -86,7 +88,7 @@ export const PhotoGallery: React.FC<PhotoGalleryProps> = ({
                 )}
               </div>
             )}
-          </div>
+          </button>
         ))}
       </div>
 
@@ -127,10 +129,12 @@ export const MasonryGallery: React.FC<MasonryGalleryProps> = ({ photos }) => {
     <>
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
         {photos.map((photo, index) => (
-          <div
+          <button
+            type="button"
             key={photo.id}
-            className="break-inside-avoid mb-6 group cursor-pointer"
+            className="break-inside-avoid mb-6 group cursor-pointer text-left w-full"
             onClick={() => openLightbox(index)}
+            aria-label={`View ${photo.title || photo.alt || 'photo'}`}
           >
             <div className="relative overflow-hidden rounded-xl shadow-lg transition-[transform,box-shadow] duration-300 group-hover:shadow-xl">
               <img
@@ -155,7 +159,7 @@ export const MasonryGallery: React.FC<MasonryGalleryProps> = ({ photos }) => {
                 </svg>
               </div>
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
