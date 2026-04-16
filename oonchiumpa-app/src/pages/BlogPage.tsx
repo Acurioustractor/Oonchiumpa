@@ -17,16 +17,13 @@ const formatDate = (iso?: string | null) => {
 const BlogPage: React.FC = () => {
   const navigate = useNavigate();
   const { articles, loading } = useArticles(18);
-  const empathyAuthorUrl = `${
-    import.meta.env.VITE_EMPATHY_LEDGER_URL || 'https://www.empathyledger.com'
-  }/admin/articles/new/edit`;
 
   React.useEffect(() => {
     const canonicalUrl = window.location.href.split('#')[0];
     applyPageMeta({
       title: 'Blog',
       description:
-        'Syndicated articles from Empathy Ledger: field stories, analysis, and community-led insights.',
+        'Field stories, analysis, and community-led insights from Oonchiumpa.',
       image: '/images/stories/IMG_9713.jpg',
       canonicalUrl,
       jsonLd: {
@@ -49,22 +46,12 @@ const BlogPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/50 to-transparent" />
 
         <div className="relative z-10 container-custom pt-28 pb-14">
-          <p className="eyebrow text-ochre-200 mb-4">Syndicated from Empathy Ledger</p>
+          <p className="eyebrow text-ochre-200 mb-4">From the field</p>
           <h1 className="heading-lg text-white mb-5 max-w-4xl">Blog & Articles</h1>
           <p className="text-white/85 text-lg max-w-3xl leading-relaxed">
-            Articles written and published in Empathy Ledger are syndicated here with storyteller identity, photo evidence, and linked video context.
+            Field stories, analysis, and community-led insights — told with
+            storyteller identity, photo evidence, and linked video context.
           </p>
-          <div className="mt-6">
-            <a
-              href={empathyAuthorUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center px-5 py-2.5 rounded-lg border border-white/30 bg-white/10 text-white hover:bg-white/20 transition-colors"
-            >
-              Write in Empathy Ledger
-              <span className="ml-2">↗</span>
-            </a>
-          </div>
         </div>
       </section>
 
@@ -74,23 +61,13 @@ const BlogPage: React.FC = () => {
             <div className="text-center text-earth-500 py-16">Loading articles...</div>
           ) : articles.length === 0 ? (
             <div className="section-shell p-10 text-center max-w-3xl mx-auto">
-              <h2 className="text-2xl font-display text-earth-950 mb-3">No syndicated articles yet</h2>
+              <h2 className="text-2xl font-display text-earth-950 mb-3">No articles yet</h2>
               <p className="text-earth-600 mb-6">
-                Publish articles in Empathy Ledger and they will appear here.
+                Check back soon for the latest stories from the community.
               </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                <a
-                  href={empathyAuthorUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-primary"
-                >
-                  Create article in Empathy Ledger
-                </a>
-                <button onClick={() => navigate('/stories')} className="btn-secondary">
-                  Browse stories
-                </button>
-              </div>
+              <button onClick={() => navigate('/stories')} className="btn-secondary">
+                Browse stories
+              </button>
             </div>
           ) : (
             <>

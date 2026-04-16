@@ -498,7 +498,7 @@ const YouthHubPage: React.FC = () => {
             <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-eucalyptus-400 mb-3">Real Voices</p>
             <h2 className="text-3xl md:text-5xl font-medium tracking-[-0.03em] mb-4">From the Community</h2>
             <p className="text-base text-zinc-500 font-light mb-12 max-w-xl">
-              Voices from Oonchiumpa's community: elders, young people, and the team, drawn from the Empathy Ledger.
+              Voices from Oonchiumpa's community: elders, young people, and the team.
             </p>
           </Reveal>
 

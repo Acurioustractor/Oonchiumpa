@@ -82,13 +82,33 @@ export function EditableImage({
 
   const hasOverride = currentUrl !== defaultSrc;
 
+  // Don't force `relative` when caller specifies another position (e.g. `absolute inset-0`).
+  const hasExplicitPosition = /\b(absolute|fixed|sticky|static)\b/.test(wrapperClassName);
+  const positionClass = hasExplicitPosition ? '' : 'relative';
+
   return (
     <div
-      className={`relative group ${wrapperClassName}`}
+      className={`${positionClass} group ${wrapperClassName}`}
       data-editable-slot={slotId}
       data-editable-default-alt={defaultAlt}
     >
-      <img src={currentUrl} alt={currentAlt} className={className} />
+      <img
+        src={currentUrl}
+        alt={currentAlt}
+        className={className}
+        onError={() => {
+          // Override URL is broken (deleted asset, blocked network, etc.) —
+          // fall back to the bundled default so the slot never renders blank.
+          if (currentUrl !== defaultSrc) {
+            console.warn(
+              `[EditableImage] slot "${slotId}" override failed to load, reverting to default`,
+              { failed: currentUrl },
+            );
+            setCurrentUrl(defaultSrc);
+            setCurrentAlt(defaultAlt);
+          }
+        }}
+      />
 
       {isEditMode && (
         <div className="absolute bottom-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-20">

@@ -249,18 +249,17 @@ export default function VideoGalleryPage() {
       {empathyVideos.length > 0 && (
         <section className="container-custom py-12 md:py-16">
           <div className="max-w-4xl mb-8">
-            <p className="eyebrow mb-3">Empathy Ledger feed</p>
+            <p className="eyebrow mb-3">More from the field</p>
             <h2 className="heading-lg text-3xl md:text-4xl mb-4">
-              Additional field videos from Empathy Ledger
+              Additional field videos
             </h2>
             <p className="text-earth-700 text-lg leading-relaxed">
-              These media assets are pulled directly from the Empathy Ledger API and update as new
-              consented videos are added.
+              Recent videos from Oonchiumpa's programs and on-country work.
             </p>
           </div>
 
           {empathyVideosLoading ? (
-            <div className="text-earth-500">Loading syndicated videos...</div>
+            <div className="text-earth-500">Loading videos...</div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {empathyVideos.map((asset) => (
@@ -277,7 +276,7 @@ export default function VideoGalleryPage() {
                     ) : asset.thumbnailUrl ? (
                       <img
                         src={asset.thumbnailUrl}
-                        alt={asset.altText || asset.title || "Syndicated video thumbnail"}
+                        alt={asset.altText || asset.title || "Video thumbnail"}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />

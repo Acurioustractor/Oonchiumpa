@@ -256,7 +256,7 @@ export const AboutPage: React.FC = () => {
       <ProgramGallery
         eyebrow="Service delivery"
         title="What this looks like in practice"
-        description="Program images and delivery details can be updated directly by your team, keeping the About page current without redesign work."
+        description="From youth diversion to on-Country healing and whole-family coordination, our work joins cultural authority with practical, day-to-day support."
         variant="rows"
         items={practiceGallery}
       />

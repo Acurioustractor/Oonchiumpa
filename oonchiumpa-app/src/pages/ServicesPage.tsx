@@ -280,7 +280,7 @@ export const ServicesPage: React.FC = () => {
           service.detail.overview ||
           service.description ||
           existing?.summary ||
-          "Syndicated service profile from Empathy Ledger.",
+          "Service profile.",
         image: service.imageUrl || existing?.image || null,
         metric:
           service.storytellerCount > 0 ||
@@ -482,8 +482,8 @@ export const ServicesPage: React.FC = () => {
               Browse active project streams with media and impact markers
             </h2>
             <p className="text-white/75 leading-relaxed">
-              This view combines flagship service projects with synced data from Empathy Ledger.
-              Use tags to quickly assess where photo/video storytelling is strongest and where more coverage is needed.
+              Browse active project streams across Oonchiumpa's flagship services.
+              Use tags to find where photo and video storytelling is strongest.
             </p>
             {(empathyImageLoading || empathyVideoLoading) && (
               <p className="text-white/55 text-sm mt-3">
@@ -548,7 +548,7 @@ export const ServicesPage: React.FC = () => {
                         {card.metric}
                       </span>
                       <span className="text-[11px] uppercase tracking-[0.16em] text-white/60">
-                        {card.source === "flagship" ? "Flagship" : "Syndicated"}
+                        {card.source === "flagship" ? "Flagship" : "Project"}
                       </span>
                     </div>
 
@@ -667,14 +667,14 @@ export const ServicesPage: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="max-w-3xl mb-8">
             <p className="text-ochre-600 text-sm uppercase tracking-[0.24em] mb-3">
-              Syndicated service feed
+              Active projects
             </p>
             <h2 className="text-3xl md:text-4xl font-display text-earth-950 mb-4">
-              Live services from Empathy Ledger
+              Service profiles and community impact
             </h2>
             <p className="text-earth-600 leading-relaxed">
-              This section syncs public service profiles, hero quotes, and theme signals
-              from your Empathy Ledger workspace.
+              Public service profiles, hero quotes, and theme signals from
+              Oonchiumpa's current programs.
             </p>
           </div>
 

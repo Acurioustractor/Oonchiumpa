@@ -1,19 +1,44 @@
 /**
  * Team & Community Directory
+ * ===========================
  *
- * Single source of truth for everyone displayed on the /team page.
- * To add a person: add an entry to the appropriate array below.
+ * The /team page reads people from TWO sources, in this order:
+ *
+ *   1. Empathy Ledger (live)  — preferred source of truth.
+ *      Anyone added in EL with `membership_type` of `leadership`,
+ *      `staff`, or `partner` and `is_public = true` is fetched at
+ *      runtime via `useOrgPeople()` and REPLACES the matching list
+ *      below. This means adding a real staff record in EL silently
+ *      retires the placeholders here — no code change needed.
+ *
+ *   2. Static fallback (this file) — shown only when EL returns
+ *      nothing for a given category. Use it to publish names quickly
+ *      while the EL record is still being prepared.
+ *
+ * ── Adding a person RIGHT NOW (static, no EL needed) ──────────────
+ *   • Find the right array below: leaders / staff / community.
+ *   • For staff, replace one of the existing entries — just fill in
+ *     `name`, optional `role`, `bio`, `quote`, `location`. Keep the
+ *     `slotId` and `photo` so the Photo Swap Widget can swap the
+ *     portrait later from Empathy Ledger.
+ *   • For leaders/community, add a new object to the array with the
+ *     same shape; give it a fresh `slotId` (e.g. team-leader-aliname).
+ *   • Photos: either point `photo` at /images/team/<file>.jpg or paste
+ *     a Supabase Storage URL. Square crop, ≥400×400. With a `slotId`
+ *     editors can also swap the photo from the Media Widget.
+ *
+ * ── Adding a person THE PROPER WAY (Empathy Ledger) ───────────────
+ *   • Go to Empathy Ledger admin (https://www.empathyledger.com).
+ *   • Create a person under the "oonchiumpa" organisation.
+ *   • Set `membership_type` to one of: leadership | staff | partner.
+ *   • Mark `is_public = true` and upload `public_avatar_url`.
+ *   • Refresh the site — the new record appears automatically and
+ *     overrides the static list above for that category.
  *
  * Categories:
- *   leaders   : Directors, Traditional Owners, Elders
- *   staff     : Case workers, coordinators, program staff
- *   community : Partners, volunteers, law students, supporters
- *
- * Photo tips:
- *   - Upload to Supabase Storage under profile-images/
- *   - Or use /images/team/ for local images
- *   - Square crop, minimum 400x400px
- *   - If no photo, initials are generated automatically
+ *   leaders   : Directors, Traditional Owners, Elders     → EL `leadership`
+ *   staff     : Case workers, coordinators, program staff → EL `staff`
+ *   community : Partners, volunteers, supporters          → EL `partner`
  */
 
 export interface TeamMember {
@@ -27,6 +52,11 @@ export interface TeamMember {
   location?: string;
   specialties?: string[];
   order?: number; // lower = shown first within category
+  /**
+   * Optional Empathy Ledger slot id. When set, the photo renders through
+   * EditableImage and becomes swappable from the Photo Swap Widget.
+   */
+  slotId?: string;
 }
 
 // ─── Leaders ─────────────────────────────────────────────────────────────────
@@ -36,6 +66,7 @@ export const leaders: TeamMember[] = [
     name: "Kristy Bloomfield",
     role: "Traditional Owner & Director",
     category: "leader",
+    slotId: "team-leader-kristy",
     photo:
       "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/profile-images/storytellers/kristy_bloomfield.jpg",
     bio: "Kristy brings Traditional Owner authority on Arrernte Country, stewarding Elder councils, knowledge systems, and land management at Atnarpa.",
@@ -50,6 +81,7 @@ export const leaders: TeamMember[] = [
     name: "Tanya Turner",
     role: "Legal Advocate & Strategist",
     category: "leader",
+    slotId: "team-leader-tanya",
     photo:
       "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/profile-images/storytellers/tanya_turner.jpg",
     bio: "Tanya navigates the legal and policy systems, translating community priorities into agreements, funding, and reform.",
@@ -62,33 +94,37 @@ export const leaders: TeamMember[] = [
 ];
 
 // ─── Staff ───────────────────────────────────────────────────────────────────
-// Add staff members here. Example:
 //
-// {
-//   name: "First Last",
-//   role: "Youth Case Worker",
-//   category: "staff",
-//   photo: "/images/team/first-last.jpg",
-//   bio: "Short bio about their work and background.",
-//   location: "Alice Springs",
-//   order: 1,
-// },
+// Eleven staff tiles, in the order they appear in the 2024 group photo
+// (back row L→R = 1-8, front row L→R = 9-11). Photos exist on disk at
+// /images/team/staff-NN.jpg and render through EditableImage so editors
+// can also swap a portrait via the Photo Swap Widget.
+//
+// To name a staff member: replace `name: ""` with the real name, set
+// `role` to their actual title, and (optionally) add `bio`, `quote`,
+// `location`, `specialties`. Keep the `slotId` and `photo` so the
+// existing photo and any Empathy Ledger override survive.
+//
+// Once a staff record is created in Empathy Ledger with
+// membership_type='staff', is_public=true, the live EL feed REPLACES
+// this whole list at runtime — at that point you can delete the
+// matching entry below (the EL avatar takes over).
 
-// Placeholder entries, 11 team members from the 2024 group photo.
-// Names, roles, and photos will be set once each person is added to
-// Empathy Ledger. At that point this static list retires and the
-// website reads everything from the EL API.
-// Placeholder names pending identification. Photos are headshots auto-cropped
-// from the 2024 group photo, stand-ins until real portraits are taken (or
-// until these records are migrated to Empathy Ledger with real names/bios).
-// Order matches the photo: back row L→R (1-8), then front row L→R (9-11).
-// Intentionally empty until real names + roles are confirmed and consented.
-// When ready, add entries like:
-//   { name: "Jane Smith", role: "Youth Mentor", category: "staff",
-//     photo: "/images/team/staff-01.jpg", order: 1 }
-// Photos are already in place at /images/team/staff-01.jpg..staff-11.jpg.
-// Team group photo still renders on /team regardless of this array.
-export const staff: TeamMember[] = [];
+export const staff: TeamMember[] = [
+  // Back row, left → right
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-01.jpg", slotId: "team-staff-01", order: 1 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-02.jpg", slotId: "team-staff-02", order: 2 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-03.jpg", slotId: "team-staff-03", order: 3 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-04.jpg", slotId: "team-staff-04", order: 4 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-05.jpg", slotId: "team-staff-05", order: 5 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-06.jpg", slotId: "team-staff-06", order: 6 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-07.jpg", slotId: "team-staff-07", order: 7 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-08.jpg", slotId: "team-staff-08", order: 8 },
+  // Front row, left → right
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-09.jpg", slotId: "team-staff-09", order: 9 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-10.jpg", slotId: "team-staff-10", order: 10 },
+  { name: "", role: "Oonchiumpa staff", category: "staff", photo: "/images/team/staff-11.jpg", slotId: "team-staff-11", order: 11 },
+];
 
 // ─── Community ───────────────────────────────────────────────────────────────
 
@@ -97,6 +133,7 @@ export const community: TeamMember[] = [
     name: "Adelaide Hayes",
     role: "Law Student, ANU",
     category: "community",
+    slotId: "team-community-adelaide",
     photo:
       "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1759627920417_Screenshot_2025-10-05_at_10.56.42_am.png",
     quote:
@@ -108,6 +145,7 @@ export const community: TeamMember[] = [
     name: "Chelsea Kenneally",
     role: "Law Student, ANU",
     category: "community",
+    slotId: "team-community-chelsea",
     quote:
       "They're not lecturing at us in this formal sense: they're sitting on the same level, conversing with us.",
     specialties: ["Knowledge Transmission", "Cultural Protocol"],
@@ -117,6 +155,7 @@ export const community: TeamMember[] = [
     name: "Aidan Harris",
     role: "Law & Public Policy Student, ANU",
     category: "community",
+    slotId: "team-community-aidan",
     photo:
       "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1759628229515_Screenshot_2025-10-05_at_11.36.59_am.png",
     quote:
@@ -128,6 +167,7 @@ export const community: TeamMember[] = [
     name: "Suzie Ma",
     role: "Law & Accounting Student, ANU",
     category: "community",
+    slotId: "team-community-suzie",
     photo:
       "https://yvnuayzslukamizrlhwb.supabase.co/storage/v1/object/public/media/d0a162d2-282e-4653-9d12-aa934c9dfa4e/1759628112665_Screenshot_2025-10-05_at_11.35.02_am.png",
     quote:

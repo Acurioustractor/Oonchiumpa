@@ -33,7 +33,7 @@ const BlogPostDetailPage: React.FC = () => {
     const description =
       article.metaDescription ||
       article.excerpt ||
-      'Article syndicated from Empathy Ledger.';
+      'A story from Oonchiumpa.';
     applyPageMeta({
       title: article.metaTitle || article.title,
       description,
@@ -184,9 +184,9 @@ const BlogPostDetailPage: React.FC = () => {
           {(photoPreviews.length > 0 || videoPreviews.length > 0) && (
             <div className="mt-10 pt-8 border-t border-earth-100 space-y-8">
               <div>
-                <p className="eyebrow mb-2">Syndicated media evidence</p>
+                <p className="eyebrow mb-2">Media</p>
                 <h2 className="text-2xl font-display text-earth-950">
-                  Photos and videos linked from Empathy Ledger
+                  Photos and videos
                 </h2>
               </div>
 

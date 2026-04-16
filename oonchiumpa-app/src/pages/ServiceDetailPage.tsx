@@ -7,6 +7,7 @@ import { Breadcrumbs } from '../components/Breadcrumbs';
 import { HowToEngage } from '../components/HowToEngage';
 import { Loading } from '../components/Loading';
 import { useMedia, useSyndicatedService } from '../hooks/useEmpathyLedger';
+import { useEditMode } from '../contexts/EditModeContext';
 import { applyPageMeta } from '../utils/seo';
 
 interface ServiceData {
@@ -458,6 +459,7 @@ const formatStoryDate = (value: string | null) => {
 export const ServiceDetailPage: React.FC = () => {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
+  const { isEditMode } = useEditMode();
 
   const localService = serviceId ? servicesData[serviceId] : null;
   const shouldLoadSyndicated = Boolean(serviceId && !localService);
@@ -555,15 +557,15 @@ export const ServiceDetailPage: React.FC = () => {
       description:
         detail.overview ||
         syndicatedService.description ||
-        'Syndicated service profile from Empathy Ledger.',
+        'Service profile.',
       longDescription:
         detail.longDescription ||
         syndicatedService.description ||
-        'This service profile is syndicated from Empathy Ledger.',
+        'A community-led service offered by Oonchiumpa.',
       features:
         featureItems.length > 0
           ? featureItems
-          : ['Service details are currently being expanded in Empathy Ledger.'],
+          : ['Service details coming soon.'],
       outcomes:
         outcomeItems.length > 0
           ? outcomeItems
@@ -573,13 +575,13 @@ export const ServiceDetailPage: React.FC = () => {
         ? {
             quote: detail.testimonial.quote || '',
             author: detail.testimonial.author || 'Community voice',
-            role: detail.testimonial.role || 'Syndicated service quote',
+            role: detail.testimonial.role || 'Community voice',
           }
         : syndicatedService.heroQuotes[0]
         ? {
             quote: syndicatedService.heroQuotes[0].text,
             author: syndicatedService.heroQuotes[0].author || 'Community voice',
-            role: 'Syndicated service quote',
+            role: 'Community voice',
           }
         : undefined,
       stats: serviceStats.slice(0, 4),
@@ -826,40 +828,43 @@ export const ServiceDetailPage: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-earth-950 text-white py-8 border-y border-earth-900">
-        <div className="container-custom">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            <div>
-              <p className="text-ochre-200 text-xs uppercase tracking-[0.2em] mb-2">
-                Service profile status
-              </p>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
-                  {isSyndicatedSource ? 'Syndicated from Empathy Ledger' : 'Flagship service page'}
-                </span>
-                <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
-                  {mediaReadiness.hasPhoto ? 'Photo-ready' : 'Needs photo assets'}
-                </span>
-                <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
-                  {mediaReadiness.hasVideo ? 'Video-ready' : 'Needs video coverage'}
-                </span>
-                <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
-                  {mediaReadiness.hasQuote ? 'Quote-ready' : 'Needs quote evidence'}
-                </span>
+      {/* Admin-only telemetry strip — only visible in edit mode */}
+      {isEditMode && (
+        <section className="bg-earth-950 text-white py-8 border-y border-earth-900">
+          <div className="container-custom">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              <div>
+                <p className="text-ochre-200 text-xs uppercase tracking-[0.2em] mb-2">
+                  Service profile status (editors only)
+                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
+                    {isSyndicatedSource ? 'Source: Empathy Ledger' : 'Flagship service page'}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
+                    {mediaReadiness.hasPhoto ? 'Photo-ready' : 'Needs photo assets'}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
+                    {mediaReadiness.hasVideo ? 'Video-ready' : 'Needs video coverage'}
+                  </span>
+                  <span className="px-3 py-1.5 rounded-full text-xs border border-white/25 bg-white/10">
+                    {mediaReadiness.hasQuote ? 'Quote-ready' : 'Needs quote evidence'}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {quickStats.slice(0, 4).map((stat, index) => (
+                  <div key={index} className="rounded-xl bg-white/10 border border-white/15 px-4 py-3">
+                    <p className="text-2xl font-display text-ochre-300">{stat.value}</p>
+                    <p className="text-xs text-white/75 mt-1">{stat.label}</p>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {quickStats.slice(0, 4).map((stat, index) => (
-                <div key={index} className="rounded-xl bg-white/10 border border-white/15 px-4 py-3">
-                  <p className="text-2xl font-display text-ochre-300">{stat.value}</p>
-                  <p className="text-xs text-white/75 mt-1">{stat.label}</p>
-                </div>
-              ))}
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <Section>
         <div className="grid lg:grid-cols-12 gap-8">
@@ -1034,9 +1039,9 @@ export const ServiceDetailPage: React.FC = () => {
             {syncedPhotoPreviews.length > 0 && (
               <Card>
                 <CardBody className="p-7 md:p-8">
-                  <p className="eyebrow mb-3">Synced photos</p>
+                  <p className="eyebrow mb-3">Photo gallery</p>
                   <h3 className="text-2xl font-display text-earth-950 mb-5">
-                    Empathy Ledger image evidence
+                    Image evidence from the field
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                     {syncedPhotoPreviews.slice(0, 9).map((asset) => {

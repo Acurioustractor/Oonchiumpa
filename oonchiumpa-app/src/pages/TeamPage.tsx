@@ -4,28 +4,98 @@ import { leaders, staff, community, getInitials, type TeamMember } from "../data
 import { useOrgPeople, useStorytellers } from "../hooks/useEmpathyLedger";
 import { EditableImage } from "../components/EditableImage";
 import { HeroVideo } from "../components/HeroVideo";
+import { useEditMode } from "../contexts/EditModeContext";
+
+const EMPATHY_LEDGER_PEOPLE_URL =
+  "https://www.empathyledger.com/admin/people";
+
+function EditorHint({ source }: { source: "static" | "ledger" }) {
+  const { isEditMode } = useEditMode();
+  if (!isEditMode) return null;
+  return (
+    <div className="max-w-3xl mx-auto mb-10 rounded-xl border border-ochre-200 bg-ochre-50 p-4 text-sm text-earth-800">
+      <p className="font-semibold text-ochre-800 mb-1">
+        {source === "ledger"
+          ? "Live from Empathy Ledger"
+          : "Static fallback (this list)"}
+      </p>
+      {source === "ledger" ? (
+        <p>
+          These cards come from Empathy Ledger. To add or update someone,
+          create / edit the person in EL with{" "}
+          <code className="px-1 bg-white/60 rounded">membership_type</code>{" "}
+          set and{" "}
+          <code className="px-1 bg-white/60 rounded">is_public = true</code>.{" "}
+          <a
+            href={EMPATHY_LEDGER_PEOPLE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="underline text-ochre-800"
+          >
+            Open Empathy Ledger →
+          </a>
+        </p>
+      ) : (
+        <p>
+          Empathy Ledger has no records yet for this category, so the page
+          shows the static fallback in{" "}
+          <code className="px-1 bg-white/60 rounded">
+            src/data/team.ts
+          </code>
+          . Edit that file to add a name or change a role. Add the person in{" "}
+          <a
+            href={EMPATHY_LEDGER_PEOPLE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="underline text-ochre-800"
+          >
+            Empathy Ledger
+          </a>{" "}
+          to take this list live.
+        </p>
+      )}
+    </div>
+  );
+}
 
 function PersonCard({ member, size = "md" }: { member: TeamMember; size?: "lg" | "md" }) {
   const isLarge = size === "lg";
+  const sizeClass = isLarge ? "w-36 h-36" : "w-24 h-24";
+
+  const photoNode = member.photo ? (
+    member.slotId ? (
+      <EditableImage
+        slotId={member.slotId}
+        defaultSrc={member.photo}
+        defaultAlt={member.name || "Oonchiumpa team member"}
+        className="w-full h-full object-cover"
+        wrapperClassName={`${sizeClass} rounded-full overflow-hidden mx-auto mb-4 border-2 border-earth-100`}
+      />
+    ) : (
+      <img
+        src={member.photo}
+        alt={member.name}
+        className={`${sizeClass} rounded-full object-cover mx-auto mb-4 border-2 border-earth-100`}
+      />
+    )
+  ) : (
+    <div
+      className={`${isLarge ? "w-36 h-36 text-3xl" : "w-24 h-24 text-xl"} rounded-full bg-ochre-100 flex items-center justify-center mx-auto mb-4 border-2 border-ochre-200`}
+    >
+      <span className="text-ochre-700 font-semibold">
+        {member.name ? getInitials(member.name) : "—"}
+      </span>
+    </div>
+  );
 
   return (
     <div className={isLarge ? "text-center max-w-sm mx-auto" : "text-center"}>
-      {member.photo ? (
-        <img
-          src={member.photo}
-          alt={member.name}
-          className={`${isLarge ? "w-36 h-36" : "w-24 h-24"} rounded-full object-cover mx-auto mb-4 border-2 border-earth-100`}
-        />
-      ) : (
-        <div
-          className={`${isLarge ? "w-36 h-36 text-3xl" : "w-24 h-24 text-xl"} rounded-full bg-ochre-100 flex items-center justify-center mx-auto mb-4 border-2 border-ochre-200`}
-        >
-          <span className="text-ochre-700 font-semibold">{getInitials(member.name)}</span>
-        </div>
+      {photoNode}
+      {member.name && (
+        <h3 className={`${isLarge ? "text-xl" : "text-base"} font-display text-earth-950 font-semibold`}>
+          {member.name}
+        </h3>
       )}
-      <h3 className={`${isLarge ? "text-xl" : "text-base"} font-display text-earth-950 font-semibold`}>
-        {member.name}
-      </h3>
       {member.isElder && (
         <p className="text-ochre-700 text-xs font-semibold uppercase tracking-[0.24em] mt-1">
           Elder
@@ -165,11 +235,12 @@ export const TeamPage: React.FC = () => {
               responsibility to Country and community.
             </p>
           </div>
+          <EditorHint source={elLeaders.length > 0 ? "ledger" : "static"} />
           <div
             className={`grid ${leadersToShow.length === 1 ? "max-w-sm mx-auto" : leadersToShow.length === 2 ? "md:grid-cols-2 max-w-3xl mx-auto" : "md:grid-cols-3 max-w-5xl mx-auto"} gap-12`}
           >
             {leadersToShow.map((member) => (
-              <PersonCard key={member.name} member={member} size="lg" />
+              <PersonCard key={member.slotId || member.name} member={member} size="lg" />
             ))}
           </div>
         </Section>
@@ -203,13 +274,14 @@ export const TeamPage: React.FC = () => {
           </figcaption>
         </figure>
 
-        {staffToShow.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8 max-w-5xl mx-auto">
-            {staffToShow.map((member) => (
-              <PersonCard key={member.name} member={member} size="md" />
-            ))}
-          </div>
-        )}
+        {/*
+          Individual staff cards intentionally hidden until each person is
+          added to Empathy Ledger with confirmed name, role, and consent.
+          The team group photo above is the source of truth for "who works
+          here". To re-enable individual cards: add staff to EL with
+          membership_type='staff', is_public=true — they'll appear here
+          automatically.
+        */}
       </Section>
 
       {/* Empathy Ledger storytellers (dynamic, if available) */}
@@ -269,9 +341,14 @@ export const TeamPage: React.FC = () => {
               impact forward.
             </p>
           </div>
+          <EditorHint source={elCommunity.length > 0 ? "ledger" : "static"} />
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {communityToShow.map((member) => (
-              <PersonCard key={member.name} member={member} size="md" />
+              <PersonCard
+                key={member.slotId || member.name}
+                member={member}
+                size="md"
+              />
             ))}
           </div>
         </Section>

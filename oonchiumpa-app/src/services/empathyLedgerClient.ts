@@ -707,6 +707,7 @@ async function apiFetch<T>(
       'X-API-Key': API_KEY,
       Accept: 'application/json',
     },
+    cache: 'no-store',
   });
 
   if (!res.ok) {
@@ -723,6 +724,7 @@ async function apiFetchOne<T>(endpoint: string): Promise<T | null> {
   const url = new URL(`/api/v2/${endpoint}`, BASE_URL);
   const res = await fetch(url.toString(), {
     headers: { 'X-API-Key': API_KEY, Accept: 'application/json' },
+    cache: 'no-store',
   });
 
   if (!res.ok) return null;
@@ -753,6 +755,7 @@ async function apiFetchContentHub(
       'X-API-Key': API_KEY,
       Accept: 'application/json',
     },
+    cache: 'no-store',
   });
 
   if (!res.ok) {

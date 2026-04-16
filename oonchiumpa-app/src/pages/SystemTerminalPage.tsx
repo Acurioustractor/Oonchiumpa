@@ -471,7 +471,7 @@ const SystemTerminalInner: React.FC = () => {
                 <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-eucalyptus-400 mb-4">Layer 3: The Voices</p>
                 <h2 className="text-4xl md:text-6xl font-medium tracking-[-0.04em] leading-[1.05] mb-4">From the Community</h2>
                 <p className="text-lg text-zinc-500 font-light max-w-2xl mb-12">
-                  Real voices from Oonchiumpa's community: elders, young people, and partners. Sourced from the Empathy Ledger.
+                  Real voices from Oonchiumpa's community: elders, young people, and partners.
                 </p>
               </Fade>
 

@@ -55,16 +55,16 @@ export const ProgramGallery: React.FC<ProgramGalleryProps> = ({
                 key={item.slotId}
                 className="grid lg:grid-cols-5 rounded-2xl overflow-hidden border border-earth-100 bg-earth-50"
               >
-                <div className="relative min-h-[260px] lg:col-span-2">
+                <div className="relative lg:col-span-2 min-h-[260px] lg:min-h-[320px]">
                   <EditableImage
                     slotId={item.slotId}
                     defaultSrc={item.defaultSrc}
                     defaultAlt={item.defaultAlt}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    wrapperClassName="absolute inset-0"
+                    className="w-full h-full object-cover block"
+                    wrapperClassName="absolute inset-0 h-full w-full"
                   />
                   {item.imageCaption && (
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 z-10">
                       <p className="text-white/90 text-xs leading-relaxed">
                         {item.imageCaption}
                       </p>

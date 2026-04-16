@@ -173,7 +173,7 @@ export const HomePage: React.FC = () => {
       />
 
       {/* ── Our people (from Empathy Ledger) ── */}
-      {withAvatars.length > 0 && (
+      {false && withAvatars.length > 0 && (
         <section className="bg-white py-20 md:py-28">
           <div className="max-w-6xl mx-auto px-6">
             <p className="text-ochre-600 text-sm uppercase tracking-[0.24em] mb-4">

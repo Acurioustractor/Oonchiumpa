@@ -181,13 +181,53 @@ export function useArticles(limit = 12) {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    el.getArticles({ limit })
-      .then((r) => setArticles(r.data))
-      .catch((err) => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        // EL's list endpoint can return stale storyteller / featured-image data
+        // even after admin edits. Fetch each article's detail and overlay the
+        // fresh fields so cards always match the article page.
+        const r = await el.getArticles({ limit });
+        if (cancelled) return;
+        setArticles(r.data);
+
+        const details = await Promise.all(
+          r.data.map((a) =>
+            el
+              .getArticleDetail(a.slug || a.id)
+              .catch(() => null),
+          ),
+        );
+        if (cancelled) return;
+
+        setArticles(
+          r.data.map((a, i) => {
+            const d = details[i];
+            if (!d) return a;
+            return {
+              ...a,
+              title: d.title || a.title,
+              authorName: d.authorName || a.authorName,
+              featuredImageUrl: d.featuredImageUrl ?? a.featuredImageUrl,
+              featuredImageAlt: d.featuredImageAlt ?? a.featuredImageAlt,
+              storyteller: d.storyteller ?? a.storyteller,
+              media: d.media ?? a.media,
+            };
+          }),
+        );
+      } catch (err) {
+        if (cancelled) return;
         setError(err as Error);
         console.error(err);
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [limit]);
 
   return { articles, loading, error };
