@@ -55,6 +55,7 @@ const OurJourneyPage = lazyNamed(() => import("../pages/OurJourneyPage"), "OurJo
 const YouthHubPage = lazy(() => import("../pages/YouthHubPage"));
 const SystemTerminalPage = lazy(() => import("../pages/SystemTerminalPage"));
 const ModelPage = lazy(() => import("../pages/ModelPage"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 export const AppRoutes = () => {
   return (
@@ -269,6 +270,7 @@ export const AppRoutes = () => {
               </ProtectedRoute>
             }
           />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Suspense>
