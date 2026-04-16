@@ -150,7 +150,7 @@ export const HomePage: React.FC = () => {
               <div key={i} className="text-center md:text-left">
                 <div className="text-3xl md:text-4xl font-bold text-ochre-300 mb-2">{m.value}</div>
                 <div className="text-white/90 font-medium text-sm mb-1">{m.label}</div>
-                <div className="text-white/50 text-xs">{m.sub}</div>
+                <div className="text-white/70 text-xs">{m.sub}</div>
               </div>
             ))}
           </div>

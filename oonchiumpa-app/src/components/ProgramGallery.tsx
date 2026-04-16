@@ -172,7 +172,7 @@ export const ProgramGallery: React.FC<ProgramGalleryProps> = ({
                     <p className="text-earth-500 text-xs uppercase tracking-[0.18em] mb-2">
                       {item.proofLabel || "Proof point"}
                     </p>
-                    <p className="text-earth-800 text-sm font-medium leading-relaxed">
+                    <p className="text-earth-800 text-base font-medium leading-relaxed">
                       {item.proof}
                     </p>
                   </div>
