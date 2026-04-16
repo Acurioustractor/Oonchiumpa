@@ -17,10 +17,8 @@ const pages: SearchItem[] = [
   { kind: "page", title: "About", path: "/about", summary: "Who we are, the model, cultural authority, and why it works." },
   { kind: "page", title: "Team", path: "/team", summary: "Leaders, staff, and community, 100% Aboriginal employment." },
   { kind: "page", title: "Services", path: "/services", summary: "All six services: diversion, cultural programs, brokerage, pathways." },
-  { kind: "page", title: "Stories", path: "/stories", summary: "Community voices and lived experience from participants and families." },
-  { kind: "page", title: "Blog", path: "/blog", summary: "Articles and updates from the Oonchiumpa team." },
+  { kind: "page", title: "Stories", path: "/stories", summary: "Community voices, articles, and lived experience from participants and families." },
   { kind: "page", title: "Impact", path: "/impact", summary: "Funder-facing evidence: $91/day diversion, 95% success, theory of change." },
-  { kind: "page", title: "Videos", path: "/videos", summary: "Video gallery covering Country, cultural programs, and community voices." },
   { kind: "page", title: "Contact", path: "/contact", summary: "Referrals, partnerships, and general enquiries." },
   { kind: "page", title: "Model", path: "/model", summary: "The Oonchiumpa model, inside-out delivery grounded in cultural authority." },
 ];
@@ -33,14 +31,13 @@ function buildItems(): SearchItem[] {
     path: `/services/${s.id}`,
   }));
 
-  // Blog slugs resolve via Supabase IDs, not titles, link to the blog
-  // index so the search result at least gets the user onto the listing
-  // page, where they can click through.
+  // Blog posts are now served under /stories; slugs resolve via Supabase
+  // IDs, not titles, so link to the index page.
   const blogItems: SearchItem[] = newBlogPosts.map((p) => ({
     kind: "blog",
     title: p.title,
     summary: p.excerpt ?? "",
-    path: "/blog",
+    path: "/stories",
   }));
 
   return [...pages, ...serviceItems, ...blogItems];

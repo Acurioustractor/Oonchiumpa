@@ -9,16 +9,16 @@ interface HeroVideoProps {
   alt: string;
   className?: string;
   wrapperClassName?: string;
+  /** Crossfade duration in ms. Default 700. */
+  crossfadeMs?: number;
 }
 
 /**
- * Hero video with poster-first rendering.
+ * Hero video with poster-first rendering and crossfade looping.
  *
- * The poster loads immediately so the hero is never blank. The video
- * is lazy-loaded and fades in when ready. On slow connections or if
- * the user has prefers-reduced-motion set, only the poster shows.
- *
- * Always muted (autoplay requires it) and loops.
+ * Two <video> elements alternate — as one plays out, the other starts
+ * from 0 and fades in, hiding the loop-point cut. Respects
+ * prefers-reduced-motion (poster only) and lazy-loads after first paint.
  */
 export function HeroVideo({
   src,
@@ -26,33 +26,66 @@ export function HeroVideo({
   alt,
   className = "",
   wrapperClassName = "",
+  crossfadeMs = 700,
 }: HeroVideoProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoReady, setVideoReady] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
+  const [mountVideos, setMountVideos] = useState(false);
+  const [firstReady, setFirstReady] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<"a" | "b">("a");
 
   useEffect(() => {
-    // Respect reduced motion preference
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) return;
-
-    // Lazy-load video after first paint so LCP isn't blocked
-    const timeout = setTimeout(() => setShouldLoadVideo(true), 400);
-    return () => clearTimeout(timeout);
+    const t = setTimeout(() => setMountVideos(true), 400);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
-    if (!shouldLoadVideo || !videoRef.current) return;
-    const video = videoRef.current;
+    if (!mountVideos) return;
+    const a = videoARef.current;
+    if (!a) return;
     const onCanPlay = () => {
-      setVideoReady(true);
-      video.play().catch(() => {
-        // Autoplay blocked, poster stays visible, which is fine
-      });
+      setFirstReady(true);
+      a.play().catch(() => {});
     };
-    video.addEventListener("canplay", onCanPlay);
-    return () => video.removeEventListener("canplay", onCanPlay);
-  }, [shouldLoadVideo]);
+    a.addEventListener("canplay", onCanPlay, { once: true });
+    return () => a.removeEventListener("canplay", onCanPlay);
+  }, [mountVideos]);
+
+  useEffect(() => {
+    if (!mountVideos || !firstReady) return;
+    const a = videoARef.current;
+    const b = videoBRef.current;
+    if (!a || !b) return;
+
+    const leadSeconds = crossfadeMs / 1000 + 0.05;
+    const isA = activeVideo === "a";
+    const active = isA ? a : b;
+    const other = isA ? b : a;
+    let swapped = false;
+
+    const onTimeUpdate = () => {
+      if (swapped) return;
+      const duration = active.duration;
+      if (!duration || isNaN(duration)) return;
+      if (duration - active.currentTime <= leadSeconds) {
+        swapped = true;
+        other.currentTime = 0;
+        other.play().catch(() => {});
+        setActiveVideo(isA ? "b" : "a");
+        window.setTimeout(() => {
+          active.pause();
+        }, crossfadeMs);
+      }
+    };
+
+    active.addEventListener("timeupdate", onTimeUpdate);
+    return () => active.removeEventListener("timeupdate", onTimeUpdate);
+  }, [mountVideos, firstReady, activeVideo, crossfadeMs]);
+
+  const isA = activeVideo === "a";
+  const transitionStyle = { transitionDuration: `${crossfadeMs}ms` };
 
   return (
     <div className={`absolute inset-0 ${wrapperClassName}`}>
@@ -60,20 +93,33 @@ export function HeroVideo({
         src={poster}
         alt={alt}
         className={`absolute inset-0 w-full h-full object-cover ${className}`}
-        aria-hidden={videoReady ? "true" : undefined}
+        aria-hidden={firstReady ? "true" : undefined}
       />
-      {shouldLoadVideo && (
-        <video
-          ref={videoRef}
-          src={src}
-          muted
-          playsInline
-          loop
-          preload="auto"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-            videoReady ? "opacity-100" : "opacity-0"
-          } ${className}`}
-        />
+      {mountVideos && (
+        <>
+          <video
+            ref={videoARef}
+            src={src}
+            muted
+            playsInline
+            preload="auto"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-linear ${
+              firstReady && isA ? "opacity-100" : "opacity-0"
+            } ${className}`}
+            style={transitionStyle}
+          />
+          <video
+            ref={videoBRef}
+            src={src}
+            muted
+            playsInline
+            preload="auto"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity ease-linear ${
+              firstReady && !isA ? "opacity-100" : "opacity-0"
+            } ${className}`}
+            style={transitionStyle}
+          />
+        </>
       )}
     </div>
   );

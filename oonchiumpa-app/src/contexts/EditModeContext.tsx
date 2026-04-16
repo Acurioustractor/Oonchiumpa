@@ -48,7 +48,7 @@ export function EditModeProvider({ children }: { children: React.ReactNode }) {
   const toggleEditMode = () => setIsEditMode((prev) => !prev);
 
   // Don't render the edit button if EL not configured or user not authenticated
-  if (!isConfigured || !isAuthenticated) {
+  if (!isConfigured || !isAuthenticated()) {
     return (
       <EditModeContext.Provider value={{ isEditMode: false, toggleEditMode }}>
         {children}

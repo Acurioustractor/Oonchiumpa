@@ -6,6 +6,7 @@ import { EditableImage } from '../components/EditableImage';
 import { HeroVideo } from '../components/HeroVideo';
 import { GeographicReachMap } from '../components/GeographicReachMap';
 import { ServiceProgramsRail } from '../components/ServiceProgramsRail';
+import { DiversionViz } from '../components/DiversionViz';
 import { useProjectAnalysis } from '../hooks/useEmpathyLedger';
 
 const headlineMetrics = [
@@ -225,18 +226,12 @@ export const ImpactPage: React.FC = () => {
           <Card className="bg-earth-950 text-white border-earth-900">
             <CardBody className="p-8">
               <p className="text-xs uppercase tracking-[0.2em] text-ochre-200 mb-3">Diversion result</p>
-              <h3 className="text-2xl font-display text-white mb-5">Breaking the cycle early</h3>
-              <div className="grid grid-cols-2 gap-5 text-center">
-                <div className="rounded-xl bg-white/10 p-4">
-                  <p className="text-4xl font-display text-ochre-300">20</p>
-                  <p className="text-xs text-white/75 mt-1">Removed from Operation Luna</p>
-                </div>
-                <div className="rounded-xl bg-white/10 p-4">
-                  <p className="text-4xl font-display text-ochre-300">1</p>
-                  <p className="text-xs text-white/75 mt-1">Remaining active case</p>
-                </div>
-              </div>
-              <p className="mt-5 text-sm text-white/80 leading-relaxed">
+              <h3 className="text-2xl font-display text-white mb-2">Breaking the cycle early</h3>
+              <p className="text-sm text-white/70 mb-4">
+                21 young people flagged under Operation Luna — each dot is one young person.
+              </p>
+              <DiversionViz diverted={20} active={1} />
+              <p className="mt-6 text-sm text-white/80 leading-relaxed">
                 Diversion performance is tied to cultural authority, daily consistency, and family-inclusive delivery.
               </p>
             </CardBody>
@@ -281,10 +276,10 @@ export const ImpactPage: React.FC = () => {
       {analysis?.analyzed && (
         <Section className="bg-white">
           <div className="text-center max-w-4xl mx-auto mb-10">
-            <p className="eyebrow mb-4">Live analysis feed</p>
-            <h2 className="heading-lg mb-5">Empathy Ledger analysis snapshot</h2>
+            <p className="eyebrow mb-4">Story analysis</p>
+            <h2 className="heading-lg mb-5">Themes and signals from the community</h2>
             <p className="lead-text">
-              This section reads directly from Empathy Ledger project analysis to surface current themes and signal quality.
+              Current themes and signal quality drawn from analysis of community storytelling.
             </p>
           </div>
 

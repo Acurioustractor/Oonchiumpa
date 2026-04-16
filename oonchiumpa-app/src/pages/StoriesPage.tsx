@@ -115,9 +115,9 @@ export const StoriesPage: React.FC = () => {
     <div className="min-h-screen bg-white">
       <section className="relative min-h-[80vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/boxing.mp4"
-          poster="/videos/hero/boxing.jpg"
-          alt="Young people training in the gym"
+          src="/videos/hero/youth-drone.mp4"
+          poster="/videos/hero/youth-drone.jpg"
+          alt="Aerial view of young people on Country"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/80 via-earth-950/45 to-transparent" />
 
@@ -204,7 +204,7 @@ export const StoriesPage: React.FC = () => {
             <div className="text-center py-20">
               <p className="text-earth-500 text-lg mb-2">No stories published yet.</p>
               <p className="text-earth-400 text-sm">
-                Stories are written in Empathy Ledger and syndicated here automatically.
+                Check back soon for the latest stories from the community.
               </p>
             </div>
           ) : filteredStories.length === 0 ? (
@@ -422,10 +422,10 @@ export const StoriesPage: React.FC = () => {
                 Storyteller photos
               </p>
               <h2 className="text-3xl font-display text-earth-950 mb-3">
-                Recent photos synced from Empathy Ledger
+                Recent photos from the community
               </h2>
               <p className="text-earth-600">
-                Photo assets update automatically when new approved media is published.
+                Photos from Oonchiumpa's programs and on-country work.
               </p>
             </div>
 

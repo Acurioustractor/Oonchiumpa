@@ -199,7 +199,7 @@ const getRouteMeta = (path: string): PageMeta => {
     return {
       title: "Blog",
       description:
-        "Syndicated articles from Empathy Ledger featuring community insight, field delivery, and outcomes analysis.",
+        "Articles from Oonchiumpa: community insight, field delivery, and outcomes analysis.",
       image: "/images/stories/IMG_9713.jpg",
       jsonLd: {
         "@context": "https://schema.org",
@@ -239,7 +239,7 @@ const getRouteMeta = (path: string): PageMeta => {
     return {
       title: `${readableId} Article`,
       description:
-        "Read syndicated community articles and analysis from Empathy Ledger.",
+        "Community articles and analysis from Oonchiumpa.",
       image: "/images/stories/IMG_9713.jpg",
       jsonLd: {
         "@context": "https://schema.org",
@@ -353,9 +353,7 @@ export const Layout = () => {
     { label: "Team", href: "/team" },
     { label: "Services", href: "/services" },
     { label: "Stories", href: "/stories" },
-    { label: "Blog", href: "/blog" },
     { label: "Impact", href: "/impact" },
-    { label: "Videos", href: "/videos" },
   ];
 
   const footerSections = [
@@ -372,8 +370,6 @@ export const Layout = () => {
       title: "Stories",
       links: [
         { label: "Community Stories", href: "/stories" },
-        { label: "Blog & Articles", href: "/blog" },
-        { label: "Video Gallery", href: "/videos" },
         { label: "Contact", href: "/contact" },
       ],
     },

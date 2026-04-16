@@ -143,9 +143,9 @@ export const OurJourneyPage: React.FC = () => {
       {/* ── Hero ──────────────────────────────────────────────────────── */}
       <section className="relative min-h-[85vh] flex items-end overflow-hidden">
         <HeroVideo
-          src="/videos/hero/country-pan.mp4"
-          poster="/videos/hero/country-pan.jpg"
-          alt="Sunlight across Arrernte Country"
+          src="/videos/hero/bed-making.mp4"
+          poster="/videos/hero/bed-making.jpg"
+          alt="Oonchiumpa team preparing a bedroom for a young person"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-earth-950/85 via-earth-950/45 to-transparent" />
 

@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "../components/Layout";
 import { Loading } from "../components/Loading";
 import ProtectedRoute from "../components/ProtectedRoute";
@@ -29,8 +29,6 @@ const GalleryUploadPage = lazyNamed(
 );
 
 const ContentGeneratorPage = lazy(() => import("../pages/ContentGeneratorPage"));
-const BlogPage = lazy(() => import("../pages/BlogPage"));
-const BlogPostDetailPage = lazy(() => import("../pages/BlogPostDetailPage"));
 const AdminPage = lazy(() => import("../pages/AdminPage"));
 const StaffPortalPage = lazy(() => import("../pages/StaffPortalPage"));
 const PresentationPage = lazy(() => import("../pages/PresentationPage"));
@@ -203,8 +201,8 @@ export const AppRoutes = () => {
           <Route path="outcomes" element={<OutcomesPage />} />
           <Route path="impact" element={<ImpactPage />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="blog" element={<BlogPage />} />
-          <Route path="blog/:id" element={<BlogPostDetailPage />} />
+          <Route path="blog" element={<Navigate to="/stories" replace />} />
+          <Route path="blog/:id" element={<Navigate to="/stories" replace />} />
           <Route path="videos" element={<VideoGalleryPage />} />
           <Route
             path="content-generator"
