@@ -36,6 +36,7 @@
   h5,
   h6 {
     @apply font-display font-semibold text-earth-950 tracking-tight;
+    text-wrap: balance;
   }
 
   /* Auto-invert headings inside dark sections so they stay readable. */
