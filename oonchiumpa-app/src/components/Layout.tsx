@@ -60,6 +60,26 @@ const getRouteMeta = (path: string): PageMeta => {
     };
   }
 
+  if (path === "/our-journey") {
+    return {
+      title: "Our Journey",
+      description:
+        "How kinship, culture, and trust built Oonchiumpa — a timeline of relationships that grew into an organisation.",
+      image: "/videos/hero/country-pan.jpg",
+      jsonLd: {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "Our Journey — Oonchiumpa",
+        url: "https://oonchiumpaconsultancy.com.au/our-journey",
+        about: {
+          "@type": "Organization",
+          "@id": organizationId,
+          name: "Oonchiumpa",
+        },
+      },
+    };
+  }
+
   if (path === "/team") {
     return {
       title: "Team",
@@ -329,6 +349,7 @@ export const Layout = () => {
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
+    { label: "Our Journey", href: "/our-journey" },
     { label: "Team", href: "/team" },
     { label: "Services", href: "/services" },
     { label: "Stories", href: "/stories" },
@@ -342,6 +363,7 @@ export const Layout = () => {
       title: "About",
       links: [
         { label: "About Us", href: "/about" },
+        { label: "Our Journey", href: "/our-journey" },
         { label: "Our Team", href: "/team" },
         { label: "Our Services", href: "/services" },
       ],

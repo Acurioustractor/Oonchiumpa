@@ -51,6 +51,7 @@ const EmpathyLedgerTestPage = lazy(() => import("../pages/EmpathyLedgerTestPage"
 const VideoGalleryPage = lazy(() => import("../pages/VideoGalleryPage"));
 const BrandSandboxPage = lazy(() => import("../pages/BrandSandboxPage"));
 const TeamPage = lazy(() => import("../pages/TeamPage"));
+const OurJourneyPage = lazyNamed(() => import("../pages/OurJourneyPage"), "OurJourneyPage");
 const YouthHubPage = lazy(() => import("../pages/YouthHubPage"));
 const SystemTerminalPage = lazy(() => import("../pages/SystemTerminalPage"));
 const ModelPage = lazy(() => import("../pages/ModelPage"));
@@ -192,6 +193,7 @@ export const AppRoutes = () => {
             }
           />
           <Route path="about" element={<AboutPage />} />
+          <Route path="our-journey" element={<OurJourneyPage />} />
           <Route path="team" element={<TeamPage />} />
           <Route path="services" element={<ServicesPage />} />
           <Route path="services/:serviceId" element={<ServiceDetailPage />} />
